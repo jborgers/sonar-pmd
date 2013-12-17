@@ -1,0 +1,2 @@
+15:13:07.153 INFO  o.sonar.plugins.pmd.PmdConfiguration - PMD configuration: /workingDir/pmd.xml
+15:13:07.173 INFO  o.sonar.plugins.pmd.PmdConfiguration - PMD output report: /workingDir/pmd-result.xml

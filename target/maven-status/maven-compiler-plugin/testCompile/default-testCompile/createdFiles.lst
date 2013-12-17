@@ -1,0 +1,17 @@
+org/sonar/plugins/pmd/PmdViolationToRuleViolationTest.class
+org/sonar/plugins/pmd/PmdConfigurationTest.class
+org/sonar/plugins/pmd/PmdProfilesTest$1.class
+org/sonar/plugins/pmd/PmdProfileImporterTest.class
+org/sonar/plugins/pmd/PmdRuleRepositoryTest$1.class
+org/sonar/plugins/pmd/PmdProfileExporterTest$1.class
+org/sonar/plugins/pmd/PmdLevelUtilsTest.class
+org/sonar/plugins/pmd/PmdSensorTest.class
+org/sonar/plugins/pmd/PmdExecutorTest.class
+org/sonar/plugins/pmd/PmdUnitTestsRuleRepositoryTest.class
+org/sonar/plugins/pmd/PmdTemplateTest.class
+org/sonar/plugins/pmd/PmdPluginTest.class
+org/sonar/plugins/pmd/PmdProfileImporterTest$1.class
+org/sonar/plugins/pmd/PmdVersionTest.class
+org/sonar/plugins/pmd/PmdProfileExporterTest.class
+org/sonar/plugins/pmd/PmdProfilesTest.class
+org/sonar/plugins/pmd/PmdRuleRepositoryTest.class
