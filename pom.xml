@@ -51,6 +51,8 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <pmd.version>4.3</pmd.version>
     <sonar.version>3.6</sonar.version>
+    <!-- TODO should be 2.0 after release of SQ Java 2.0: -->
+    <sonar-java.version>1.6-SNAPSHOT</sonar-java.version>
   </properties>
 
   <dependencies>
@@ -146,6 +148,7 @@
           <pluginName>PMD</pluginName>
           <pluginDescription><![CDATA[Analyze Java code with <a href="http://pmd.sourceforge.net/">PMD</a>.]]></pluginDescription>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
+          <requirePlugins>java:${sonar-java.version}</requirePlugins>
         </configuration>
       </plugin>
       <plugin>
