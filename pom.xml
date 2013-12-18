@@ -37,19 +37,15 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:SonarSource/sonar-java.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-java.git</developerConnection>
-    <url>https://github.com/SonarSource/sonar-java</url>
+    <connection>scm:git:git@github.com:SonarCommunity/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-pmd.git</developerConnection>
+    <url>https://github.com/SonarCommunity/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>JIRA</system>
-    <url>http://jira.codehaus.org/browse/SONARJAVA</url>
+    <url>https://jira.codehaus.org/browse/SONARPLUGINS/component/16258</url>
   </issueManagement>
-  <ciManagement>
-    <system>Cloudbees</system>
-    <url>https://sonarplugins.ci.cloudbees.com/job/java/</url>
-  </ciManagement>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
