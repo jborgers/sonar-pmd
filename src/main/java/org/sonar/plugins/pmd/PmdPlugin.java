@@ -27,7 +27,8 @@ import java.util.List;
 
 public class PmdPlugin extends SonarPlugin {
 
-  public List<?> getExtensions() {
+  @Override
+  public List getExtensions() {
     return ImmutableList.of(
       PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
         .defaultValue("false")
