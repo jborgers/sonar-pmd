@@ -52,8 +52,7 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <pmd.version>4.3</pmd.version>
     <sonar.version>3.6</sonar.version>
-    <!-- TODO should be 2.0 after release of SQ Java 2.0: -->
-    <sonar-java.version>1.6-SNAPSHOT</sonar-java.version>
+    <sonar-java.version>2.0</sonar-java.version>
   </properties>
 
   <dependencies>
