@@ -19,27 +19,22 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import net.sourceforge.pmd.IRuleViolation;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.SensorContext;
-import org.sonar.api.resources.JavaFile;
-import org.sonar.api.resources.ProjectFileSystem;
+import org.sonar.api.resources.File;
+import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.Violation;
 
-import java.io.File;
-import java.util.List;
-
 public class PmdViolationToRuleViolation implements BatchExtension {
-  private final ProjectFileSystem projectFileSystem;
+  private final Project project;
   private final RuleFinder ruleFinder;
 
-  public PmdViolationToRuleViolation(ProjectFileSystem projectFileSystem, RuleFinder ruleFinder) {
-    this.projectFileSystem = projectFileSystem;
+  public PmdViolationToRuleViolation(Project project, RuleFinder ruleFinder) {
+    this.project = project;
     this.ruleFinder = ruleFinder;
   }
 
@@ -63,9 +58,7 @@ public class PmdViolationToRuleViolation implements BatchExtension {
   }
 
   private Resource findResourceFor(IRuleViolation violation) {
-    List<File> allSources = ImmutableList.copyOf(Iterables.concat(projectFileSystem.getSourceDirs(), projectFileSystem.getTestDirs()));
-
-    return JavaFile.fromAbsolutePath(violation.getFilename(), allSources, true);
+    return File.fromIOFile(new java.io.File(violation.getFilename()), project);
   }
 
   private Rule findRuleFor(IRuleViolation violation) {
@@ -76,4 +69,5 @@ public class PmdViolationToRuleViolation implements BatchExtension {
     }
     return ruleFinder.findByKey(PmdConstants.TEST_REPOSITORY_KEY, ruleKey);
   }
+
 }
