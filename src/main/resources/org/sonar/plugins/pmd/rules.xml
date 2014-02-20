@@ -13,17 +13,20 @@
 
   <rule key="GenericsNaming">
     <priority>MAJOR</priority>
+    <tag>naming</tag>
     <configKey>rulesets/naming.xml/GenericsNaming</configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidCatchingGenericException">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey>rulesets/strictexception.xml/AvoidCatchingGenericException</configKey>
   </rule>
 
   <rule key="AvoidLosingExceptionInformation">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey>rulesets/strictexception.xml/AvoidLosingExceptionInformation</configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -35,6 +38,7 @@
 
   <rule key="UseConcurrentHashMap">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey>rulesets/controversial.xml/UseConcurrentHashMap</configKey>
   </rule>
 
@@ -45,6 +49,7 @@
 
   <rule key="AvoidThrowingNewInstanceOfSameException">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey>rulesets/strictexception.xml/AvoidThrowingNewInstanceOfSameException</configKey>
   </rule>
 
@@ -76,6 +81,7 @@
 
   <rule key="CyclomaticComplexity">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey>rulesets/codesize.xml/CyclomaticComplexity</configKey>
     <param key="reportLevel" type="INTEGER">
     </param>
@@ -93,12 +99,14 @@
 
   <rule key="DoNotThrowExceptionInFinally">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/DoNotThrowExceptionInFinally]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="TooManyMethods">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/TooManyMethods]]></configKey>
     <param key="maxmethods" type="INTEGER">
     </param>
@@ -137,11 +145,13 @@
 
   <rule key="DoubleCheckedLocking">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/basic.xml/DoubleCheckedLocking]]></configKey>
   </rule>
 
   <rule key="NPathComplexity">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NPathComplexity]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -189,6 +199,7 @@
 
   <rule key="OverrideBothEqualsAndHashcode">
     <priority>BLOCKER</priority>
+    <tag>bug</tag>
     <configKey><![CDATA[rulesets/basic.xml/OverrideBothEqualsAndHashcode]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -206,6 +217,7 @@
 
   <rule key="AbstractNaming">
     <priority>MAJOR</priority>
+    <tag>naming</tag>
     <configKey><![CDATA[rulesets/naming.xml/AbstractNaming]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -285,24 +297,28 @@
 
   <rule key="UnusedPrivateField">
     <priority>MAJOR</priority>
+    <tag>unused-code</tag>
     <configKey><![CDATA[rulesets/unusedcode.xml/UnusedPrivateField]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnusedLocalVariable">
     <priority>MAJOR</priority>
+    <tag>unused-code</tag>
     <configKey><![CDATA[rulesets/unusedcode.xml/UnusedLocalVariable]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnusedPrivateMethod">
     <priority>MAJOR</priority>
+    <tag>unused-code</tag>
     <configKey><![CDATA[rulesets/unusedcode.xml/UnusedPrivateMethod]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnusedFormalParameter">
     <priority>MAJOR</priority>
+    <tag>unused-code</tag>
     <configKey><![CDATA[rulesets/unusedcode.xml/UnusedFormalParameter]]></configKey>
   </rule>
 
@@ -450,6 +466,7 @@
 
   <rule key="EmptyCatchBlock">
     <priority>CRITICAL</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/basic.xml/EmptyCatchBlock]]></configKey>
     <param key="allowCommentedBlocks" type="BOOLEAN">
     </param>
@@ -476,6 +493,7 @@
 
   <rule key="EmptyFinallyBlock">
     <priority>CRITICAL</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/basic.xml/EmptyFinallyBlock]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -589,6 +607,7 @@
 
   <rule key="AvoidThreadGroup">
     <priority>CRITICAL</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/basic.xml/AvoidThreadGroup]]></configKey>
   </rule>
 
@@ -654,6 +673,7 @@
 
   <rule key="CloseResource">
     <priority>CRITICAL</priority>
+    <tag>bug</tag>
     <configKey><![CDATA[rulesets/design.xml/CloseResource]]></configKey>
     <param key="types" type="STRING">
     </param>
@@ -685,6 +705,7 @@
 
   <rule key="EqualsNull">
     <priority>CRITICAL</priority>
+    <tag>bug</tag>
     <configKey><![CDATA[rulesets/design.xml/EqualsNull]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -736,6 +757,7 @@
 
   <rule key="AvoidSynchronizedAtMethodLevel">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/design.xml/AvoidSynchronizedAtMethodLevel]]></configKey>
   </rule>
 
@@ -784,6 +806,7 @@
 
   <rule key="NonThreadSafeSingleton">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/design.xml/NonThreadSafeSingleton]]></configKey>
     <param key="checkNonStaticMethods" type="BOOLEAN">
     </param>
@@ -793,12 +816,14 @@
 
   <rule key="UncommentedEmptyMethod">
     <priority>MAJOR</priority>
+    <tag>comment</tag>
     <configKey><![CDATA[rulesets/design.xml/UncommentedEmptyMethod]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="UncommentedEmptyConstructor">
     <priority>MAJOR</priority>
+    <tag>comment</tag>
     <configKey><![CDATA[rulesets/design.xml/UncommentedEmptyConstructor]]></configKey>
     <param key="ignoreExplicitConstructorInvocation" type="BOOLEAN">
     </param>
@@ -812,11 +837,13 @@
 
   <rule key="UnsynchronizedStaticDateFormatter">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/design.xml/UnsynchronizedStaticDateFormatter]]></configKey>
   </rule>
 
   <rule key="PreserveStackTrace">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/design.xml/PreserveStackTrace]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -829,22 +856,26 @@
 
   <rule key="MethodReturnsInternalArray">
     <priority>CRITICAL</priority>
+    <tag>security</tag>
     <configKey><![CDATA[rulesets/sunsecure.xml/MethodReturnsInternalArray]]></configKey>
   </rule>
 
   <rule key="ArrayIsStoredDirectly">
     <priority>CRITICAL</priority>
+    <tag>security</tag>
     <configKey><![CDATA[rulesets/sunsecure.xml/ArrayIsStoredDirectly]]></configKey>
   </rule>
 
   <rule key="AvoidCatchingThrowable">
     <priority>CRITICAL</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/AvoidCatchingThrowable]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="SignatureDeclareThrowsException">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/SignatureDeclareThrowsException]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -857,22 +888,26 @@
 
   <rule key="AvoidCatchingNPE">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/AvoidCatchingNPE]]></configKey>
   </rule>
 
   <rule key="AvoidThrowingRawExceptionTypes">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/AvoidThrowingRawExceptionTypes]]></configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidThrowingNullPointerException">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/AvoidThrowingNullPointerException]]></configKey>
   </rule>
 
   <rule key="AvoidRethrowingException">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/strictexception.xml/AvoidRethrowingException]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -978,6 +1013,7 @@
 
   <rule key="ExcessiveMethodLength">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveMethodLength]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -986,6 +1022,7 @@
 
   <rule key="ExcessiveParameterList">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveParameterList]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -994,6 +1031,7 @@
 
   <rule key="ExcessiveClassLength">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveClassLength]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -1001,6 +1039,7 @@
 
   <rule key="ExcessivePublicCount">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessivePublicCount]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -1008,6 +1047,7 @@
 
   <rule key="TooManyFields">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/TooManyFields]]></configKey>
     <param key="maxfields" type="INTEGER">
     </param>
@@ -1015,6 +1055,7 @@
 
   <rule key="NcssMethodCount">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssMethodCount]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -1023,6 +1064,7 @@
 
   <rule key="NcssTypeCount">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssTypeCount]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -1030,6 +1072,7 @@
 
   <rule key="NcssConstructorCount">
     <priority>MAJOR</priority>
+    <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssConstructorCount]]></configKey>
     <param key="minimum" type="INTEGER">
     </param>
@@ -1062,6 +1105,7 @@
 
   <rule key="UseCorrectExceptionLogging">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -1088,11 +1132,13 @@
 
   <rule key="ShortMethodName">
     <priority>MAJOR</priority>
+    <tag>convention</tag>
     <configKey><![CDATA[rulesets/naming.xml/ShortMethodName]]></configKey>
   </rule>
 
   <rule key="VariableNamingConventions">
     <priority>MAJOR</priority>
+    <tag>naming</tag>
     <configKey><![CDATA[rulesets/naming.xml/VariableNamingConventions]]></configKey>
     <param key="staticPrefix" type="STRING">
     </param>
@@ -1107,12 +1153,14 @@
 
   <rule key="MethodNamingConventions">
     <priority>MAJOR</priority>
+    <tag>naming</tag>
     <configKey>rulesets/naming.xml/MethodNamingConventions</configKey>
     <status>DEPRECATED</status>
   </rule>
 
   <rule key="ClassNamingConventions">
     <priority>MAJOR</priority>
+    <tag>naming</tag>
     <configKey><![CDATA[rulesets/naming.xml/ClassNamingConventions]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -1217,6 +1265,7 @@
 
   <rule key="AvoidPrintStackTrace">
     <priority>MAJOR</priority>
+    <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/logging-java.xml/AvoidPrintStackTrace]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -1303,6 +1352,7 @@
 
   <rule key="DoNotUseThreads">
     <priority>MAJOR</priority>
+    <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/j2ee.xml/DoNotUseThreads]]></configKey>
   </rule>
 
