@@ -22,7 +22,7 @@
         <rule-key>AvoidAssertAsIdentifier</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -40,7 +40,7 @@
         <rule-key>AvoidEnumAsIdentifier</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -62,7 +62,7 @@
         <rule-key>AvoidUsingHardCodedIP</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -80,7 +80,7 @@
         <rule-key>AvoidUsingNativeCode</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -98,7 +98,7 @@
         <rule-key>DoNotHardCodeSDCard</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -120,7 +120,7 @@
         <rule-key>SimpleDateFormatNeedsLocale</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -138,7 +138,7 @@
         <rule-key>UseLocaleWithCaseConversions</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -164,7 +164,7 @@
         <rule-key>DontImportSun</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -182,7 +182,7 @@
         <rule-key>ByteInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -200,7 +200,7 @@
         <rule-key>LongInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -218,7 +218,7 @@
         <rule-key>ShortInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -236,7 +236,7 @@
         <rule-key>ReplaceEnumerationWithIterator</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -254,7 +254,7 @@
         <rule-key>SystemPrintln</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -284,7 +284,7 @@
         <rule-key>AbstractNaming</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -302,7 +302,7 @@
         <rule-key>AvoidUsingOctalValues</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -320,7 +320,7 @@
         <rule-key>BooleanGetMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -338,7 +338,7 @@
         <rule-key>ForLoopsMustUseBraces</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -356,7 +356,7 @@
         <rule-key>ForLoopShouldBeWhileLoop</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -374,7 +374,7 @@
         <rule-key>LongVariable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -392,7 +392,7 @@
         <rule-key>MDBAndSessionBeanNamingConvention</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -410,7 +410,7 @@
         <rule-key>AvoidDollarSigns</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -428,7 +428,7 @@
         <rule-key>AvoidFieldNameMatchingMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -446,7 +446,7 @@
         <rule-key>AvoidFieldNameMatchingTypeName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -464,7 +464,7 @@
         <rule-key>ClassNamingConventions</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -482,7 +482,7 @@
         <rule-key>MethodNamingConventions</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -500,7 +500,7 @@
         <rule-key>MethodWithSameNameAsEnclosingClass</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -518,7 +518,7 @@
         <rule-key>MisleadingVariableName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -536,7 +536,7 @@
         <rule-key>ShortMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -554,7 +554,7 @@
         <rule-key>SuspiciousHashcodeMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -572,7 +572,7 @@
         <rule-key>SuspiciousConstantFieldName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -590,7 +590,7 @@
         <rule-key>SuspiciousEqualsMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -608,7 +608,7 @@
         <rule-key>VariableNamingConventions</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -626,7 +626,7 @@
         <rule-key>PackageCase</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -644,7 +644,7 @@
         <rule-key>ProperLogger</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -662,7 +662,7 @@
         <rule-key>RemoteInterfaceNamingConvention</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -680,7 +680,7 @@
         <rule-key>RemoteSessionInterfaceNamingConvention</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -698,7 +698,7 @@
         <rule-key>ShortVariable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -716,7 +716,7 @@
         <rule-key>StringToString</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -734,7 +734,7 @@
         <rule-key>TooManyStaticImports</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -752,7 +752,7 @@
         <rule-key>TooFewBranchesForASwitchStatement</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -770,7 +770,7 @@
         <rule-key>UnnecessaryReturn</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -788,7 +788,7 @@
         <rule-key>UseCollectionIsEmpty</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -806,7 +806,7 @@
         <rule-key>UselessStringValueOf</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -824,7 +824,7 @@
         <rule-key>WhileLoopsMustUseBraces</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -842,7 +842,7 @@
         <rule-key>LocalHomeNamingConvention</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -860,7 +860,7 @@
         <rule-key>LocalInterfaceSessionNamingConvention</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -878,7 +878,7 @@
         <rule-key>UnnecessaryFinalModifier</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -896,7 +896,7 @@
         <rule-key>UnnecessaryParentheses</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -914,7 +914,7 @@
         <rule-key>UnusedModifier</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -932,7 +932,7 @@
         <rule-key>UseStringBufferLength</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -954,7 +954,7 @@
         <rule-key>AbstractClassWithoutAbstractMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -972,7 +972,7 @@
         <rule-key>AccessorClassGeneration</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -990,7 +990,7 @@
         <rule-key>AssignmentInOperand</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1008,7 +1008,7 @@
         <rule-key>AvoidMultipleUnaryOperators</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1026,7 +1026,7 @@
         <rule-key>AvoidUsingVolatile</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1044,7 +1044,7 @@
         <rule-key>SimplifyBooleanExpressions</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1062,7 +1062,7 @@
         <rule-key>EmptyInitializer</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1080,7 +1080,7 @@
         <rule-key>ClassWithOnlyPrivateConstructorsShouldBeFinal</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1098,7 +1098,7 @@
         <rule-key>CloneMethodMustImplementCloneable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1116,7 +1116,7 @@
         <rule-key>CollapsibleIfStatements</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1134,7 +1134,7 @@
         <rule-key>ConfusingTernary</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1152,7 +1152,7 @@
         <rule-key>EmptyFinalizer</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1170,7 +1170,7 @@
         <rule-key>EmptyFinallyBlock</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1188,7 +1188,7 @@
         <rule-key>EmptyStaticInitializer</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1206,7 +1206,7 @@
         <rule-key>EmptySwitchStatements</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1224,7 +1224,7 @@
         <rule-key>EmptySynchronizedBlock</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1242,7 +1242,7 @@
         <rule-key>EmptyTryBlock</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1260,7 +1260,7 @@
         <rule-key>EmptyWhileStmt</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1278,7 +1278,7 @@
         <rule-key>ExcessiveClassLength</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1296,7 +1296,7 @@
         <rule-key>ExcessiveMethodLength</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1314,7 +1314,7 @@
         <rule-key>FinalizeOnlyCallsSuperFinalize</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1332,7 +1332,7 @@
         <rule-key>FinalizeShouldBeProtected</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1350,7 +1350,7 @@
         <rule-key>ImmutableField</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1368,7 +1368,7 @@
         <rule-key>LocalVariableCouldBeFinal</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1386,7 +1386,7 @@
         <rule-key>MoreThanOneLogger</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1404,7 +1404,7 @@
         <rule-key>NcssConstructorCount</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1422,7 +1422,7 @@
         <rule-key>ReturnEmptyArrayRatherThanNull</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1440,7 +1440,7 @@
         <rule-key>SignatureDeclareThrowsException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1458,7 +1458,7 @@
         <rule-key>SimplifyBooleanReturns</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1476,7 +1476,7 @@
         <rule-key>SingularField</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1494,7 +1494,7 @@
         <rule-key>UncommentedEmptyMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1512,7 +1512,7 @@
         <rule-key>UncommentedEmptyConstructor</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1530,7 +1530,7 @@
         <rule-key>UnconditionalIfStatement</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1548,7 +1548,7 @@
         <rule-key>UnusedFormalParameter</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1566,7 +1566,7 @@
         <rule-key>AtLeastOneConstructor</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1584,7 +1584,7 @@
         <rule-key>AvoidFinalLocalVariable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1602,7 +1602,7 @@
         <rule-key>AvoidInstanceofChecksInCatchClause</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1620,7 +1620,7 @@
         <rule-key>EmptyIfStmt</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1638,7 +1638,7 @@
         <rule-key>ExcessivePublicCount</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1656,7 +1656,7 @@
         <rule-key>IdempotentOperations</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1674,7 +1674,7 @@
         <rule-key>MissingStaticMethodInNonInstantiatableClass</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1692,7 +1692,7 @@
         <rule-key>NcssMethodCount</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1710,7 +1710,7 @@
         <rule-key>NcssTypeCount</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1728,7 +1728,7 @@
         <rule-key>SimplifyConditional</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1746,7 +1746,7 @@
         <rule-key>TooManyMethods</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1764,7 +1764,7 @@
         <rule-key>UnnecessaryWrapperObjectCreation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1782,7 +1782,7 @@
         <rule-key>UnnecessaryConstructor</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1800,7 +1800,7 @@
         <rule-key>UnusedPrivateField</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1818,7 +1818,7 @@
         <rule-key>UnusedLocalVariable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1836,7 +1836,7 @@
         <rule-key>UnusedPrivateMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1854,7 +1854,7 @@
         <rule-key>CloneThrowsCloneNotSupportedException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1872,7 +1872,7 @@
         <rule-key>AvoidLiteralsInIfCondition</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1890,7 +1890,7 @@
         <rule-key>NoPackage</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1920,7 +1920,7 @@
         <rule-key>PreserveStackTrace</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1942,7 +1942,7 @@
         <rule-key>MethodReturnsInternalArray</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1960,7 +1960,7 @@
         <rule-key>ArrayIsStoredDirectly</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1982,7 +1982,7 @@
         <rule-key>AvoidAccessibilityAlteration</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2000,7 +2000,7 @@
         <rule-key>DoNotCallSystemExit</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2026,7 +2026,7 @@
         <rule-key>BooleanInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2044,7 +2044,7 @@
         <rule-key>FinalFieldCouldBeStatic</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2062,7 +2062,7 @@
         <rule-key>UnnecessaryConversionTemporary</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2080,7 +2080,7 @@
         <rule-key>UnnecessaryLocalBeforeReturn</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2098,7 +2098,7 @@
         <rule-key>AvoidUsingShortType</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2116,7 +2116,7 @@
         <rule-key>AvoidInstantiatingObjectsInLoops</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2134,7 +2134,7 @@
         <rule-key>IntegerInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2156,7 +2156,7 @@
         <rule-key>AvoidArrayLoops</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2174,7 +2174,7 @@
         <rule-key>AvoidSynchronizedAtMethodLevel</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2192,7 +2192,7 @@
         <rule-key>OptimizableToArrayCall</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2210,7 +2210,7 @@
         <rule-key>UseArraysAsList</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2228,7 +2228,7 @@
         <rule-key>AddEmptyString</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2246,7 +2246,7 @@
         <rule-key>AppendCharacterWithChar</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2264,7 +2264,7 @@
         <rule-key>BigIntegerInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2282,7 +2282,7 @@
         <rule-key>ConsecutiveLiteralAppends</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2300,7 +2300,7 @@
         <rule-key>DoNotCallGarbageCollectionExplicitly</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2318,7 +2318,7 @@
         <rule-key>InefficientEmptyStringCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2336,7 +2336,7 @@
         <rule-key>InefficientStringBuffering</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2354,7 +2354,7 @@
         <rule-key>InstantiationToGetClass</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2372,7 +2372,7 @@
         <rule-key>InsufficientStringBufferDeclaration</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2390,7 +2390,7 @@
         <rule-key>LoggerIsNotStaticFinal</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2408,7 +2408,7 @@
         <rule-key>SimplifyStartsWith</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2426,7 +2426,7 @@
         <rule-key>StringInstantiation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2444,7 +2444,7 @@
         <rule-key>UnnecessaryCaseChange</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2462,7 +2462,7 @@
         <rule-key>UseIndexOfChar</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2480,7 +2480,7 @@
         <rule-key>ProtectLogD</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2498,7 +2498,7 @@
         <rule-key>ProtectLogV</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2516,7 +2516,7 @@
         <rule-key>BooleanInversion</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2534,7 +2534,7 @@
         <rule-key>UnusedNullCheckInEquals</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2552,7 +2552,7 @@
         <rule-key>UseStringBufferForStringAppends</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2570,7 +2570,7 @@
         <rule-key>AvoidLosingExceptionInformation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2588,7 +2588,7 @@
         <rule-key>GuardDebugLogging</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2614,7 +2614,7 @@
         <rule-key>LooseCoupling</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2632,7 +2632,7 @@
         <rule-key>UselessOverridingMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2650,7 +2650,7 @@
         <rule-key>CouplingBetweenObjects</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2668,7 +2668,7 @@
         <rule-key>AbstractClassWithoutAnyMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2686,7 +2686,7 @@
         <rule-key>ExcessiveImports</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2704,7 +2704,7 @@
         <rule-key>TooManyFields</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2722,7 +2722,7 @@
         <rule-key>AvoidProtectedFieldInFinalClass</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2740,7 +2740,7 @@
         <rule-key>DefaultPackage</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2758,7 +2758,7 @@
         <rule-key>UseArrayListInsteadOfVector</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2780,7 +2780,7 @@
         <rule-key>AvoidConstantsInterface</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2802,7 +2802,7 @@
         <rule-key>AvoidDeeplyNestedIfStmts</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2820,7 +2820,7 @@
         <rule-key>AvoidDuplicateLiterals</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2838,7 +2838,7 @@
         <rule-key>IfStmtsMustUseBraces</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2856,7 +2856,7 @@
         <rule-key>IfElseStmtsMustUseBraces</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2874,7 +2874,7 @@
         <rule-key>OnlyOneReturn</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2892,7 +2892,7 @@
         <rule-key>ReplaceHashtableWithMap</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2910,7 +2910,7 @@
         <rule-key>ReplaceVectorWithList</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2928,7 +2928,7 @@
         <rule-key>SwitchDensity</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2954,7 +2954,7 @@
         <rule-key>AvoidCallingFinalize</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2972,7 +2972,7 @@
         <rule-key>AvoidStringBufferField</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2990,7 +2990,7 @@
         <rule-key>BeanMembersShouldSerialize</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3008,7 +3008,7 @@
         <rule-key>ConstructorCallsOverridableMethod</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3026,7 +3026,7 @@
         <rule-key>EmptyMethodInAbstractClassShouldBeAbstract</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3044,7 +3044,7 @@
         <rule-key>MissingSerialVersionUID</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3066,7 +3066,7 @@
         <rule-key>UselessOperationOnImmutable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3084,7 +3084,7 @@
         <rule-key>AssignmentToNonFinalStatic</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3102,7 +3102,7 @@
         <rule-key>AvoidDecimalLiteralsInBigDecimalConstructor</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3120,7 +3120,7 @@
         <rule-key>AvoidReassigningParameters</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3138,7 +3138,7 @@
         <rule-key>MethodArgumentCouldBeFinal</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3156,7 +3156,7 @@
         <rule-key>NullAssignment</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3174,7 +3174,7 @@
         <rule-key>StaticEJBFieldShouldBeFinal</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3192,7 +3192,7 @@
         <rule-key>SuspiciousOctalEscape</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3214,7 +3214,7 @@
         <rule-key>AvoidCatchingNPE</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3232,7 +3232,7 @@
         <rule-key>AvoidCatchingThrowable</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3250,7 +3250,7 @@
         <rule-key>AvoidRethrowingException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3268,7 +3268,7 @@
         <rule-key>AvoidThrowingNewInstanceOfSameException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3286,7 +3286,7 @@
         <rule-key>DoNotThrowExceptionInFinally</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3304,7 +3304,7 @@
         <rule-key>UseCorrectExceptionLogging</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3322,7 +3322,7 @@
         <rule-key>AvoidPrintStackTrace</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3340,7 +3340,7 @@
         <rule-key>AvoidThrowingNullPointerException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3358,7 +3358,7 @@
         <rule-key>AvoidThrowingRawExceptionTypes</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3380,7 +3380,7 @@
         <rule-key>EmptyCatchBlock</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3398,7 +3398,7 @@
         <rule-key>MisplacedNullCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3416,7 +3416,7 @@
         <rule-key>DoNotExtendJavaLangError</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3434,7 +3434,7 @@
         <rule-key>AvoidCatchingGenericException</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3456,7 +3456,7 @@
         <rule-key>ClassCastExceptionWithToArray</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3474,7 +3474,7 @@
         <rule-key>EqualsNull</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3492,7 +3492,7 @@
         <rule-key>BadComparison</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3510,7 +3510,7 @@
         <rule-key>CompareObjectsWithEquals</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3528,7 +3528,7 @@
         <rule-key>EmptyStatementNotInLoop</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3546,7 +3546,7 @@
         <rule-key>FinalizeDoesNotCallSuperFinalize</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3564,7 +3564,7 @@
         <rule-key>FinalizeOverloaded</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3582,7 +3582,7 @@
         <rule-key>OverrideBothEqualsAndHashcode</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3600,7 +3600,7 @@
         <rule-key>ProperCloneImplementation</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3618,7 +3618,7 @@
         <rule-key>StringBufferInstantiationWithChar</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3636,7 +3636,7 @@
         <rule-key>UseEqualsToCompareStrings</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3654,7 +3654,7 @@
         <rule-key>UseProperClassLoader</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3672,7 +3672,7 @@
         <rule-key>DontCallThreadRun</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3690,7 +3690,7 @@
         <rule-key>DontNestJsfInJstlIteration</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3712,7 +3712,7 @@
         <rule-key>JumbledIncrementer</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3730,7 +3730,7 @@
         <rule-key>CallSuperFirst</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3748,7 +3748,7 @@
         <rule-key>CallSuperLast</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3766,7 +3766,7 @@
         <rule-key>BrokenNullCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3784,7 +3784,7 @@
         <rule-key>CallSuperInConstructor</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3802,7 +3802,7 @@
         <rule-key>CheckResultSet</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3820,7 +3820,7 @@
         <rule-key>DataflowAnomalyAnalysis</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3838,7 +3838,7 @@
         <rule-key>DefaultLabelNotLastInSwitchStmt</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3856,7 +3856,7 @@
         <rule-key>MissingBreakInSwitch</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3874,7 +3874,7 @@
         <rule-key>NonCaseLabelInSwitchStatement</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3892,7 +3892,7 @@
         <rule-key>PositionLiteralsFirstInComparisons</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3910,7 +3910,7 @@
         <rule-key>ReturnFromFinallyBlock</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3928,7 +3928,7 @@
         <rule-key>SwitchStmtsShouldHaveDefault</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3946,7 +3946,7 @@
         <rule-key>NonStaticInitializer</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3972,7 +3972,7 @@
         <rule-key>UseNotifyAllInsteadOfNotify</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -3990,7 +3990,7 @@
         <rule-key>AvoidThreadGroup</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4008,7 +4008,7 @@
         <rule-key>CloseResource</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4026,7 +4026,7 @@
         <rule-key>DoNotUseThreads</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4044,7 +4044,7 @@
         <rule-key>DoubleCheckedLocking</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4062,7 +4062,7 @@
         <rule-key>NonThreadSafeSingleton</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4080,7 +4080,7 @@
         <rule-key>UnsynchronizedStaticDateFormatter</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4098,7 +4098,7 @@
         <rule-key>UseConcurrentHashMap</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4120,7 +4120,7 @@
         <rule-key>JUnitTestsShouldIncludeAssert</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4150,7 +4150,7 @@
         <rule-key>CyclomaticComplexity</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4168,7 +4168,7 @@
         <rule-key>ExceptionAsFlowControl</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4186,7 +4186,7 @@
         <rule-key>ExcessiveParameterList</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4204,7 +4204,7 @@
         <rule-key>NPathComplexity</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4222,7 +4222,7 @@
         <rule-key>JUnitAssertionsShouldIncludeMessage</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4240,7 +4240,7 @@
         <rule-key>JUnitSpelling</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4258,7 +4258,7 @@
         <rule-key>JUnitStaticSuite</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4276,7 +4276,7 @@
         <rule-key>SimplifyBooleanAssertion</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4294,7 +4294,7 @@
         <rule-key>UnnecessaryBooleanAssertion</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4312,7 +4312,7 @@
         <rule-key>UseAssertEqualsInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4330,7 +4330,7 @@
         <rule-key>UseAssertNullInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -4348,7 +4348,7 @@
         <rule-key>UseAssertSameInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
