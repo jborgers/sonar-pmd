@@ -43,8 +43,6 @@ public class PmdPlugin extends SonarPlugin {
       PmdUnitTestsRuleRepository.class,
       PmdProfileExporter.class,
       PmdProfileImporter.class,
-      SonarWayProfile.class,
-      SonarWayWithFindbugsProfile.class,
       PmdViolationToRuleViolation.class);
   }
 
