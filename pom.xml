@@ -52,7 +52,7 @@
 
     <pmd.version>4.3</pmd.version>
     <sonar.version>3.6</sonar.version>
-    <sonar-java.version>2.1-SNAPSHOT</sonar-java.version>
+    <sonar-java.version>2.1-RC4</sonar-java.version>
   </properties>
 
   <dependencies>
