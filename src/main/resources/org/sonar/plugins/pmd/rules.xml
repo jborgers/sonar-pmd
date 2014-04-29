@@ -84,10 +84,13 @@
     <tag>size</tag>
     <configKey>rulesets/codesize.xml/CyclomaticComplexity</configKey>
     <param key="reportLevel" type="INTEGER">
+      <defaultValue>10</defaultValue>
     </param>
     <param key="showClassesComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="showMethodsComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -109,6 +112,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/TooManyMethods]]></configKey>
     <param key="maxmethods" type="INTEGER">
+      <defaultValue>10</defaultValue>
     </param>
   </rule>
 
@@ -122,6 +126,7 @@
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/design.xml/TooFewBranchesForASwitchStatement]]></configKey>
     <param key="minimumNumberCaseForASwitch" type="INTEGER">
+      <defaultValue>3</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -154,6 +159,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NPathComplexity]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>200</defaultValue>
     </param>
   </rule>
 
@@ -390,8 +396,10 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/controversial.xml/DataflowAnomalyAnalysis]]></configKey>
     <param key="maxviolations" type="INTEGER">
+      <defaultValue>100</defaultValue>
     </param>
     <param key="maxpaths" type="INTEGER">
+      <defaultValue>1000</defaultValue>
     </param>
   </rule>
 
@@ -399,6 +407,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/coupling.xml/CouplingBetweenObjects]]></configKey>
     <param key="threshold" type="INTEGER">
+      <defaultValue>20</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -407,6 +416,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/coupling.xml/ExcessiveImports]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>30</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -469,6 +479,7 @@
     <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/basic.xml/EmptyCatchBlock]]></configKey>
     <param key="allowCommentedBlocks" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -576,6 +587,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/basic.xml/UselessOverridingMethod]]></configKey>
     <param key="ignoreAnnotations" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -637,6 +649,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/design.xml/AvoidDeeplyNestedIfStmts]]></configKey>
     <param key="problemDepth" type="INTEGER">
+      <defaultValue>3</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -651,6 +664,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/design.xml/SwitchDensity]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>10</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -676,8 +690,10 @@
     <tag>bug</tag>
     <configKey><![CDATA[rulesets/design.xml/CloseResource]]></configKey>
     <param key="types" type="STRING">
+      <defaultValue>Connection,Statement,ResultSet</defaultValue>
     </param>
     <param key="closeTargets" type="STRING">
+      <defaultValue>close</defaultValue>
     </param>
   </rule>
 
@@ -809,8 +825,10 @@
     <tag>multithreading</tag>
     <configKey><![CDATA[rulesets/design.xml/NonThreadSafeSingleton]]></configKey>
     <param key="checkNonStaticMethods" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="checkNonStaticFields" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
   </rule>
 
@@ -826,6 +844,7 @@
     <tag>comment</tag>
     <configKey><![CDATA[rulesets/design.xml/UncommentedEmptyConstructor]]></configKey>
     <param key="ignoreExplicitConstructorInvocation" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
   </rule>
 
@@ -916,6 +935,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/javabeans.xml/BeanMembersShouldSerialize]]></configKey>
     <param key="prefix" type="STRING">
+      <defaultValue></defaultValue>
     </param>
   </rule>
 
@@ -934,14 +954,19 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/strings.xml/AvoidDuplicateLiterals]]></configKey>
     <param key="threshold" type="INTEGER">
+      <defaultValue>4</defaultValue>
     </param>
     <param key="skipAnnotations" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="exceptionlist" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <param key="separator" type="STRING">
+      <defaultValue>,</defaultValue>
     </param>
     <param key="exceptionfile" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -981,6 +1006,7 @@
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/strings.xml/ConsecutiveLiteralAppends]]></configKey>
     <param key="threshold" type="INTEGER">
+      <defaultValue>1</defaultValue>
     </param>
   </rule>
 
@@ -1016,6 +1042,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveMethodLength]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>100</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1025,6 +1052,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveParameterList]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>10</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1034,6 +1062,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessiveClassLength]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>1000</defaultValue>
     </param>
   </rule>
 
@@ -1042,6 +1071,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/ExcessivePublicCount]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>45</defaultValue>
     </param>
   </rule>
 
@@ -1050,6 +1080,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/TooManyFields]]></configKey>
     <param key="maxfields" type="INTEGER">
+      <defaultValue>15</defaultValue>
     </param>
   </rule>
 
@@ -1058,6 +1089,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssMethodCount]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>100</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1067,6 +1099,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssTypeCount]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>1500</defaultValue>
     </param>
   </rule>
 
@@ -1075,6 +1108,7 @@
     <tag>size</tag>
     <configKey><![CDATA[rulesets/codesize.xml/NcssConstructorCount]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>100</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1114,6 +1148,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/logging-jakarta-commons.xml/ProperLogger]]></configKey>
     <param key="staticLoggerName" type="STRING">
+      <defaultValue>LOG</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1127,6 +1162,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/naming.xml/LongVariable]]></configKey>
     <param key="minimum" type="INTEGER">
+      <defaultValue>17</defaultValue>
     </param>
   </rule>
 
@@ -1141,12 +1177,16 @@
     <tag>naming</tag>
     <configKey><![CDATA[rulesets/naming.xml/VariableNamingConventions]]></configKey>
     <param key="staticPrefix" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <param key="staticSuffix" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <param key="memberPrefix" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <param key="memberSuffix" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1298,6 +1338,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/basic.xml/AvoidUsingHardCodedIP]]></configKey>
     <param key="pattern" type="REGULAR_EXPRESSION">
+      <defaultValue><![CDATA[^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$]]></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1336,6 +1377,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/imports.xml/TooManyStaticImports]]></configKey>
     <param key="maximumStaticImports" type="INTEGER">
+      <defaultValue>4</defaultValue>
     </param>
   </rule>
 
@@ -1402,6 +1444,7 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/naming.xml/BooleanGetMethodName]]></configKey>
     <param key="checkParameterizedMethods" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
   </rule>
 
@@ -1410,8 +1453,10 @@
     <configKey><![CDATA[net.sourceforge.pmd.rules.XPathRule]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="xpath" type="TEXT">
+      <defaultValue></defaultValue>
     </param>
     <param key="message" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
