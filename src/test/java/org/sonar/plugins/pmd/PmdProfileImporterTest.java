@@ -67,8 +67,8 @@ public class PmdProfileImporterTest {
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertThat(profile.getActiveRules()).hasSize(3);
-    assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/coupling.xml/ExcessiveImports")).isNotNull();
-    assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/design.xml/UseNotifyAllInsteadOfNotify")).isNotNull();
+    assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports")).isNotNull();
+    assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/java/design.xml/UseNotifyAllInsteadOfNotify")).isNotNull();
     assertThat(messages.hasErrors()).isFalse();
   }
 
@@ -87,9 +87,9 @@ public class PmdProfileImporterTest {
     Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
     RulesProfile profile = importer.importProfile(reader, messages);
-    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/coupling.xml/ExcessiveImports");
+    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports");
 
-    assertThat(activeRule.getParameter("max")).isEqualTo("30");
+    assertThat(activeRule.getParameter("minimum")).isEqualTo("30");
   }
 
   @Test
@@ -97,7 +97,7 @@ public class PmdProfileImporterTest {
     Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
     RulesProfile profile = importer.importProfile(reader, messages);
-    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/coupling.xml/ExcessiveImports");
+    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports");
 
     assertThat(activeRule.getSeverity()).isSameAs(RulePriority.BLOCKER);
   }
@@ -108,10 +108,10 @@ public class PmdProfileImporterTest {
 
     RulesProfile profile = importer.importProfile(reader, messages);
 
-    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/design.xml/UseNotifyAllInsteadOfNotify");
+    ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/design.xml/UseNotifyAllInsteadOfNotify");
     assertThat(activeRule.getSeverity()).isSameAs(RulePriority.MINOR);
 
-    activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/coupling.xml/CouplingBetweenObjects");
+    activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/CouplingBetweenObjects");
     assertThat(activeRule.getSeverity()).isSameAs(RulePriority.CRITICAL);
   }
 
@@ -129,7 +129,7 @@ public class PmdProfileImporterTest {
     Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
     RulesProfile profile = importer.importProfile(reader, messages);
-    ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "rulesets/coupling.xml/CouplingBetweenObjects");
+    ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/CouplingBetweenObjects");
 
     assertThat(check.getParameter("threshold")).isNull();
     assertThat(messages.getWarnings()).hasSize(1);
@@ -165,8 +165,8 @@ public class PmdProfileImporterTest {
       public Rule answer(InvocationOnMock invocation) {
         RuleQuery query = (RuleQuery) invocation.getArguments()[0];
         Rule rule = Rule.create(query.getRepositoryKey(), "", "").setConfigKey(query.getConfigKey()).setSeverity(RulePriority.BLOCKER);
-        if (rule.getConfigKey().equals("rulesets/coupling.xml/ExcessiveImports")) {
-          rule.createParameter("max");
+        if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
+          rule.createParameter("minimum");
         }
         return rule;
       }

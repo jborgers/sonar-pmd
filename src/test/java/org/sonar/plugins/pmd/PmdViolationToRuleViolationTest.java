@@ -19,7 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.IRuleViolation;
+import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.Rule;
 import org.junit.Test;
 import org.sonar.api.batch.SensorContext;
@@ -40,7 +40,7 @@ public class PmdViolationToRuleViolationTest {
   private org.sonar.api.rules.Rule sonarRule = org.sonar.api.rules.Rule.create("pmd", "RULE");
   private ProjectFileSystem projectFileSystem = mock(ProjectFileSystem.class);
   private Project project = when(mock(Project.class).getFileSystem()).thenReturn(projectFileSystem).getMock();
-  private IRuleViolation pmdViolation = mock(IRuleViolation.class);
+  private RuleViolation pmdViolation = mock(RuleViolation.class);
   private SensorContext context = mock(SensorContext.class);
   private RuleFinder ruleFinder = mock(RuleFinder.class);
   private Rule rule = mock(Rule.class);

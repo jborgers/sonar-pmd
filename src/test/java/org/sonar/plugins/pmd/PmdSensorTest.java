@@ -26,7 +26,7 @@ import org.junit.Rule;
 import org.sonar.api.utils.XmlParserException;
 
 import com.google.common.collect.Iterators;
-import net.sourceforge.pmd.IRuleViolation;
+import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.Report;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,7 +101,7 @@ public class PmdSensorTest {
 
   @Test
   public void should_report_violations() {
-    IRuleViolation pmdViolation = violation();
+    RuleViolation pmdViolation = violation();
     Report report = report(pmdViolation);
     when(executor.execute()).thenReturn(report);
     when(pmdViolationToRuleViolation.toViolation(pmdViolation, sensorContext)).thenReturn(violation);
@@ -123,7 +123,7 @@ public class PmdSensorTest {
 
   @Test
   public void shouldnt_report_invalid_violation() {
-    IRuleViolation pmdViolation = violation();
+    RuleViolation pmdViolation = violation();
     Report report = report(pmdViolation);
     when(executor.execute()).thenReturn(report);
     when(report.iterator()).thenReturn(Iterators.forArray(pmdViolation));
@@ -150,11 +150,11 @@ public class PmdSensorTest {
     assertThat(toString).isEqualTo("PmdSensor");
   }
 
-  static IRuleViolation violation() {
-    return mock(IRuleViolation.class);
+  static RuleViolation violation() {
+    return mock(RuleViolation.class);
   }
 
-  static Report report(IRuleViolation... violations) {
+  static Report report(RuleViolation... violations) {
     Report report = mock(Report.class);
     when(report.iterator()).thenReturn(Iterators.forArray(violations));
     return report;

@@ -37,6 +37,8 @@ public class PmdRule {
   private List<PmdProperty> properties = new ArrayList<PmdProperty>();
 
   private String clazz;
+  
+  private String language;
 
   public PmdRule(String ref) {
     this(ref, null);
@@ -124,6 +126,15 @@ public class PmdRule {
 
   public boolean hasProperties() {
     return properties != null && !properties.isEmpty();
+  }
+
+  @Nullable
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
   }
 
 }

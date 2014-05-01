@@ -50,7 +50,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>4.3</pmd.version>
+    <pmd.version>5.1.1</pmd.version>
     <sonar.version>3.6</sonar.version>
     <sonar-java.version>2.1</sonar-java.version>
   </properties>
@@ -69,7 +69,7 @@
       <version>${sonar.version}</version>
     </dependency>
     <dependency>
-      <groupId>pmd</groupId>
+      <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd</artifactId>
       <version>${pmd.version}</version>
       <exclusions>
@@ -79,7 +79,7 @@
         </exclusion>
         <exclusion>
           <!-- optimization for JAR size -->
-          <groupId>ant</groupId>
+          <groupId>org.apache.ant</groupId>
           <artifactId>ant</artifactId>
         </exclusion>
         <exclusion>
@@ -164,8 +164,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>1600000</maxsize>
-                  <minsize>1400000</minsize>
+                  <maxsize>6000000</maxsize>
+                  <minsize>5000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>

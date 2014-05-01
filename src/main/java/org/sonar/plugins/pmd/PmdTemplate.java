@@ -23,11 +23,13 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Closeables;
-import net.sourceforge.pmd.PMD;
+import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.SourceType;
+import net.sourceforge.pmd.SourceCodeProcessor;
+import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.LanguageVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.resources.InputFile;
@@ -39,37 +41,48 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 public class PmdTemplate {
+  
   private static final Logger LOG = LoggerFactory.getLogger(PmdTemplate.class);
 
-  private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.of(
-    "1.1", "1.3",
-    "1.2", "1.3",
-    "5", "1.5",
-    "6", "1.6",
-    "7", "1.7");
+  private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.<String, String>builder()
+    .put("1.1", "1.3")
+    .put("1.2", "1.3")
+    .put("5", "1.5")
+    .put("6", "1.6")
+    .put("7", "1.7")
+    .put("8", "1.8")
+    .build();
 
-  private final PMD pmd;
+  private SourceCodeProcessor processor;
+  private PMDConfiguration configuration;
 
-  public PmdTemplate(String javaVersion, ClassLoader classloader) {
-    this(new PMD());
-    setJavaVersion(pmd, javaVersion);
-    setClassloader(pmd, classloader);
+  public static PmdTemplate create(String javaVersion, ClassLoader classloader, Charset charset) {
+    PMDConfiguration configuration = new PMDConfiguration();
+    configuration.setDefaultLanguageVersion(languageVersion(javaVersion));
+    configuration.setClassLoader(classloader);
+    configuration.setSourceEncoding(charset.name());
+    SourceCodeProcessor processor = new SourceCodeProcessor(configuration);
+    return new PmdTemplate(configuration, processor);
   }
 
   @VisibleForTesting
-  PmdTemplate(PMD pmd) {
-    this.pmd = pmd;
+  PmdTemplate(PMDConfiguration configuration, SourceCodeProcessor processor) {
+    this.configuration = configuration;
+    this.processor = processor;
   }
 
-  public void process(InputFile inputFile, Charset encoding, RuleSets rulesets, RuleContext ruleContext) {
+  @VisibleForTesting
+  PMDConfiguration configuration() {
+    return configuration;
+  }
+
+  public void process(InputFile inputFile, RuleSets rulesets, RuleContext ruleContext) {
     File file = inputFile.getFile();
     ruleContext.setSourceCodeFilename(file.getAbsolutePath());
-
     InputStream inputStream = null;
     try {
       inputStream = inputFile.getInputStream();
-
-      pmd.processFile(inputStream, encoding.displayName(), rulesets, ruleContext);
+      processor.processSourceCode(inputStream, rulesets, ruleContext);
     } catch (PMDException e) {
       LOG.error("Fail to execute PMD. Following file is ignored: " + file, e.getCause());
     } catch (Exception e) {
@@ -80,24 +93,18 @@ public class PmdTemplate {
   }
 
   @VisibleForTesting
-  static void setJavaVersion(PMD pmd, String javaVersion) {
+  static LanguageVersion languageVersion(String javaVersion) {
     String version = normalize(javaVersion);
-    SourceType sourceType = SourceType.getSourceTypeForId("java " + version);
-    if (sourceType == null) {
+    LanguageVersion languageVersion = Language.JAVA.getVersion(version);
+    if (languageVersion == null) {
       throw new SonarException("Unsupported Java version for PMD: " + version);
     }
-
     LOG.info("Java version: " + version);
-    pmd.setJavaVersion(sourceType);
+    return languageVersion;
   }
 
   private static String normalize(String version) {
     return Functions.forMap(JAVA_VERSIONS, version).apply(version);
-  }
-
-  @VisibleForTesting
-  static void setClassloader(PMD pmd, ClassLoader classloader) {
-    pmd.setClassLoader(classloader);
   }
 
 }

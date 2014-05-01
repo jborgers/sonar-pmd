@@ -20,11 +20,11 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.io.Closeables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
+import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.ProjectClasspath;
@@ -33,11 +33,11 @@ import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
+import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.TimeProfiler;
 import org.sonar.java.api.JavaUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -49,8 +49,8 @@ public class PmdExecutor implements BatchExtension {
   private final PmdConfiguration pmdConfiguration;
   private final ClassLoader projectClassloader;
 
-  public PmdExecutor(Project project, ProjectFileSystem projectFileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration,
-    ProjectClasspath classpath) {
+  public PmdExecutor(Project project, ProjectFileSystem projectFileSystem, RulesProfile rulesProfile, 
+    PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration, ProjectClasspath classpath) {
     this.project = project;
     this.projectFileSystem = projectFileSystem;
     this.rulesProfile = rulesProfile;
@@ -100,12 +100,10 @@ public class PmdExecutor implements BatchExtension {
       return;
     }
 
-    Charset encoding = projectFileSystem.getSourceCharset();
-
     rulesets.start(ruleContext);
 
     for (InputFile file : files) {
-      pmdFactory.process(file, encoding, rulesets, ruleContext);
+      pmdFactory.process(file, rulesets, ruleContext);
     }
 
     rulesets.end(ruleContext);
@@ -113,26 +111,21 @@ public class PmdExecutor implements BatchExtension {
 
   private RuleSets createRulesets(String repositoryKey) {
     String rulesXml = pmdProfileExporter.exportProfile(repositoryKey, rulesProfile);
-
-    pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
-
-    return new RuleSets(readRuleSet(rulesXml));
-  }
-
-  private static RuleSet readRuleSet(String rulesXml) {
-    InputStream rulesInput = null;
+    File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
+    String ruleSetFilePath = ruleSetFile.getAbsolutePath();
+    RuleSetFactory ruleSetFactory = new RuleSetFactory();
     try {
-      rulesInput = new ByteArrayInputStream(rulesXml.getBytes());
-
-      return new RuleSetFactory().createRuleSet(rulesInput);
-    } finally {
-      Closeables.closeQuietly(rulesInput);
+      RuleSet ruleSet = ruleSetFactory.createRuleSet(ruleSetFilePath);
+      return new RuleSets(ruleSet);
+    } catch (RuleSetNotFoundException e) {
+      throw new SonarException(e);
     }
   }
 
   @VisibleForTesting
   PmdTemplate createPmdTemplate() {
-    return new PmdTemplate(JavaUtils.getSourceVersion(project), projectClassloader);
+    Charset encoding = projectFileSystem.getSourceCharset();
+    return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassloader, encoding);
   }
 
 }

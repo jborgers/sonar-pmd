@@ -19,8 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.IRuleViolation;
 import net.sourceforge.pmd.Report;
+import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.profiles.RulesProfile;
@@ -56,9 +56,9 @@ public class PmdSensor implements Sensor {
     }
   }
 
-  private void reportViolations(Iterator<IRuleViolation> violations, SensorContext context) {
+  private void reportViolations(Iterator<RuleViolation> violations, SensorContext context) {
     while (violations.hasNext()) {
-      IRuleViolation pmdViolation = violations.next();
+      RuleViolation pmdViolation = violations.next();
 
       Violation violation = pmdViolationToRuleViolation.toViolation(pmdViolation, context);
       if (null != violation) {

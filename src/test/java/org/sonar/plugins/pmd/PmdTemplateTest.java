@@ -19,12 +19,14 @@
  */
 package org.sonar.plugins.pmd;
 
+import net.sourceforge.pmd.lang.LanguageVersion;
+
+import net.sourceforge.pmd.SourceCodeProcessor;
+import net.sourceforge.pmd.PMDConfiguration;
 import com.google.common.base.Charsets;
-import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.SourceType;
 import org.junit.Test;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.utils.SonarException;
@@ -33,6 +35,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,71 +46,67 @@ public class PmdTemplateTest {
   RuleSets rulesets = mock(RuleSets.class);
   RuleContext ruleContext = mock(RuleContext.class);
   InputStream inputStream = mock(InputStream.class);
-  PMD pmd = mock(PMD.class);
+  PMDConfiguration configuration = mock(PMDConfiguration.class);
+  SourceCodeProcessor processor = mock(SourceCodeProcessor.class);
 
   @Test
   public void should_process_input_file() throws PMDException, FileNotFoundException {
     when(inputFile.getFile()).thenReturn(new File("source.java"));
     when(inputFile.getInputStream()).thenReturn(inputStream);
 
-    new PmdTemplate(pmd).process(inputFile, Charsets.UTF_8, rulesets, ruleContext);
+    new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
 
     verify(ruleContext).setSourceCodeFilename(new File("source.java").getAbsolutePath());
-    verify(pmd).processFile(inputStream, Charsets.UTF_8.displayName(), rulesets, ruleContext);
+    verify(processor).processSourceCode(inputStream, rulesets, ruleContext);
   }
 
   @Test
   public void should_ignore_PMD_error() throws PMDException, FileNotFoundException {
     when(inputFile.getFile()).thenReturn(new File("source.java"));
     when(inputFile.getInputStream()).thenReturn(inputStream);
-    doThrow(new PMDException("BUG")).when(pmd).processFile(inputStream, Charsets.UTF_8.displayName(), rulesets, ruleContext);
+    doThrow(new PMDException("BUG")).when(processor).processSourceCode(inputStream, rulesets, ruleContext);
 
-    new PmdTemplate(pmd).process(inputFile, Charsets.UTF_8, rulesets, ruleContext);
+    new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
   }
 
   @Test
-  public void should_set_java11_version() {
-    PmdTemplate.setJavaVersion(pmd, "1.1");
-
-    verify(pmd).setJavaVersion(SourceType.JAVA_13);
+  public void java11_version() {
+    assertThat(PmdTemplate.languageVersion("1.1")).isEqualTo(LanguageVersion.JAVA_13);
   }
 
   @Test
-  public void should_set_java12_version() {
-    PmdTemplate.setJavaVersion(pmd, "1.2");
-
-    verify(pmd).setJavaVersion(SourceType.JAVA_13);
+  public void java12_version() {
+    assertThat(PmdTemplate.languageVersion("1.2")).isEqualTo(LanguageVersion.JAVA_13);
   }
 
   @Test
-  public void should_set_java5_version() {
-    PmdTemplate.setJavaVersion(pmd, "5");
-
-    verify(pmd).setJavaVersion(SourceType.JAVA_15);
+  public void java5_version() {
+    assertThat(PmdTemplate.languageVersion("5")).isEqualTo(LanguageVersion.JAVA_15);
   }
 
   @Test
-  public void should_set_java6_version() {
-    PmdTemplate.setJavaVersion(pmd, "6");
-
-    verify(pmd).setJavaVersion(SourceType.JAVA_16);
+  public void java6_version() {
+    assertThat(PmdTemplate.languageVersion("6")).isEqualTo(LanguageVersion.JAVA_16);
   }
 
   @Test
-  public void should_set_java7_version() {
-    PmdTemplate.setJavaVersion(pmd, "7");
-
-    verify(pmd).setJavaVersion(SourceType.JAVA_17);
+  public void java7_version() {
+    assertThat(PmdTemplate.languageVersion("7")).isEqualTo(LanguageVersion.JAVA_17);
+  }
+  
+  @Test
+  public void java8_version() {
+    assertThat(PmdTemplate.languageVersion("8")).isEqualTo(LanguageVersion.JAVA_18);
   }
 
   @Test(expected = SonarException.class)
   public void should_fail_on_invalid_java_version() {
-    new PmdTemplate("12.2", mock(ClassLoader.class));
+    PmdTemplate.create("12.2", mock(ClassLoader.class), Charsets.UTF_8);
   }
 
   @Test
   public void shouldnt_fail_on_valid_java_version() {
-    new PmdTemplate("6", mock(ClassLoader.class));
+    PmdTemplate.create("6", mock(ClassLoader.class), Charsets.UTF_8);
   }
 
   /**
@@ -116,8 +115,14 @@ public class PmdTemplateTest {
   @Test
   public void should_set_classloader() {
     ClassLoader classloader = mock(ClassLoader.class);
-    PmdTemplate.setClassloader(pmd, classloader);
-    verify(pmd).setClassLoader(classloader);
+    PmdTemplate pmdTemplate = PmdTemplate.create("6", classloader, Charsets.UTF_8);
+    assertThat(pmdTemplate.configuration().getClassLoader()).isEqualTo(classloader);
   }
 
+  @Test
+  public void should_set_encoding() {
+    PmdTemplate pmdTemplate = PmdTemplate.create("6", mock(ClassLoader.class), Charsets.UTF_16BE);
+    assertThat(pmdTemplate.configuration().getSourceEncoding()).isEqualTo("UTF-16BE");
+  }
+  
 }

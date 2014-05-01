@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset>
     <description>Sonar PMD Unit Tests rules</description>
-    <rule ref="rulesets/junit.xml/SimplifyBooleanAssertion">
+    <rule ref="rulesets/java/junit.xml/SimplifyBooleanAssertion">
         <priority>2</priority>
     </rule>
 </ruleset>

@@ -19,7 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.IRuleViolation;
+import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.resources.File;
@@ -38,7 +38,7 @@ public class PmdViolationToRuleViolation implements BatchExtension {
     this.ruleFinder = ruleFinder;
   }
 
-  public Violation toViolation(IRuleViolation pmdViolation, SensorContext context) {
+  public Violation toViolation(RuleViolation pmdViolation, SensorContext context) {
     Resource resource = findResourceFor(pmdViolation);
     if (context.getResource(resource) == null) {
       // Save violations only for existing resources
@@ -57,11 +57,11 @@ public class PmdViolationToRuleViolation implements BatchExtension {
     return Violation.create(rule, resource).setLineId(lineId).setMessage(message);
   }
 
-  private Resource findResourceFor(IRuleViolation violation) {
+  private Resource findResourceFor(RuleViolation violation) {
     return File.fromIOFile(new java.io.File(violation.getFilename()), project);
   }
 
-  private Rule findRuleFor(IRuleViolation violation) {
+  private Rule findRuleFor(RuleViolation violation) {
     String ruleKey = violation.getRule().getName();
     Rule rule = ruleFinder.findByKey(PmdConstants.REPOSITORY_KEY, ruleKey);
     if (rule != null) {

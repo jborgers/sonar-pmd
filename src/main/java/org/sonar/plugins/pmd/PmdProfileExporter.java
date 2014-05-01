@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
+import net.sourceforge.pmd.lang.Language;
+
 import com.google.common.annotations.VisibleForTesting;
 import org.jdom.CDATA;
 import org.jdom.Document;
@@ -99,6 +101,7 @@ public class PmdProfileExporter extends ProfileExporter {
       }
       xpathExp.setCdataValue(xpathExp.getValue());
       rule.setClazz(PmdConstants.XPATH_CLASS);
+      rule.setLanguage(Language.JAVA.getTerseName());
       rule.setName(sonarRuleKey);
     }
   }
@@ -111,6 +114,7 @@ public class PmdProfileExporter extends ProfileExporter {
       addAttribute(eltRule, "class", pmdRule.getClazz());
       addAttribute(eltRule, "message", pmdRule.getMessage());
       addAttribute(eltRule, "name", pmdRule.getName());
+      addAttribute(eltRule, "language", pmdRule.getLanguage());
       addChild(eltRule, "priority", pmdRule.getPriority());
       if (pmdRule.hasProperties()) {
         Element eltProperties = new Element("properties");

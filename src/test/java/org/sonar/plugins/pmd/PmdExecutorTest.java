@@ -20,6 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
@@ -35,6 +36,7 @@ import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.test.TestUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -66,19 +68,19 @@ public class PmdExecutorTest {
   }
 
   @Test
-  public void should_execute_pmd_on_source_files_and_test_files() {
+  public void should_execute_pmd_on_source_files_and_test_files() throws Exception {
     InputFile srcFile = file("src/Class.java");
     InputFile tstFile = file("test/ClassTest.java");
-    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-    when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
+    setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
+    setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
     when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
     when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
     when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Arrays.asList(tstFile));
 
     Report report = pmdExecutor.execute();
 
-    verify(pmdTemplate).process(eq(srcFile), eq(Charsets.UTF_8), any(RuleSets.class), any(RuleContext.class));
-    verify(pmdTemplate).process(eq(tstFile), eq(Charsets.UTF_8), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(tstFile), any(RuleSets.class), any(RuleContext.class));
     assertThat(report).isNotNull();
   }
 
@@ -93,11 +95,11 @@ public class PmdExecutorTest {
   }
 
   @Test
-  public void should_dump_ruleset_as_xml() {
+  public void should_dump_ruleset_as_xml() throws Exception {
     InputFile srcFile = file("src/Class.java");
     InputFile tstFile = file("test/ClassTest.java");
-    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-    when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
+    setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
+    setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
     when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
     when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Arrays.asList(tstFile));
 
@@ -108,17 +110,17 @@ public class PmdExecutorTest {
   }
 
   @Test
-  public void should_ignore_empty_test_dir() {
+  public void should_ignore_empty_test_dir() throws Exception {
     InputFile srcFile = file("src/Class.java");
     doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
-    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
+    setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
     when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
     when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
     when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Collections.<InputFile>emptyList());
 
     pmdExecutor.execute();
 
-    verify(pmdTemplate).process(eq(srcFile), eq(Charsets.UTF_8), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
     verifyNoMoreInteractions(pmdTemplate);
   }
 
@@ -126,5 +128,13 @@ public class PmdExecutorTest {
     InputFile inputFile = mock(InputFile.class);
     when(inputFile.getFile()).thenReturn(new File(path));
     return inputFile;
+  }
+  
+  private void setupPmdRuleSet(String repositoryKey, String profileFileName) throws IOException {
+    File ruleSetDirectory = new File("src/test/resources/org/sonar/plugins/pmd/");
+    File file = new File(ruleSetDirectory, profileFileName);
+    String profileContent = Files.toString(file, Charsets.UTF_8);
+    when(pmdProfileExporter.exportProfile(repositoryKey, rulesProfile)).thenReturn(profileContent);
+    when(pmdConfiguration.dumpXmlRuleSet(repositoryKey, profileContent)).thenReturn(file);
   }
 }
