@@ -1512,6 +1512,7 @@
     <param key="ignoreEnumDeclarations" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="GodClass">
@@ -1537,6 +1538,7 @@
   <rule key="EmptyStatementBlock">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/empty.xml/EmptyStatementBlock]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnnecessaryFullyQualifiedName">
@@ -1577,11 +1579,13 @@
   <rule key="CloneMethodMustImplementCloneableWithTypeResolution">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/typeresolution.xml/CloneMethodMustImplementCloneable]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="LooseCouplingWithTypeResolution">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/typeresolution.xml/LooseCoupling]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="SignatureDeclareThrowsExceptionWithTypeResolution">
@@ -1590,16 +1594,19 @@
     <param key="IgnoreJUnitCompletely" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnusedImportsWithTypeResolution">
     <priority>INFO</priority>
     <configKey><![CDATA[rulesets/java/typeresolution.xml/UnusedImports]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="UselessParentheses">
     <priority>INFO</priority>
     <configKey><![CDATA[rulesets/java/unnecessary.xml/UselessParentheses]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="XPathRule">
