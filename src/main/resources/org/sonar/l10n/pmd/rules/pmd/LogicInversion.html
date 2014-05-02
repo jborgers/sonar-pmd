@@ -1,0 +1,13 @@
+Use opposite operator instead of negating the whole expression with a logic complement operator. Example: 
+<pre>
+public boolean bar(int a, int b) {
+
+	if (!(a == b)) // use !=
+         return false;
+
+	if (!(a < b)) // use >=
+         return false;
+
+	return true;
+}
+</pre>

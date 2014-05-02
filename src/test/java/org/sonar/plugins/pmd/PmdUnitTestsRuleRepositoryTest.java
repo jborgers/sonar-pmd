@@ -58,7 +58,14 @@ public class PmdUnitTestsRuleRepositoryTest {
         "UseAssertEqualsInsteadOfAssertTrue",
         "UseAssertSameInsteadOfAssertTrue",
         "UseAssertNullInsteadOfAssertTrue",
-        "SimplifyBooleanAssertion");
+        "SimplifyBooleanAssertion",
+        "UseAssertTrueInsteadOfAssertEquals",
+        "JUnitTestContainsTooManyAsserts",
+        "JUnit4SuitesShouldUseSuiteAnnotation",
+        "JUnit4TestShouldUseAfterAnnotation",
+        "JUnit4TestShouldUseBeforeAnnotation",
+        "JUnit4TestShouldUseTestAnnotation",
+        "JUnitUseExpected");
   }
 
   @Test

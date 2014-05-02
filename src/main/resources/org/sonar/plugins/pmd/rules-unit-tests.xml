@@ -39,4 +39,36 @@
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/SimplifyBooleanAssertion]]></configKey>
   </rule>
+  <rule key="UseAssertTrueInsteadOfAssertEquals">
+    <priority>MINOR</priority>
+    <configKey><![CDATA[rulesets/java/junit.xml/UseAssertTrueInsteadOfAssertEquals]]></configKey>
+  </rule>
+  <rule key="JUnitTestContainsTooManyAsserts">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts]]></configKey>
+    <param key="maximumAsserts" type="INTEGER">
+      <defaultValue>1</defaultValue>
+    </param>
+  </rule>
+  
+  <rule key="JUnitUseExpected">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/migrating.xml/JUnitUseExpected]]></configKey>
+  </rule>
+  <rule key="JUnit4SuitesShouldUseSuiteAnnotation">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/migrating.xml/JUnit4SuitesShouldUseSuiteAnnotation]]></configKey>
+  </rule>
+  <rule key="JUnit4TestShouldUseAfterAnnotation">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/migrating.xml/JUnit4TestShouldUseAfterAnnotation]]></configKey>
+  </rule>
+  <rule key="JUnit4TestShouldUseBeforeAnnotation">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/migrating.xml/JUnit4TestShouldUseBeforeAnnotation]]></configKey>
+  </rule>
+  <rule key="JUnit4TestShouldUseTestAnnotation">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/migrating.xml/JUnit4TestShouldUseTestAnnotation]]></configKey>
+  </rule>
 </rules>

@@ -1,0 +1,13 @@
+Empty block statements serve no purpose and should be removed. Example: 
+<pre>
+public class Foo {
+
+   private int _bar;
+
+   public void setBar(int bar) {
+      { _bar = bar; } // Why not?
+      {} // But remove this.
+   }
+
+}
+</pre>
