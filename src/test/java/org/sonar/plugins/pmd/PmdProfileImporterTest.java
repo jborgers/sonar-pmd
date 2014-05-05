@@ -164,7 +164,9 @@ public class PmdProfileImporterTest {
     when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
       public Rule answer(InvocationOnMock invocation) {
         RuleQuery query = (RuleQuery) invocation.getArguments()[0];
-        Rule rule = Rule.create(query.getRepositoryKey(), "", "").setConfigKey(query.getConfigKey()).setSeverity(RulePriority.BLOCKER);
+        String configKey = query.getConfigKey();
+        String key = configKey.substring(configKey.lastIndexOf('/') + 1, configKey.length());
+        Rule rule = Rule.create(query.getRepositoryKey(), key, "").setConfigKey(configKey).setSeverity(RulePriority.BLOCKER);
         if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
           rule.createParameter("minimum");
         }

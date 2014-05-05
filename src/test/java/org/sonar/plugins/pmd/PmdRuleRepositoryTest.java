@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import org.junit.Before;
@@ -26,13 +28,15 @@ import org.junit.Test;
 import org.sonar.api.PropertyType;
 import org.sonar.api.platform.ServerFileSystem;
 import org.sonar.api.rules.Rule;
+import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.rules.XMLRuleParser;
 import org.sonar.test.TestUtils;
-import org.sonar.test.i18n.RuleRepositoryTestHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -91,10 +95,22 @@ public class PmdRuleRepositoryTest {
   }
 
   @Test
-  public void should_provide_a_name_and_description_for_each_rule() {
-    List<Rule> rules = RuleRepositoryTestHelper.createRulesWithNameAndDescription("pmd", repository);
+  public void should_provide_a_name_and_description_for_each_rule() throws Exception {
+    assertThatAllRulesHaveNonEmptyNameAndDescription(repository);
+  }
 
-    assertThat(rules).onProperty("name").excludes(null, "");
-    assertThat(rules).onProperty("description").excludes(null, "");
+  public static void assertThatAllRulesHaveNonEmptyNameAndDescription(RuleRepository repository) throws IOException {
+    String pluginKey = "pmd";
+    String propertiesLocation = String.format("/org/sonar/l10n/%s.properties", pluginKey);
+    Properties properties = new Properties();
+    properties.load(PmdRuleRepository.class.getResourceAsStream(propertiesLocation));
+    
+    for (Rule rule : repository.createRules()) {
+      String name = properties.getProperty(String.format("rule.%s.%s.name", repository.getKey(), rule.getKey()));
+      assertThat(name).isNotEmpty();
+      String htmlLocation = String.format("/org/sonar/l10n/%s/rules/%s/%s.html", pluginKey, repository.getKey(), rule.getKey());
+      String description = Resources.toString(Resources.getResource(PmdRuleRepository.class, htmlLocation), Charsets.UTF_8);
+      assertThat(description).isNotEmpty();
+    }
   }
 }

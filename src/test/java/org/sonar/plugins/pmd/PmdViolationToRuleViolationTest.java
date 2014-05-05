@@ -47,25 +47,30 @@ public class PmdViolationToRuleViolationTest {
 
   @Test
   public void should_convert_pmd_violation_to_sonar_violation() {
-    when(projectFileSystem.getSourceDirs()).thenReturn(Arrays.asList(new File("/src")));
-    when(pmdViolation.getFilename()).thenReturn("/src/source.java");
+    when(projectFileSystem.getBasedir()).thenReturn(new File("src"));
+    String absolutePath = new File("src/source.java").getAbsolutePath();
+    when(pmdViolation.getFilename()).thenReturn(absolutePath);
     when(pmdViolation.getBeginLine()).thenReturn(42);
     when(pmdViolation.getDescription()).thenReturn("Description");
     when(pmdViolation.getRule()).thenReturn(rule);
     when(rule.getName()).thenReturn("RULE");
-    when(context.getResource(new org.sonar.api.resources.File("source.java"))).thenReturn(new org.sonar.api.resources.File("source.java"));
+    org.sonar.api.resources.File file = org.sonar.api.resources.File.fromIOFile(new File(absolutePath), project);
+    when(context.getResource(file)).thenReturn(file);
     when(ruleFinder.findByKey("pmd", "RULE")).thenReturn(sonarRule);
 
     PmdViolationToRuleViolation pmdViolationToRuleViolation = new PmdViolationToRuleViolation(project, ruleFinder);
     Violation violation = pmdViolationToRuleViolation.toViolation(pmdViolation, context);
-
-    assertThat(violation).is(reflectionEqualTo(Violation.create(sonarRule, new org.sonar.api.resources.File("source.java")).setLineId(42).setMessage("Description")));
+    assertThat(violation).isNotNull();
+    assertThat(violation.getRule()).isEqualTo(sonarRule);
+    assertThat(violation.getResource()).isEqualTo(file);
+    assertThat(violation.getLineId()).isEqualTo(42);
+    assertThat(violation.getMessage()).isEqualTo("Description");
   }
 
   @Test
   public void should_ignore_violation_on_unknown_resource() {
-    when(projectFileSystem.getSourceDirs()).thenReturn(Arrays.asList(new File("/src")));
-    when(pmdViolation.getFilename()).thenReturn("/src/UNKNOWN.java");
+    when(projectFileSystem.getBasedir()).thenReturn(new File("src"));
+    when(pmdViolation.getFilename()).thenReturn(new File("src/UNKNOWN.java").getAbsolutePath());
 
     PmdViolationToRuleViolation pmdViolationToRuleViolation = new PmdViolationToRuleViolation(project, ruleFinder);
     Violation violation = pmdViolationToRuleViolation.toViolation(pmdViolation, context);
@@ -75,11 +80,13 @@ public class PmdViolationToRuleViolationTest {
 
   @Test
   public void should_ignore_violation_on_unknown_rule() {
-    when(projectFileSystem.getTestDirs()).thenReturn(Arrays.asList(new File("/test")));
-    when(pmdViolation.getFilename()).thenReturn("/test/source.java");
+    when(projectFileSystem.getBasedir()).thenReturn(new File(""));
+    String absolutePath = new File("test/source.java").getAbsolutePath();
+    when(pmdViolation.getFilename()).thenReturn(absolutePath);
     when(pmdViolation.getRule()).thenReturn(rule);
     when(rule.getName()).thenReturn("UNKNOWN");
-    when(context.getResource(new org.sonar.api.resources.File("source.java"))).thenReturn(new org.sonar.api.resources.File("source.java"));
+    org.sonar.api.resources.File file = org.sonar.api.resources.File.fromIOFile(new File(absolutePath), project);
+    when(context.getResource(file)).thenReturn(file);
 
     PmdViolationToRuleViolation pmdViolationToRuleViolation = new PmdViolationToRuleViolation(project, ruleFinder);
     Violation violation = pmdViolationToRuleViolation.toViolation(pmdViolation, context);
