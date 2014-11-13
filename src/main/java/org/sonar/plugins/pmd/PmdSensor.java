@@ -42,11 +42,13 @@ public class PmdSensor implements Sensor {
     this.pmdViolationToRuleViolation = pmdViolationToRuleViolation;
   }
 
+  @Override
   public boolean shouldExecuteOnProject(Project project) {
     return (!project.getFileSystem().mainFiles(Java.KEY).isEmpty() && !profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY).isEmpty())
       || (!project.getFileSystem().testFiles(Java.KEY).isEmpty() && !profile.getActiveRulesByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty());
   }
 
+  @Override
   public void analyse(Project project, SensorContext context) {
     try {
       Report report = executor.execute();

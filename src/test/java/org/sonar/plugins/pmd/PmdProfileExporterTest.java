@@ -128,6 +128,7 @@ public class PmdProfileExporterTest {
   static RuleFinder createRuleFinder(final List<Rule> rules) {
     RuleFinder ruleFinder = mock(RuleFinder.class);
     when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
+      @Override
       public Rule answer(InvocationOnMock invocation) {
         RuleQuery query = (RuleQuery) invocation.getArguments()[0];
         for (Rule rule : rules) {

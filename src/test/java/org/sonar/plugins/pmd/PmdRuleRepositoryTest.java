@@ -20,9 +20,9 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.io.Resources;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.PropertyType;
@@ -86,6 +86,7 @@ public class PmdRuleRepositoryTest {
   @Test
   public void should_use_text_parameter_for_xpath_rule() {
     Rule xpathRule = Iterables.find(repository.createRules(), new Predicate<Rule>() {
+      @Override
       public boolean apply(Rule rule) {
         return rule.getKey().equals("XPathRule");
       }

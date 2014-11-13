@@ -162,6 +162,7 @@ public class PmdProfileImporterTest {
   static RuleFinder createRuleFinder() {
     RuleFinder ruleFinder = mock(RuleFinder.class);
     when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
+      @Override
       public Rule answer(InvocationOnMock invocation) {
         RuleQuery query = (RuleQuery) invocation.getArguments()[0];
         String configKey = query.getConfigKey();
