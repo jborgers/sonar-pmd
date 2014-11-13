@@ -19,14 +19,18 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.lang.LanguageVersion;
-
-import net.sourceforge.pmd.SourceCodeProcessor;
-import net.sourceforge.pmd.PMDConfiguration;
 import com.google.common.base.Charsets;
+import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
+import net.sourceforge.pmd.SourceCodeProcessor;
+import net.sourceforge.pmd.lang.java.Java13Handler;
+import net.sourceforge.pmd.lang.java.Java15Handler;
+import net.sourceforge.pmd.lang.java.Java16Handler;
+import net.sourceforge.pmd.lang.java.Java17Handler;
+import net.sourceforge.pmd.lang.java.Java18Handler;
+import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.junit.Test;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.utils.SonarException;
@@ -42,6 +46,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PmdTemplateTest {
+
+  private static final JavaLanguageModule JAVA_LANGUAGE = new JavaLanguageModule();
+
   InputFile inputFile = mock(InputFile.class);
   RuleSets rulesets = mock(RuleSets.class);
   RuleContext ruleContext = mock(RuleContext.class);
@@ -70,33 +77,28 @@ public class PmdTemplateTest {
   }
 
   @Test
-  public void java11_version() {
-    assertThat(PmdTemplate.languageVersion("1.1")).isEqualTo(LanguageVersion.JAVA_13);
-  }
-
-  @Test
   public void java12_version() {
-    assertThat(PmdTemplate.languageVersion("1.2")).isEqualTo(LanguageVersion.JAVA_13);
+    assertThat(PmdTemplate.languageVersion("1.2").getLanguageVersionHandler()).isInstanceOf(Java13Handler.class);
   }
 
   @Test
   public void java5_version() {
-    assertThat(PmdTemplate.languageVersion("5")).isEqualTo(LanguageVersion.JAVA_15);
+    assertThat(PmdTemplate.languageVersion("5").getLanguageVersionHandler()).isInstanceOf(Java15Handler.class);
   }
 
   @Test
   public void java6_version() {
-    assertThat(PmdTemplate.languageVersion("6")).isEqualTo(LanguageVersion.JAVA_16);
+    assertThat(PmdTemplate.languageVersion("6").getLanguageVersionHandler()).isInstanceOf(Java16Handler.class);
   }
 
   @Test
   public void java7_version() {
-    assertThat(PmdTemplate.languageVersion("7")).isEqualTo(LanguageVersion.JAVA_17);
+    assertThat(PmdTemplate.languageVersion("7").getLanguageVersionHandler()).isInstanceOf(Java17Handler.class);
   }
   
   @Test
   public void java8_version() {
-    assertThat(PmdTemplate.languageVersion("8")).isEqualTo(LanguageVersion.JAVA_18);
+    assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(Java18Handler.class);
   }
 
   @Test(expected = SonarException.class)

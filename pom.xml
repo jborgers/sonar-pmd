@@ -50,7 +50,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>5.1.1</pmd.version>
+    <pmd.version>5.2.1</pmd.version>
     <sonar.version>4.2</sonar.version>
     <sonar-java.version>2.1</sonar-java.version>
   </properties>
@@ -76,7 +76,7 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
-      <artifactId>pmd</artifactId>
+      <artifactId>pmd-core</artifactId>
       <version>${pmd.version}</version>
       <exclusions>
         <exclusion>
@@ -101,6 +101,22 @@
           <artifactId>xercesImpl</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-java</artifactId>
+      <version>${pmd.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-jsp</artifactId>
+      <version>${pmd.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.0</version>
     </dependency>
 
     <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
