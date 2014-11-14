@@ -616,6 +616,7 @@
   <rule key="BrokenNullCheck">
     <priority>CRITICAL</priority>
     <configKey><![CDATA[rulesets/java/basic.xml/BrokenNullCheck]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="BigIntegerInstantiation">
