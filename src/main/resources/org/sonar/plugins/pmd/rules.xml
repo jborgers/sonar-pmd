@@ -812,6 +812,7 @@
   <rule key="UnnecessaryLocalBeforeReturn">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/design.xml/UnnecessaryLocalBeforeReturn]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="NonThreadSafeSingleton">
