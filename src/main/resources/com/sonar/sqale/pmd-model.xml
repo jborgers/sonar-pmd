@@ -3557,6 +3557,32 @@
       </chc>
       <chc>
         <rule-repo>pmd</rule-repo>
+        <rule-key>StdCyclomaticComplexity</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>constant_issue</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>1.0</val>
+          <txt>h</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>ModifiedCyclomaticComplexity</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>constant_issue</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>1.0</val>
+          <txt>h</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
         <rule-key>ExceptionAsFlowControl</rule-key>
         <prop>
           <key>remediationFunction</key>

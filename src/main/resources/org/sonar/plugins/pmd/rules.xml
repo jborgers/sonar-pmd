@@ -1512,6 +1512,9 @@
     <param key="ignoreEnumDeclarations" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
+    <param key="ignoreAnonymousClassDeclarations" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1559,6 +1562,9 @@
   <rule key="ShortClassName">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/naming.xml/ShortClassName]]></configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>5</defaultValue>
+    </param>
   </rule>
 
   <rule key="PrematureDeclaration">
@@ -1607,6 +1613,36 @@
     <priority>INFO</priority>
     <configKey><![CDATA[rulesets/java/unnecessary.xml/UselessParentheses]]></configKey>
     <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="StdCyclomaticComplexity">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey><![CDATA[rulesets/java/codesize.xml/StdCyclomaticComplexity]]></configKey>
+    <param key="reportLevel" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <param key="showClassesComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="showMethodsComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="ModifiedCyclomaticComplexity">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey><![CDATA[rulesets/java/codesize.xml/ModifiedCyclomaticComplexity]]></configKey>
+    <param key="reportLevel" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <param key="showClassesComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="showMethodsComplexity" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
   </rule>
 
   <rule key="XPathRule">
