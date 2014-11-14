@@ -787,6 +787,7 @@
   <rule key="AbstractClassWithoutAbstractMethod">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/design.xml/AbstractClassWithoutAbstractMethod]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="SimplifyConditional">
