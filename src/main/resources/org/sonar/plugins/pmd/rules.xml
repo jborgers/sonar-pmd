@@ -1233,6 +1233,7 @@
   <rule key="AvoidFieldNameMatchingTypeName">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/naming.xml/AvoidFieldNameMatchingTypeName]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidFieldNameMatchingMethodName">
