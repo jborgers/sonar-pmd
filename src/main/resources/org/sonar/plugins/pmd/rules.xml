@@ -914,6 +914,7 @@
     <priority>MAJOR</priority>
     <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/java/strictexception.xml/AvoidThrowingNullPointerException]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidRethrowingException">
