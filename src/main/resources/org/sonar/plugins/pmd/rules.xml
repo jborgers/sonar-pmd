@@ -900,6 +900,7 @@
     <priority>MAJOR</priority>
     <tag>error-handling</tag>
     <configKey><![CDATA[rulesets/java/strictexception.xml/AvoidCatchingNPE]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidThrowingRawExceptionTypes">
