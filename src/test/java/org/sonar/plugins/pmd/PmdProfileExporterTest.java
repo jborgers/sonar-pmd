@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
+import com.google.common.base.CharMatcher;
+import org.fest.assertions.Condition;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -33,7 +35,6 @@ import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
-import org.sonar.test.TestUtils;
 
 import java.io.StringReader;
 import java.util.List;
@@ -42,14 +43,16 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.sonar.test.MoreConditions.equalsIgnoreEOL;
 
 public class PmdProfileExporterTest {
+
+  private static final CharMatcher EOLS = CharMatcher.anyOf("\n\r");
+
   PmdProfileExporter exporter = new PmdProfileExporter();
 
   @Test
   public void should_export_pmd_profile() {
-    String importedXml = TestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
+    String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
 
     String exportedXml = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, importProfile(importedXml));
 
@@ -78,7 +81,7 @@ public class PmdProfileExporterTest {
 
     String exportedXml = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, profile);
 
-    assertThat(exportedXml).satisfies(equalsIgnoreEOL(TestUtils.getResourceContent("/org/sonar/plugins/pmd/export_xpath_rules.xml")));
+    assertThat(exportedXml).satisfies(equalsIgnoreEOL(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_xpath_rules.xml")));
   }
 
   @Test(expected = SonarException.class)
@@ -140,5 +143,16 @@ public class PmdProfileExporterTest {
       }
     });
     return ruleFinder;
+  }
+
+  public static Condition<String> equalsIgnoreEOL(String text) {
+    final String strippedText = EOLS.removeFrom(text);
+
+    return new Condition<String>() {
+      @Override
+      public boolean matches(String value) {
+        return EOLS.removeFrom(value).equals(strippedText);
+      }
+    }.as("equal to " + strippedText);
   }
 }

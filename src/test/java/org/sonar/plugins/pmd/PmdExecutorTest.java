@@ -33,7 +33,6 @@ import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.test.TestUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,8 +85,8 @@ public class PmdExecutorTest {
 
   @Test
   public void should_dump_configuration_as_xml() {
-    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-    when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(TestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
+    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
+    when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
 
     Report report = pmdExecutor.execute();
 
@@ -105,8 +104,8 @@ public class PmdExecutorTest {
 
     pmdExecutor.execute();
 
-    verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, TestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-    verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.TEST_REPOSITORY_KEY, TestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
+    verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
+    verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.TEST_REPOSITORY_KEY, PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
   }
 
   @Test

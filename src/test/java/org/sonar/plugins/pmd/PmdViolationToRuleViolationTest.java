@@ -19,8 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.Rule;
+import net.sourceforge.pmd.RuleViolation;
 import org.junit.Test;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.resources.Project;
@@ -29,12 +29,10 @@ import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.Violation;
 
 import java.io.File;
-import java.util.Arrays;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.sonar.test.MoreConditions.reflectionEqualTo;
 
 public class PmdViolationToRuleViolationTest {
   private org.sonar.api.rules.Rule sonarRule = org.sonar.api.rules.Rule.create("pmd", "RULE");

@@ -51,7 +51,7 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>5.2.1</pmd.version>
-    <sonar.version>4.2</sonar.version>
+    <sonar.version>4.5.1</sonar.version>
     <sonar-java.version>2.1</sonar-java.version>
   </properties>
 

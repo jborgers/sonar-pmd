@@ -31,7 +31,6 @@ import org.sonar.api.rules.RulePriority;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
-import org.sonar.test.TestUtils;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -156,7 +155,7 @@ public class PmdProfileImporterTest {
   }
 
   static Reader read(String path) {
-    return new StringReader(TestUtils.getResourceContent(path));
+    return new StringReader(PmdTestUtils.getResourceContent(path));
   }
 
   static RuleFinder createRuleFinder() {
