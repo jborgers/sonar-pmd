@@ -21,7 +21,6 @@ package org.sonar.plugins.pmd;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -69,14 +68,13 @@ public class PmdExecutor implements BatchExtension {
     TimeProfiler profiler = new TimeProfiler().start("Execute PMD " + PmdVersion.getVersion());
 
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-    URLClassLoader projectClassLoader = createClassloader();
+    ClassLoader projectClassLoader = createClassloader();
     try {
       Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
       return executePmd(projectClassLoader);
     } finally {
       Thread.currentThread().setContextClassLoader(initialClassLoader);
-      Closeables.closeQuietly(projectClassLoader);
       profiler.stop();
     }
   }
@@ -136,7 +134,7 @@ public class PmdExecutor implements BatchExtension {
     return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassloader, encoding);
   }
 
-  private URLClassLoader createClassloader() {
+  private ClassLoader createClassloader() {
     Collection<File> classpathElements = javaResourceLocator.classpath();
     List<URL> urls = Lists.newArrayList();
     for (File file : classpathElements) {
