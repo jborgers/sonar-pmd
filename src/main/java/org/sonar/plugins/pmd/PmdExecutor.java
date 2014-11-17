@@ -20,6 +20,8 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -27,7 +29,6 @@ import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import org.sonar.api.BatchExtension;
-import org.sonar.api.batch.ProjectClasspath;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
@@ -36,9 +37,14 @@ import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.TimeProfiler;
 import org.sonar.java.api.JavaUtils;
+import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.List;
 
 public class PmdExecutor implements BatchExtension {
@@ -47,39 +53,41 @@ public class PmdExecutor implements BatchExtension {
   private final RulesProfile rulesProfile;
   private final PmdProfileExporter pmdProfileExporter;
   private final PmdConfiguration pmdConfiguration;
-  private final ClassLoader projectClassloader;
+  private final JavaResourceLocator javaResourceLocator;
 
   public PmdExecutor(Project project, ProjectFileSystem projectFileSystem, RulesProfile rulesProfile, 
-    PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration, ProjectClasspath classpath) {
+    PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator) {
     this.project = project;
     this.projectFileSystem = projectFileSystem;
     this.rulesProfile = rulesProfile;
     this.pmdProfileExporter = pmdProfileExporter;
     this.pmdConfiguration = pmdConfiguration;
-    this.projectClassloader = classpath.getClassloader();
+    this.javaResourceLocator = javaResourceLocator;
   }
 
   public Report execute() {
     TimeProfiler profiler = new TimeProfiler().start("Execute PMD " + PmdVersion.getVersion());
 
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+    URLClassLoader projectClassLoader = createClassloader();
     try {
       Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-      return executePmd();
+      return executePmd(projectClassLoader);
     } finally {
       Thread.currentThread().setContextClassLoader(initialClassLoader);
+      Closeables.closeQuietly(projectClassLoader);
       profiler.stop();
     }
   }
 
-  private Report executePmd() {
+  private Report executePmd(ClassLoader projectClassLoader) {
     Report report = new Report();
 
     RuleContext context = new RuleContext();
     context.setReport(report);
 
-    PmdTemplate pmdFactory = createPmdTemplate();
+    PmdTemplate pmdFactory = createPmdTemplate(projectClassLoader);
     executeRules(pmdFactory, context, projectFileSystem.mainFiles(Java.KEY), PmdConstants.REPOSITORY_KEY);
     executeRules(pmdFactory, context, projectFileSystem.testFiles(Java.KEY), PmdConstants.TEST_REPOSITORY_KEY);
 
@@ -123,9 +131,22 @@ public class PmdExecutor implements BatchExtension {
   }
 
   @VisibleForTesting
-  PmdTemplate createPmdTemplate() {
+  PmdTemplate createPmdTemplate(ClassLoader projectClassloader) {
     Charset encoding = projectFileSystem.getSourceCharset();
     return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassloader, encoding);
+  }
+
+  private URLClassLoader createClassloader() {
+    Collection<File> classpathElements = javaResourceLocator.classpath();
+    List<URL> urls = Lists.newArrayList();
+    for (File file : classpathElements) {
+      try {
+        urls.add(file.toURI().toURL());
+      } catch (MalformedURLException e) {
+        throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + file, e);
+      }
+    }
+    return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
   }
 
 }

@@ -20,22 +20,28 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.sonar.api.batch.ProjectClasspath;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
+import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -57,13 +63,13 @@ public class PmdExecutorTest {
   PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
   PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
   PmdTemplate pmdTemplate = mock(PmdTemplate.class);
-  ProjectClasspath projectClasspath = mock(ProjectClasspath.class);
+  JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
 
   @Before
   public void setUpPmdExecutor() {
-    pmdExecutor = Mockito.spy(new PmdExecutor(project, projectFileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, projectClasspath));
+    pmdExecutor = Mockito.spy(new PmdExecutor(project, projectFileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator));
 
-    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
+    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(ClassLoader.class));
   }
 
   @Test
@@ -111,7 +117,7 @@ public class PmdExecutorTest {
   @Test
   public void should_ignore_empty_test_dir() throws Exception {
     InputFile srcFile = file("src/Class.java");
-    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
+    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(ClassLoader.class));
     setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
     when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
     when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
@@ -121,6 +127,32 @@ public class PmdExecutorTest {
 
     verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
     verifyNoMoreInteractions(pmdTemplate);
+  }
+
+  @Test
+  public void should_build_project_classloader_from_javaresourcelocator() throws Exception {
+    File file = new File("x");
+    when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
+    pmdExecutor.execute();
+    ArgumentCaptor<ClassLoader> classLoaderArgument = ArgumentCaptor.forClass(ClassLoader.class);
+    verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
+    ClassLoader classLoader = classLoaderArgument.getValue();
+    assertThat(classLoader).isInstanceOf(URLClassLoader.class);
+    URL[] urls = ((URLClassLoader) classLoader).getURLs();
+    assertThat(urls).containsOnly(file.toURI().toURL());
+  }
+
+  @Test
+  public void invalid_classpath_element() throws Exception {
+    File invalidFile = mock(File.class);
+    when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
+    when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
+    try {
+      pmdExecutor.execute();
+      Assert.fail();
+    } catch (IllegalStateException e) {
+      assertThat(e.getMessage()).containsIgnoringCase("classpath");
+    }
   }
 
   static InputFile file(String path) {
