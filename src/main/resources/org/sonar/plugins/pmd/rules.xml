@@ -286,11 +286,6 @@
     <status>DEPRECATED</status>
   </rule>
 
-  <rule key="DontNestJsfInJstlIteration">
-    <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/jsp/basic-jsf.xml/DontNestJsfInJstlIteration]]></configKey>
-  </rule>
-
   <rule key="UnusedPrivateField">
     <priority>MAJOR</priority>
     <tag>unused-code</tag>
