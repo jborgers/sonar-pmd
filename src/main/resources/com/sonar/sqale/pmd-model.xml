@@ -1663,6 +1663,19 @@
       </chc>
       <chc>
         <rule-repo>pmd</rule-repo>
+        <rule-key>SignatureDeclareThrowsExceptionWithTypeResolution</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>20</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
         <rule-key>EmptyStaticInitializer</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3013,19 +3026,6 @@
       </chc>
       <chc>
         <rule-repo>pmd</rule-repo>
-        <rule-key>DontNestJsfInJstlIteration</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>20</val>
-          <txt>min</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>pmd</rule-repo>
         <rule-key>FinalizeOverloaded</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3232,7 +3232,7 @@
         </prop>
         <prop>
           <key>offset</key>
-          <val>30</val>
+          <val>2</val>
           <txt>min</txt>
         </prop>
       </chc>
