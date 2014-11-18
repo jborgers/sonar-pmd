@@ -68,24 +68,23 @@ public class PmdExecutor implements BatchExtension {
     TimeProfiler profiler = new TimeProfiler().start("Execute PMD " + PmdVersion.getVersion());
 
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-    ClassLoader projectClassLoader = createClassloader();
     try {
       Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-      return executePmd(projectClassLoader);
+      return executePmd();
     } finally {
       Thread.currentThread().setContextClassLoader(initialClassLoader);
       profiler.stop();
     }
   }
 
-  private Report executePmd(ClassLoader projectClassLoader) {
+  private Report executePmd() {
     Report report = new Report();
 
     RuleContext context = new RuleContext();
     context.setReport(report);
 
-    PmdTemplate pmdFactory = createPmdTemplate(projectClassLoader);
+    PmdTemplate pmdFactory = createPmdTemplate();
     executeRules(pmdFactory, context, projectFileSystem.mainFiles(Java.KEY), PmdConstants.REPOSITORY_KEY);
     executeRules(pmdFactory, context, projectFileSystem.testFiles(Java.KEY), PmdConstants.TEST_REPOSITORY_KEY);
 
@@ -129,9 +128,10 @@ public class PmdExecutor implements BatchExtension {
   }
 
   @VisibleForTesting
-  PmdTemplate createPmdTemplate(ClassLoader projectClassloader) {
+  PmdTemplate createPmdTemplate() {
+    ClassLoader projectClassLoader = createClassloader();
     Charset encoding = projectFileSystem.getSourceCharset();
-    return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassloader, encoding);
+    return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassLoader, encoding);
   }
 
   private ClassLoader createClassloader() {
