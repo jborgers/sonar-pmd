@@ -32,10 +32,9 @@ import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.resources.InputFile;
-import org.sonar.api.utils.SonarException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -76,12 +75,11 @@ public class PmdTemplate {
     return configuration;
   }
 
-  public void process(InputFile inputFile, RuleSets rulesets, RuleContext ruleContext) {
-    File file = inputFile.getFile();
+  public void process(File file, RuleSets rulesets, RuleContext ruleContext) {
     ruleContext.setSourceCodeFilename(file.getAbsolutePath());
     InputStream inputStream = null;
     try {
-      inputStream = inputFile.getInputStream();
+      inputStream = new FileInputStream(file);
       processor.processSourceCode(inputStream, rulesets, ruleContext);
     } catch (PMDException e) {
       LOG.error("Fail to execute PMD. Following file is ignored: " + file, e.getCause());
@@ -97,7 +95,7 @@ public class PmdTemplate {
     String version = normalize(javaVersion);
     LanguageVersion languageVersion = new JavaLanguageModule().getVersion(version);
     if (languageVersion == null) {
-      throw new SonarException("Unsupported Java version for PMD: " + version);
+      throw new IllegalArgumentException("Unsupported Java version for PMD: " + version);
     }
     LOG.info("Java version: " + version);
     return languageVersion;

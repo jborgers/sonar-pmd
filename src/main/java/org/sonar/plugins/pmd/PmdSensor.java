@@ -19,53 +19,57 @@
  */
 package org.sonar.plugins.pmd;
 
+import com.google.common.collect.Iterables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
+import org.sonar.api.batch.fs.FilePredicates;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
-import org.sonar.api.rules.Violation;
 import org.sonar.api.utils.XmlParserException;
 
-import java.util.Iterator;
+import java.io.File;
 
 public class PmdSensor implements Sensor {
   private final RulesProfile profile;
   private final PmdExecutor executor;
-  private final PmdViolationToRuleViolation pmdViolationToRuleViolation;
+  private final PmdViolationRecorder pmdViolationRecorder;
+  private final FileSystem fs;
 
-  public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationToRuleViolation pmdViolationToRuleViolation) {
+  public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
     this.profile = profile;
     this.executor = executor;
-    this.pmdViolationToRuleViolation = pmdViolationToRuleViolation;
+    this.pmdViolationRecorder = pmdViolationRecorder;
+    this.fs = fs;
   }
 
   @Override
   public boolean shouldExecuteOnProject(Project project) {
-    return (!project.getFileSystem().mainFiles(Java.KEY).isEmpty() && !profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY).isEmpty())
-      || (!project.getFileSystem().testFiles(Java.KEY).isEmpty() && !profile.getActiveRulesByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty());
+    return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
+      || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
+  }
+
+  private boolean hasFilesToCheck(Type type, String repositoryKey) {
+    FilePredicates predicates = fs.predicates();
+    Iterable<File> files = fs.files(predicates.and(
+      predicates.hasLanguage(Java.KEY),
+      predicates.hasType(type)));
+    return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
   }
 
   @Override
   public void analyse(Project project, SensorContext context) {
     try {
       Report report = executor.execute();
-      reportViolations(report.iterator(), context);
+      for (RuleViolation violation : report) {
+        pmdViolationRecorder.saveViolation(violation);
+      }
     } catch (Exception e) {
       throw new XmlParserException(e);
-    }
-  }
-
-  private void reportViolations(Iterator<RuleViolation> violations, SensorContext context) {
-    while (violations.hasNext()) {
-      RuleViolation pmdViolation = violations.next();
-
-      Violation violation = pmdViolationToRuleViolation.toViolation(pmdViolation, context);
-      if (null != violation) {
-        context.saveViolation(violation);
-      }
     }
   }
 

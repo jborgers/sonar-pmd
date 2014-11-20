@@ -20,6 +20,8 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
+import com.google.common.io.Resources;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
@@ -30,26 +32,27 @@ import net.sourceforge.pmd.lang.java.Java15Handler;
 import net.sourceforge.pmd.lang.java.Java16Handler;
 import net.sourceforge.pmd.lang.java.Java17Handler;
 import net.sourceforge.pmd.lang.java.Java18Handler;
-import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.junit.Test;
-import org.sonar.api.resources.InputFile;
-import org.sonar.api.utils.SonarException;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class PmdTemplateTest {
 
-  private static final JavaLanguageModule JAVA_LANGUAGE = new JavaLanguageModule();
-
-  InputFile inputFile = mock(InputFile.class);
+  File inputFile = new File(Resources.getResource(PmdTemplateTest.class, "source.txt").getFile());
   RuleSets rulesets = mock(RuleSets.class);
   RuleContext ruleContext = mock(RuleContext.class);
   InputStream inputStream = mock(InputStream.class);
@@ -57,21 +60,27 @@ public class PmdTemplateTest {
   SourceCodeProcessor processor = mock(SourceCodeProcessor.class);
 
   @Test
-  public void should_process_input_file() throws PMDException, FileNotFoundException {
-    when(inputFile.getFile()).thenReturn(new File("source.java"));
-    when(inputFile.getInputStream()).thenReturn(inputStream);
-
+  public void should_process_input_file() throws Exception {
+    doAnswer(new Answer<Void>() {
+      @Override
+      public Void answer(InvocationOnMock invocation) throws Throwable {
+        InputStream inputStreamArg = (InputStream) invocation.getArguments()[0];
+        List<String> inputStreamLines = CharStreams.readLines(new InputStreamReader(inputStreamArg));
+        assertThat(inputStreamLines).containsExactly("Example source");
+        return null;
+      }
+    }).when(processor).processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
+    
     new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
 
-    verify(ruleContext).setSourceCodeFilename(new File("source.java").getAbsolutePath());
-    verify(processor).processSourceCode(inputStream, rulesets, ruleContext);
+    verify(ruleContext).setSourceCodeFilename(inputFile.getAbsolutePath());
+    verify(processor).processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
   }
 
   @Test
   public void should_ignore_PMD_error() throws PMDException, FileNotFoundException {
-    when(inputFile.getFile()).thenReturn(new File("source.java"));
-    when(inputFile.getInputStream()).thenReturn(inputStream);
-    doThrow(new PMDException("BUG")).when(processor).processSourceCode(inputStream, rulesets, ruleContext);
+    doThrow(new PMDException("BUG"))
+      .when(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), any(RuleContext.class));
 
     new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
   }
@@ -101,7 +110,7 @@ public class PmdTemplateTest {
     assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(Java18Handler.class);
   }
 
-  @Test(expected = SonarException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void should_fail_on_invalid_java_version() {
     PmdTemplate.create("12.2", mock(ClassLoader.class), Charsets.UTF_8);
   }

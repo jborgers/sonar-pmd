@@ -24,16 +24,19 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
+import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
-import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
@@ -41,8 +44,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -57,35 +58,34 @@ public class PmdExecutorTest {
   PmdExecutor pmdExecutor;
 
   Project project = mock(Project.class);
-  ProjectFileSystem projectFileSystem = mock(ProjectFileSystem.class);
+  DefaultFileSystem fileSystem = new DefaultFileSystem();
   RulesProfile rulesProfile = mock(RulesProfile.class);
   PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
   PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
   PmdTemplate pmdTemplate = mock(PmdTemplate.class);
   JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
-  PmdExecutor realPmdExecutor = new PmdExecutor(project, projectFileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator);
+  PmdExecutor realPmdExecutor = new PmdExecutor(project, fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator);
 
   @Before
   public void setUp() {
     pmdExecutor = Mockito.spy(realPmdExecutor);
     doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
-    when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
+    fileSystem.setEncoding(Charsets.UTF_8);
   }
 
   @Test
   public void should_execute_pmd_on_source_files_and_test_files() throws Exception {
-    InputFile srcFile = file("src/Class.java");
-    InputFile tstFile = file("test/ClassTest.java");
+    InputFile srcFile = file("src/Class.java", Type.MAIN);
+    InputFile tstFile = file("test/ClassTest.java", Type.TEST);
     setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
     setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
-    when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
-    when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
-    when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Arrays.asList(tstFile));
+    fileSystem.add(srcFile);
+    fileSystem.add(tstFile);
 
     Report report = pmdExecutor.execute();
 
-    verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
-    verify(pmdTemplate).process(eq(tstFile), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(srcFile.file()), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(tstFile.file()), any(RuleSets.class), any(RuleContext.class));
     assertThat(report).isNotNull();
   }
 
@@ -101,12 +101,12 @@ public class PmdExecutorTest {
 
   @Test
   public void should_dump_ruleset_as_xml() throws Exception {
-    InputFile srcFile = file("src/Class.java");
-    InputFile tstFile = file("test/ClassTest.java");
+    InputFile srcFile = file("src/Class.java", Type.MAIN);
+    InputFile tstFile = file("test/ClassTest.java", Type.TEST);
     setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
     setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
-    when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
-    when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Arrays.asList(tstFile));
+    fileSystem.add(srcFile);
+    fileSystem.add(tstFile);
 
     pmdExecutor.execute();
 
@@ -116,16 +116,14 @@ public class PmdExecutorTest {
 
   @Test
   public void should_ignore_empty_test_dir() throws Exception {
-    InputFile srcFile = file("src/Class.java");
+    InputFile srcFile = file("src/Class.java", Type.MAIN);
     doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
     setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
-    when(projectFileSystem.getSourceCharset()).thenReturn(Charsets.UTF_8);
-    when(projectFileSystem.mainFiles(Java.KEY)).thenReturn(Arrays.asList(srcFile));
-    when(projectFileSystem.testFiles(Java.KEY)).thenReturn(Collections.<InputFile>emptyList());
+    fileSystem.add(srcFile);
 
     pmdExecutor.execute();
 
-    verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
+    verify(pmdTemplate).process(eq(srcFile.file()), any(RuleSets.class), any(RuleContext.class));
     verifyNoMoreInteractions(pmdTemplate);
   }
 
@@ -153,10 +151,28 @@ public class PmdExecutorTest {
     }
   }
 
-  static InputFile file(String path) {
-    InputFile inputFile = mock(InputFile.class);
-    when(inputFile.getFile()).thenReturn(new File(path));
-    return inputFile;
+  @Test
+  public void unknown_pmd_ruleset() throws Exception {
+    String profileContent = "content";
+    when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(profileContent);
+    when(pmdConfiguration.dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, profileContent)).thenReturn(new File("unknown"));
+
+    InputFile srcFile = file("src/Class.java", Type.MAIN);
+    fileSystem.add(srcFile);
+
+    try {
+      pmdExecutor.execute();
+      Assert.fail("Expected an exception");
+    } catch (IllegalStateException e) {
+      assertThat(e.getCause()).isInstanceOf(RuleSetNotFoundException.class);
+    }
+  }
+
+  static InputFile file(String path, Type type) {
+    return new DefaultInputFile(path)
+      .setAbsolutePath(new File(path).getAbsolutePath())
+      .setType(type)
+      .setLanguage(Java.KEY);
   }
   
   private void setupPmdRuleSet(String repositoryKey, String profileFileName) throws IOException {

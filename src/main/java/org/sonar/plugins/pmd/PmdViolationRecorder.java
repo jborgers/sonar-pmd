@@ -21,44 +21,53 @@ package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.BatchExtension;
-import org.sonar.api.batch.SensorContext;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.component.ResourcePerspectives;
+import org.sonar.api.issue.Issuable;
+import org.sonar.api.issue.Issuable.IssueBuilder;
 import org.sonar.api.resources.File;
-import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
-import org.sonar.api.rules.Violation;
 
-public class PmdViolationToRuleViolation implements BatchExtension {
-  private final Project project;
+public class PmdViolationRecorder implements BatchExtension {
+
+  private final FileSystem fs;
   private final RuleFinder ruleFinder;
+  private final ResourcePerspectives perspectives;
 
-  public PmdViolationToRuleViolation(Project project, RuleFinder ruleFinder) {
-    this.project = project;
+  public PmdViolationRecorder(FileSystem fs, RuleFinder ruleFinder, ResourcePerspectives perspectives) {
+    this.fs = fs;
     this.ruleFinder = ruleFinder;
+    this.perspectives = perspectives;
   }
 
-  public Violation toViolation(RuleViolation pmdViolation, SensorContext context) {
-    Resource resource = findResourceFor(pmdViolation);
-    if (context.getResource(resource) == null) {
+  public void saveViolation(RuleViolation pmdViolation) {
+    InputFile inputFile = findResourceFor(pmdViolation);
+    if (inputFile == null) {
       // Save violations only for existing resources
-      return null;
+      return;
     }
+    Resource resource = File.create(inputFile.relativePath());
+
+    Issuable issuable = perspectives.as(Issuable.class, resource);
 
     Rule rule = findRuleFor(pmdViolation);
-    if (rule == null) {
+    if (issuable == null || rule == null) {
       // Save violations only for enabled rules
-      return null;
+      return;
     }
 
-    int lineId = pmdViolation.getBeginLine();
-    String message = pmdViolation.getDescription();
-
-    return Violation.create(rule, resource).setLineId(lineId).setMessage(message);
+    IssueBuilder issueBuilder = issuable.newIssueBuilder()
+      .ruleKey(rule.ruleKey())
+      .message(pmdViolation.getDescription())
+      .line(pmdViolation.getBeginLine());
+    issuable.addIssue(issueBuilder.build());
   }
 
-  private Resource findResourceFor(RuleViolation violation) {
-    return File.fromIOFile(new java.io.File(violation.getFilename()), project);
+  private InputFile findResourceFor(RuleViolation violation) {
+    return fs.inputFile(fs.predicates().hasAbsolutePath(violation.getFilename()));
   }
 
   private Rule findRuleFor(RuleViolation violation) {

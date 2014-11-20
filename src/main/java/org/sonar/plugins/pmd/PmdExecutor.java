@@ -20,6 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
@@ -28,12 +29,12 @@ import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.fs.FilePredicates;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
-import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.TimeProfiler;
 import org.sonar.java.api.JavaUtils;
 import org.sonar.plugins.java.api.JavaResourceLocator;
@@ -48,16 +49,16 @@ import java.util.List;
 
 public class PmdExecutor implements BatchExtension {
   private final Project project;
-  private final ProjectFileSystem projectFileSystem;
+  private final FileSystem fs;
   private final RulesProfile rulesProfile;
   private final PmdProfileExporter pmdProfileExporter;
   private final PmdConfiguration pmdConfiguration;
   private final JavaResourceLocator javaResourceLocator;
 
-  public PmdExecutor(Project project, ProjectFileSystem projectFileSystem, RulesProfile rulesProfile, 
+  public PmdExecutor(Project project, FileSystem fileSystem, RulesProfile rulesProfile,
     PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator) {
     this.project = project;
-    this.projectFileSystem = projectFileSystem;
+    this.fs = fileSystem;
     this.rulesProfile = rulesProfile;
     this.pmdProfileExporter = pmdProfileExporter;
     this.pmdConfiguration = pmdConfiguration;
@@ -85,16 +86,23 @@ public class PmdExecutor implements BatchExtension {
     context.setReport(report);
 
     PmdTemplate pmdFactory = createPmdTemplate();
-    executeRules(pmdFactory, context, projectFileSystem.mainFiles(Java.KEY), PmdConstants.REPOSITORY_KEY);
-    executeRules(pmdFactory, context, projectFileSystem.testFiles(Java.KEY), PmdConstants.TEST_REPOSITORY_KEY);
+    executeRules(pmdFactory, context, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
+    executeRules(pmdFactory, context, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
 
     pmdConfiguration.dumpXmlReport(report);
 
     return report;
   }
 
-  public void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, List<InputFile> files, String repositoryKey) {
-    if (files.isEmpty()) {
+  public Iterable<File> javaFiles(Type fileType) {
+    FilePredicates predicates = fs.predicates();
+    return fs.files(predicates.and(
+      predicates.hasLanguage(Java.KEY),
+      predicates.hasType(fileType)));
+  }
+
+  public void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<File> files, String repositoryKey) {
+    if (Iterables.isEmpty(files)) {
       // Nothing to analyze
       return;
     }
@@ -107,7 +115,7 @@ public class PmdExecutor implements BatchExtension {
 
     rulesets.start(ruleContext);
 
-    for (InputFile file : files) {
+    for (File file : files) {
       pmdFactory.process(file, rulesets, ruleContext);
     }
 
@@ -123,14 +131,14 @@ public class PmdExecutor implements BatchExtension {
       RuleSet ruleSet = ruleSetFactory.createRuleSet(ruleSetFilePath);
       return new RuleSets(ruleSet);
     } catch (RuleSetNotFoundException e) {
-      throw new SonarException(e);
+      throw new IllegalStateException(e);
     }
   }
 
   @VisibleForTesting
   PmdTemplate createPmdTemplate() {
     ClassLoader projectClassLoader = createClassloader();
-    Charset encoding = projectFileSystem.getSourceCharset();
+    Charset encoding = fs.encoding();
     return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassLoader, encoding);
   }
 
