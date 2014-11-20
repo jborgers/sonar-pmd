@@ -19,15 +19,16 @@
  */
 package org.sonar.plugins.pmd;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Settings;
-import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.api.utils.SonarException;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,30 +40,23 @@ public class PmdConfiguration implements BatchExtension {
   public static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
   public static final String PMD_RESULT_XML = "pmd-result.xml";
 
-  private final ProjectFileSystem projectFileSystem;
+  private final FileSystem fileSystem;
   private final Settings settings;
 
-  public PmdConfiguration(ProjectFileSystem projectFileSystem, Settings settings) {
-    this.projectFileSystem = projectFileSystem;
+  public PmdConfiguration(FileSystem fileSystem, Settings settings) {
+    this.fileSystem = fileSystem;
     this.settings = settings;
-  }
-
-  public File getTargetXMLReport() {
-    if (settings.getBoolean(PROPERTY_GENERATE_XML)) {
-      return projectFileSystem.resolvePath(PMD_RESULT_XML);
-    }
-    return null;
   }
 
   public File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
     try {
-      File configurationFile = projectFileSystem.writeToWorkingDirectory(rulesXml, repositoryKey + ".xml");
+      File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml");
 
       LOG.info("PMD configuration: " + configurationFile.getAbsolutePath());
 
       return configurationFile;
     } catch (IOException e) {
-      throw new SonarException("Fail to save the PMD configuration", e);
+      throw new IllegalStateException("Fail to save the PMD configuration", e);
     }
   }
 
@@ -74,13 +68,13 @@ public class PmdConfiguration implements BatchExtension {
     try {
       String reportAsString = reportToString(report);
 
-      File reportFile = projectFileSystem.writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
+      File reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
 
       LOG.info("PMD output report: " + reportFile.getAbsolutePath());
 
       return reportFile;
     } catch (IOException e) {
-      throw new SonarException("Fail to save the PMD report", e);
+      throw new IllegalStateException("Fail to save the PMD report", e);
     }
   }
 
@@ -92,8 +86,14 @@ public class PmdConfiguration implements BatchExtension {
     xmlRenderer.start();
     xmlRenderer.renderFileReport(report);
     xmlRenderer.end();
-
+  
     return output.toString();
+  }
+
+  private File writeToWorkingDirectory(String content, String fileName) throws IOException {
+    File file = new File(fileSystem.workDir(), fileName);
+    Files.write(content, file, Charsets.UTF_8);
+    return file;
   }
 
 }

@@ -19,21 +19,23 @@
  */
 package org.sonar.plugins.pmd;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Settings;
-import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.api.utils.SonarException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -42,10 +44,28 @@ public class PmdConfigurationTest {
   PmdConfiguration configuration;
 
   Settings settings = new Settings();
-  ProjectFileSystem fs = mock(ProjectFileSystem.class);
+  FileSystem fs = mock(FileSystem.class);
+
+  private static final File WORK_DIR = new File("test-work-dir");
 
   @Rule
   public ExpectedException expectedException = ExpectedException.none();
+
+  @BeforeClass
+  public static void createTempDir() {
+    deleteTempDir();
+    WORK_DIR.mkdir();
+  }
+
+  @AfterClass
+  public static void deleteTempDir() {
+    if (WORK_DIR.exists()) {
+      for (File file : WORK_DIR.listFiles()) {
+        file.delete();
+      }
+      WORK_DIR.delete();
+    }
+  }
 
   @Before
   public void setUpPmdConfiguration() {
@@ -53,36 +73,20 @@ public class PmdConfigurationTest {
   }
 
   @Test
-  public void should_return_default_target_xml_report_when_property_is_not_set() {
-    File targetXMLReport = configuration.getTargetXMLReport();
-
-    assertThat(targetXMLReport).isNull();
-  }
-
-  @Test
-  public void should_set_target_xml_report() {
-    when(fs.resolvePath("pmd-result.xml")).thenReturn(new File("/workingDir/pmd-result.xml"));
-
-    settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
-    File targetXMLReport = configuration.getTargetXMLReport();
-
-    assertThat(targetXMLReport).isEqualTo(new File("/workingDir/pmd-result.xml"));
-  }
-
-  @Test
   public void should_dump_xml_rule_set() throws IOException {
-    when(fs.writeToWorkingDirectory("<rules>", "pmd.xml")).thenReturn(new File("/workingDir/pmd.xml"));
+    when(fs.workDir()).thenReturn(WORK_DIR);
 
     File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
 
-    assertThat(rulesFile).isEqualTo(new File("/workingDir/pmd.xml"));
+    assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
+    assertThat(Files.readLines(rulesFile, Charsets.UTF_8)).containsExactly("<rules>");
   }
 
   @Test
   public void should_fail_to_dump_xml_rule_set() throws IOException {
-    when(fs.writeToWorkingDirectory("<xml>", "pmd.xml")).thenThrow(new IOException("BUG"));
+    when(fs.workDir()).thenReturn(new File("xxx"));
 
-    expectedException.expect(SonarException.class);
+    expectedException.expect(IllegalStateException.class);
     expectedException.expectMessage("Fail to save the PMD configuration");
 
     configuration.dumpXmlRuleSet("pmd", "<xml>");
@@ -90,12 +94,27 @@ public class PmdConfigurationTest {
 
   @Test
   public void should_dump_xml_report() throws IOException {
-    when(fs.writeToWorkingDirectory(matches("(?s)<\\?xml .*>.*<pmd.*>.*</pmd>.*"), eq("pmd-result.xml"))).thenReturn(new File("/workingDir/pmd-result.xml"));
+    when(fs.workDir()).thenReturn(WORK_DIR);
 
     settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
     File reportFile = configuration.dumpXmlReport(new Report());
 
-    assertThat(reportFile).isEqualTo(new File("/workingDir/pmd-result.xml"));
+    assertThat(reportFile).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
+    List<String> writtenLines = Files.readLines(reportFile, Charsets.UTF_8);
+    assertThat(writtenLines).hasSize(3);
+    assertThat(writtenLines.get(1)).contains("<pmd");
+  }
+
+  @Test
+  public void should_fail_to_dump_xml_report() throws Exception {
+    when(fs.workDir()).thenReturn(new File("xxx"));
+
+    settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
+
+    expectedException.expect(IllegalStateException.class);
+    expectedException.expectMessage("Fail to save the PMD report");
+
+    configuration.dumpXmlReport(new Report());
   }
 
   @Test
@@ -105,4 +124,5 @@ public class PmdConfigurationTest {
     assertThat(reportFile).isNull();
     verifyZeroInteractions(fs);
   }
+
 }

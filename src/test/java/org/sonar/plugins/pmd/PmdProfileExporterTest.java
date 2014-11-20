@@ -31,7 +31,6 @@ import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.rules.XMLRuleParser;
-import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
@@ -84,7 +83,7 @@ public class PmdProfileExporterTest {
     assertThat(exportedXml).satisfies(equalsIgnoreEOL(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_xpath_rules.xml")));
   }
 
-  @Test(expected = SonarException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void should_fail_if_message_not_provided_for_xPath_rule() {
     PmdRule rule = new PmdRule(PmdConstants.XPATH_CLASS);
 
@@ -111,7 +110,7 @@ public class PmdProfileExporterTest {
     assertThat(rule.getProperty(PmdConstants.XPATH_EXPRESSION_PARAM).getValue()).isEqualTo("xpathExpression");
   }
 
-  @Test(expected = SonarException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void should_fail_if_xPath_not_provided() {
     PmdRule rule = new PmdRule(PmdConstants.XPATH_CLASS);
     rule.setName("MyOwnRule");

@@ -28,10 +28,9 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Java;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.ActiveRuleParam;
-import org.sonar.api.utils.SonarException;
+import org.sonar.plugins.java.Java;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
@@ -55,7 +54,7 @@ public class PmdProfileExporter extends ProfileExporter {
       String xmlModules = exportProfile(PmdConstants.REPOSITORY_KEY, profile);
       writer.append(xmlModules);
     } catch (IOException e) {
-      throw new SonarException("Fail to export the profile " + profile, e);
+      throw new IllegalArgumentException("Fail to export the profile " + profile, e);
     }
   }
 
@@ -90,13 +89,13 @@ public class PmdProfileExporter extends ProfileExporter {
       rule.setRef(null);
       PmdProperty xpathMessage = rule.getProperty(PmdConstants.XPATH_MESSAGE_PARAM);
       if (xpathMessage == null) {
-        throw new SonarException("Property '" + PmdConstants.XPATH_MESSAGE_PARAM + "' should be set for PMD rule " + sonarRuleKey);
+        throw new IllegalArgumentException("Property '" + PmdConstants.XPATH_MESSAGE_PARAM + "' should be set for PMD rule " + sonarRuleKey);
       }
       rule.setMessage(xpathMessage.getValue());
       rule.removeProperty(PmdConstants.XPATH_MESSAGE_PARAM);
       PmdProperty xpathExp = rule.getProperty(PmdConstants.XPATH_EXPRESSION_PARAM);
       if (xpathExp == null) {
-        throw new SonarException("Property '" + PmdConstants.XPATH_EXPRESSION_PARAM + "' should be set for PMD rule " + sonarRuleKey);
+        throw new IllegalArgumentException("Property '" + PmdConstants.XPATH_EXPRESSION_PARAM + "' should be set for PMD rule " + sonarRuleKey);
       }
       xpathExp.setCdataValue(xpathExp.getValue());
       rule.setClazz(PmdConstants.XPATH_CLASS);
@@ -138,7 +137,7 @@ public class PmdProfileExporter extends ProfileExporter {
     try {
       serializer.output(new Document(eltRuleset), xml);
     } catch (IOException e) {
-      throw new SonarException("A exception occured while generating the PMD configuration file.", e);
+      throw new IllegalStateException("A exception occured while generating the PMD configuration file.", e);
     }
     return xml.toString();
   }
