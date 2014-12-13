@@ -41,7 +41,7 @@
     <url>https://github.com/SonarCommunity/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>http://docs.codehaus.org/x/65S7DQ</url>
+  <url>http://redirect.sonarsource.com/plugins/pmd.html</url>
   <issueManagement>
     <system>JIRA</system>
     <url>https://jira.codehaus.org/browse/SONARPMD</url>
