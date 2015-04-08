@@ -311,6 +311,7 @@
     <priority>MAJOR</priority>
     <tag>unused-code</tag>
     <configKey><![CDATA[rulesets/java/unusedcode.xml/UnusedFormalParameter]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="UnnecessaryConstructor">
