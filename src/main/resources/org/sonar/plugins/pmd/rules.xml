@@ -254,6 +254,7 @@
   <rule key="EmptyFinalizer">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/finalizers.xml/EmptyFinalizer]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="FinalizeOnlyCallsSuperFinalize">
