@@ -50,7 +50,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>5.2.1</pmd.version>
+    <pmd.version>5.3.0</pmd.version>
     <sonar.version>4.5.1</sonar.version>
     <sonar-java.version>2.5.1</sonar-java.version>
   </properties>
@@ -101,10 +101,6 @@
         <exclusion>
           <groupId>com.beust</groupId>
           <artifactId>jcommander</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-lang3</artifactId>
         </exclusion>
         <exclusion>
           <groupId>net.java.dev.javacc</groupId>
@@ -222,8 +218,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>3600000</maxsize>
-                  <minsize>3500000</minsize>
+                  <maxsize>4000000</maxsize>
+                  <minsize>3900000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>
