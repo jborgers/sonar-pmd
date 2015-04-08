@@ -657,6 +657,7 @@
   <rule key="ConstructorCallsOverridableMethod">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/design.xml/ConstructorCallsOverridableMethod]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="AccessorClassGeneration">
