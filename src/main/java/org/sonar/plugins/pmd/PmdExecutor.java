@@ -22,6 +22,7 @@ package org.sonar.plugins.pmd;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -43,7 +44,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,23 +69,25 @@ public class PmdExecutor implements BatchExtension {
     TimeProfiler profiler = new TimeProfiler().start("Execute PMD " + PmdVersion.getVersion());
 
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+    URLClassLoader classLoader = createClassloader();
     try {
       Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-      return executePmd();
+      return executePmd(classLoader);
     } finally {
+      Closeables.closeQuietly(classLoader);
       Thread.currentThread().setContextClassLoader(initialClassLoader);
       profiler.stop();
     }
   }
 
-  private Report executePmd() {
+  private Report executePmd(URLClassLoader classLoader) {
     Report report = new Report();
 
     RuleContext context = new RuleContext();
     context.setReport(report);
 
-    PmdTemplate pmdFactory = createPmdTemplate();
+    PmdTemplate pmdFactory = createPmdTemplate(classLoader);
     executeRules(pmdFactory, context, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
     executeRules(pmdFactory, context, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
 
@@ -136,13 +138,11 @@ public class PmdExecutor implements BatchExtension {
   }
 
   @VisibleForTesting
-  PmdTemplate createPmdTemplate() {
-    ClassLoader projectClassLoader = createClassloader();
-    Charset encoding = fs.encoding();
-    return PmdTemplate.create(JavaUtils.getSourceVersion(project), projectClassLoader, encoding);
+  PmdTemplate createPmdTemplate(URLClassLoader classLoader) {
+    return PmdTemplate.create(JavaUtils.getSourceVersion(project), classLoader, fs.encoding());
   }
 
-  private ClassLoader createClassloader() {
+  private URLClassLoader createClassloader() {
     Collection<File> classpathElements = javaResourceLocator.classpath();
     List<URL> urls = Lists.newArrayList();
     for (File file : classpathElements) {

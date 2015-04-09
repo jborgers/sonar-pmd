@@ -29,6 +29,7 @@ import net.sourceforge.pmd.RuleSets;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -69,7 +70,7 @@ public class PmdExecutorTest {
   @Before
   public void setUp() {
     pmdExecutor = Mockito.spy(realPmdExecutor);
-    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
+    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
     fileSystem.setEncoding(Charsets.UTF_8);
   }
 
@@ -117,7 +118,7 @@ public class PmdExecutorTest {
   @Test
   public void should_ignore_empty_test_dir() throws Exception {
     InputFile srcFile = file("src/Class.java", Type.MAIN);
-    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate();
+    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
     setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
     fileSystem.add(srcFile);
 
@@ -131,10 +132,11 @@ public class PmdExecutorTest {
   public void should_build_project_classloader_from_javaresourcelocator() throws Exception {
     File file = new File("x");
     when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
-    PmdTemplate template = realPmdExecutor.createPmdTemplate();
-    ClassLoader classLoader = template.configuration().getClassLoader();
-    assertThat(classLoader).isInstanceOf(URLClassLoader.class);
-    URL[] urls = ((URLClassLoader) classLoader).getURLs();
+    pmdExecutor.execute();
+    ArgumentCaptor<URLClassLoader> classLoaderArgument = ArgumentCaptor.forClass(URLClassLoader.class);
+    verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
+    URLClassLoader classLoader = classLoaderArgument.getValue();
+    URL[] urls = classLoader.getURLs();
     assertThat(urls).containsOnly(file.toURI().toURL());
   }
 
@@ -144,7 +146,7 @@ public class PmdExecutorTest {
     when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
     when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
     try {
-      realPmdExecutor.createPmdTemplate();
+      pmdExecutor.execute();
       Assert.fail();
     } catch (IllegalStateException e) {
       assertThat(e.getMessage()).containsIgnoringCase("classpath");
