@@ -42,7 +42,7 @@ public final class PmdRulesDefinition implements RulesDefinition {
     repository.done();
   }
 
-  protected static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
+  static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
     RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
     ruleLoader.load(repository, PmdRulesDefinition.class.getResourceAsStream(xmlRulesFilePath), "UTF-8");
     ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
