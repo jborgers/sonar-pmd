@@ -51,7 +51,7 @@ public class PmdSensorTest {
   PmdExecutor executor = mock(PmdExecutor.class);
   PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
   SensorContext sensorContext = mock(SensorContext.class);
-  DefaultFileSystem fs = new DefaultFileSystem();
+  DefaultFileSystem fs = new DefaultFileSystem(new File("."));
 
   @Rule
   public ExpectedException exception = ExpectedException.none();

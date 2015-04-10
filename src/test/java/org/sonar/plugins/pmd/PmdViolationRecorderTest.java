@@ -42,7 +42,7 @@ import static org.mockito.Mockito.when;
 
 public class PmdViolationRecorderTest {
 
-  private DefaultFileSystem fs = new DefaultFileSystem();
+  private DefaultFileSystem fs = new DefaultFileSystem(new File("."));
   private RuleFinder ruleFinder = mock(RuleFinder.class);
   private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
   private PmdViolationRecorder pmdViolationRecorder =

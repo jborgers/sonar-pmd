@@ -59,7 +59,7 @@ public class PmdExecutorTest {
   PmdExecutor pmdExecutor;
 
   Project project = mock(Project.class);
-  DefaultFileSystem fileSystem = new DefaultFileSystem();
+  DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
   RulesProfile rulesProfile = mock(RulesProfile.class);
   PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
   PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);

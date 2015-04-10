@@ -51,7 +51,7 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>5.3.0</pmd.version>
-    <sonar.version>4.5.1</sonar.version>
+    <sonar.version>4.5.4</sonar.version>
     <sonar-java.version>2.5.1</sonar-java.version>
   </properties>
 
@@ -80,6 +80,11 @@
       <type>sonar-plugin</type>
       <version>${sonar-java.version}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <artifactId>sslr-squid-bridge</artifactId>
+      <version>2.6</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -218,8 +223,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>4000000</maxsize>
-                  <minsize>3900000</minsize>
+                  <maxsize>4300000</maxsize>
+                  <minsize>4200000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>
