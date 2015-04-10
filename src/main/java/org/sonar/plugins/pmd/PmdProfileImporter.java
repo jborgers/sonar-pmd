@@ -65,26 +65,26 @@ public class PmdProfileImporter extends ProfileImporter {
       if (PmdConstants.XPATH_CLASS.equals(pmdRule.getClazz())) {
         messages.addWarningText("PMD XPath rule '" + pmdRule.getName()
           + "' can't be imported automatically. The rule must be created manually through the SonarQube web interface.");
-        continue;
-      }
-      if (pmdRule.getRef() == null) {
-        messages.addWarningText("A PMD rule without 'ref' attribute can't be imported. see '" + pmdRule.getClazz() + "'");
-        continue;
-      }
-      Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.REPOSITORY_KEY).withConfigKey(pmdRule.getRef()));
-      if (rule != null) {
-        ActiveRule activeRule = profile.activateRule(rule, PmdLevelUtils.fromLevel(pmdRule.getPriority()));
-        if (pmdRule.getProperties() != null) {
-          for (PmdProperty prop : pmdRule.getProperties()) {
-            if (rule.getParam(prop.getName()) == null) {
-              messages.addWarningText("The property '" + prop.getName() + "' is not supported in the pmd rule: " + pmdRule.getRef());
-              continue;
+      } else {
+        String ruleRef = pmdRule.getRef();
+        if (ruleRef == null) {
+          messages.addWarningText("A PMD rule without 'ref' attribute can't be imported. see '" + pmdRule.getClazz() + "'");
+        } else {
+          Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.REPOSITORY_KEY).withConfigKey(ruleRef));
+          if (rule != null) {
+            ActiveRule activeRule = profile.activateRule(rule, PmdLevelUtils.fromLevel(pmdRule.getPriority()));
+            for (PmdProperty prop : pmdRule.getProperties()) {
+              String paramName = prop.getName();
+              if (rule.getParam(paramName) == null) {
+                messages.addWarningText("The property '" + paramName + "' is not supported in the pmd rule: " + ruleRef);
+              } else {
+                activeRule.setParameter(paramName, prop.getValue());
+              }
             }
-            activeRule.setParameter(prop.getName(), prop.getValue());
+          } else {
+            messages.addWarningText("Unable to import unknown PMD rule '" + ruleRef + "'");
           }
         }
-      } else {
-        messages.addWarningText("Unable to import unknown PMD rule '" + pmdRule.getRef() + "'");
       }
     }
     return profile;

@@ -15,4 +15,7 @@
     <rule ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
         <priority>4</priority>
     </rule>
+    <rule class="net.sourceforge.pmd.lang.java.rule.design.UseCollectionIsEmptyRule">
+    <priority>3</priority>
+  </rule>
 </ruleset>

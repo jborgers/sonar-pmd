@@ -56,7 +56,7 @@ public class PmdProfileImporterTest {
 
     PmdRuleset pmdRuleset = importer.parsePmdRuleset(reader, messages);
 
-    assertThat(pmdRuleset.getPmdRules()).hasSize(3);
+    assertThat(pmdRuleset.getPmdRules()).hasSize(4);
   }
 
   @Test
@@ -131,7 +131,7 @@ public class PmdProfileImporterTest {
     ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/CouplingBetweenObjects");
 
     assertThat(check.getParameter("threshold")).isNull();
-    assertThat(messages.getWarnings()).hasSize(1);
+    assertThat(messages.getWarnings()).hasSize(2);
   }
 
   @Test
@@ -151,7 +151,7 @@ public class PmdProfileImporterTest {
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertThat(profile.getActiveRules()).isEmpty();
-    assertThat(messages.getWarnings()).hasSize(3);
+    assertThat(messages.getWarnings()).hasSize(4);
   }
 
   static Reader read(String path) {
