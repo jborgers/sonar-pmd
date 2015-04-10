@@ -41,7 +41,7 @@ public final class PmdVersion {
       input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH);
       properties.load(input);
     } catch (IOException e) {
-      LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH);
+      LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH, e);
     } finally {
       Closeables.closeQuietly(input);
     }

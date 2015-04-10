@@ -40,7 +40,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 public class PmdTemplate {
-  
+
   private static final Logger LOG = LoggerFactory.getLogger(PmdTemplate.class);
 
   private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.<String, String>builder()
@@ -82,7 +82,7 @@ public class PmdTemplate {
       inputStream = new FileInputStream(file);
       processor.processSourceCode(inputStream, rulesets, ruleContext);
     } catch (PMDException e) {
-      LOG.error("Fail to execute PMD. Following file is ignored: " + file, e.getCause());
+      LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
     } catch (Exception e) {
       LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
     } finally {
