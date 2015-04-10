@@ -62,25 +62,19 @@ public class PmdProfileImporter extends ProfileImporter {
   protected RulesProfile createRuleProfile(PmdRuleset pmdRuleset, ValidationMessages messages) {
     RulesProfile profile = RulesProfile.create();
     for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
-      if (PmdConstants.XPATH_CLASS.equals(pmdRule.getClazz())) {
+      String ruleClassName = pmdRule.getClazz();
+      if (PmdConstants.XPATH_CLASS.equals(ruleClassName)) {
         messages.addWarningText("PMD XPath rule '" + pmdRule.getName()
           + "' can't be imported automatically. The rule must be created manually through the SonarQube web interface.");
       } else {
         String ruleRef = pmdRule.getRef();
         if (ruleRef == null) {
-          messages.addWarningText("A PMD rule without 'ref' attribute can't be imported. see '" + pmdRule.getClazz() + "'");
+          messages.addWarningText("A PMD rule without 'ref' attribute can't be imported. see '" + ruleClassName + "'");
         } else {
           Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.REPOSITORY_KEY).withConfigKey(ruleRef));
           if (rule != null) {
             ActiveRule activeRule = profile.activateRule(rule, PmdLevelUtils.fromLevel(pmdRule.getPriority()));
-            for (PmdProperty prop : pmdRule.getProperties()) {
-              String paramName = prop.getName();
-              if (rule.getParam(paramName) == null) {
-                messages.addWarningText("The property '" + paramName + "' is not supported in the pmd rule: " + ruleRef);
-              } else {
-                activeRule.setParameter(paramName, prop.getValue());
-              }
-            }
+            setParameters(activeRule, pmdRule, rule, messages);
           } else {
             messages.addWarningText("Unable to import unknown PMD rule '" + ruleRef + "'");
           }
@@ -88,6 +82,17 @@ public class PmdProfileImporter extends ProfileImporter {
       }
     }
     return profile;
+  }
+
+  private void setParameters(ActiveRule activeRule, PmdRule pmdRule, Rule rule, ValidationMessages messages) {
+    for (PmdProperty prop : pmdRule.getProperties()) {
+      String paramName = prop.getName();
+      if (rule.getParam(paramName) == null) {
+        messages.addWarningText("The property '" + paramName + "' is not supported in the pmd rule: " + pmdRule.getRef());
+      } else {
+        activeRule.setParameter(paramName, prop.getValue());
+      }
+    }
   }
 
   protected PmdRuleset parsePmdRuleset(Reader pmdConfigurationFile, ValidationMessages messages) {
