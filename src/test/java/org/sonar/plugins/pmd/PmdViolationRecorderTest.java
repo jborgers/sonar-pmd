@@ -63,7 +63,7 @@ public class PmdViolationRecorderTest {
     when(issueBuilder.message("Description")).thenReturn(issueBuilder);
     when(issueBuilder.line(42)).thenReturn(issueBuilder);
     when(issueBuilder.build()).thenReturn(issue);
-    
+
     pmdViolationRecorder.saveViolation(pmdViolation);
     verify(issuable).addIssue(issue);
     verify(issueBuilder).ruleKey(sonarRule.ruleKey());
@@ -112,7 +112,7 @@ public class PmdViolationRecorderTest {
 
   private Issuable createIssuable(InputFile file) {
     Issuable issuable = mock(Issuable.class);
-    when(perspectives.as(Issuable.class, org.sonar.api.resources.File.create(file.relativePath()))).thenReturn(issuable);
+    when(perspectives.as(Issuable.class, file)).thenReturn(issuable);
     return issuable;
   }
 

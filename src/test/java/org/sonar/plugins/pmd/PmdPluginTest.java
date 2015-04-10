@@ -29,7 +29,7 @@ public class PmdPluginTest {
 
   @Test
   public void should_contain_both_rule_repositories() {
-    assertThat(plugin.getExtensions()).contains(PmdRuleRepository.class, PmdUnitTestsRuleRepository.class);
+    assertThat(plugin.getExtensions()).contains(PmdRulesDefinition.class, PmdUnitTestsRulesDefinition.class);
   }
 
 }

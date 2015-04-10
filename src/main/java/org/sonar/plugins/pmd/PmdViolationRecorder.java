@@ -26,8 +26,6 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.component.ResourcePerspectives;
 import org.sonar.api.issue.Issuable;
 import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.resources.File;
-import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 
@@ -49,9 +47,8 @@ public class PmdViolationRecorder implements BatchExtension {
       // Save violations only for existing resources
       return;
     }
-    Resource resource = File.create(inputFile.relativePath());
 
-    Issuable issuable = perspectives.as(Issuable.class, resource);
+    Issuable issuable = perspectives.as(Issuable.class, inputFile);
 
     Rule rule = findRuleFor(pmdViolation);
     if (issuable == null || rule == null) {

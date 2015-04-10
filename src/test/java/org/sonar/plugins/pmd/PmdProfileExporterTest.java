@@ -20,17 +20,19 @@
 package org.sonar.plugins.pmd;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.collect.Lists;
 import org.fest.assertions.Condition;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.sonar.api.platform.ServerFileSystem;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
+import org.sonar.api.rules.RuleParam;
 import org.sonar.api.rules.RuleQuery;
-import org.sonar.api.rules.XMLRuleParser;
+import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
@@ -68,8 +70,8 @@ public class PmdProfileExporterTest {
   @Test
   public void should_export_xPath_rule() {
     Rule rule = Rule.create(PmdConstants.REPOSITORY_KEY, "MyOwnRule", "This is my own xpath rule.")
-        .setConfigKey(PmdConstants.XPATH_CLASS)
-        .setRepositoryKey(PmdConstants.REPOSITORY_KEY);
+      .setConfigKey(PmdConstants.XPATH_CLASS)
+      .setRepositoryKey(PmdConstants.REPOSITORY_KEY);
     rule.createParameter(PmdConstants.XPATH_EXPRESSION_PARAM);
     rule.createParameter(PmdConstants.XPATH_MESSAGE_PARAM);
 
@@ -120,28 +122,52 @@ public class PmdProfileExporterTest {
   }
 
   static RulesProfile importProfile(String configuration) {
-    PmdRuleRepository pmdRuleRepository = new PmdRuleRepository(mock(ServerFileSystem.class), new XMLRuleParser());
-    RuleFinder ruleFinder = createRuleFinder(pmdRuleRepository.createRules());
+    PmdRulesDefinition definition = new PmdRulesDefinition();
+    RulesDefinition.Context context = new RulesDefinition.Context();
+    definition.define(context);
+    RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+    RuleFinder ruleFinder = createRuleFinder(repository.rules());
     PmdProfileImporter importer = new PmdProfileImporter(ruleFinder);
 
     return importer.importProfile(new StringReader(configuration), ValidationMessages.create());
   }
 
-  static RuleFinder createRuleFinder(final List<Rule> rules) {
+  static RuleFinder createRuleFinder(final List<RulesDefinition.Rule> rules) {
     RuleFinder ruleFinder = mock(RuleFinder.class);
+    final List<Rule> convertedRules = convert(rules);
+
     when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
       @Override
       public Rule answer(InvocationOnMock invocation) {
         RuleQuery query = (RuleQuery) invocation.getArguments()[0];
-        for (Rule rule : rules) {
+        for (Rule rule : convertedRules) {
           if (query.getConfigKey().equals(rule.getConfigKey())) {
-            return rule.setRepositoryKey(PmdConstants.REPOSITORY_KEY);
+            return rule;
           }
         }
         return null;
       }
     });
     return ruleFinder;
+  }
+
+  private static List<Rule> convert(List<RulesDefinition.Rule> rules) {
+    List<Rule> results = Lists.newArrayListWithCapacity(rules.size());
+    for (RulesDefinition.Rule rule : rules) {
+      Rule newRule = Rule.create(rule.repository().key(), rule.key(), rule.name())
+        .setDescription(rule.htmlDescription())
+        .setRepositoryKey(rule.repository().key())
+        .setConfigKey(rule.internalKey());
+      if (!rule.params().isEmpty()) {
+        List<RuleParam> ruleParams = Lists.newArrayList();
+        for (Param param : rule.params()) {
+          ruleParams.add(new RuleParam().setDefaultValue(param.defaultValue()).setKey(param.name()));
+        }
+        newRule.setParams(ruleParams);
+      }
+      results.add(newRule);
+    }
+    return results;
   }
 
   public static Condition<String> equalsIgnoreEOL(String text) {

@@ -19,26 +19,22 @@
  */
 package org.sonar.plugins.pmd;
 
-import org.sonar.api.resources.Java;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RuleRepository;
-import org.sonar.api.rules.XMLRuleParser;
+import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.plugins.java.Java;
 
-import java.io.InputStream;
-import java.util.List;
+public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
 
-public final class PmdUnitTestsRuleRepository extends RuleRepository {
-  private final XMLRuleParser xmlRuleParser;
-
-  public PmdUnitTestsRuleRepository(XMLRuleParser xmlRuleParser) {
-    super(PmdConstants.TEST_REPOSITORY_KEY, Java.KEY);
-    setName(PmdConstants.TEST_REPOSITORY_NAME);
-    this.xmlRuleParser = xmlRuleParser;
+  public PmdUnitTestsRulesDefinition() {
   }
 
   @Override
-  public List<Rule> createRules() {
-    InputStream input = getClass().getResourceAsStream("/org/sonar/plugins/pmd/rules-unit-tests.xml");
-    return xmlRuleParser.parse(input);
+  public void define(Context context) {
+    NewRepository repository = context
+      .createRepository(PmdConstants.TEST_REPOSITORY_KEY, Java.KEY)
+      .setName(PmdConstants.TEST_REPOSITORY_NAME);
+
+    PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd-unit-tests");
+
+    repository.done();
   }
 }
