@@ -1,0 +1,67 @@
+<rules>
+  <!-- Extension written in Java -->
+  <rule>
+    <key>MaximumMethodsCountCheck</key>
+    <name>Maximum Methods Count Check</name>
+    <description>Maximum number of methods authorised</description>
+
+    <!-- path to definition -->
+    <configKey>org/sonar/examples/pmd/rulesets.xml/MaximumMethodsCountCheck</configKey>
+
+    <!-- Default priority ("severity"). It can be changed while activating the rule in Quality profile -->
+    <!-- Possible values are: INFO, MINOR, MAJOR, CRITICAL, BLOCKER. Default value is MAJOR -->
+    <!--<priority>MAJOR</priority>-->
+
+    <!-- parameters available in administration console of Quality profiles -->
+    <param>
+      <key>maxAuthorisedMethodsCount</key>
+      <description>Maximum number of methods authorised</description>
+
+      <!-- default value is optional -->
+      <defaultValue>2</defaultValue>
+    </param>
+  </rule>
+
+
+  <!-- Extension written in XPath, first solution -->
+  <rule>
+    <key>AvoidIfWithoutBrace</key>
+    <name>Avoid if without using brace</name>
+    <configKey>org/sonar/examples/pmd/rulesets.xml/AvoidIfWithoutBrace</configKey>
+    <priority>CRITICAL</priority>
+  <description>Avoid if without using brace</description>
+  </rule>
+
+
+  <!--
+    Extension written in XPath, second solution.
+    Difference is that the XPath expression can be configured by users from administration console of Quality profiles
+   -->
+  <rule>
+    <key>PreventUseOfEmptyClass</key>
+    <priority>MAJOR</priority>
+  <description>Prevent use of EmptyClass class</description>
+    <name><![CDATA[Prevent use of EmptyClass]]></name>
+    <configKey><![CDATA[net.sourceforge.pmd.lang.rule.XPathRule]]></configKey>
+    <priority>MINOR</priority>
+    <param>
+      <key>xpath</key>
+      <description><![CDATA[XPath expressions.]]></description>
+      <defaultValue>//VariableDeclarator[../Type/ReferenceType/ClassOrInterfaceType[@Image='EmptyClass']]</defaultValue>
+    </param>
+    <param>
+      <key>message</key>
+      <description><![CDATA[Message to display when a violation occurs.]]></description>
+      <defaultValue>Prevent use of EmptyClass class</defaultValue>
+    </param>
+  </rule>
+
+  <!-- XPath rules using type information -->
+  <rule>
+    <key>DoNotExtendIOException</key>
+    <name>IOException should not be extended</name>
+    <configKey>org/sonar/examples/pmd/rulesets.xml/DoNotExtendIOException</configKey>
+    <priority>CRITICAL</priority>
+    <description>IOException should not directly or indirectly be extended</description>
+  </rule>
+</rules>

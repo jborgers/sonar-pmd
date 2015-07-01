@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<ruleset name="PMD extensions"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+  <description></description>
+
+  <rule name="MaximumMethodsCountCheck"
+        message="Avoid too many methods"
+        class="org.sonar.examples.pmd.MaximumMethodsCountCheck">
+    <description>
+      Avoid too many methods
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="maxAuthorisedMethodsCount" description="Maximum number of methods authorised" value="3"/>
+    </properties>
+    <example>
+      <![CDATA[
+          // too many methods!
+            public void doSomething() {}
+            public void doSomething2() {}
+            public void doSomething3() {}
+            public void doSomething4() {}
+
+        ]]>
+    </example>
+  </rule>
+
+  <rule name="AvoidIfWithoutBrace"
+        message="Avoid if without using brace"
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
+    <description>
+      Avoid if without using brace
+    </description>
+    <properties>
+      <property name="xpath">
+        <value>
+          <![CDATA[
+            //IfStatement[not(Statement/Block)]
+        ]]>
+        </value>
+      </property>
+    </properties>
+    <example>
+      <![CDATA[
+       // don't do this!
+       if (true)
+        test = "test";
+      ]]>
+    </example>
+  </rule>
+
+  <rule name="DoNotExtendIOException"
+        message="Extend Exception rather than IOException."
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
+    <description>
+      IOException should never be extended. Either use it, or extend Exception for your own business exceptions.
+    </description>
+    <properties>
+      <property name="xpath">
+        <value>
+          <![CDATA[
+            //ClassOrInterfaceType[typeof(@Image, 'java.io.IOException', 'IOException')]
+        ]]>
+        </value>
+      </property>
+    </properties>
+    <example>
+      <![CDATA[
+       // don't do this!
+       class MyOwnIOException extends IOException {
+       }
+      ]]>
+    </example>
+  </rule>
+</ruleset>
