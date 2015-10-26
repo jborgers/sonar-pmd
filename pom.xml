@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.codehaus.sonar-plugins</groupId>
+    <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>19</version>
+    <version>24</version>
   </parent>
 
-  <groupId>org.codehaus.sonar-plugins.java</groupId>
+  <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
   <version>2.5-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
@@ -44,7 +44,7 @@
   <url>http://redirect.sonarsource.com/plugins/pmd.html</url>
   <issueManagement>
     <system>JIRA</system>
-    <url>https://jira.codehaus.org/browse/SONARPMD</url>
+    <url>https://jira.sonarsource.com/browse/SONARPMD</url>
   </issueManagement>
 
   <properties>
@@ -53,6 +53,13 @@
     <pmd.version>5.3.1</pmd.version>
     <sonar.version>4.5.4</sonar.version>
     <sonar-java.version>2.5.1</sonar-java.version>
+
+    <!-- Configuration for sonar-packaging-maven-plugin -->
+    <sonar.pluginKey>pmd</sonar.pluginKey>
+    <sonar.pluginName>PMD</sonar.pluginName>
+    <sonar.pluginClass>org.sonar.plugins.pmd.PmdPlugin</sonar.pluginClass>
+    <sonar.pluginDescription><![CDATA[Analyze Java code with <a href="http://pmd.sourceforge.net/">PMD</a>.]]></sonar.pluginDescription>
+    <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
   </properties>
 
   <dependencies>
@@ -165,14 +172,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!--
-    <dependency>
-      <groupId>org.codehaus.sonar.plugins</groupId>
-      <artifactId>sonar-l10n-en-plugin</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -200,17 +199,6 @@
 
     <plugins>
       <plugin>
-        <groupId>org.codehaus.sonar</groupId>
-        <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <configuration>
-          <pluginKey>pmd</pluginKey>
-          <pluginName>PMD</pluginName>
-          <pluginDescription><![CDATA[Analyze Java code with <a href="http://pmd.sourceforge.net/">PMD</a>.]]></pluginDescription>
-          <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
-          <requirePlugins>java:${sonar-java.version}</requirePlugins>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
@@ -223,7 +211,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>4300000</maxsize>
+                  <maxsize>4400000</maxsize>
                   <minsize>4200000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
