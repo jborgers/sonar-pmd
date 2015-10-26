@@ -52,7 +52,7 @@
 
     <pmd.version>5.3.1</pmd.version>
     <sonar.version>4.5.4</sonar.version>
-    <sonar-java.version>2.5.1</sonar-java.version>
+    <sonar-java.version>3.6</sonar-java.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>pmd</sonar.pluginKey>
@@ -82,7 +82,7 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar-plugins.java</groupId>
+      <groupId>org.sonarsource.java</groupId>
       <artifactId>sonar-java-plugin</artifactId>
       <type>sonar-plugin</type>
       <version>${sonar-java.version}</version>
