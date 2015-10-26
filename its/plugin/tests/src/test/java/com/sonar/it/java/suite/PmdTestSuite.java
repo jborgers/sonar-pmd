@@ -42,8 +42,4 @@ public class PmdTestSuite {
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
     .build();
 
-  public static boolean is_plugin_2_2_or_later() {
-    return ORCHESTRATOR.getConfiguration().getPluginVersion("pmd").isGreaterThanOrEquals("2.2");
-  }
-
 }

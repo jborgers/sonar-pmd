@@ -22,7 +22,6 @@ package com.sonar.it.java.suite;
 import com.google.common.collect.Lists;
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.MavenBuild;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -57,7 +56,6 @@ public class PmdTest {
 
   @Test
   public void pmdExtensions() {
-    Assume.assumeTrue(PmdTestSuite.is_plugin_2_2_or_later());
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanSonarGoals()
       .setProperty("sonar.profile", "pmd-extensions")
@@ -127,7 +125,6 @@ public class PmdTest {
    */
   @Test
   public void pmd_should_have_access_to_external_libraries_in_its_classpath() {
-    Assume.assumeTrue(PmdTestSuite.is_plugin_2_2_or_later());
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanPackageSonarGoals()
       .setProperty("sonar.profile", "pmd-extensions")
