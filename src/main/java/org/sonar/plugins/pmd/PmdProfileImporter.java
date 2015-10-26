@@ -84,7 +84,7 @@ public class PmdProfileImporter extends ProfileImporter {
     return profile;
   }
 
-  private void setParameters(ActiveRule activeRule, PmdRule pmdRule, Rule rule, ValidationMessages messages) {
+  private static void setParameters(ActiveRule activeRule, PmdRule pmdRule, Rule rule, ValidationMessages messages) {
     for (PmdProperty prop : pmdRule.getProperties()) {
       String paramName = prop.getName();
       if (rule.getParam(paramName) == null) {
@@ -120,7 +120,7 @@ public class PmdProfileImporter extends ProfileImporter {
     }
   }
 
-  private List<Element> getChildren(Element parent, String childName, @Nullable Namespace namespace) {
+  private static List<Element> getChildren(Element parent, String childName, @Nullable Namespace namespace) {
     if (namespace == null) {
       return parent.getChildren(childName);
     } else {
@@ -128,7 +128,7 @@ public class PmdProfileImporter extends ProfileImporter {
     }
   }
 
-  private void parsePmdProperties(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
+  private static void parsePmdProperties(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
     for (Element eltProperties : getChildren(eltRule, "properties", namespace)) {
       for (Element eltProperty : getChildren(eltProperties, "property", namespace)) {
         pmdRule.addProperty(new PmdProperty(eltProperty.getAttributeValue("name"), eltProperty.getAttributeValue("value")));
@@ -136,7 +136,7 @@ public class PmdProfileImporter extends ProfileImporter {
     }
   }
 
-  private void parsePmdPriority(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
+  private static void parsePmdPriority(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
     for (Element eltPriority : getChildren(eltRule, "priority", namespace)) {
       pmdRule.setPriority(eltPriority.getValue());
     }

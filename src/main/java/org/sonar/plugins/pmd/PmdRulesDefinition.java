@@ -29,6 +29,7 @@ import org.sonar.squidbridge.rules.SqaleXmlLoader;
 public final class PmdRulesDefinition implements RulesDefinition {
 
   public PmdRulesDefinition() {
+    // do nothing
   }
 
   @Override

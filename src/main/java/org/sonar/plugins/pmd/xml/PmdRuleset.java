@@ -26,9 +26,10 @@ public class PmdRuleset {
 
   private String description;
 
-  private List<PmdRule> rules = new ArrayList<PmdRule>();
+  private List<PmdRule> rules = new ArrayList<>();
 
   public PmdRuleset() {
+    // no description
   }
 
   public PmdRuleset(String description) {

@@ -70,7 +70,7 @@ public class PmdProfileExporter extends ProfileExporter {
         String configKey = activeRule.getRule().getConfigKey();
         PmdRule rule = new PmdRule(configKey, PmdLevelUtils.toLevel(activeRule.getSeverity()));
         if ((activeRule.getActiveRuleParams() != null) && !activeRule.getActiveRuleParams().isEmpty()) {
-          List<PmdProperty> properties = new ArrayList<PmdProperty>();
+          List<PmdProperty> properties = new ArrayList<>();
           for (ActiveRuleParam activeRuleParam : activeRule.getActiveRuleParams()) {
             properties.add(new PmdProperty(activeRuleParam.getRuleParam().getKey(), activeRuleParam.getValue()));
           }
@@ -137,18 +137,18 @@ public class PmdProfileExporter extends ProfileExporter {
     try {
       serializer.output(new Document(eltRuleset), xml);
     } catch (IOException e) {
-      throw new IllegalStateException("A exception occured while generating the PMD configuration file.", e);
+      throw new IllegalStateException("An exception occurred while generating the PMD configuration file.", e);
     }
     return xml.toString();
   }
 
-  private void addChild(Element elt, String name, String text) {
+  private static void addChild(Element elt, String name, String text) {
     if (text != null) {
       elt.addContent(new Element(name).setText(text));
     }
   }
 
-  private void addAttribute(Element elt, String name, String value) {
+  private static void addAttribute(Element elt, String name, String value) {
     if (value != null) {
       elt.setAttribute(name, value);
     }

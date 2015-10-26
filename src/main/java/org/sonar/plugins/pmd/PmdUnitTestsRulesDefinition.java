@@ -25,6 +25,7 @@ import org.sonar.plugins.java.Java;
 public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
 
   public PmdUnitTestsRulesDefinition() {
+    // Do nothing
   }
 
   @Override
