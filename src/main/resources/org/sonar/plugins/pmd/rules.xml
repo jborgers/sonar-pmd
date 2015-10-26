@@ -1523,6 +1523,18 @@
   <rule key="CommentSize">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/comments.xml/CommentSize]]></configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="maxLines" type="INTEGER">
+      <defaultValue>6</defaultValue>
+    </param>
+    <param key="maxLineLength" type="INTEGER">
+      <defaultValue>80</defaultValue>
+    </param>
   </rule>
 
   <rule key="AvoidPrefixingMethodParameters">
