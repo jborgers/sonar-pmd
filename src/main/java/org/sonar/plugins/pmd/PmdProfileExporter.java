@@ -35,6 +35,7 @@ import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -104,7 +105,7 @@ public class PmdProfileExporter extends ProfileExporter {
     }
   }
 
-  private String exportPmdRulesetToXml(PmdRuleset pmdRuleset) {
+  private static String exportPmdRulesetToXml(PmdRuleset pmdRuleset) {
     Element eltRuleset = new Element("ruleset");
     for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
       Element eltRule = new Element("rule");
@@ -142,13 +143,13 @@ public class PmdProfileExporter extends ProfileExporter {
     return xml.toString();
   }
 
-  private static void addChild(Element elt, String name, String text) {
+  private static void addChild(Element elt, String name, @Nullable String text) {
     if (text != null) {
       elt.addContent(new Element(name).setText(text));
     }
   }
 
-  private static void addAttribute(Element elt, String name, String value) {
+  private static void addAttribute(Element elt, String name, @Nullable String value) {
     if (value != null) {
       elt.setAttribute(name, value);
     }
