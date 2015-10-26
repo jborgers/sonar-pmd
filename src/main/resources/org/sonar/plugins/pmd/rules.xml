@@ -1513,6 +1513,7 @@
   <rule key="LoosePackageCoupling">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/coupling.xml/LoosePackageCoupling]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="AvoidProtectedMethodInFinalClassNotExtending">
