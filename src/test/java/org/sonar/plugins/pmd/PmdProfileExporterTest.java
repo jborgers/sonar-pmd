@@ -23,6 +23,7 @@ import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import org.fest.assertions.Condition;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.profiles.RulesProfile;
@@ -37,11 +38,15 @@ import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +55,31 @@ public class PmdProfileExporterTest {
   private static final CharMatcher EOLS = CharMatcher.anyOf("\n\r");
 
   PmdProfileExporter exporter = new PmdProfileExporter();
+
+  @org.junit.Rule
+  public ExpectedException thrown = ExpectedException.none();
+
+  @Test
+  public void should_export_pmd_profile_on_writer() {
+    String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
+
+    StringWriter stringWriter = new StringWriter();
+    exporter.exportProfile(importProfile(importedXml), stringWriter);
+
+    assertThat(stringWriter.toString()).satisfies(equalsIgnoreEOL(importedXml));
+  }
+
+  @Test
+  public void should_export_pmd_profile_on_writer_exception() throws IOException {
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("Fail to export the profile [name=null,language=null]");
+
+    String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
+
+    Writer writer = mock(Writer.class);
+    when(writer.append(anyString())).thenThrow(new IOException("test exception"));
+    exporter.exportProfile(importProfile(importedXml), writer);
+  }
 
   @Test
   public void should_export_pmd_profile() {

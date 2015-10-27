@@ -24,7 +24,6 @@ import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Closeables;
 import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.SourceCodeProcessor;
@@ -81,8 +80,6 @@ public class PmdTemplate {
     try {
       inputStream = new FileInputStream(file);
       processor.processSourceCode(inputStream, rulesets, ruleContext);
-    } catch (PMDException e) {
-      LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
     } catch (Exception e) {
       LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
     } finally {
