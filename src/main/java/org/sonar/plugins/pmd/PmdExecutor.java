@@ -33,10 +33,9 @@ import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
 import org.sonar.api.utils.TimeProfiler;
-import org.sonar.java.api.JavaUtils;
 import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
@@ -48,21 +47,21 @@ import java.util.Collection;
 import java.util.List;
 
 public class PmdExecutor implements BatchExtension {
-  private final Project project;
   private final FileSystem fs;
   private final RulesProfile rulesProfile;
   private final PmdProfileExporter pmdProfileExporter;
   private final PmdConfiguration pmdConfiguration;
   private final JavaResourceLocator javaResourceLocator;
+  private final Settings settings;
 
-  public PmdExecutor(Project project, FileSystem fileSystem, RulesProfile rulesProfile,
-    PmdProfileExporter pmdProfileExporter, PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator) {
-    this.project = project;
+  public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
+                     PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Settings settings) {
     this.fs = fileSystem;
     this.rulesProfile = rulesProfile;
     this.pmdProfileExporter = pmdProfileExporter;
     this.pmdConfiguration = pmdConfiguration;
     this.javaResourceLocator = javaResourceLocator;
+    this.settings = settings;
   }
 
   public Report execute() {
@@ -139,7 +138,7 @@ public class PmdExecutor implements BatchExtension {
 
   @VisibleForTesting
   PmdTemplate createPmdTemplate(URLClassLoader classLoader) {
-    return PmdTemplate.create(JavaUtils.getSourceVersion(project), classLoader, fs.encoding());
+    return PmdTemplate.create(getSourceVersion(), classLoader, fs.encoding());
   }
 
   private URLClassLoader createClassloader() {
@@ -153,6 +152,11 @@ public class PmdExecutor implements BatchExtension {
       }
     }
     return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
+  }
+
+  private String getSourceVersion() {
+    String javaVersion = settings.getString(PmdConstants.JAVA_SOURCE_VERSION);
+    return javaVersion != null ? javaVersion : PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE;
   }
 
 }

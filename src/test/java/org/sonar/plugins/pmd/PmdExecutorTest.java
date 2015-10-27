@@ -35,8 +35,8 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
 import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
@@ -58,20 +58,21 @@ import static org.mockito.Mockito.when;
 public class PmdExecutorTest {
   PmdExecutor pmdExecutor;
 
-  Project project = mock(Project.class);
   DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
   RulesProfile rulesProfile = mock(RulesProfile.class);
   PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
   PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
   PmdTemplate pmdTemplate = mock(PmdTemplate.class);
   JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
-  PmdExecutor realPmdExecutor = new PmdExecutor(project, fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator);
+  Settings settings = new Settings();
+  PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator, settings);
 
   @Before
   public void setUp() {
     pmdExecutor = Mockito.spy(realPmdExecutor);
     doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
     fileSystem.setEncoding(Charsets.UTF_8);
+    settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
   }
 
   @Test
