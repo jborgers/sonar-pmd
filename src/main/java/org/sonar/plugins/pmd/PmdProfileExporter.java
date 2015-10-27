@@ -51,17 +51,17 @@ public class PmdProfileExporter extends ProfileExporter {
 
   @Override
   public void exportProfile(RulesProfile profile, Writer writer) {
-    try {
-      String xmlModules = exportProfile(PmdConstants.REPOSITORY_KEY, profile);
-      writer.append(xmlModules);
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Fail to export the profile " + profile, e);
-    }
+    String profileName = profile.getName();
+    PmdRuleset tree = createPmdRuleset(PmdConstants.REPOSITORY_KEY, profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY), profileName);
+    exportPmdRulesetToXml(tree, writer, profileName);
   }
 
   public String exportProfile(String repositoryKey, RulesProfile profile) {
-    PmdRuleset tree = createPmdRuleset(repositoryKey, profile.getActiveRulesByRepository(repositoryKey), profile.getName());
-    return exportPmdRulesetToXml(tree);
+    String profileName = profile.getName();
+    PmdRuleset tree = createPmdRuleset(repositoryKey, profile.getActiveRulesByRepository(repositoryKey), profileName);
+    StringWriter stringWriter = new StringWriter();
+    exportPmdRulesetToXml(tree, stringWriter, profileName);
+    return stringWriter.toString();
   }
 
   private PmdRuleset createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules, String profileName) {
@@ -105,7 +105,7 @@ public class PmdProfileExporter extends ProfileExporter {
     }
   }
 
-  private static String exportPmdRulesetToXml(PmdRuleset pmdRuleset) {
+  private static void exportPmdRulesetToXml(PmdRuleset pmdRuleset, Writer writer, String profileName) {
     Element eltRuleset = new Element("ruleset");
     for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
       Element eltRule = new Element("rule");
@@ -134,13 +134,11 @@ public class PmdProfileExporter extends ProfileExporter {
       eltRuleset.addContent(eltRule);
     }
     XMLOutputter serializer = new XMLOutputter(Format.getPrettyFormat());
-    StringWriter xml = new StringWriter();
     try {
-      serializer.output(new Document(eltRuleset), xml);
+      serializer.output(new Document(eltRuleset), writer);
     } catch (IOException e) {
-      throw new IllegalStateException("An exception occurred while generating the PMD configuration file.", e);
+      throw new IllegalStateException("An exception occurred while generating the PMD configuration file from profile: " + profileName, e);
     }
-    return xml.toString();
   }
 
   private static void addChild(Element elt, String name, @Nullable String text) {

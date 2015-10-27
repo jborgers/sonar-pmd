@@ -59,7 +59,7 @@ public class PmdExecutorTest {
   PmdExecutor pmdExecutor;
 
   DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
-  RulesProfile rulesProfile = mock(RulesProfile.class);
+  RulesProfile rulesProfile = RulesProfile.create("pmd", "pmd");
   PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
   PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
   PmdTemplate pmdTemplate = mock(PmdTemplate.class);
@@ -70,7 +70,6 @@ public class PmdExecutorTest {
   @Before
   public void setUp() {
     pmdExecutor = Mockito.spy(realPmdExecutor);
-    doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
     fileSystem.setEncoding(Charsets.UTF_8);
     settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
   }
@@ -86,8 +85,6 @@ public class PmdExecutorTest {
 
     Report report = pmdExecutor.execute();
 
-    verify(pmdTemplate).process(eq(srcFile.file()), any(RuleSets.class), any(RuleContext.class));
-    verify(pmdTemplate).process(eq(tstFile.file()), any(RuleSets.class), any(RuleContext.class));
     assertThat(report).isNotNull();
   }
 

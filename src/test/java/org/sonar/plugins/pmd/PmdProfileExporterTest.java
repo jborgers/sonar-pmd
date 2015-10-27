@@ -47,6 +47,7 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -71,13 +72,13 @@ public class PmdProfileExporterTest {
 
   @Test
   public void should_export_pmd_profile_on_writer_exception() throws IOException {
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("Fail to export the profile [name=null,language=null]");
+    thrown.expect(IllegalStateException.class);
+    thrown.expectMessage("An exception occurred while generating the PMD configuration file from profile: null");
 
     String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
 
     Writer writer = mock(Writer.class);
-    when(writer.append(anyString())).thenThrow(new IOException("test exception"));
+    doThrow(new IOException("test exception")).when(writer).write(anyString());
     exporter.exportProfile(importProfile(importedXml), writer);
   }
 
