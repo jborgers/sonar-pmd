@@ -229,6 +229,32 @@
       <name>Readability</name>
       <chc>
         <rule-repo>pmd</rule-repo>
+        <rule-key>UselessQualifiedThis</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>2</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>SimplifiedTernary</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>5</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
         <rule-key>ShortMethodName</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -878,6 +904,19 @@
         <prop>
           <key>remediationFactor</key>
           <val>3</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>CommentDefaultAccessModifier</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>5</val>
           <txt>min</txt>
         </prop>
       </chc>
@@ -2594,6 +2633,32 @@
       <name>Architecture</name>
       <chc>
         <rule-repo>pmd</rule-repo>
+        <rule-key>CloneMethodMustBePublic</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>2</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>CloneMethodReturnTypeMustMatchClassName</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>20</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
         <rule-key>MissingSerialVersionUID</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3132,6 +3197,32 @@
     <chc>
       <key>LOGIC_RELIABILITY</key>
       <name>Logic</name>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>SingletonClassReturningNewInstance</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>10</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>pmd</rule-repo>
+        <rule-key>SingleMethodSingleton</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>2</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
       <chc>
         <rule-repo>pmd</rule-repo>
         <rule-key>NonStaticInitializer</rule-key>

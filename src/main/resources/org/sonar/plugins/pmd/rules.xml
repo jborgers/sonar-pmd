@@ -222,6 +222,9 @@
     <priority>MAJOR</priority>
     <tag>naming</tag>
     <configKey><![CDATA[rulesets/java/naming.xml/AbstractNaming]]></configKey>
+    <param key="strict" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1189,6 +1192,9 @@
   <rule key="ShortVariable">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/naming.xml/ShortVariable]]></configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1205,6 +1211,9 @@
     <priority>MAJOR</priority>
     <tag>convention</tag>
     <configKey><![CDATA[rulesets/java/naming.xml/ShortMethodName]]></configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1729,5 +1738,61 @@
     </param>
     <status>DEPRECATED</status>
   </rule>
+
+  <rule key="SimplifiedTernary">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/basic.xml/SimplifiedTernary]]></configKey>
+  </rule>
+
+  <rule key="CloneMethodMustBePublic">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/clone.xml/CloneMethodMustBePublic]]></configKey>
+  </rule>
+
+  <rule key="CloneMethodReturnTypeMustMatchClassName">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/clone.xml/CloneMethodReturnTypeMustMatchClassName]]></configKey>
+  </rule>
+
+  <rule key="CommentDefaultAccessModifier">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/comments.xml/CommentDefaultAccessModifier]]></configKey>
+    <param key="regex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="SingletonClassReturningNewInstance">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/design.xml/SingletonClassReturningNewInstance]]></configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="SingleMethodSingleton">
+    <priority>CRITICAL</priority>
+    <configKey><![CDATA[rulesets/java/design.xml/SingleMethodSingleton]]></configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="UselessQualifiedThis">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[rulesets/java/unnecessary.xml/UselessQualifiedThis]]></configKey>
+   </rule>
 
 </rules>

@@ -45,7 +45,7 @@ public class PmdRulesDefinitionTest {
     assertThat(repository.language()).isEqualTo(Java.KEY);
 
     List<Rule> rules = repository.rules();
-    assertThat(rules).hasSize(263);
+    assertThat(rules).hasSize(270);
 
     for (Rule rule : rules) {
       assertThat(rule.key()).isNotNull();
