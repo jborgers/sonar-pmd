@@ -25,17 +25,14 @@ import java.lang.reflect.Constructor;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class PmdVersionTest {
-  @Test
-  public void should_get_pmd_version() {
-    assertThat(PmdVersion.getVersion()).isNotEmpty();
-  }
+public class PmdConstantsTest {
 
   @Test
   public void private_constructor() throws Exception {
-    Constructor constructor = PmdVersion.class.getDeclaredConstructor();
+    Constructor constructor = PmdConstants.class.getDeclaredConstructor();
     assertThat(constructor.isAccessible()).isFalse();
     constructor.setAccessible(true);
     constructor.newInstance();
   }
+
 }

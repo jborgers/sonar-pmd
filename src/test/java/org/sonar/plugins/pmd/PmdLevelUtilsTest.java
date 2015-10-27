@@ -22,6 +22,8 @@ package org.sonar.plugins.pmd;
 import org.junit.Test;
 import org.sonar.api.rules.RulePriority;
 
+import java.lang.reflect.Constructor;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class PmdLevelUtilsTest {
@@ -43,5 +45,13 @@ public class PmdLevelUtilsTest {
     assertThat(PmdLevelUtils.toLevel(RulePriority.MAJOR)).isEqualTo("3");
     assertThat(PmdLevelUtils.toLevel(RulePriority.MINOR)).isEqualTo("4");
     assertThat(PmdLevelUtils.toLevel(RulePriority.INFO)).isEqualTo("5");
+  }
+
+  @Test
+  public void private_constructor() throws Exception {
+    Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
+    assertThat(constructor.isAccessible()).isFalse();
+    constructor.setAccessible(true);
+    constructor.newInstance();
   }
 }
