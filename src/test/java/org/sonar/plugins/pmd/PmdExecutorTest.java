@@ -86,6 +86,12 @@ public class PmdExecutorTest {
     Report report = pmdExecutor.execute();
 
     assertThat(report).isNotNull();
+
+    // setting java source version to the default value
+    settings.removeProperty(PmdConstants.JAVA_SOURCE_VERSION);
+    report = pmdExecutor.execute();
+
+    assertThat(report).isNotNull();
   }
 
   @Test
