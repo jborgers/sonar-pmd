@@ -7,7 +7,7 @@ jdk:
 install: true
 script: ./travis.sh
 env:
-  - TEST=CI
+  - TEST=ci
   - TEST=plugin
     SQ_VERSION=DEV
   - TEST=plugin
