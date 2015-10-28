@@ -10,7 +10,7 @@ function installTravisTools {
 
 case "$TEST" in
 
-CI)
+ci)
   mvn verify -B -e -V
   ;;
 
