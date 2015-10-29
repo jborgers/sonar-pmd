@@ -5,19 +5,19 @@
 <p>Examples:</p>
 <pre>
 public class Foo implements Cloneable {
-    @Override
-    protected Object clone() throws CloneNotSupportedException { // Violation, must be public
-    }
+  @Override
+  protected Object clone() throws CloneNotSupportedException { // Violation, must be public
+  }
 }
 
 public class Foo implements Cloneable {
-    @Override
-    protected Foo clone() { // Violation, must be public
-    }
+  @Override
+  protected Foo clone() { // Violation, must be public
+  }
 }
 
 public class Foo implements Cloneable {
-    @Override
-    public Object clone() // Ok
+  @Override
+  public Object clone() // Ok
 }
 </pre>
