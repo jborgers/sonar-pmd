@@ -3,16 +3,16 @@ Ensure that the usage is not a bug, or consider using another approach. Example:
 <pre>
 // unusual use of branching statement in a loop
 for (int i = 0; i < 10; i++) {
-	if (i*i <= 25) {
-		continue;
-	}
-	break;
+  if (i*i <= 25) {
+    continue;
+  }
+  break;
 }
 
-  // this makes more sense...
+// this makes more sense...
 for (int i = 0; i < 10; i++) {
-	if (i*i > 25) {
-		break;
-	}
+  if (i*i > 25) {
+    break;
+  }
 }
 </pre>
