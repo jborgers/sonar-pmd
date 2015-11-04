@@ -10,7 +10,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
-  <version>2.5-SNAPSHOT</version>
+  <version>2.5</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
@@ -39,7 +39,7 @@
     <connection>scm:git:git@github.com:SonarCommunity/sonar-pmd.git</connection>
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-pmd.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-pmd</url>
-    <tag>HEAD</tag>
+    <tag>2.5</tag>
   </scm>
   <url>http://redirect.sonarsource.com/plugins/pmd.html</url>
   <issueManagement>
