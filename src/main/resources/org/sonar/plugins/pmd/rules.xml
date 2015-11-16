@@ -383,7 +383,6 @@
   <rule key="DefaultPackage">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/controversial.xml/DefaultPackage]]></configKey>
-    <status>DEPRECATED</status>
   </rule>
 
   <rule key="BooleanInversion">
