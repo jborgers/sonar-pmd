@@ -42,21 +42,11 @@ public class PmdTemplate {
 
   private static final Logger LOG = LoggerFactory.getLogger(PmdTemplate.class);
 
-  private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.<String, String>builder()
-    .put("1.1", "1.3")
-    .put("1.2", "1.3")
-    .put("5", "1.5")
-    .put("6", "1.6")
-    .put("7", "1.7")
-    .put("8", "1.8")
-    .build();
-
   private SourceCodeProcessor processor;
   private PMDConfiguration configuration;
 
-  public static PmdTemplate create(String javaVersion, ClassLoader classloader, Charset charset) {
+  public static PmdTemplate create(ClassLoader classloader, Charset charset) {
     PMDConfiguration configuration = new PMDConfiguration();
-    configuration.setDefaultLanguageVersion(languageVersion(javaVersion));
     configuration.setClassLoader(classloader);
     configuration.setSourceEncoding(charset.name());
     SourceCodeProcessor processor = new SourceCodeProcessor(configuration);
@@ -75,7 +65,9 @@ public class PmdTemplate {
   }
 
   public void process(File file, RuleSets rulesets, RuleContext ruleContext) {
-    ruleContext.setSourceCodeFilename(file.getAbsolutePath());
+	LanguageVersion languageVersion = configuration.getLanguageVersionOfFile(file.getAbsolutePath());
+	ruleContext.setLanguageVersion(languageVersion);
+	ruleContext.setSourceCodeFilename(file.getAbsolutePath());
     InputStream inputStream = null;
     try {
       inputStream = new FileInputStream(file);
@@ -85,21 +77,6 @@ public class PmdTemplate {
     } finally {
       Closeables.closeQuietly(inputStream);
     }
-  }
-
-  @VisibleForTesting
-  static LanguageVersion languageVersion(String javaVersion) {
-    String version = normalize(javaVersion);
-    LanguageVersion languageVersion = new JavaLanguageModule().getVersion(version);
-    if (languageVersion == null) {
-      throw new IllegalArgumentException("Unsupported Java version for PMD: " + version);
-    }
-    LOG.info("Java version: " + version);
-    return languageVersion;
-  }
-
-  private static String normalize(String version) {
-    return Functions.forMap(JAVA_VERSIONS, version).apply(version);
   }
 
 }

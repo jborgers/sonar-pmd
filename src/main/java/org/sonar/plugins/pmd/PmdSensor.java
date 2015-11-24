@@ -55,9 +55,7 @@ public class PmdSensor implements Sensor {
 
   private boolean hasFilesToCheck(Type type, String repositoryKey) {
     FilePredicates predicates = fs.predicates();
-    Iterable<File> files = fs.files(predicates.and(
-      predicates.hasLanguage(Java.KEY),
-      predicates.hasType(type)));
+    Iterable<File> files = fs.files(predicates.hasType(type));
     return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
   }
 
