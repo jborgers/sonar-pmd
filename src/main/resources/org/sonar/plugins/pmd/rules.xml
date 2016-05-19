@@ -383,6 +383,7 @@
   <rule key="DefaultPackage">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/controversial.xml/DefaultPackage]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="BooleanInversion">
@@ -1526,6 +1527,9 @@
   <rule key="CommentRequired">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/comments.xml/CommentRequired]]></configKey>
+	<param key="violationSuppressXPath" type="STRING">
++      <defaultValue></defaultValue>
++   </param>
   </rule>
 
   <rule key="CommentSize">
