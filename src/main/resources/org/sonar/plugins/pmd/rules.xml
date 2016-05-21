@@ -385,12 +385,6 @@
     <configKey><![CDATA[rulesets/java/controversial.xml/DefaultPackage]]></configKey>
   </rule>
 
-  <rule key="BooleanInversion">
-    <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/controversial.xml/BooleanInversion]]></configKey>
-    <status>DEPRECATED</status>
-  </rule>
-
   <rule key="DataflowAnomalyAnalysis">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/controversial.xml/DataflowAnomalyAnalysis]]></configKey>
@@ -846,13 +840,6 @@
     <status>DEPRECATED</status>
   </rule>
   
-  <rule key="UncommentedEmptyMethod">
-    <priority>MAJOR</priority>
-    <tag>comment</tag>
-    <configKey><![CDATA[rulesets/java/design.xml/UncommentedEmptyMethod]]></configKey>
-    <status>DEPRECATED</status>
-  </rule>
-
   <rule key="UncommentedEmptyMethodBody">
     <priority>MAJOR</priority>
     <tag>comment</tag>

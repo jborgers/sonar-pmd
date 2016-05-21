@@ -1624,19 +1624,6 @@
       </chc>
       <chc>
         <rule-repo>pmd</rule-repo>
-        <rule-key>UncommentedEmptyMethod</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>15</val>
-          <txt>min</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>pmd</rule-repo>
         <rule-key>UncommentedEmptyMethodBody</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -2207,19 +2194,6 @@
       <chc>
         <rule-repo>pmd</rule-repo>
         <rule-key>LoggerIsNotStaticFinal</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>5</val>
-          <txt>min</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>pmd</rule-repo>
-        <rule-key>BooleanInversion</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>
