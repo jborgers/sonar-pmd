@@ -179,7 +179,6 @@
   </dependencies>
 
   <build>
-    <finalName>${project.artifactId}</finalName>
 
     <resources>
       <resource>
