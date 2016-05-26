@@ -40,9 +40,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:SonarSource/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-pmd.git</developerConnection>
-    <url>https://github.com/SonarSource/sonar-pmd</url>
+    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</developerConnection>
+    <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
   <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
