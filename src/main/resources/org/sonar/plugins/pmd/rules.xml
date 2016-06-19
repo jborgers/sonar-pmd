@@ -1513,6 +1513,9 @@
   <rule key="CommentRequired">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/comments.xml/CommentRequired]]></configKey>
+	<param key="violationSuppressXPath" type="STRING">
++      <defaultValue></defaultValue>
++   </param>
   </rule>
 
   <rule key="CommentSize">
