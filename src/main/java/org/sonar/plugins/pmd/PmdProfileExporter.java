@@ -21,6 +21,7 @@ package org.sonar.plugins.pmd;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
+import org.apache.commons.lang3.StringUtils;
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -70,13 +71,7 @@ public class PmdProfileExporter extends ProfileExporter {
       if (activeRule.getRule().getRepositoryKey().equals(repositoryKey)) {
         String configKey = activeRule.getRule().getConfigKey();
         PmdRule rule = new PmdRule(configKey, PmdLevelUtils.toLevel(activeRule.getSeverity()));
-        if ((activeRule.getActiveRuleParams() != null) && !activeRule.getActiveRuleParams().isEmpty()) {
-          List<PmdProperty> properties = new ArrayList<>();
-          for (ActiveRuleParam activeRuleParam : activeRule.getActiveRuleParams()) {
-            properties.add(new PmdProperty(activeRuleParam.getRuleParam().getKey(), activeRuleParam.getValue()));
-          }
-          rule.setProperties(properties);
-        }
+        addRuleProperties(activeRule, rule);
         ruleset.addRule(rule);
         processXPathRule(activeRule.getRuleKey(), rule);
       }
@@ -84,8 +79,18 @@ public class PmdProfileExporter extends ProfileExporter {
     return ruleset;
   }
 
+  private static void addRuleProperties(ActiveRule activeRule, PmdRule pmdRule) {
+    if ((activeRule.getActiveRuleParams() != null) && !activeRule.getActiveRuleParams().isEmpty()) {
+      List<PmdProperty> properties = new ArrayList<>();
+      for (ActiveRuleParam activeRuleParam : activeRule.getActiveRuleParams()) {
+        properties.add(new PmdProperty(activeRuleParam.getRuleParam().getKey(), activeRuleParam.getValue()));
+      }
+      pmdRule.setProperties(properties);
+    }
+  }
+
   @VisibleForTesting
-  void processXPathRule(String sonarRuleKey, PmdRule rule) {
+  static void processXPathRule(String sonarRuleKey, PmdRule rule) {
     if (PmdConstants.XPATH_CLASS.equals(rule.getRef())) {
       rule.setRef(null);
       PmdProperty xpathMessage = rule.getProperty(PmdConstants.XPATH_MESSAGE_PARAM);
@@ -116,19 +121,9 @@ public class PmdProfileExporter extends ProfileExporter {
       addAttribute(eltRule, "language", pmdRule.getLanguage());
       addChild(eltRule, "priority", pmdRule.getPriority());
       if (pmdRule.hasProperties()) {
-        Element eltProperties = new Element("properties");
-        eltRule.addContent(eltProperties);
-        for (PmdProperty prop : pmdRule.getProperties()) {
-          Element eltProperty = new Element("property");
-          eltProperty.setAttribute("name", prop.getName());
-          if (prop.isCdataValue()) {
-            Element eltValue = new Element("value");
-            eltValue.addContent(new CDATA(prop.getCdataValue()));
-            eltProperty.addContent(eltValue);
-          } else {
-            eltProperty.setAttribute("value", prop.getValue());
-          }
-          eltProperties.addContent(eltProperty);
+        Element ruleProperties = processRuleProperties(pmdRule);
+        if (ruleProperties.getContentSize() > 0) {
+          eltRule.addContent(ruleProperties);
         }
       }
       eltRuleset.addContent(eltRule);
@@ -139,6 +134,32 @@ public class PmdProfileExporter extends ProfileExporter {
     } catch (IOException e) {
       throw new IllegalStateException("An exception occurred while generating the PMD configuration file from profile: " + profileName, e);
     }
+  }
+
+  private static Element processRuleProperties(PmdRule pmdRule) {
+    Element eltProperties = new Element("properties");
+    for (PmdProperty prop : pmdRule.getProperties()) {
+      if (isPropertyValueNotEmpty(prop)) {
+        Element eltProperty = new Element("property");
+        eltProperty.setAttribute("name", prop.getName());
+        if (prop.isCdataValue()) {
+          Element eltValue = new Element("value");
+          eltValue.addContent(new CDATA(prop.getCdataValue()));
+          eltProperty.addContent(eltValue);
+        } else {
+          eltProperty.setAttribute("value", prop.getValue());
+        }
+        eltProperties.addContent(eltProperty);
+      }
+    }
+    return eltProperties;
+  }
+
+  private static boolean isPropertyValueNotEmpty(PmdProperty prop) {
+    if (prop.isCdataValue()) {
+      return StringUtils.isNotEmpty(prop.getCdataValue());
+    }
+    return StringUtils.isNotEmpty(prop.getValue());
   }
 
   private static void addChild(Element elt, String name, @Nullable String text) {
