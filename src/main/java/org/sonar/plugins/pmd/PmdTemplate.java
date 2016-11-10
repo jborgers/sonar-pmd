@@ -80,7 +80,7 @@ public class PmdTemplate {
     try {
       inputStream = new FileInputStream(file);
       processor.processSourceCode(inputStream, rulesets, ruleContext);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
     } finally {
       Closeables.closeQuietly(inputStream);
