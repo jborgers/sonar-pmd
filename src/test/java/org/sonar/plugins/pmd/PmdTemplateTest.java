@@ -85,54 +85,19 @@ public class PmdTemplateTest {
     new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
   }
 
-  @Test
-  public void java12_version() {
-    assertThat(PmdTemplate.languageVersion("1.2").getLanguageVersionHandler()).isInstanceOf(Java13Handler.class);
-  }
-
-  @Test
-  public void java5_version() {
-    assertThat(PmdTemplate.languageVersion("5").getLanguageVersionHandler()).isInstanceOf(Java15Handler.class);
-  }
-
-  @Test
-  public void java6_version() {
-    assertThat(PmdTemplate.languageVersion("6").getLanguageVersionHandler()).isInstanceOf(Java16Handler.class);
-  }
-
-  @Test
-  public void java7_version() {
-    assertThat(PmdTemplate.languageVersion("7").getLanguageVersionHandler()).isInstanceOf(Java17Handler.class);
-  }
-  
-  @Test
-  public void java8_version() {
-    assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(Java18Handler.class);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void should_fail_on_invalid_java_version() {
-    PmdTemplate.create("12.2", mock(ClassLoader.class), Charsets.UTF_8);
-  }
-
-  @Test
-  public void shouldnt_fail_on_valid_java_version() {
-    PmdTemplate.create("6", mock(ClassLoader.class), Charsets.UTF_8);
-  }
-
   /**
    * SONARPLUGINS-3318
    */
   @Test
   public void should_set_classloader() {
     ClassLoader classloader = mock(ClassLoader.class);
-    PmdTemplate pmdTemplate = PmdTemplate.create("6", classloader, Charsets.UTF_8);
+    PmdTemplate pmdTemplate = PmdTemplate.create(classloader, Charsets.UTF_8);
     assertThat(pmdTemplate.configuration().getClassLoader()).isEqualTo(classloader);
   }
 
   @Test
   public void should_set_encoding() {
-    PmdTemplate pmdTemplate = PmdTemplate.create("6", mock(ClassLoader.class), Charsets.UTF_16BE);
+    PmdTemplate pmdTemplate = PmdTemplate.create(mock(ClassLoader.class), Charsets.UTF_16BE);
     assertThat(pmdTemplate.configuration().getSourceEncoding()).isEqualTo("UTF-16BE");
   }
   

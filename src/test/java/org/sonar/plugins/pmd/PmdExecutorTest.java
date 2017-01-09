@@ -65,13 +65,12 @@ public class PmdExecutorTest {
   PmdTemplate pmdTemplate = mock(PmdTemplate.class);
   JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
   Settings settings = new Settings();
-  PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator, settings);
+  PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator);
 
   @Before
   public void setUp() {
     pmdExecutor = Mockito.spy(realPmdExecutor);
     fileSystem.setEncoding(Charsets.UTF_8);
-    settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
   }
 
   @Test
@@ -87,8 +86,6 @@ public class PmdExecutorTest {
 
     assertThat(report).isNotNull();
 
-    // setting java source version to the default value
-    settings.removeProperty(PmdConstants.JAVA_SOURCE_VERSION);
     report = pmdExecutor.execute();
 
     assertThat(report).isNotNull();
