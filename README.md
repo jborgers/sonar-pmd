@@ -1,7 +1,7 @@
 SonarQube PMD Plugin
 ====================
 ## Description / Features
-This plugin provides coding rules from [PMD](http://pmd.sourceforge.net/).
+This plugin provides coding rules from [PMD](https://pmd.github.io/).
 
 PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5
 -------|---|---|---|---|---|---
