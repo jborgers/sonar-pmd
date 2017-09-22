@@ -10,7 +10,6 @@
   <rule key="JUnitAssertionsShouldIncludeMessage">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/JUnitAssertionsShouldIncludeMessage]]></configKey>
-    <status>DEPRECATED</status>
   </rule>
   <rule key="JUnitTestsShouldIncludeAssert">
     <priority>MAJOR</priority>

@@ -10,7 +10,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
-  <version>2.6-RC1</version>
+  <version>2.7</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
@@ -43,7 +43,7 @@
     <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</connection>
     <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</developerConnection>
     <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
-    <tag>2.6-RC1</tag>
+    <tag>2.7</tag>
   </scm>
   <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
   <issueManagement>
@@ -54,7 +54,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>5.4.2</pmd.version>
+    <pmd.version>5.8.1</pmd.version>
     <sonar.version>4.5.4</sonar.version>
     <sonar-java.version>3.6</sonar-java.version>
 
@@ -218,20 +218,6 @@
                 </requireFilesSize>
               </rules>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
