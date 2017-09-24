@@ -35,7 +35,7 @@ public class PmdTestSuite {
   public static final Orchestrator ORCHESTRATOR = Orchestrator
     .builderEnv()
     .addPlugin("java")
-    .addPlugin(FileLocation.of("../../../target/sonar-pmd-plugin.jar"))
+    .addPlugin(FileLocation.of("../../../target/sonar-pmd-plugin-2.7.jar"))
     .addPlugin(FileLocation.of(TestUtils.pluginJar("pmd-extension-plugin")))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
