@@ -92,6 +92,40 @@ public class PmdProfileExporterTest {
   }
 
   @Test
+  public void should_skip_empty_params() {
+    String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_rule_with_empty_param.xml");
+
+    String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<ruleset>\n" +
+            "  <rule ref=\"rulesets/java/comments.xml/CommentDefaultAccessModifier\">\n" +
+            "    <priority>2</priority>\n" +
+            "    <properties>\n" +
+            "      <property name=\"violationSuppressRegex\" value=\"nonEmptyValue\" />\n" +
+            "      <property name=\"violationSuppressXPath\" value=\"nonEmptyValue\" />\n" +
+            "    </properties>\n" +
+            "  </rule>\n" +
+            "</ruleset>";
+
+    String actual = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, importProfile(importedXml));
+    assertThat(actual).satisfies(equalsIgnoreEOL(expected));
+  }
+
+  @Test
+  public void should_skip_all_empty_params() {
+    String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_rule_with_all_params_empty.xml");
+
+    String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<ruleset>\n" +
+            "  <rule ref=\"rulesets/java/comments.xml/CommentDefaultAccessModifier\">\n" +
+            "    <priority>2</priority>\n" +
+            "  </rule>\n" +
+            "</ruleset>";
+
+    String actual = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, importProfile(importedXml));
+    assertThat(actual).satisfies(equalsIgnoreEOL(expected));
+  }
+
+  @Test
   public void should_export_empty_configuration_as_xml() {
     String exportedXml = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, RulesProfile.create());
 
