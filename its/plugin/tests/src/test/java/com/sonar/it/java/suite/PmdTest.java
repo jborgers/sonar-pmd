@@ -59,7 +59,7 @@ public class PmdTest {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanSonarGoals()
       .setProperty("sonar.profile", "pmd-extensions")
-      .setProperty("sonar.dynamicAnalysis", "false");
+      .setProperty("sonar.dynamicAnalysis", "false")
       .setProperty("sonar.java.binaries", "target/classes");
     String log = orchestrator.executeBuild(build).getLogs();
 
