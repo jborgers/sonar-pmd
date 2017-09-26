@@ -17,7 +17,7 @@ ci)
 plugin)
   installTravisTools
 
-  mvn package -X -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
+  mvn package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
 
   if [ "$SQ_VERSION" = "DEV" ] ; then
     build_snapshot "SonarSource/sonarqube"
