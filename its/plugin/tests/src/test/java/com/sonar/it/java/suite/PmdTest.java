@@ -60,6 +60,7 @@ public class PmdTest {
       .setCleanSonarGoals()
       .setProperty("sonar.profile", "pmd-extensions")
       .setProperty("sonar.dynamicAnalysis", "false");
+      .setProperty("sonar.java.binaries", "target/classes");
     String log = orchestrator.executeBuild(build).getLogs();
 
     // SONARJAVA-213
