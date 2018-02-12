@@ -16,10 +16,7 @@
   <name>SonarQube PMD Plugin</name>
   <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code, overcomplicated expressions or duplicate code.</description>
   <inceptionYear>2012</inceptionYear>
-  <organization>
-    <name>SonarSource</name>
-    <url>http://www.sonarsource.com</url>
-  </organization>
+
   <licenses>
     <license>
       <name>GNU LGPL 3</name>
@@ -30,13 +27,13 @@
 
   <developers>
     <developer>
+      <name>Tim Webster</name>
+      <email>tim.webster@gmail.com</email>
+    </developer>
+    <developer>
       <id>godin</id>
       <name>Evgeny Mandrikov</name>
       <organization>SonarSource</organization>
-    </developer>
-    <developer>
-      <name>Tim Webster</name>
-      <email>tim.webster@gmail.com</email>
     </developer>
   </developers>
   <scm>
