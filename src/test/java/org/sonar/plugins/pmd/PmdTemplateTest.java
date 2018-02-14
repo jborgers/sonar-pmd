@@ -1,6 +1,6 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 SonarSource
+ * Copyright (C) 2012 ${owner}
  * sonarqube@googlegroups.com
  *
  * This program is free software; you can redistribute it and/or
