@@ -1,8 +1,10 @@
 language: java
-sudo: false
+sudo: required
 
 jdk:
-  - oraclejdk7
+- openjdk7
+- openjdk8
+- oraclejdk8
 
 install: true
 script: ./travis.sh
@@ -16,7 +18,8 @@ matrix:
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
+  - $HOME/.m2
 
 notifications:
-  email: false
+  email:
+  - jens@gerdes.digital
