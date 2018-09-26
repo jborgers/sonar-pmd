@@ -101,7 +101,7 @@ public class PmdConfigurationTest {
 
     assertThat(reportFile).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
     List<String> writtenLines = Files.readLines(reportFile, Charsets.UTF_8);
-    assertThat(writtenLines).hasSize(3);
+    assertThat(writtenLines).hasSize(6);
     assertThat(writtenLines.get(1)).contains("<pmd");
   }
 

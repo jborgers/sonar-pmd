@@ -49,6 +49,9 @@ public class PmdTemplate {
     .put("6", "1.6")
     .put("7", "1.7")
     .put("8", "1.8")
+    .put("9", "9")
+    .put("10", "10")
+    .put("11", "11")
     .build();
 
   private SourceCodeProcessor processor;
