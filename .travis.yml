@@ -1,5 +1,5 @@
 language: java
-sudo: required
+sudo: false
 
 jdk:
 - openjdk7
@@ -18,7 +18,7 @@ matrix:
 
 cache:
   directories:
-  - $HOME/.m2
+  - $HOME/.m2/repository
 
 notifications:
   email:
