@@ -67,7 +67,7 @@
     <sonar.pluginKey>pmd</sonar.pluginKey>
     <sonar.pluginName>PMD</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.pmd.PmdPlugin</sonar.pluginClass>
-    <sonar.pluginDescription><![CDATA[Analyze Java code with <a href="http://pmd.sourceforge.net/">PMD</a>.]]></sonar.pluginDescription>
+    <sonar.pluginDescription>Analyze Java code with PMD.</sonar.pluginDescription>
     <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
   </properties>
 
