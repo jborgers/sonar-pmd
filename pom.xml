@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -14,7 +15,9 @@
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
-  <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code, overcomplicated expressions or duplicate code.</description>
+  <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code,
+    overcomplicated expressions or duplicate code.
+  </description>
   <inceptionYear>2012</inceptionYear>
 
   <licenses>
@@ -27,6 +30,11 @@
 
   <developers>
     <developer>
+      <name>Jens Gerdes</name>
+      <email>jens@gerdes.digital</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
       <name>Tim Webster</name>
       <email>tim.webster@gmail.com</email>
     </developer>
@@ -37,15 +45,15 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</developerConnection>
-    <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
+    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
+    <url>https://github.com/jensgerdes/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
+  <url>https://github.com/jensgerdes/sonar-pmd</url>
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/SonarQubeCommunity/sonar-pmd/issues</url>
+    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
   </issueManagement>
 
   <properties>
