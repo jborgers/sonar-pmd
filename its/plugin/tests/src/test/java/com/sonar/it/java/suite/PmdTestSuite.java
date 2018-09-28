@@ -19,6 +19,8 @@
  */
 package com.sonar.it.java.suite;
 
+import java.io.File;
+
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.locator.FileLocation;
 import org.junit.ClassRule;
@@ -27,19 +29,19 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  PmdTest.class
+        PmdTest.class
 })
 public class PmdTestSuite {
 
-  @ClassRule
-  public static final Orchestrator ORCHESTRATOR = Orchestrator
-    .builderEnv()
-    .addPlugin("java")
-    .addPlugin(FileLocation.of("../../../target/sonar-pmd-plugin.jar"))
-    .addPlugin(FileLocation.of(TestUtils.pluginJar("pmd-extension-plugin")))
-    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
-    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
-    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
-    .build();
+    @ClassRule
+    public static final Orchestrator ORCHESTRATOR = Orchestrator
+            .builderEnv()
+            .addPlugin("java")
+            .addPlugin(FileLocation.byWildcardMavenFilename(new File("../../../target"), "sonar-pmd-plugin-*.jar"))
+            .addPlugin(FileLocation.of(TestUtils.pluginJar("pmd-extension-plugin")))
+            .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
+            .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
+            .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
+            .build();
 
 }
