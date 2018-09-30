@@ -1,8 +1,11 @@
-SonarQube PMD Plugin
-====================
-## Description / Features
-This plugin provides coding rules from [PMD](https://pmd.github.io/).
+# SonarQube PMD Plugin [![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg?branch=fix_travis_builds)](https://travis-ci.org/jensgerdes/sonar-pmd) [![LGPL 3 License](https://img.shields.io/badge/license-LGPLv3-green.svg)](https://github.com/jensgerdes/sonar-pmd/blob/master/LICENSE.md)
+Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.io/).
 
+**Build status (all branches)**
+
+[![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg)](https://travis-ci.org/SonarSource/sonar-java)
+
+## Description / Features
 PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6
 -------|---|---|---|---|---|---|---
 PMD|4.3|4.3|5.1.1|5.2.1|5.3.1|5.4.0|5.4.2
@@ -15,3 +18,6 @@ Set the sonar.java.source property to tell PMD which version of Java your source
 
 ## Rules on test
 PMD tool provides some rules that can check the code of JUnit tests.Please note that these rules (and only these rules) will be applied only on the test files of your project.
+
+## License
+Licensed under the [GNU Lesser General Public License, Version 3.0](https://github.com/jensgerdes/sonar-pmd/blob/master/LICENSE.md)
