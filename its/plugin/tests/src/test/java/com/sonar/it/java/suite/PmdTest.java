@@ -19,7 +19,9 @@
  */
 package com.sonar.it.java.suite;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
@@ -28,8 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
-
-import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -62,17 +62,14 @@ public class PmdTest {
       .setProperty("sonar.java.binaries", ".")
       .setProperty("sonar.profile", "pmd-extensions");
     final BuildResult buildResult = orchestrator.executeBuild(build);
-    String log = buildResult.getLogs();
+    final String log = buildResult.getLogs();
 
-    // SONARJAVA-213
-    if (orchestrator.getConfiguration().getPluginVersion("java").isGreaterThanOrEquals("1.4")) {
-      assertThat(log).contains("Start MaximumMethodsCountCheck");
-      assertThat(log).contains("End MaximumMethodsCountCheck");
-    }
+    assertThat(log).contains("Start MaximumMethodsCountCheck");
+    assertThat(log).contains("End MaximumMethodsCountCheck");
 
     List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Errors"));
     assertThat(issues).hasSize(3);
-    List<String> messages = Lists.newArrayList();
+    List<String> messages = new ArrayList<>();
     for (Issue issue : issues) {
       messages.add(issue.message());
     }

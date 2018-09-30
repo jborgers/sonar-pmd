@@ -10,9 +10,8 @@ install: true
 script: ./travis.sh
 env:
   - TEST=ci
-  - TEST=plugin SQ_VERSION=DEV
-  - TEST=plugin SQ_VERSION=LATEST_RELEASE
-  - TEST=plugin SQ_VERSION=LTS
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[6.7]
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.2]
 
 cache:
   directories:

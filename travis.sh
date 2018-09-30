@@ -9,9 +9,9 @@ ci)
   ;;
 
 plugin)
-  mvn package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
+  mvn clean package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
   cd its/plugin
-  mvn package -Dsonar.runtimeVersion="$SQ_VERSION" -DjavaVersion="LATEST_RELEASE" -Dmaven.test.redirectTestOutputToFile=false
+  mvn clean package -Dtest.sonar.version=${SQ_VERSION} -Dmaven.test.redirectTestOutputToFile=false
   ;;
 
 *)

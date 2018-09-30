@@ -23,6 +23,7 @@ import java.io.File;
 
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.locator.FileLocation;
+import com.sonar.orchestrator.locator.MavenLocation;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -33,10 +34,18 @@ import org.junit.runners.Suite;
 })
 public class PmdTestSuite {
 
+    private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
+    private static final String SONAR_VERSION_KEY = "test.sonar.version";
+
     @ClassRule
     public static final Orchestrator ORCHESTRATOR = Orchestrator
             .builderEnv()
-            .addPlugin("java")
+            .setSonarVersion(determineSonarqubeVersion())
+            .addPlugin(MavenLocation.create(
+                    "org.sonarsource.java",
+                    "sonar-java-plugin",
+                    determineJavaPluginVersion()
+            ))
             .addPlugin(FileLocation.byWildcardMavenFilename(new File("../../../target"), "sonar-pmd-plugin-*.jar"))
             .addPlugin(FileLocation.of(TestUtils.pluginJar("pmd-extension-plugin")))
             .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
@@ -44,4 +53,11 @@ public class PmdTestSuite {
             .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
             .build();
 
+    private static String determineJavaPluginVersion() {
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "DEV");
+    }
+
+    private static String determineSonarqubeVersion() {
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[6.7]");
+    }
 }
