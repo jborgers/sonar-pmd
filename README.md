@@ -1,4 +1,4 @@
-# SonarQube PMD Plugin [![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg?branch=fix_travis_builds)](https://travis-ci.org/jensgerdes/sonar-pmd) [![LGPL 3 License](https://img.shields.io/badge/license-LGPLv3-green.svg)](https://github.com/jensgerdes/sonar-pmd/blob/master/LICENSE.md)
+# SonarQube PMD Plugin [![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg?branch=master)](https://travis-ci.org/jensgerdes/sonar-pmd) [![LGPL 3 License](https://img.shields.io/badge/license-LGPLv3-green.svg)](https://github.com/jensgerdes/sonar-pmd/blob/master/LICENSE.md)
 Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.io/).
 
 **Build status (all branches)**
