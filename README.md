@@ -3,7 +3,7 @@ Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.i
 
 **Build status (all branches)**
 
-[![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg)](https://travis-ci.org/SonarSource/sonar-java)
+[![Build Status](https://api.travis-ci.org/jensgerdes/sonar-pmd.svg)](https://travis-ci.org/jensgerdes/sonar-pmd)
 
 ## Description / Features
 PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6
