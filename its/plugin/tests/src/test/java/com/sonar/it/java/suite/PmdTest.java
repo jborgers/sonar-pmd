@@ -60,6 +60,8 @@ public class PmdTest {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanSonarGoals()
       .setProperty("sonar.java.binaries", ".")
+      .setProperty("sonar.login", "admin")
+      .setProperty("sonar.password", "admin")
       .setProperty("sonar.profile", "pmd-extensions");
     final BuildResult buildResult = orchestrator.executeBuild(build);
     final String log = buildResult.getLogs();
@@ -86,6 +88,8 @@ public class PmdTest {
   public void ruleAvoidDuplicateLiterals() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-avoid-duplicate-literals"))
       .setCleanSonarGoals()
+      .setProperty("sonar.login", "admin")
+      .setProperty("sonar.password", "admin")
       .setProperty("sonar.profile", "pmd");
     orchestrator.executeBuild(build);
 
@@ -103,6 +107,8 @@ public class PmdTest {
   public void junitRules() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-junit-rules"))
       .setCleanSonarGoals()
+      .setProperty("sonar.login", "admin")
+      .setProperty("sonar.password", "admin")
       .setProperty("sonar.profile", "pmd-junit");
     orchestrator.executeBuild(build);
 
@@ -124,6 +130,8 @@ public class PmdTest {
   public void pmd_should_have_access_to_external_libraries_in_its_classpath() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanPackageSonarGoals()
+      .setProperty("sonar.login", "admin")
+      .setProperty("sonar.password", "admin")
       .setProperty("sonar.profile", "pmd-extensions");
     orchestrator.executeBuild(build);
 
