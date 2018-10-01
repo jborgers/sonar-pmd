@@ -11,6 +11,7 @@ ci)
 plugin)
   mvn clean package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
   cd its/plugin
+  unset SONARQUBE_SCANNER_PARAMS SONAR_TOKEN SONAR_SCANNER_HOME
   echo "####"
   printenv | cut -d= -f1
   echo "####"
