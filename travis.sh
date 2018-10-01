@@ -11,6 +11,9 @@ ci)
 plugin)
   mvn clean package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
   cd its/plugin
+  echo "####"
+  printenv | cut -d= -f1
+  echo "####"
   mvn clean package -Dtest.sonar.version=${SQ_VERSION} -Dmaven.test.redirectTestOutputToFile=false
   ;;
 
