@@ -1,9 +1,14 @@
 language: java
 sudo: false
 
+addons:
+  sonarcloud:
+    organization: "jensgerdes-github"
+    token:
+      secure: "U299FqcJAMNfblrZF8R/ivqRk7KNdSOdcyWI4h5dgOLlQHj+HHrF2GJB2fOVeaB53snOkCycM/ZQgqTLlS1PU2NUca3TroNXj6jpNK1Erb/TXqFMKK+rmsN+hcxudDYGnQFIVnWy4lsg72jlK3Qvktt0XyfuYjMqQbsp3zwhlxw="
+
 jdk:
 - openjdk8
-- oraclejdk8
 
 install: true
 script: ./travis.sh

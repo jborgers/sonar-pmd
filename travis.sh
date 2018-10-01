@@ -5,7 +5,7 @@ set -euo pipefail
 case "$TEST" in
 
 ci)
-  mvn verify -B -e -V
+  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar verify -B -e -V
   ;;
 
 plugin)
