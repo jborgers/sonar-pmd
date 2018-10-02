@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>24</version>
+    <version>48</version>
   </parent>
 
   <groupId>org.sonarsource.pmd</groupId>
@@ -15,9 +15,7 @@
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
-  <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code,
-    overcomplicated expressions or duplicate code.
-  </description>
+  <description>Sonar-PMD is a plugin that provides coding rules from PMD.</description>
   <inceptionYear>2012</inceptionYear>
 
   <licenses>
