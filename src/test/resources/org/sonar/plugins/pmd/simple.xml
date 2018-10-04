@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset>
-    <description>Sonar PMD rules</description>
-    <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
-        <priority>2</priority>
-        <properties>
-            <property name="threshold" value="20"/>
-        </properties>
-    </rule>
-    <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
-        <properties>
-            <property name="minimum" value="30"/>
-        </properties>
-    </rule>
-    <rule ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
-        <priority>4</priority>
-    </rule>
-    <rule class="net.sourceforge.pmd.lang.java.rule.design.UseCollectionIsEmptyRule">
+  <description>Sonar PMD rules</description>
+  <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
+    <priority>2</priority>
+    <properties>
+      <property name="threshold" value="20"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
+    <properties>
+      <property name="minimum" value="30"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
+    <priority>4</priority>
+  </rule>
+  <rule class="net.sourceforge.pmd.lang.java.rule.design.UseCollectionIsEmptyRule">
     <priority>3</priority>
   </rule>
 </ruleset>

@@ -19,33 +19,33 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.io.Closeables;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.google.common.io.Closeables;
+import org.slf4j.LoggerFactory;
+
 public final class PmdVersion {
-  private static final String PROPERTIES_PATH = "/org/sonar/plugins/pmd/pmd-plugin.properties";
+    private static final String PROPERTIES_PATH = "/org/sonar/plugins/pmd/pmd-plugin.properties";
 
-  private PmdVersion() {
-    // Static utility class
-  }
-
-  public static String getVersion() {
-    Properties properties = new Properties();
-
-    InputStream input = null;
-    try {
-      input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH);
-      properties.load(input);
-    } catch (IOException e) {
-      LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH, e);
-    } finally {
-      Closeables.closeQuietly(input);
+    private PmdVersion() {
+        // Static utility class
     }
 
-    return properties.getProperty("pmd.version", "");
-  }
+    public static String getVersion() {
+        Properties properties = new Properties();
+
+        InputStream input = null;
+        try {
+            input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH);
+            properties.load(input);
+        } catch (IOException e) {
+            LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH, e);
+        } finally {
+            Closeables.closeQuietly(input);
+        }
+
+        return properties.getProperty("pmd.version", "");
+    }
 }

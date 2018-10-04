@@ -26,22 +26,22 @@ import org.sonar.api.rules.RulePriority;
 import static com.google.common.collect.ImmutableMap.of;
 
 public final class PmdLevelUtils {
-  private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
-      RulePriority.BLOCKER, "1",
-      RulePriority.CRITICAL, "2",
-      RulePriority.MAJOR, "3",
-      RulePriority.MINOR, "4",
-      RulePriority.INFO, "5"));
+    private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
+            RulePriority.BLOCKER, "1",
+            RulePriority.CRITICAL, "2",
+            RulePriority.MAJOR, "3",
+            RulePriority.MINOR, "4",
+            RulePriority.INFO, "5"));
 
-  private PmdLevelUtils() {
-    // only static methods
-  }
+    private PmdLevelUtils() {
+        // only static methods
+    }
 
-  public static RulePriority fromLevel(String level) {
-    return LEVELS_PER_PRIORITY.inverse().get(level);
-  }
+    public static RulePriority fromLevel(String level) {
+        return LEVELS_PER_PRIORITY.inverse().get(level);
+    }
 
-  public static String toLevel(RulePriority priority) {
-    return LEVELS_PER_PRIORITY.get(priority);
-  }
+    public static String toLevel(RulePriority priority) {
+        return LEVELS_PER_PRIORITY.get(priority);
+    }
 }

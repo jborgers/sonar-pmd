@@ -24,36 +24,36 @@ import java.util.List;
 
 public class PmdRuleset {
 
-  private String description;
+    private String description;
 
-  private List<PmdRule> rules = new ArrayList<>();
+    private List<PmdRule> rules = new ArrayList<>();
 
-  public PmdRuleset() {
-    // no description
-  }
+    public PmdRuleset() {
+        // no description
+    }
 
-  public PmdRuleset(String description) {
-    this.description = description;
-  }
+    public PmdRuleset(String description) {
+        this.description = description;
+    }
 
-  public List<PmdRule> getPmdRules() {
-    return rules;
-  }
+    public List<PmdRule> getPmdRules() {
+        return rules;
+    }
 
-  public void setRules(List<PmdRule> rules) {
-    this.rules = rules;
-  }
+    public void setRules(List<PmdRule> rules) {
+        this.rules = rules;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void addRule(PmdRule rule) {
-    rules.add(rule);
-  }
+    public void addRule(PmdRule rule) {
+        rules.add(rule);
+    }
 
 }

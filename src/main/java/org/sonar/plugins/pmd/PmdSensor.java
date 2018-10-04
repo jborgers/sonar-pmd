@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.io.File;
+
 import com.google.common.collect.Iterables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
@@ -32,49 +34,47 @@ import org.sonar.api.resources.Project;
 import org.sonar.api.utils.XmlParserException;
 import org.sonar.plugins.java.Java;
 
-import java.io.File;
-
 public class PmdSensor implements Sensor {
-  private final RulesProfile profile;
-  private final PmdExecutor executor;
-  private final PmdViolationRecorder pmdViolationRecorder;
-  private final FileSystem fs;
+    private final RulesProfile profile;
+    private final PmdExecutor executor;
+    private final PmdViolationRecorder pmdViolationRecorder;
+    private final FileSystem fs;
 
-  public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
-    this.profile = profile;
-    this.executor = executor;
-    this.pmdViolationRecorder = pmdViolationRecorder;
-    this.fs = fs;
-  }
-
-  @Override
-  public boolean shouldExecuteOnProject(Project project) {
-    return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
-      || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
-  }
-
-  private boolean hasFilesToCheck(Type type, String repositoryKey) {
-    FilePredicates predicates = fs.predicates();
-    Iterable<File> files = fs.files(predicates.and(
-      predicates.hasLanguage(Java.KEY),
-      predicates.hasType(type)));
-    return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
-  }
-
-  @Override
-  public void analyse(Project project, SensorContext context) {
-    try {
-      Report report = executor.execute();
-      for (RuleViolation violation : report) {
-        pmdViolationRecorder.saveViolation(violation);
-      }
-    } catch (Exception e) {
-      throw new XmlParserException(e);
+    public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+        this.profile = profile;
+        this.executor = executor;
+        this.pmdViolationRecorder = pmdViolationRecorder;
+        this.fs = fs;
     }
-  }
 
-  @Override
-  public String toString() {
-    return getClass().getSimpleName();
-  }
+    @Override
+    public boolean shouldExecuteOnProject(Project project) {
+        return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
+                || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
+    }
+
+    private boolean hasFilesToCheck(Type type, String repositoryKey) {
+        FilePredicates predicates = fs.predicates();
+        Iterable<File> files = fs.files(predicates.and(
+                predicates.hasLanguage(Java.KEY),
+                predicates.hasType(type)));
+        return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
+    }
+
+    @Override
+    public void analyse(Project project, SensorContext context) {
+        try {
+            Report report = executor.execute();
+            for (RuleViolation violation : report) {
+                pmdViolationRecorder.saveViolation(violation);
+            }
+        } catch (Exception e) {
+            throw new XmlParserException(e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

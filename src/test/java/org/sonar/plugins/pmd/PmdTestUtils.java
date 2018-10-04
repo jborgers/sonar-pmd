@@ -19,19 +19,19 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.io.IOException;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import java.io.IOException;
-
 public class PmdTestUtils {
 
-  public static String getResourceContent(String path) {
-    try {
-      return Resources.toString(Resources.getResource(PmdTestUtils.class, path), Charsets.UTF_8);
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Could not load resource " + path, e);
+    public static String getResourceContent(String path) {
+        try {
+            return Resources.toString(Resources.getResource(PmdTestUtils.class, path), Charsets.UTF_8);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Could not load resource " + path, e);
+        }
     }
-  }
 
 }

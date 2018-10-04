@@ -19,20 +19,20 @@
  */
 package org.sonar.plugins.pmd;
 
-import org.junit.Test;
-
 import java.lang.reflect.Constructor;
+
+import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class PmdConstantsTest {
 
-  @Test
-  public void private_constructor() throws Exception {
-    Constructor constructor = PmdConstants.class.getDeclaredConstructor();
-    assertThat(constructor.isAccessible()).isFalse();
-    constructor.setAccessible(true);
-    constructor.newInstance();
-  }
+    @Test
+    public void private_constructor() throws Exception {
+        Constructor constructor = PmdConstants.class.getDeclaredConstructor();
+        assertThat(constructor.isAccessible()).isFalse();
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
 }

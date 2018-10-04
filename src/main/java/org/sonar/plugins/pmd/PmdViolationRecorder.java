@@ -31,49 +31,49 @@ import org.sonar.api.rules.RuleFinder;
 
 public class PmdViolationRecorder implements BatchExtension {
 
-  private final FileSystem fs;
-  private final RuleFinder ruleFinder;
-  private final ResourcePerspectives perspectives;
+    private final FileSystem fs;
+    private final RuleFinder ruleFinder;
+    private final ResourcePerspectives perspectives;
 
-  public PmdViolationRecorder(FileSystem fs, RuleFinder ruleFinder, ResourcePerspectives perspectives) {
-    this.fs = fs;
-    this.ruleFinder = ruleFinder;
-    this.perspectives = perspectives;
-  }
-
-  public void saveViolation(RuleViolation pmdViolation) {
-    InputFile inputFile = findResourceFor(pmdViolation);
-    if (inputFile == null) {
-      // Save violations only for existing resources
-      return;
+    public PmdViolationRecorder(FileSystem fs, RuleFinder ruleFinder, ResourcePerspectives perspectives) {
+        this.fs = fs;
+        this.ruleFinder = ruleFinder;
+        this.perspectives = perspectives;
     }
 
-    Issuable issuable = perspectives.as(Issuable.class, inputFile);
+    public void saveViolation(RuleViolation pmdViolation) {
+        InputFile inputFile = findResourceFor(pmdViolation);
+        if (inputFile == null) {
+            // Save violations only for existing resources
+            return;
+        }
 
-    Rule rule = findRuleFor(pmdViolation);
-    if (issuable == null || rule == null) {
-      // Save violations only for enabled rules
-      return;
+        Issuable issuable = perspectives.as(Issuable.class, inputFile);
+
+        Rule rule = findRuleFor(pmdViolation);
+        if (issuable == null || rule == null) {
+            // Save violations only for enabled rules
+            return;
+        }
+
+        IssueBuilder issueBuilder = issuable.newIssueBuilder()
+                .ruleKey(rule.ruleKey())
+                .message(pmdViolation.getDescription())
+                .line(pmdViolation.getBeginLine());
+        issuable.addIssue(issueBuilder.build());
     }
 
-    IssueBuilder issueBuilder = issuable.newIssueBuilder()
-      .ruleKey(rule.ruleKey())
-      .message(pmdViolation.getDescription())
-      .line(pmdViolation.getBeginLine());
-    issuable.addIssue(issueBuilder.build());
-  }
-
-  private InputFile findResourceFor(RuleViolation violation) {
-    return fs.inputFile(fs.predicates().hasAbsolutePath(violation.getFilename()));
-  }
-
-  private Rule findRuleFor(RuleViolation violation) {
-    String ruleKey = violation.getRule().getName();
-    Rule rule = ruleFinder.findByKey(PmdConstants.REPOSITORY_KEY, ruleKey);
-    if (rule != null) {
-      return rule;
+    private InputFile findResourceFor(RuleViolation violation) {
+        return fs.inputFile(fs.predicates().hasAbsolutePath(violation.getFilename()));
     }
-    return ruleFinder.findByKey(PmdConstants.TEST_REPOSITORY_KEY, ruleKey);
-  }
+
+    private Rule findRuleFor(RuleViolation violation) {
+        String ruleKey = violation.getRule().getName();
+        Rule rule = ruleFinder.findByKey(PmdConstants.REPOSITORY_KEY, ruleKey);
+        if (rule != null) {
+            return rule;
+        }
+        return ruleFinder.findByKey(PmdConstants.TEST_REPOSITORY_KEY, ruleKey);
+    }
 
 }

@@ -19,39 +19,39 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.lang.reflect.Constructor;
+
 import org.junit.Test;
 import org.sonar.api.rules.RulePriority;
-
-import java.lang.reflect.Constructor;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class PmdLevelUtilsTest {
-  @Test
-  public void should_get_priority_from_level() {
-    assertThat(PmdLevelUtils.fromLevel("1")).isSameAs(RulePriority.BLOCKER);
-    assertThat(PmdLevelUtils.fromLevel("2")).isSameAs(RulePriority.CRITICAL);
-    assertThat(PmdLevelUtils.fromLevel("3")).isSameAs(RulePriority.MAJOR);
-    assertThat(PmdLevelUtils.fromLevel("4")).isSameAs(RulePriority.MINOR);
-    assertThat(PmdLevelUtils.fromLevel("5")).isSameAs(RulePriority.INFO);
-    assertThat(PmdLevelUtils.fromLevel("?")).isNull();
-    assertThat(PmdLevelUtils.fromLevel(null)).isNull();
-  }
+    @Test
+    public void should_get_priority_from_level() {
+        assertThat(PmdLevelUtils.fromLevel("1")).isSameAs(RulePriority.BLOCKER);
+        assertThat(PmdLevelUtils.fromLevel("2")).isSameAs(RulePriority.CRITICAL);
+        assertThat(PmdLevelUtils.fromLevel("3")).isSameAs(RulePriority.MAJOR);
+        assertThat(PmdLevelUtils.fromLevel("4")).isSameAs(RulePriority.MINOR);
+        assertThat(PmdLevelUtils.fromLevel("5")).isSameAs(RulePriority.INFO);
+        assertThat(PmdLevelUtils.fromLevel("?")).isNull();
+        assertThat(PmdLevelUtils.fromLevel(null)).isNull();
+    }
 
-  @Test
-  public void should_get_level_from_priority() {
-    assertThat(PmdLevelUtils.toLevel(RulePriority.BLOCKER)).isEqualTo("1");
-    assertThat(PmdLevelUtils.toLevel(RulePriority.CRITICAL)).isEqualTo("2");
-    assertThat(PmdLevelUtils.toLevel(RulePriority.MAJOR)).isEqualTo("3");
-    assertThat(PmdLevelUtils.toLevel(RulePriority.MINOR)).isEqualTo("4");
-    assertThat(PmdLevelUtils.toLevel(RulePriority.INFO)).isEqualTo("5");
-  }
+    @Test
+    public void should_get_level_from_priority() {
+        assertThat(PmdLevelUtils.toLevel(RulePriority.BLOCKER)).isEqualTo("1");
+        assertThat(PmdLevelUtils.toLevel(RulePriority.CRITICAL)).isEqualTo("2");
+        assertThat(PmdLevelUtils.toLevel(RulePriority.MAJOR)).isEqualTo("3");
+        assertThat(PmdLevelUtils.toLevel(RulePriority.MINOR)).isEqualTo("4");
+        assertThat(PmdLevelUtils.toLevel(RulePriority.INFO)).isEqualTo("5");
+    }
 
-  @Test
-  public void private_constructor() throws Exception {
-    Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
-    assertThat(constructor.isAccessible()).isFalse();
-    constructor.setAccessible(true);
-    constructor.newInstance();
-  }
+    @Test
+    public void private_constructor() throws Exception {
+        Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
+        assertThat(constructor.isAccessible()).isFalse();
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 }

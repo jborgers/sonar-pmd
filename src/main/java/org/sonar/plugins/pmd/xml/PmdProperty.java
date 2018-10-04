@@ -21,38 +21,38 @@ package org.sonar.plugins.pmd.xml;
 
 public class PmdProperty {
 
-  private String name;
+    private String name;
 
-  private String value;
+    private String value;
 
-  private String cdataValue;
+    private String cdataValue;
 
-  public PmdProperty(String name, String value) {
-    this.name = name;
-    this.value = value;
-  }
+    public PmdProperty(String name, String value) {
+        this.name = name;
+        this.value = value;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getValue() {
-    return value;
-  }
+    public String getValue() {
+        return value;
+    }
 
-  public String getCdataValue() {
-    return cdataValue;
-  }
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-  public boolean isCdataValue(){
-    return cdataValue != null;
-  }
+    public String getCdataValue() {
+        return cdataValue;
+    }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
+    public boolean isCdataValue() {
+        return cdataValue != null;
+    }
 
-  public void setCdataValue(String cdataValue) {
-    this.cdataValue = cdataValue;
-  }
+    public void setCdataValue(String cdataValue) {
+        this.cdataValue = cdataValue;
+    }
 }

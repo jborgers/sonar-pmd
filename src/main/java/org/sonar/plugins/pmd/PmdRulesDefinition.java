@@ -28,26 +28,26 @@ import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
 public final class PmdRulesDefinition implements RulesDefinition {
 
-  public PmdRulesDefinition() {
-    // do nothing
-  }
+    public PmdRulesDefinition() {
+        // do nothing
+    }
 
-  @Override
-  public void define(Context context) {
-    NewRepository repository = context
-      .createRepository(PmdConstants.REPOSITORY_KEY, Java.KEY)
-      .setName(PmdConstants.REPOSITORY_NAME);
+    static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
+        RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
+        ruleLoader.load(repository, PmdRulesDefinition.class.getResourceAsStream(xmlRulesFilePath), "UTF-8");
+        ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
+        PropertyFileLoader.loadNames(repository, PmdRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/pmd.properties"));
+        SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model.xml");
+    }
 
-    extractRulesData(repository, "/org/sonar/plugins/pmd/rules.xml", "/org/sonar/l10n/pmd/rules/pmd");
+    @Override
+    public void define(Context context) {
+        NewRepository repository = context
+                .createRepository(PmdConstants.REPOSITORY_KEY, Java.KEY)
+                .setName(PmdConstants.REPOSITORY_NAME);
 
-    repository.done();
-  }
+        extractRulesData(repository, "/org/sonar/plugins/pmd/rules.xml", "/org/sonar/l10n/pmd/rules/pmd");
 
-  static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
-    RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
-    ruleLoader.load(repository, PmdRulesDefinition.class.getResourceAsStream(xmlRulesFilePath), "UTF-8");
-    ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
-    PropertyFileLoader.loadNames(repository, PmdRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/pmd.properties"));
-    SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model.xml");
-  }
+        repository.done();
+    }
 }

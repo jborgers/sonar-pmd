@@ -19,6 +19,10 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
@@ -30,70 +34,64 @@ import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Settings;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-
 public class PmdConfiguration implements BatchExtension {
-  private static final Logger LOG = LoggerFactory.getLogger(PmdConfiguration.class);
+    public static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
+    public static final String PMD_RESULT_XML = "pmd-result.xml";
+    private static final Logger LOG = LoggerFactory.getLogger(PmdConfiguration.class);
+    private final FileSystem fileSystem;
+    private final Settings settings;
 
-  public static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
-  public static final String PMD_RESULT_XML = "pmd-result.xml";
-
-  private final FileSystem fileSystem;
-  private final Settings settings;
-
-  public PmdConfiguration(FileSystem fileSystem, Settings settings) {
-    this.fileSystem = fileSystem;
-    this.settings = settings;
-  }
-
-  public File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
-    try {
-      File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml");
-
-      LOG.info("PMD configuration: " + configurationFile.getAbsolutePath());
-
-      return configurationFile;
-    } catch (IOException e) {
-      throw new IllegalStateException("Fail to save the PMD configuration", e);
-    }
-  }
-
-  public File dumpXmlReport(Report report) {
-    if (!settings.getBoolean(PROPERTY_GENERATE_XML)) {
-      return null;
+    public PmdConfiguration(FileSystem fileSystem, Settings settings) {
+        this.fileSystem = fileSystem;
+        this.settings = settings;
     }
 
-    try {
-      String reportAsString = reportToString(report);
+    private static String reportToString(Report report) throws IOException {
+        StringWriter output = new StringWriter();
 
-      File reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
+        Renderer xmlRenderer = new XMLRenderer();
+        xmlRenderer.setWriter(output);
+        xmlRenderer.start();
+        xmlRenderer.renderFileReport(report);
+        xmlRenderer.end();
 
-      LOG.info("PMD output report: " + reportFile.getAbsolutePath());
-
-      return reportFile;
-    } catch (IOException e) {
-      throw new IllegalStateException("Fail to save the PMD report", e);
+        return output.toString();
     }
-  }
 
-  private static String reportToString(Report report) throws IOException {
-    StringWriter output = new StringWriter();
+    public File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
+        try {
+            File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml");
 
-    Renderer xmlRenderer = new XMLRenderer();
-    xmlRenderer.setWriter(output);
-    xmlRenderer.start();
-    xmlRenderer.renderFileReport(report);
-    xmlRenderer.end();
-  
-    return output.toString();
-  }
+            LOG.info("PMD configuration: " + configurationFile.getAbsolutePath());
 
-  private File writeToWorkingDirectory(String content, String fileName) throws IOException {
-    File file = new File(fileSystem.workDir(), fileName);
-    Files.write(content, file, Charsets.UTF_8);
-    return file;
-  }
+            return configurationFile;
+        } catch (IOException e) {
+            throw new IllegalStateException("Fail to save the PMD configuration", e);
+        }
+    }
+
+    public File dumpXmlReport(Report report) {
+        if (!settings.getBoolean(PROPERTY_GENERATE_XML)) {
+            return null;
+        }
+
+        try {
+            String reportAsString = reportToString(report);
+
+            File reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
+
+            LOG.info("PMD output report: " + reportFile.getAbsolutePath());
+
+            return reportFile;
+        } catch (IOException e) {
+            throw new IllegalStateException("Fail to save the PMD report", e);
+        }
+    }
+
+    private File writeToWorkingDirectory(String content, String fileName) throws IOException {
+        File file = new File(fileSystem.workDir(), fileName);
+        Files.write(content, file, Charsets.UTF_8);
+        return file;
+    }
 
 }
