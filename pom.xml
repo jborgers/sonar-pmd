@@ -59,7 +59,7 @@
 
     <pmd.version>5.4.2</pmd.version>
     <sonar.version>5.1</sonar.version>
-    <sonar-java.version>3.6</sonar-java.version>
+    <sonar-java.version>5.5.0.14655</sonar-java.version>
     <slf4j.version>1.7.25</slf4j.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
@@ -91,9 +91,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
       <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.6</version>
+      <version>2.6.1</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
