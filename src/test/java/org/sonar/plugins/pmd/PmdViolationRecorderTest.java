@@ -105,7 +105,7 @@ public class PmdViolationRecorderTest {
     }
 
     private DefaultInputFile addToFileSystem(File file) {
-        DefaultInputFile inputFile = new DefaultInputFile(file.getPath()).setAbsolutePath(file.getAbsolutePath());
+        DefaultInputFile inputFile = new DefaultInputFile("test", file.getPath());
         fs.add(inputFile);
         return inputFile;
     }

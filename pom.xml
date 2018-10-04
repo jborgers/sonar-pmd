@@ -58,8 +58,9 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>5.4.2</pmd.version>
-    <sonar.version>4.5.4</sonar.version>
+    <sonar.version>5.1</sonar.version>
     <sonar-java.version>3.6</sonar-java.version>
+    <slf4j.version>1.7.25</slf4j.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>pmd</sonar.pluginKey>
@@ -147,6 +148,13 @@
       <version>1.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
     We need following dependency, otherwise we will receive
     java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
@@ -177,6 +185,21 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Only here for transition purposes. -->
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert</artifactId>
+      <version>1.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

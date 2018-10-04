@@ -158,7 +158,6 @@ public class PmdSensorTest {
 
     private void addOneJavaFile(Type type) {
         File file = new File("x");
-        fs.add(new DefaultInputFile(
-                file.getName()).setAbsolutePath(file.getAbsolutePath()).setLanguage("java").setType(type));
+        fs.add(new DefaultInputFile("test", file.getName()).setLanguage("java").setType(type));
     }
 }

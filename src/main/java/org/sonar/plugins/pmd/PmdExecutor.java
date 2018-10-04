@@ -42,11 +42,16 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.utils.TimeProfiler;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 public class PmdExecutor implements BatchExtension {
+
+    private static final Logger LOGGER = Loggers.get(PmdExecutor.class);
+
     private final FileSystem fs;
     private final RulesProfile rulesProfile;
     private final PmdProfileExporter pmdProfileExporter;
@@ -65,7 +70,7 @@ public class PmdExecutor implements BatchExtension {
     }
 
     public Report execute() {
-        TimeProfiler profiler = new TimeProfiler().start("Execute PMD " + PmdVersion.getVersion());
+        Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PmdVersion.getVersion());
 
         ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
         URLClassLoader classLoader = createClassloader();
@@ -76,7 +81,7 @@ public class PmdExecutor implements BatchExtension {
         } finally {
             Closeables.closeQuietly(classLoader);
             Thread.currentThread().setContextClassLoader(initialClassLoader);
-            profiler.stop();
+            profiler.stopInfo();
         }
     }
 
@@ -95,14 +100,14 @@ public class PmdExecutor implements BatchExtension {
         return report;
     }
 
-    public Iterable<File> javaFiles(Type fileType) {
+    private Iterable<File> javaFiles(Type fileType) {
         FilePredicates predicates = fs.predicates();
         return fs.files(predicates.and(
                 predicates.hasLanguage(Java.KEY),
                 predicates.hasType(fileType)));
     }
 
-    public void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<File> files, String repositoryKey) {
+    private void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<File> files, String repositoryKey) {
         if (Iterables.isEmpty(files)) {
             // Nothing to analyze
             return;

@@ -67,9 +67,9 @@ public class PmdExecutorTest {
     Settings settings = new Settings();
     PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator, settings);
 
-    static InputFile file(String path, Type type) {
-        return new DefaultInputFile(path)
-                .setAbsolutePath(new File(path).getAbsolutePath())
+    static DefaultInputFile file(String path, Type type) {
+        return new DefaultInputFile("test", path)
+                //.setAbsolutePath(new File(path).getAbsolutePath())
                 .setType(type)
                 .setLanguage(Java.KEY);
     }
@@ -83,8 +83,8 @@ public class PmdExecutorTest {
 
     @Test
     public void should_execute_pmd_on_source_files_and_test_files() throws Exception {
-        InputFile srcFile = file("src/Class.java", Type.MAIN);
-        InputFile tstFile = file("test/ClassTest.java", Type.TEST);
+        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
+        DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
         setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
         fileSystem.add(srcFile);
@@ -113,8 +113,8 @@ public class PmdExecutorTest {
 
     @Test
     public void should_dump_ruleset_as_xml() throws Exception {
-        InputFile srcFile = file("src/Class.java", Type.MAIN);
-        InputFile tstFile = file("test/ClassTest.java", Type.TEST);
+        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
+        DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
         setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
         fileSystem.add(srcFile);
@@ -128,7 +128,7 @@ public class PmdExecutorTest {
 
     @Test
     public void should_ignore_empty_test_dir() throws Exception {
-        InputFile srcFile = file("src/Class.java", Type.MAIN);
+        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);
@@ -170,7 +170,7 @@ public class PmdExecutorTest {
         when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(profileContent);
         when(pmdConfiguration.dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, profileContent)).thenReturn(new File("unknown"));
 
-        InputFile srcFile = file("src/Class.java", Type.MAIN);
+        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         fileSystem.add(srcFile);
 
         try {

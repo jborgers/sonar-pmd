@@ -36,7 +36,6 @@ import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
-import org.sonar.api.rules.RuleParam;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
@@ -96,11 +95,9 @@ public class PmdProfileExporterTest {
                     .setRepositoryKey(rule.repository().key())
                     .setConfigKey(rule.internalKey());
             if (!rule.params().isEmpty()) {
-                List<RuleParam> ruleParams = Lists.newArrayList();
                 for (Param param : rule.params()) {
-                    ruleParams.add(new RuleParam().setDefaultValue(param.defaultValue()).setKey(param.name()));
+                    newRule.createParameter(param.name()).setDefaultValue(param.defaultValue());
                 }
-                newRule.setParams(ruleParams);
             }
             results.add(newRule);
         }
