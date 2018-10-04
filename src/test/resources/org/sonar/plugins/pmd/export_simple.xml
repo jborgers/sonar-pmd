@@ -3,7 +3,7 @@
   <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
     <priority>2</priority>
     <properties>
-      <property name="threshold" value="20"/>
+      <property name="threshold" value="20" />
     </properties>
   </rule>
   <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
