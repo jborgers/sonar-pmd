@@ -148,25 +148,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
-    We need following dependency, otherwise we will receive
-    java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
-    during call mock(org.sonar.api.resources.Project.class)
-    -->
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.0.7</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-testing-harness</artifactId>
       <scope>test</scope>
