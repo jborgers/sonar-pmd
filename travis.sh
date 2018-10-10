@@ -10,7 +10,7 @@ ci)
 
 plugin)
   # Build plugin
-  mvn clean package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
+  mvn clean package -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
 
   cd its/plugin
 
