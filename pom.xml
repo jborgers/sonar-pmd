@@ -58,7 +58,7 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>5.4.2</pmd.version>
-    <sonar.version>5.1</sonar.version>
+    <sonar.version>6.7</sonar.version>
     <sonar-java.version>5.5.0.14655</sonar-java.version>
     <slf4j.version>1.7.25</slf4j.version>
 
@@ -72,7 +72,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
       <scope>provided</scope>
       <version>${sonar.version}</version>
@@ -84,16 +84,15 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <type>sonar-plugin</type>
-      <version>${sonar-java.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.sonarsource.sslr-squid-bridge</groupId>
       <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.6.1</version>
+      <version>2.7.0.377</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>java-frontend</artifactId>
+      <version>${sonar-java.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -168,7 +167,7 @@
     </dependency>
 
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-testing-harness</artifactId>
       <scope>test</scope>
       <version>${sonar.version}</version>
@@ -185,7 +184,6 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

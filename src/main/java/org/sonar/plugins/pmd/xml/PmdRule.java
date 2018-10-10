@@ -19,10 +19,9 @@
  */
 package org.sonar.plugins.pmd.xml;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Lists;
 
 public class PmdRule {
 
@@ -34,7 +33,7 @@ public class PmdRule {
 
     private String message;
 
-    private List<PmdProperty> properties = Lists.newArrayList();
+    private List<PmdProperty> properties = new ArrayList<>();
 
     private String clazz;
 

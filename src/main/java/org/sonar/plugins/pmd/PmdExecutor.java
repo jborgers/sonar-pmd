@@ -20,6 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -29,7 +30,6 @@ import java.util.List;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -45,9 +45,10 @@ import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
-import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
+import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 
+// TODO Replace with Annotation
 public class PmdExecutor implements BatchExtension {
 
     private static final Logger LOGGER = Loggers.get(PmdExecutor.class);
@@ -57,6 +58,8 @@ public class PmdExecutor implements BatchExtension {
     private final PmdProfileExporter pmdProfileExporter;
     private final PmdConfiguration pmdConfiguration;
     private final JavaResourceLocator javaResourceLocator;
+
+    // FIXME Replace with Configuration
     private final Settings settings;
 
     public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
@@ -70,19 +73,22 @@ public class PmdExecutor implements BatchExtension {
     }
 
     public Report execute() {
-        Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PmdVersion.getVersion());
+        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PmdVersion.getVersion());
+        final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+        Report result = null;
 
-        ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-        URLClassLoader classLoader = createClassloader();
-        try {
+        try (URLClassLoader classLoader = createClassloader()) {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-            return executePmd(classLoader);
+            result = executePmd(classLoader);
+        } catch (IOException e) {
+            LOGGER.error("Failed to close URLClassLoader.", e);
         } finally {
-            Closeables.closeQuietly(classLoader);
             Thread.currentThread().setContextClassLoader(initialClassLoader);
             profiler.stopInfo();
         }
+
+        return result;
     }
 
     private Report executePmd(URLClassLoader classLoader) {
@@ -103,7 +109,7 @@ public class PmdExecutor implements BatchExtension {
     private Iterable<File> javaFiles(Type fileType) {
         FilePredicates predicates = fs.predicates();
         return fs.files(predicates.and(
-                predicates.hasLanguage(Java.KEY),
+                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
                 predicates.hasType(fileType)));
     }
 

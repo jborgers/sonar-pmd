@@ -17,14 +17,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd;
+package org.sonar.plugins.pmd.profile;
 
 import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -33,6 +32,7 @@ import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RulePriority;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
+import org.sonar.plugins.pmd.PmdTestUtils;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -41,6 +41,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class PmdProfileImporterTest {
+    // FIXME Make members private
     PmdProfileImporter importer;
     ValidationMessages messages;
 
@@ -50,18 +51,15 @@ public class PmdProfileImporterTest {
 
     static RuleFinder createRuleFinder() {
         RuleFinder ruleFinder = mock(RuleFinder.class);
-        when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
-            @Override
-            public Rule answer(InvocationOnMock invocation) {
-                RuleQuery query = (RuleQuery) invocation.getArguments()[0];
-                String configKey = query.getConfigKey();
-                String key = configKey.substring(configKey.lastIndexOf('/') + 1, configKey.length());
-                Rule rule = Rule.create(query.getRepositoryKey(), key, "").setConfigKey(configKey).setSeverity(RulePriority.BLOCKER);
-                if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
-                    rule.createParameter("minimum");
-                }
-                return rule;
+        when(ruleFinder.find(any(RuleQuery.class))).then((Answer<Rule>) invocation -> {
+            RuleQuery query = (RuleQuery) invocation.getArguments()[0];
+            String configKey = query.getConfigKey();
+            String key = configKey.substring(configKey.lastIndexOf('/') + 1, configKey.length());
+            Rule rule = Rule.create(query.getRepositoryKey(), key, "").setConfigKey(configKey).setSeverity(RulePriority.BLOCKER);
+            if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
+                rule.createParameter("minimum");
             }
+            return rule;
         });
         return ruleFinder;
     }

@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
-import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 import org.sonar.api.utils.XmlParserException;
@@ -46,6 +46,8 @@ import static org.mockito.Mockito.when;
 public class PmdSensorTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    // FIXME Make members private
     PmdSensor pmdSensor;
     Project project = mock(Project.class);
     RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
@@ -158,6 +160,14 @@ public class PmdSensorTest {
 
     private void addOneJavaFile(Type type) {
         File file = new File("x");
-        fs.add(new DefaultInputFile("test", file.getName()).setLanguage("java").setType(type));
+        fs.add(
+                TestInputFileBuilder.create(
+                        "sonar-pmd-test",
+                        file.getName()
+                )
+                        .setLanguage("java")
+                        .setType(type)
+                        .build()
+        );
     }
 }

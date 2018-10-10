@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.lang.reflect.Constructor;
-
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -28,11 +26,18 @@ import static org.fest.assertions.Assertions.assertThat;
 public class PmdConstantsTest {
 
     @Test
-    public void private_constructor() throws Exception {
-        Constructor constructor = PmdConstants.class.getDeclaredConstructor();
-        assertThat(constructor.isAccessible()).isFalse();
-        constructor.setAccessible(true);
-        constructor.newInstance();
+    public void checkDefinedKeys() {
+        assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.REPOSITORY_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.TEST_REPOSITORY_KEY).isEqualTo("pmd-unit-tests");
+        assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD Unit Tests");
+        assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.XPathRule");
+        assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
+        assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
+        assertThat(PmdConstants.JAVA_SOURCE_VERSION).isEqualTo("sonar.java.source");
+        assertThat(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE).isEqualTo("1.5");
+        assertThat(PmdConstants.LANGUAGE_KEY).isEqualTo("java");
     }
-
 }

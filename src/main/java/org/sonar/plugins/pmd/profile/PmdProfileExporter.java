@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd;
+package org.sonar.plugins.pmd.profile;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -38,7 +38,8 @@ import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.ActiveRuleParam;
-import org.sonar.plugins.java.Java;
+import org.sonar.plugins.pmd.PmdConstants;
+import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
@@ -46,7 +47,7 @@ import org.sonar.plugins.pmd.xml.PmdRuleset;
 public class PmdProfileExporter extends ProfileExporter {
     public PmdProfileExporter() {
         super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
-        setSupportedLanguages(Java.KEY);
+        setSupportedLanguages(PmdConstants.LANGUAGE_KEY);
         setMimeType("application/xml");
     }
 
@@ -82,6 +83,8 @@ public class PmdProfileExporter extends ProfileExporter {
     }
 
     private static void exportPmdRulesetToXml(PmdRuleset pmdRuleset, Writer writer, String profileName) {
+
+// TODO Check if org.sonar.api.utils.text.XmlWriter instead of JDOM?
         Element eltRuleset = new Element("ruleset");
         for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
             Element eltRule = new Element("rule");

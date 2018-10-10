@@ -19,35 +19,35 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.sonar.api.SonarPlugin;
+import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.plugins.pmd.profile.PmdProfileExporter;
+import org.sonar.plugins.pmd.profile.PmdProfileImporter;
+import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
-public class PmdPlugin extends SonarPlugin {
+/**
+ * The {@link PmdPlugin} is the main entry-point of Sonar-PMD.
+ */
+public class PmdPlugin implements Plugin {
 
     @Override
-    public List getExtensions() {
-        return Collections.unmodifiableList(
-                Arrays.asList(
-                        PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
-                                .defaultValue("false")
-                                .name("Generate XML Report")
-                                .hidden()
-                                .build(),
+    public void define(Context context) {
+        context.addExtensions(
+                PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
+                        .defaultValue("false")
+                        .name("Generate XML Report")
+                        .hidden()
+                        .build(),
 
-                        PmdSensor.class,
-                        PmdConfiguration.class,
-                        PmdExecutor.class,
-                        PmdRulesDefinition.class,
-                        PmdUnitTestsRulesDefinition.class,
-                        PmdProfileExporter.class,
-                        PmdProfileImporter.class,
-                        PmdViolationRecorder.class
-                )
+                PmdSensor.class,
+                PmdConfiguration.class,
+                PmdExecutor.class,
+                PmdRulesDefinition.class,
+                PmdUnitTestsRulesDefinition.class,
+                PmdProfileExporter.class,
+                PmdProfileImporter.class,
+                PmdViolationRecorder.class
         );
     }
-
 }

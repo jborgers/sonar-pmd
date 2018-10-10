@@ -37,14 +37,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
+import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -56,6 +57,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class PmdExecutorTest {
+    // FIXME Make members private
     PmdExecutor pmdExecutor;
 
     DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
@@ -64,14 +66,17 @@ public class PmdExecutorTest {
     PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
     PmdTemplate pmdTemplate = mock(PmdTemplate.class);
     JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
-    Settings settings = new Settings();
+
+    // FIXME Replace With Configuration
+    Settings settings = new MapSettings();
     PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator, settings);
 
     static DefaultInputFile file(String path, Type type) {
-        return new DefaultInputFile("test", path)
+        return TestInputFileBuilder.create("sonar-pmd-test", path)
                 //.setAbsolutePath(new File(path).getAbsolutePath())
                 .setType(type)
-                .setLanguage(Java.KEY);
+                .setLanguage(PmdConstants.LANGUAGE_KEY)
+                .build();
     }
 
     @Before

@@ -19,17 +19,50 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.Plugin;
+import org.sonar.api.SonarQubeSide;
+import org.sonar.api.SonarRuntime;
+import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.utils.Version;
+import org.sonar.plugins.pmd.profile.PmdProfileExporter;
+import org.sonar.plugins.pmd.profile.PmdProfileImporter;
+import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class PmdPluginTest {
 
-    private PmdPlugin plugin = new PmdPlugin();
+    private PmdPlugin subject;
 
-    @Test
-    public void should_contain_both_rule_repositories() {
-        assertThat(plugin.getExtensions()).contains(PmdRulesDefinition.class, PmdUnitTestsRulesDefinition.class);
+    @Before
+    public void setup() {
+        subject = new PmdPlugin();
     }
 
+    @Test
+    public void testPluginConfiguration() {
+        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(7, 3), SonarQubeSide.SCANNER);
+        final Plugin.Context context = new Plugin.Context(runtime);
+
+        subject.define(context);
+        final List extensions = context.getExtensions();
+        assertThat(extensions).hasSize(9);
+        assertThat(extensions).contains(
+                PmdSensor.class,
+                PmdConfiguration.class,
+                PmdExecutor.class,
+                PmdRulesDefinition.class,
+                PmdUnitTestsRulesDefinition.class,
+                PmdProfileExporter.class,
+                PmdProfileImporter.class,
+                PmdViolationRecorder.class
+        );
+    }
+
+    // TODO Compare expected classes with all classes annotated with ScannerSide annotation.
 }

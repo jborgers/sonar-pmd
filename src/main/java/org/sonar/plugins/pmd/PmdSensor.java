@@ -32,7 +32,6 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 import org.sonar.api.utils.XmlParserException;
-import org.sonar.plugins.java.Java;
 
 public class PmdSensor implements Sensor {
     private final RulesProfile profile;
@@ -56,7 +55,7 @@ public class PmdSensor implements Sensor {
     private boolean hasFilesToCheck(Type type, String repositoryKey) {
         FilePredicates predicates = fs.predicates();
         Iterable<File> files = fs.files(predicates.and(
-                predicates.hasLanguage(Java.KEY),
+                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
                 predicates.hasType(type)));
         return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
     }

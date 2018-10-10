@@ -20,7 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.RuleViolation;
-import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.component.ResourcePerspectives;
@@ -29,7 +29,8 @@ import org.sonar.api.issue.Issuable.IssueBuilder;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 
-public class PmdViolationRecorder implements BatchExtension {
+@ScannerSide
+public class PmdViolationRecorder {
 
     private final FileSystem fs;
     private final RuleFinder ruleFinder;

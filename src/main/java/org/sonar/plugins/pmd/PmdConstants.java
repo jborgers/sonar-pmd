@@ -19,6 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
+/**
+ * Common configuration parameters for the Sonar-PMD plugin.
+ */
 public final class PmdConstants {
     public static final String PLUGIN_NAME = "PMD";
     public static final String PLUGIN_KEY = "pmd";
@@ -39,6 +42,11 @@ public final class PmdConstants {
      * Default value for property {@link #JAVA_SOURCE_VERSION}.
      */
     public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "1.5";
+
+    /**
+     * The Java Language key.
+     */
+    public static final String LANGUAGE_KEY = "java";
 
     private PmdConstants() {
     }

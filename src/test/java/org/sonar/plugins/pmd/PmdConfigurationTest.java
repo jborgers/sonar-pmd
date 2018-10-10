@@ -34,6 +34,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.MapSettings;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -45,7 +46,8 @@ public class PmdConfigurationTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
     PmdConfiguration configuration;
-    Settings settings = new Settings();
+    // FIXME: Replace with Configuration
+    Settings settings = new MapSettings();
     FileSystem fs = mock(FileSystem.class);
 
     @BeforeClass

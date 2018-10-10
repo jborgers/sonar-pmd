@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd;
+package org.sonar.plugins.pmd.profile;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -40,6 +40,9 @@ import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.utils.ValidationMessages;
+import org.sonar.plugins.pmd.PmdConstants;
+import org.sonar.plugins.pmd.PmdTestUtils;
+import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 
@@ -55,6 +58,8 @@ public class PmdProfileExporterTest {
     private static final CharMatcher EOLS = CharMatcher.anyOf("\n\r");
     @org.junit.Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    // FIXME: Make member private
     PmdProfileExporter exporter = new PmdProfileExporter();
 
     static RulesProfile importProfile(String configuration) {

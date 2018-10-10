@@ -28,7 +28,7 @@ import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
-import org.sonar.plugins.java.Java;
+import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -42,7 +42,7 @@ public class PmdRulesDefinitionTest {
         RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
 
         assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_NAME);
-        assertThat(repository.language()).isEqualTo(Java.KEY);
+        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KEY);
 
         List<Rule> rules = repository.rules();
         assertThat(rules).hasSize(268);
@@ -58,15 +58,6 @@ public class PmdRulesDefinitionTest {
                 assertThat(param.name()).isNotNull();
                 assertThat(param.description())
                         .overridingErrorMessage("Description is not set for parameter '" + param.name() + "' of rule '" + rule.key())
-                        .isNotNull();
-            }
-
-            if (!"XPathRule".equals(rule.key())) {
-                assertThat(rule.debtRemediationFunction())
-                        .overridingErrorMessage("Sqale remediation function is not set for rule '" + rule.key())
-                        .isNotNull();
-                assertThat(rule.debtSubCharacteristic())
-                        .overridingErrorMessage("Sqale characteristic is not set for rule '" + rule.key())
                         .isNotNull();
             }
         }

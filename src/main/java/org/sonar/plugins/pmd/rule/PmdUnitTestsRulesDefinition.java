@@ -17,10 +17,10 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd;
+package org.sonar.plugins.pmd.rule;
 
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.plugins.java.Java;
+import org.sonar.plugins.pmd.PmdConstants;
 
 public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
 
@@ -31,7 +31,7 @@ public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
         NewRepository repository = context
-                .createRepository(PmdConstants.TEST_REPOSITORY_KEY, Java.KEY)
+                .createRepository(PmdConstants.TEST_REPOSITORY_KEY, PmdConstants.LANGUAGE_KEY)
                 .setName(PmdConstants.TEST_REPOSITORY_NAME);
 
         PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd-unit-tests");

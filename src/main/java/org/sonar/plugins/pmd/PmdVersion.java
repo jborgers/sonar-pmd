@@ -22,11 +22,14 @@ package org.sonar.plugins.pmd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
-import com.google.common.io.Closeables;
-import org.slf4j.LoggerFactory;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 public final class PmdVersion {
+
+    private static final Logger LOG = Loggers.get(PmdVersion.class);
     private static final String PROPERTIES_PATH = "/org/sonar/plugins/pmd/pmd-plugin.properties";
 
     private PmdVersion() {
@@ -34,18 +37,15 @@ public final class PmdVersion {
     }
 
     public static String getVersion() {
-        Properties properties = new Properties();
 
-        InputStream input = null;
-        try {
-            input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH);
+        try (InputStream input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH)) {
+            final Properties properties = new Properties();
             properties.load(input);
-        } catch (IOException e) {
-            LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH, e);
-        } finally {
-            Closeables.closeQuietly(input);
-        }
 
-        return properties.getProperty("pmd.version", "");
+            return properties.getProperty("pmd.version", "");
+        } catch (IOException e) {
+            LOG.warn("Failed to parse PMD Version from properties file.", e);
+            return "";
+        }
     }
 }

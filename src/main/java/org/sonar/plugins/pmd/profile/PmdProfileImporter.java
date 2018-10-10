@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd;
+package org.sonar.plugins.pmd.profile;
 
 import java.io.Reader;
 import java.util.List;
@@ -36,7 +36,8 @@ import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
-import org.sonar.plugins.java.Java;
+import org.sonar.plugins.pmd.PmdConstants;
+import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
@@ -48,7 +49,7 @@ public class PmdProfileImporter extends ProfileImporter {
 
     public PmdProfileImporter(RuleFinder ruleFinder) {
         super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
-        setSupportedLanguages(Java.KEY);
+        setSupportedLanguages(PmdConstants.LANGUAGE_KEY);
         this.ruleFinder = ruleFinder;
     }
 
@@ -116,7 +117,7 @@ public class PmdProfileImporter extends ProfileImporter {
         return profile;
     }
 
-    protected PmdRuleset parsePmdRuleset(Reader pmdConfigurationFile, ValidationMessages messages) {
+    PmdRuleset parsePmdRuleset(Reader pmdConfigurationFile, ValidationMessages messages) {
         try {
             SAXBuilder parser = new SAXBuilder();
             Document dom = parser.build(pmdConfigurationFile);

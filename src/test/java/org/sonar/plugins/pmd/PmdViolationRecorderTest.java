@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.component.ResourcePerspectives;
 import org.sonar.api.issue.Issuable;
 import org.sonar.api.issue.Issuable.IssueBuilder;
@@ -42,7 +43,7 @@ import static org.mockito.Mockito.when;
 
 public class PmdViolationRecorderTest {
 
-    private DefaultFileSystem fs = new DefaultFileSystem(new File("."));
+    private DefaultFileSystem fs = new DefaultFileSystem(new File("").getAbsoluteFile());
     private RuleFinder ruleFinder = mock(RuleFinder.class);
     private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
     private PmdViolationRecorder pmdViolationRecorder =
@@ -105,7 +106,7 @@ public class PmdViolationRecorderTest {
     }
 
     private DefaultInputFile addToFileSystem(File file) {
-        DefaultInputFile inputFile = new DefaultInputFile("test", file.getPath());
+        DefaultInputFile inputFile = TestInputFileBuilder.create("test", fs.baseDir(), file.getAbsoluteFile()).build();
         fs.add(inputFile);
         return inputFile;
     }
