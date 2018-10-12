@@ -35,12 +35,12 @@ import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 public class PmdTemplate {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PmdTemplate.class);
+    private static final Logger LOG = Loggers.get(PmdTemplate.class);
 
     private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.<String, String>builder()
             .put("1.1", "1.3")

@@ -27,8 +27,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -36,6 +34,8 @@ import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
@@ -44,7 +44,7 @@ import org.sonar.plugins.pmd.xml.PmdRuleset;
 
 public class PmdProfileImporter extends ProfileImporter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PmdProfileImporter.class);
+    private static final Logger LOG = Loggers.get(PmdProfileImporter.class);
     private final RuleFinder ruleFinder;
 
     public PmdProfileImporter(RuleFinder ruleFinder) {
