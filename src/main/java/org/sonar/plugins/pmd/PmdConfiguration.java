@@ -28,13 +28,14 @@ import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
-import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Settings;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
-public class PmdConfiguration implements BatchExtension {
+@ScannerSide
+public class PmdConfiguration {
     public static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
     public static final String PMD_RESULT_XML = "pmd-result.xml";
     private static final Logger LOG = Loggers.get(PmdConfiguration.class);

@@ -36,7 +36,7 @@ import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
-import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -48,8 +48,8 @@ import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 
-// TODO Replace with Annotation
-public class PmdExecutor implements BatchExtension {
+@ScannerSide
+public class PmdExecutor {
 
     private static final Logger LOGGER = Loggers.get(PmdExecutor.class);
 

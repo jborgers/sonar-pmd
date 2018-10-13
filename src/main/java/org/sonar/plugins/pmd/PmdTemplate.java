@@ -28,7 +28,6 @@ import java.util.Map;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.io.Closeables;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
@@ -91,15 +90,11 @@ public class PmdTemplate {
 
     public void process(File file, RuleSets rulesets, RuleContext ruleContext) {
         ruleContext.setSourceCodeFilename(file.getAbsolutePath());
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(file);
+
+        try (InputStream inputStream = new FileInputStream(file)) {
             processor.processSourceCode(inputStream, rulesets, ruleContext);
         } catch (Throwable e) {
             LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
-        } finally {
-            Closeables.closeQuietly(inputStream);
         }
     }
-
 }
