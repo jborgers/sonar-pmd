@@ -60,7 +60,6 @@
     <pmd.version>5.4.2</pmd.version>
     <sonar.version>6.7</sonar.version>
     <sonar-java.version>5.5.0.14655</sonar-java.version>
-    <slf4j.version>1.7.25</slf4j.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>pmd</sonar.pluginKey>
@@ -181,8 +180,14 @@
 
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>0.9.30</version>
       <scope>test</scope>
     </dependency>
 
