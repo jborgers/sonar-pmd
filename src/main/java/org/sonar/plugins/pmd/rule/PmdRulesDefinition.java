@@ -29,7 +29,6 @@ import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.PmdConstants;
-import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
 
 public final class PmdRulesDefinition implements RulesDefinition {
 
