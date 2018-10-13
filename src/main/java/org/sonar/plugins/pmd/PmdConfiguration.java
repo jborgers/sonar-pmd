@@ -22,27 +22,27 @@ package org.sonar.plugins.pmd;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
 @ScannerSide
 public class PmdConfiguration {
-    public static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
-    public static final String PMD_RESULT_XML = "pmd-result.xml";
+    static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
+    private static final String PMD_RESULT_XML = "pmd-result.xml";
     private static final Logger LOG = Loggers.get(PmdConfiguration.class);
     private final FileSystem fileSystem;
-    private final Settings settings;
+    private final Configuration settings;
 
-    public PmdConfiguration(FileSystem fileSystem, Settings settings) {
+    public PmdConfiguration(FileSystem fileSystem, Configuration settings) {
         this.fileSystem = fileSystem;
         this.settings = settings;
     }
@@ -59,9 +59,9 @@ public class PmdConfiguration {
         return output.toString();
     }
 
-    public File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
+    File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
         try {
-            File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml");
+            File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml").toFile();
 
             LOG.info("PMD configuration: " + configurationFile.getAbsolutePath());
 
@@ -71,17 +71,23 @@ public class PmdConfiguration {
         }
     }
 
-    public File dumpXmlReport(Report report) {
-        if (!settings.getBoolean(PROPERTY_GENERATE_XML)) {
+    /**
+     * Writes an XML Report about the analyzed project into the current working directory
+     * unless <code>sonar.pmd.generateXml</code> is set to false.
+     *
+     * @param report The report which shall be written into an XML file.
+     * @return The file reference to the XML document.
+     */
+    Path dumpXmlReport(Report report) {
+        if (!settings.getBoolean(PROPERTY_GENERATE_XML).orElse(false)) {
             return null;
         }
 
         try {
-            String reportAsString = reportToString(report);
+            final String reportAsString = reportToString(report);
+            final Path reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
 
-            File reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
-
-            LOG.info("PMD output report: " + reportFile.getAbsolutePath());
+            LOG.info("PMD output report: " + reportFile.toString());
 
             return reportFile;
         } catch (IOException e) {
@@ -89,10 +95,10 @@ public class PmdConfiguration {
         }
     }
 
-    private File writeToWorkingDirectory(String content, String fileName) throws IOException {
-        File file = new File(fileSystem.workDir(), fileName);
-        Files.write(content, file, Charsets.UTF_8);
-        return file;
-    }
+    private Path writeToWorkingDirectory(String content, String fileName) throws IOException {
+        final Path targetPath = fileSystem.workDir().toPath().resolve(fileName);
+        Files.write(targetPath, content.getBytes());
 
+        return targetPath;
+    }
 }

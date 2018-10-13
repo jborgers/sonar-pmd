@@ -24,10 +24,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSetNotFoundException;
@@ -41,7 +43,6 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-import org.sonar.api.config.Settings;
 import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.plugins.java.api.JavaResourceLocator;
@@ -57,21 +58,26 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class PmdExecutorTest {
-    // FIXME Make members private
-    PmdExecutor pmdExecutor;
 
-    DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
-    RulesProfile rulesProfile = RulesProfile.create("pmd", "pmd");
-    PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
-    PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
-    PmdTemplate pmdTemplate = mock(PmdTemplate.class);
-    JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
+    private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
+    private final RulesProfile rulesProfile = RulesProfile.create("pmd", "pmd");
+    private final PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
+    private final PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
+    private final PmdTemplate pmdTemplate = mock(PmdTemplate.class);
+    private final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
+    private final MapSettings settings = new MapSettings();
+    private final PmdExecutor realPmdExecutor = new PmdExecutor(
+            fileSystem,
+            rulesProfile,
+            pmdProfileExporter,
+            pmdConfiguration,
+            javaResourceLocator,
+            settings.asConfig()
+    );
 
-    // FIXME Replace With Configuration
-    Settings settings = new MapSettings();
-    PmdExecutor realPmdExecutor = new PmdExecutor(fileSystem, rulesProfile, pmdProfileExporter, pmdConfiguration, javaResourceLocator, settings);
+    private PmdExecutor pmdExecutor;
 
-    static DefaultInputFile file(String path, Type type) {
+    private static DefaultInputFile file(String path, Type type) {
         return TestInputFileBuilder.create("sonar-pmd-test", path)
                 //.setAbsolutePath(new File(path).getAbsolutePath())
                 .setType(type)
@@ -82,7 +88,7 @@ public class PmdExecutorTest {
     @Before
     public void setUp() {
         pmdExecutor = Mockito.spy(realPmdExecutor);
-        fileSystem.setEncoding(Charsets.UTF_8);
+        fileSystem.setEncoding(StandardCharsets.UTF_8);
         settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
     }
 
@@ -157,7 +163,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void invalid_classpath_element() throws Exception {
+    public void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
         when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
@@ -170,7 +176,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void unknown_pmd_ruleset() throws Exception {
+    public void unknown_pmd_ruleset() {
         String profileContent = "content";
         when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(profileContent);
         when(pmdConfiguration.dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, profileContent)).thenReturn(new File("unknown"));
@@ -187,10 +193,9 @@ public class PmdExecutorTest {
     }
 
     private void setupPmdRuleSet(String repositoryKey, String profileFileName) throws IOException {
-        File ruleSetDirectory = new File("src/test/resources/org/sonar/plugins/pmd/");
-        File file = new File(ruleSetDirectory, profileFileName);
-        String profileContent = Files.toString(file, Charsets.UTF_8);
+        final Path sourcePath = Paths.get("src/test/resources/org/sonar/plugins/pmd/").resolve(profileFileName);
+        String profileContent = new String(Files.readAllBytes(sourcePath));
         when(pmdProfileExporter.exportProfile(repositoryKey, rulesProfile)).thenReturn(profileContent);
-        when(pmdConfiguration.dumpXmlRuleSet(repositoryKey, profileContent)).thenReturn(file);
+        when(pmdConfiguration.dumpXmlRuleSet(repositoryKey, profileContent)).thenReturn(sourcePath.toFile());
     }
 }

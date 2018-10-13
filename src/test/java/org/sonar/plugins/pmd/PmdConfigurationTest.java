@@ -21,10 +21,11 @@ package org.sonar.plugins.pmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import net.sourceforge.pmd.Report;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -33,7 +34,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.config.Settings;
 import org.sonar.api.config.internal.MapSettings;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -42,20 +42,24 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class PmdConfigurationTest {
+
     private static final File WORK_DIR = new File("test-work-dir");
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    PmdConfiguration configuration;
-    // FIXME: Replace with Configuration
-    Settings settings = new MapSettings();
-    FileSystem fs = mock(FileSystem.class);
 
+    private PmdConfiguration configuration;
+    private MapSettings settings;
+    private FileSystem fs = mock(FileSystem.class);
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @BeforeClass
     public static void createTempDir() {
         deleteTempDir();
         WORK_DIR.mkdir();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @AfterClass
     public static void deleteTempDir() {
         if (WORK_DIR.exists()) {
@@ -68,7 +72,8 @@ public class PmdConfigurationTest {
 
     @Before
     public void setUpPmdConfiguration() {
-        configuration = new PmdConfiguration(fs, settings);
+        settings = new MapSettings();
+        configuration = new PmdConfiguration(fs, settings.asConfig());
     }
 
     @Test
@@ -78,11 +83,11 @@ public class PmdConfigurationTest {
         File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
 
         assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
-        assertThat(Files.readLines(rulesFile, Charsets.UTF_8)).containsExactly("<rules>");
+        assertThat(Files.readAllLines(rulesFile.toPath(), StandardCharsets.UTF_8)).containsExactly("<rules>");
     }
 
     @Test
-    public void should_fail_to_dump_xml_rule_set() throws IOException {
+    public void should_fail_to_dump_xml_rule_set() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
         expectedException.expect(IllegalStateException.class);
@@ -96,16 +101,16 @@ public class PmdConfigurationTest {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
-        File reportFile = configuration.dumpXmlReport(new Report());
+        Path reportFile = configuration.dumpXmlReport(new Report());
 
-        assertThat(reportFile).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
-        List<String> writtenLines = Files.readLines(reportFile, Charsets.UTF_8);
+        assertThat(reportFile.toFile()).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
+        List<String> writtenLines = Files.readAllLines(reportFile, StandardCharsets.UTF_8);
         assertThat(writtenLines).hasSize(3);
         assertThat(writtenLines.get(1)).contains("<pmd");
     }
 
     @Test
-    public void should_fail_to_dump_xml_report() throws Exception {
+    public void should_fail_to_dump_xml_report() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
@@ -118,10 +123,9 @@ public class PmdConfigurationTest {
 
     @Test
     public void should_ignore_xml_report_when_property_is_not_set() {
-        File reportFile = configuration.dumpXmlReport(new Report());
+        Path reportFile = configuration.dumpXmlReport(new Report());
 
         assertThat(reportFile).isNull();
         verifyZeroInteractions(fs);
     }
-
 }

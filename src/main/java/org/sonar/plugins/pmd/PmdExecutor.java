@@ -40,7 +40,7 @@ import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -58,12 +58,10 @@ public class PmdExecutor {
     private final PmdProfileExporter pmdProfileExporter;
     private final PmdConfiguration pmdConfiguration;
     private final JavaResourceLocator javaResourceLocator;
-
-    // FIXME Replace with Configuration
-    private final Settings settings;
+    private final Configuration settings;
 
     public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
-                       PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Settings settings) {
+                PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
         this.pmdProfileExporter = pmdProfileExporter;
@@ -119,7 +117,7 @@ public class PmdExecutor {
             return;
         }
 
-        RuleSets rulesets = createRulesets(repositoryKey);
+        RuleSets rulesets = createRuleSets(repositoryKey);
         if (rulesets.getAllRules().isEmpty()) {
             // No rule
             return;
@@ -134,7 +132,7 @@ public class PmdExecutor {
         rulesets.end(ruleContext);
     }
 
-    private RuleSets createRulesets(String repositoryKey) {
+    private RuleSets createRuleSets(String repositoryKey) {
         String rulesXml = pmdProfileExporter.exportProfile(repositoryKey, rulesProfile);
         File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         String ruleSetFilePath = ruleSetFile.getAbsolutePath();
@@ -162,12 +160,12 @@ public class PmdExecutor {
                 throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + file, e);
             }
         }
-        return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
+        return new URLClassLoader(urls.toArray(new URL[0]), null);
     }
 
     private String getSourceVersion() {
-        String javaVersion = settings.getString(PmdConstants.JAVA_SOURCE_VERSION);
-        return javaVersion != null ? javaVersion : PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE;
+        return settings.get(PmdConstants.JAVA_SOURCE_VERSION)
+                .orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
     }
 
 }
