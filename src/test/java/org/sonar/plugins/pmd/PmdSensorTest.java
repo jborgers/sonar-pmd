@@ -20,6 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import java.io.File;
+import java.util.Iterator;
 
 import com.google.common.collect.Iterators;
 import net.sourceforge.pmd.Report;
@@ -28,17 +29,19 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -46,7 +49,6 @@ import static org.mockito.Mockito.when;
 public class PmdSensorTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-    private final Project project = mock(Project.class);
     private final RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
     private final PmdExecutor executor = mock(PmdExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
@@ -68,98 +70,149 @@ public class PmdSensorTest {
     @Before
     public void setUpPmdSensor() {
         pmdSensor = new PmdSensor(profile, executor, pmdViolationRecorder, fs);
+        when(executor.execute()).thenReturn(mock(Report.class));
     }
 
     @Test
     public void should_execute_on_project_without_main_files() {
+
+        // given
         addOneJavaFile(Type.TEST);
 
-        boolean shouldExecute = pmdSensor.shouldExecuteOnProject(project);
+        // when
+        pmdSensor.execute(sensorContext);
 
-        assertThat(shouldExecute).isTrue();
+        // then
+        verify(executor, atLeastOnce()).execute();
     }
 
     @Test
     public void should_execute_on_project_without_test_files() {
+
+        // given
         addOneJavaFile(Type.MAIN);
 
-        boolean shouldExecute = pmdSensor.shouldExecuteOnProject(project);
+        // when
+        pmdSensor.execute(sensorContext);
 
-        assertThat(shouldExecute).isTrue();
+        // then
+        verify(executor, atLeastOnce()).execute();
     }
 
     @Test
     public void should_not_execute_on_project_without_any_files() {
-        boolean shouldExecute = pmdSensor.shouldExecuteOnProject(project);
 
-        assertThat(shouldExecute).isFalse();
+        // given
+        // no files
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(executor, never()).execute();
     }
 
     @Test
     public void should_not_execute_on_project_without_active_rules() {
+
+        // given
         addOneJavaFile(Type.MAIN);
         addOneJavaFile(Type.TEST);
 
         when(profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
         when(profile.getActiveRulesByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
-        boolean shouldExecute = pmdSensor.shouldExecuteOnProject(project);
+        // when
+        pmdSensor.execute(sensorContext);
 
-        assertThat(shouldExecute).isFalse();
+        // then
+        verify(executor, never()).execute();
     }
 
     @Test
     public void should_report_violations() {
-        RuleViolation pmdViolation = violation();
-        Report report = report(pmdViolation);
+
+        // given
+        addOneJavaFile(Type.MAIN);
+        final RuleViolation pmdViolation = violation();
+        final Report report = report(pmdViolation);
         when(executor.execute()).thenReturn(report);
 
-        pmdSensor.analyse(project, sensorContext);
+        // when
+        pmdSensor.execute(sensorContext);
 
+        // then
         verify(pmdViolationRecorder).saveViolation(pmdViolation);
     }
 
     @Test
-    public void shouldnt_report_zero_violation() {
-        Report report = report();
+    public void should_not_report_zero_violation() {
+
+        // given
+        final Report report = report();
         when(executor.execute()).thenReturn(report);
 
-        pmdSensor.analyse(project, sensorContext);
+        // when
+        pmdSensor.execute(sensorContext);
 
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any());
         verifyZeroInteractions(sensorContext);
     }
 
     @Test
     public void should_not_report_invalid_violation() {
-        RuleViolation pmdViolation = violation();
-        Report report = report(pmdViolation);
+
+        // given
+        final RuleViolation pmdViolation = violation();
+        final Report report = report(pmdViolation);
         when(executor.execute()).thenReturn(report);
         when(report.iterator()).thenReturn(Iterators.forArray(pmdViolation));
 
-        pmdSensor.analyse(project, sensorContext);
+        // when
+        pmdSensor.execute(sensorContext);
 
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any());
         verifyZeroInteractions(sensorContext);
     }
 
     @Test
     public void pmdSensorShouldNotRethrowOtherExceptions() {
+
+        // given
+        addOneJavaFile(Type.MAIN);
+
         final RuntimeException expectedException = new RuntimeException();
         when(executor.execute()).thenThrow(expectedException);
 
+        // expect
         exception.expect(RuntimeException.class);
         exception.expect(equalTo(expectedException));
 
-        pmdSensor.analyse(project, sensorContext);
+        // when
+        pmdSensor.execute(sensorContext);
     }
 
     @Test
     public void should_to_string() {
-        String toString = pmdSensor.toString();
-
+        final String toString = pmdSensor.toString();
         assertThat(toString).isEqualTo("PmdSensor");
     }
 
+    @SuppressWarnings("unchecked")
+    private void mockEmptyReport() {
+        final Report mockReport = mock(Report.class);
+        final Iterator<RuleViolation> iterator = mock(Iterator.class);
+
+        when(mockReport.iterator()).thenReturn(iterator);
+        when(iterator.hasNext()).thenReturn(false);
+
+        when(executor.execute()).thenReturn(mockReport);
+    }
+
     private void addOneJavaFile(Type type) {
+        mockEmptyReport();
         File file = new File("x");
         fs.add(
                 TestInputFileBuilder.create(

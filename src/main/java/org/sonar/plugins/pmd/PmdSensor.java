@@ -19,17 +19,13 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.File;
-
-import com.google.common.collect.Iterables;
 import net.sourceforge.pmd.RuleViolation;
-import org.sonar.api.batch.Sensor;
-import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
 
 public class PmdSensor implements Sensor {
     private final RulesProfile profile;
@@ -44,29 +40,36 @@ public class PmdSensor implements Sensor {
         this.fs = fs;
     }
 
-    @Override
-    public boolean shouldExecuteOnProject(Project project) {
+    private boolean shouldExecuteOnProject() {
         return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
                 || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
     }
 
     private boolean hasFilesToCheck(Type type, String repositoryKey) {
         FilePredicates predicates = fs.predicates();
-        Iterable<File> files = fs.files(predicates.and(
+        final boolean hasMatchingFiles = fs.hasFiles(predicates.and(
                 predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
                 predicates.hasType(type)));
-        return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
-    }
-
-    @Override
-    public void analyse(Project project, SensorContext context) {
-        for (RuleViolation violation : executor.execute()) {
-            pmdViolationRecorder.saveViolation(violation);
-        }
+        return hasMatchingFiles && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName();
+    }
+
+    @Override
+    public void describe(SensorDescriptor descriptor) {
+        descriptor.onlyOnLanguage(PmdConstants.LANGUAGE_KEY)
+                .name("PmdSensor");
+    }
+
+    @Override
+    public void execute(org.sonar.api.batch.sensor.SensorContext context) {
+        if (shouldExecuteOnProject()) {
+            for (RuleViolation violation : executor.execute()) {
+                pmdViolationRecorder.saveViolation(violation);
+            }
+        }
     }
 }
