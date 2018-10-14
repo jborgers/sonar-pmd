@@ -22,7 +22,6 @@ package org.sonar.plugins.pmd;
 import java.io.File;
 
 import com.google.common.collect.Iterables;
-import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
@@ -31,7 +30,6 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
-import org.sonar.api.utils.XmlParserException;
 
 public class PmdSensor implements Sensor {
     private final RulesProfile profile;
@@ -62,13 +60,8 @@ public class PmdSensor implements Sensor {
 
     @Override
     public void analyse(Project project, SensorContext context) {
-        try {
-            Report report = executor.execute();
-            for (RuleViolation violation : report) {
-                pmdViolationRecorder.saveViolation(violation);
-            }
-        } catch (Exception e) {
-            throw new XmlParserException(e);
+        for (RuleViolation violation : executor.execute()) {
+            pmdViolationRecorder.saveViolation(violation);
         }
     }
 

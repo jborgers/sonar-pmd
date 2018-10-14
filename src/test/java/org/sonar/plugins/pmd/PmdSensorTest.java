@@ -34,9 +34,9 @@ import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
-import org.sonar.api.utils.XmlParserException;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -45,22 +45,21 @@ import static org.mockito.Mockito.when;
 
 public class PmdSensorTest {
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
+    private final Project project = mock(Project.class);
+    private final RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
+    private final PmdExecutor executor = mock(PmdExecutor.class);
+    private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
+    private final SensorContext sensorContext = mock(SensorContext.class);
+    private final DefaultFileSystem fs = new DefaultFileSystem(new File("."));
 
-    // FIXME Make members private
-    PmdSensor pmdSensor;
-    Project project = mock(Project.class);
-    RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
-    PmdExecutor executor = mock(PmdExecutor.class);
-    PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
-    SensorContext sensorContext = mock(SensorContext.class);
-    DefaultFileSystem fs = new DefaultFileSystem(new File("."));
+    private PmdSensor pmdSensor;
 
-    static RuleViolation violation() {
+    private static RuleViolation violation() {
         return mock(RuleViolation.class);
     }
 
-    static Report report(RuleViolation... violations) {
+    private static Report report(RuleViolation... violations) {
         Report report = mock(Report.class);
         when(report.iterator()).thenReturn(Iterators.forArray(violations));
         return report;
@@ -131,7 +130,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void shouldnt_report_invalid_violation() {
+    public void should_not_report_invalid_violation() {
         RuleViolation pmdViolation = violation();
         Report report = report(pmdViolation);
         when(executor.execute()).thenReturn(report);
@@ -143,10 +142,12 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_report_analyse_failure() {
-        when(executor.execute()).thenThrow(new RuntimeException());
+    public void pmdSensorShouldNotRethrowOtherExceptions() {
+        final RuntimeException expectedException = new RuntimeException();
+        when(executor.execute()).thenThrow(expectedException);
 
-        exception.expect(XmlParserException.class);
+        exception.expect(RuntimeException.class);
+        exception.expect(equalTo(expectedException));
 
         pmdSensor.analyse(project, sensorContext);
     }
