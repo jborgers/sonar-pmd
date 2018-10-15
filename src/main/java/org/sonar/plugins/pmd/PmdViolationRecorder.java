@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.net.URI;
+
 import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
@@ -28,6 +30,8 @@ import org.sonar.api.issue.Issuable;
 import org.sonar.api.issue.Issuable.IssueBuilder;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 @ScannerSide
 public class PmdViolationRecorder {
@@ -65,7 +69,10 @@ public class PmdViolationRecorder {
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
-        return fs.inputFile(fs.predicates().hasAbsolutePath(violation.getFilename()));
+        final URI uri = URI.create(violation.getFilename());
+        return fs.inputFile(
+                fs.predicates().hasURI(uri)
+        );
     }
 
     private Rule findRuleFor(RuleViolation violation) {

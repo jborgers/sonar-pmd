@@ -128,7 +128,7 @@ public class PmdViolationRecorderTest {
         Rule rule = mock(Rule.class);
         when(rule.getName()).thenReturn(ruleName);
         RuleViolation pmdViolation = mock(RuleViolation.class);
-        when(pmdViolation.getFilename()).thenReturn(file.getAbsolutePath());
+        when(pmdViolation.getFilename()).thenReturn(file.toURI().toString());
         when(pmdViolation.getBeginLine()).thenReturn(line);
         when(pmdViolation.getDescription()).thenReturn(description);
         when(pmdViolation.getRule()).thenReturn(rule);

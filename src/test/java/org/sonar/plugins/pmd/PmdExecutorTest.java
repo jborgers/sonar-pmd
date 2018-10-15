@@ -79,7 +79,6 @@ public class PmdExecutorTest {
 
     private static DefaultInputFile file(String path, Type type) {
         return TestInputFileBuilder.create("sonar-pmd-test", path)
-                //.setAbsolutePath(new File(path).getAbsolutePath())
                 .setType(type)
                 .setLanguage(PmdConstants.LANGUAGE_KEY)
                 .build();
@@ -146,7 +145,7 @@ public class PmdExecutorTest {
 
         pmdExecutor.execute();
 
-        verify(pmdTemplate).process(eq(srcFile.file()), any(RuleSets.class), any(RuleContext.class));
+        verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
         verifyNoMoreInteractions(pmdTemplate);
     }
 

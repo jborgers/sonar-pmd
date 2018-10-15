@@ -24,12 +24,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -39,6 +38,7 @@ import net.sourceforge.pmd.RuleSets;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.profiles.RulesProfile;
@@ -61,7 +61,7 @@ public class PmdExecutor {
     private final Configuration settings;
 
     public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
-                PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
+                       PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
         this.pmdProfileExporter = pmdProfileExporter;
@@ -104,15 +104,18 @@ public class PmdExecutor {
         return report;
     }
 
-    private Iterable<File> javaFiles(Type fileType) {
-        FilePredicates predicates = fs.predicates();
-        return fs.files(predicates.and(
-                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
-                predicates.hasType(fileType)));
+    private Iterable<InputFile> javaFiles(Type fileType) {
+        final FilePredicates predicates = fs.predicates();
+        return fs.inputFiles(
+                predicates.and(
+                        predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
+                        predicates.hasType(fileType)
+                )
+        );
     }
 
-    private void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<File> files, String repositoryKey) {
-        if (Iterables.isEmpty(files)) {
+    private void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<InputFile> files, String repositoryKey) {
+        if (!files.iterator().hasNext()) {
             // Nothing to analyze
             return;
         }
@@ -125,7 +128,7 @@ public class PmdExecutor {
 
         rulesets.start(ruleContext);
 
-        for (File file : files) {
+        for (InputFile file : files) {
             pmdFactory.process(file, rulesets, ruleContext);
         }
 
@@ -152,7 +155,7 @@ public class PmdExecutor {
 
     private URLClassLoader createClassloader() {
         Collection<File> classpathElements = javaResourceLocator.classpath();
-        List<URL> urls = Lists.newArrayList();
+        List<URL> urls = new ArrayList<>();
         for (File file : classpathElements) {
             try {
                 urls.add(file.toURI().toURL());
