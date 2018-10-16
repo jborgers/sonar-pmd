@@ -38,6 +38,7 @@ import org.sonar.api.profiles.RulesProfile;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -142,7 +143,7 @@ public class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(pmdViolationRecorder).saveViolation(pmdViolation);
+        verify(pmdViolationRecorder).saveViolation(pmdViolation, sensorContext);
     }
 
     @Test
@@ -156,7 +157,7 @@ public class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(pmdViolationRecorder, never()).saveViolation(any());
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
         verifyZeroInteractions(sensorContext);
     }
 
@@ -173,7 +174,7 @@ public class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(pmdViolationRecorder, never()).saveViolation(any());
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
         verifyZeroInteractions(sensorContext);
     }
 

@@ -24,6 +24,7 @@ import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.profiles.RulesProfile;
 
@@ -65,10 +66,10 @@ public class PmdSensor implements Sensor {
     }
 
     @Override
-    public void execute(org.sonar.api.batch.sensor.SensorContext context) {
+    public void execute(SensorContext context) {
         if (shouldExecuteOnProject()) {
             for (RuleViolation violation : executor.execute()) {
-                pmdViolationRecorder.saveViolation(violation);
+                pmdViolationRecorder.saveViolation(violation, context);
             }
         }
     }

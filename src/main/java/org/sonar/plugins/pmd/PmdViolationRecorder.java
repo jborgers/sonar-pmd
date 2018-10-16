@@ -25,47 +25,64 @@ import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.component.ResourcePerspectives;
-import org.sonar.api.issue.Issuable;
-import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RuleFinder;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.batch.fs.TextPointer;
+import org.sonar.api.batch.fs.TextRange;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
+import org.sonar.api.rule.RuleKey;
 
 @ScannerSide
 public class PmdViolationRecorder {
 
     private final FileSystem fs;
-    private final RuleFinder ruleFinder;
-    private final ResourcePerspectives perspectives;
+    private final ActiveRules activeRules;
 
-    public PmdViolationRecorder(FileSystem fs, RuleFinder ruleFinder, ResourcePerspectives perspectives) {
+    public PmdViolationRecorder(FileSystem fs, ActiveRules activeRules) {
         this.fs = fs;
-        this.ruleFinder = ruleFinder;
-        this.perspectives = perspectives;
+        this.activeRules = activeRules;
     }
 
-    public void saveViolation(RuleViolation pmdViolation) {
-        InputFile inputFile = findResourceFor(pmdViolation);
+    public void saveViolation(RuleViolation pmdViolation, SensorContext context) {
+        final InputFile inputFile = findResourceFor(pmdViolation);
         if (inputFile == null) {
             // Save violations only for existing resources
             return;
         }
 
-        Issuable issuable = perspectives.as(Issuable.class, inputFile);
+        final RuleKey ruleKey = findActiveRuleKeyFor(pmdViolation);
 
-        Rule rule = findRuleFor(pmdViolation);
-        if (issuable == null || rule == null) {
+        if (ruleKey == null) {
             // Save violations only for enabled rules
             return;
         }
 
-        IssueBuilder issueBuilder = issuable.newIssueBuilder()
-                .ruleKey(rule.ruleKey())
+        final NewIssue issue = context.newIssue()
+                .forRule(ruleKey);
+
+        final TextRange issueTextRange = issueRangeFor(pmdViolation, inputFile);
+
+        final NewIssueLocation issueLocation = issue.newLocation()
+                .on(inputFile)
                 .message(pmdViolation.getDescription())
-                .line(pmdViolation.getBeginLine());
-        issuable.addIssue(issueBuilder.build());
+                .at(issueTextRange);
+
+        issue.at(issueLocation)
+                .save();
+    }
+
+    private TextRange issueRangeFor(RuleViolation pmdViolation, InputFile inputFile) {
+
+        final int startLine = pmdViolation.getBeginLine();
+        final int endLine = pmdViolation.getEndLine() > 0 ? pmdViolation.getEndLine() : pmdViolation.getBeginLine();
+
+        // PMD counts TABs differently, so we can not use RuleViolation#getBeginColumn and RuleViolation#getEndColumn
+        // Therefore, we select complete lines.
+        final TextPointer startPointer = inputFile.selectLine(startLine).start();
+        final TextPointer endPointer = inputFile.selectLine(endLine).end();
+
+        return inputFile.newRange(startPointer, endPointer);
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
@@ -75,13 +92,17 @@ public class PmdViolationRecorder {
         );
     }
 
-    private Rule findRuleFor(RuleViolation violation) {
-        String ruleKey = violation.getRule().getName();
-        Rule rule = ruleFinder.findByKey(PmdConstants.REPOSITORY_KEY, ruleKey);
-        if (rule != null) {
-            return rule;
-        }
-        return ruleFinder.findByKey(PmdConstants.TEST_REPOSITORY_KEY, ruleKey);
-    }
+    private RuleKey findActiveRuleKeyFor(RuleViolation violation) {
+        final String internalRuleKey = violation.getRule().getName();
+        RuleKey ruleKey = RuleKey.of(PmdConstants.REPOSITORY_KEY, internalRuleKey);
 
+        if (activeRules.find(ruleKey) != null) {
+            return ruleKey;
+        }
+
+        // Let's try the test repo.
+        ruleKey = RuleKey.of(PmdConstants.TEST_REPOSITORY_KEY, internalRuleKey);
+
+        return activeRules.find(ruleKey) != null ? ruleKey : null;
+    }
 }
