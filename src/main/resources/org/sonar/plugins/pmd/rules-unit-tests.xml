@@ -51,7 +51,7 @@
       <defaultValue>1</defaultValue>
     </param>
   </rule>
-  
+
   <rule key="JUnitUseExpected">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/migrating.xml/JUnitUseExpected]]></configKey>

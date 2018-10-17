@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,26 +13,31 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
 
 import org.junit.Test;
 
-import java.lang.reflect.Constructor;
-
 import static org.fest.assertions.Assertions.assertThat;
 
 public class PmdConstantsTest {
 
-  @Test
-  public void private_constructor() throws Exception {
-    Constructor constructor = PmdConstants.class.getDeclaredConstructor();
-    assertThat(constructor.isAccessible()).isFalse();
-    constructor.setAccessible(true);
-    constructor.newInstance();
-  }
-
+    @Test
+    public void checkDefinedKeys() {
+        assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.REPOSITORY_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.TEST_REPOSITORY_KEY).isEqualTo("pmd-unit-tests");
+        assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD Unit Tests");
+        assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.XPathRule");
+        assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
+        assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
+        assertThat(PmdConstants.JAVA_SOURCE_VERSION).isEqualTo("sonar.java.source");
+        assertThat(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE).isEqualTo("1.5");
+        assertThat(PmdConstants.LANGUAGE_KEY).isEqualTo("java");
+    }
 }

@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>24</version>
+    <version>48</version>
   </parent>
 
   <groupId>org.sonarsource.pmd</groupId>
@@ -15,9 +15,7 @@
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
-  <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code,
-    overcomplicated expressions or duplicate code.
-  </description>
+  <description>Sonar-PMD is a plugin that provides coding rules from PMD.</description>
   <inceptionYear>2012</inceptionYear>
 
   <licenses>
@@ -60,8 +58,8 @@
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>5.4.2</pmd.version>
-    <sonar.version>4.5.4</sonar.version>
-    <sonar-java.version>3.6</sonar-java.version>
+    <sonar.version>6.7</sonar.version>
+    <sonar-java.version>5.5.0.14655</sonar-java.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>pmd</sonar.pluginKey>
@@ -73,7 +71,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
       <scope>provided</scope>
       <version>${sonar.version}</version>
@@ -84,17 +82,34 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!--<dependency>
+      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
+      <artifactId>sslr-squid-bridge</artifactId>
+      <version>2.7.0.377</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.picocontainer</groupId>
+          <artifactId>picocontainer</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-lang</groupId>
+          <artifactId>commons-lang</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>-->
     <dependency>
       <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <type>sonar-plugin</type>
+      <artifactId>java-frontend</artifactId>
       <version>${sonar-java.version}</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
-      <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.6</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -149,20 +164,14 @@
       <version>1.0</version>
     </dependency>
 
-    <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
-    We need following dependency, otherwise we will receive
-    java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
-    during call mock(org.sonar.api.resources.Project.class)
-    -->
     <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.0.7</version>
-      <scope>test</scope>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>19.0</version>
     </dependency>
 
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-testing-harness</artifactId>
       <scope>test</scope>
       <version>${sonar.version}</version>
@@ -176,9 +185,23 @@
     </dependency>
 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>0.9.30</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Only here for transition purposes. -->
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert</artifactId>
+      <version>1.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -215,7 +238,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>5000000</maxsize>
+                  <maxsize>7000000</maxsize>
                   <minsize>4200000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>

@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,68 +13,64 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.Iterables;
-import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
-import org.sonar.api.batch.Sensor;
-import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
-import org.sonar.api.utils.XmlParserException;
-import org.sonar.plugins.java.Java;
-
-import java.io.File;
 
 public class PmdSensor implements Sensor {
-  private final RulesProfile profile;
-  private final PmdExecutor executor;
-  private final PmdViolationRecorder pmdViolationRecorder;
-  private final FileSystem fs;
+    private final RulesProfile profile;
+    private final PmdExecutor executor;
+    private final PmdViolationRecorder pmdViolationRecorder;
+    private final FileSystem fs;
 
-  public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
-    this.profile = profile;
-    this.executor = executor;
-    this.pmdViolationRecorder = pmdViolationRecorder;
-    this.fs = fs;
-  }
-
-  @Override
-  public boolean shouldExecuteOnProject(Project project) {
-    return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
-      || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
-  }
-
-  private boolean hasFilesToCheck(Type type, String repositoryKey) {
-    FilePredicates predicates = fs.predicates();
-    Iterable<File> files = fs.files(predicates.and(
-      predicates.hasLanguage(Java.KEY),
-      predicates.hasType(type)));
-    return !Iterables.isEmpty(files) && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
-  }
-
-  @Override
-  public void analyse(Project project, SensorContext context) {
-    try {
-      Report report = executor.execute();
-      for (RuleViolation violation : report) {
-        pmdViolationRecorder.saveViolation(violation);
-      }
-    } catch (Exception e) {
-      throw new XmlParserException(e);
+    public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+        this.profile = profile;
+        this.executor = executor;
+        this.pmdViolationRecorder = pmdViolationRecorder;
+        this.fs = fs;
     }
-  }
 
-  @Override
-  public String toString() {
-    return getClass().getSimpleName();
-  }
+    private boolean shouldExecuteOnProject() {
+        return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
+                || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
+    }
+
+    private boolean hasFilesToCheck(Type type, String repositoryKey) {
+        FilePredicates predicates = fs.predicates();
+        final boolean hasMatchingFiles = fs.hasFiles(predicates.and(
+                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
+                predicates.hasType(type)));
+        return hasMatchingFiles && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
+
+    @Override
+    public void describe(SensorDescriptor descriptor) {
+        descriptor.onlyOnLanguage(PmdConstants.LANGUAGE_KEY)
+                .name("PmdSensor");
+    }
+
+    @Override
+    public void execute(SensorContext context) {
+        if (shouldExecuteOnProject()) {
+            for (RuleViolation violation : executor.execute()) {
+                pmdViolationRecorder.saveViolation(violation, context);
+            }
+        }
+    }
 }

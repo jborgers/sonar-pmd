@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,39 +13,39 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
-
-import com.google.common.io.Closeables;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 public final class PmdVersion {
-  private static final String PROPERTIES_PATH = "/org/sonar/plugins/pmd/pmd-plugin.properties";
 
-  private PmdVersion() {
-    // Static utility class
-  }
+    private static final Logger LOG = Loggers.get(PmdVersion.class);
+    private static final String PROPERTIES_PATH = "/org/sonar/plugins/pmd/pmd-plugin.properties";
 
-  public static String getVersion() {
-    Properties properties = new Properties();
-
-    InputStream input = null;
-    try {
-      input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH);
-      properties.load(input);
-    } catch (IOException e) {
-      LoggerFactory.getLogger(PmdVersion.class).warn("Can not load the PMD version from the file " + PROPERTIES_PATH, e);
-    } finally {
-      Closeables.closeQuietly(input);
+    private PmdVersion() {
+        // Static utility class
     }
 
-    return properties.getProperty("pmd.version", "");
-  }
+    public static String getVersion() {
+
+        try (InputStream input = PmdVersion.class.getResourceAsStream(PROPERTIES_PATH)) {
+            final Properties properties = new Properties();
+            properties.load(input);
+
+            return properties.getProperty("pmd.version", "");
+        } catch (IOException e) {
+            LOG.warn("Failed to parse PMD Version from properties file.", e);
+            return "";
+        }
+    }
 }

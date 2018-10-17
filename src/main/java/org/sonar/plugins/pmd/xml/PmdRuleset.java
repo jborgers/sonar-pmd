@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,9 +13,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd.xml;
 
@@ -24,36 +24,36 @@ import java.util.List;
 
 public class PmdRuleset {
 
-  private String description;
+    private String description;
 
-  private List<PmdRule> rules = new ArrayList<>();
+    private List<PmdRule> rules = new ArrayList<>();
 
-  public PmdRuleset() {
-    // no description
-  }
+    public PmdRuleset() {
+        // no description
+    }
 
-  public PmdRuleset(String description) {
-    this.description = description;
-  }
+    public PmdRuleset(String description) {
+        this.description = description;
+    }
 
-  public List<PmdRule> getPmdRules() {
-    return rules;
-  }
+    public List<PmdRule> getPmdRules() {
+        return rules;
+    }
 
-  public void setRules(List<PmdRule> rules) {
-    this.rules = rules;
-  }
+    public void setRules(List<PmdRule> rules) {
+        this.rules = rules;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void addRule(PmdRule rule) {
-    rules.add(rule);
-  }
+    public void addRule(PmdRule rule) {
+        rules.add(rule);
+    }
 
 }

@@ -839,7 +839,7 @@
     </param>
     <status>DEPRECATED</status>
   </rule>
-  
+
   <rule key="UncommentedEmptyMethodBody">
     <priority>MAJOR</priority>
     <tag>comment</tag>
@@ -1482,7 +1482,7 @@
       <defaultValue>false</defaultValue>
     </param>
   </rule>
-  
+
   <rule key="AvoidBranchingStatementAsLastInLoop">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/basic.xml/AvoidBranchingStatementAsLastInLoop]]></configKey>
@@ -1513,9 +1513,11 @@
   <rule key="CommentRequired">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/comments.xml/CommentRequired]]></configKey>
-	<param key="violationSuppressXPath" type="STRING">
-+      <defaultValue></defaultValue>
-+   </param>
+    <param key="violationSuppressXPath" type="STRING">
+      +
+      <defaultValue></defaultValue>
+      +
+    </param>
   </rule>
 
   <rule key="CommentSize">
@@ -1782,6 +1784,6 @@
   <rule key="UselessQualifiedThis">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/unnecessary.xml/UselessQualifiedThis]]></configKey>
-   </rule>
+  </rule>
 
 </rules>

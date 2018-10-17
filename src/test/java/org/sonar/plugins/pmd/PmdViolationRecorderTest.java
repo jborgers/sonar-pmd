@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,124 +13,135 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
+
+import java.io.File;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleViolation;
 import org.junit.Test;
-import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.FilePredicate;
+import org.sonar.api.batch.fs.TextRange;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.component.ResourcePerspectives;
-import org.sonar.api.issue.Issuable;
-import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.issue.Issue;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.rule.ActiveRule;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rules.RuleFinder;
 
-import java.io.File;
-
-import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class PmdViolationRecorderTest {
 
-  private DefaultFileSystem fs = new DefaultFileSystem(new File("."));
-  private RuleFinder ruleFinder = mock(RuleFinder.class);
-  private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
-  private PmdViolationRecorder pmdViolationRecorder =
-    new PmdViolationRecorder(fs, ruleFinder, perspectives);
+    private final DefaultFileSystem spiedFs = spy(new DefaultFileSystem(new File("").getAbsoluteFile()));
+    private final ActiveRules mockActiveRules = mock(ActiveRules.class);
+    private final SensorContext mockContext = mock(SensorContext.class);
 
-  @Test
-  public void should_convert_pmd_violation_to_sonar_violation() {
-    org.sonar.api.rules.Rule sonarRule = createRuleInRuleFinder("RULE");
-    File file1 = new File("src/source.java");
-    DefaultInputFile inputFile1 = addToFileSystem(file1);
-    Issuable issuable = createIssuable(inputFile1);
-    RuleViolation pmdViolation = createPmdViolation(file1, 42, "Description", "RULE");
+    private final PmdViolationRecorder pmdViolationRecorder = new PmdViolationRecorder(spiedFs, mockActiveRules);
 
-    Issue issue = mock(Issue.class);
-    IssueBuilder issueBuilder = mock(IssueBuilder.class);
-    when(issuable.newIssueBuilder()).thenReturn(issueBuilder);
-    when(issueBuilder.ruleKey(sonarRule.ruleKey())).thenReturn(issueBuilder);
-    when(issueBuilder.message("Description")).thenReturn(issueBuilder);
-    when(issueBuilder.line(42)).thenReturn(issueBuilder);
-    when(issueBuilder.build()).thenReturn(issue);
+    @Test
+    public void should_convert_pmd_violation_to_sonar_violation() {
 
-    pmdViolationRecorder.saveViolation(pmdViolation);
-    verify(issuable).addIssue(issue);
-    verify(issueBuilder).ruleKey(sonarRule.ruleKey());
-    verify(issueBuilder).message("Description");
-    verify(issueBuilder).line(42);
-    verify(sonarRule, atLeastOnce()).ruleKey();
-  }
+        // given
+        final ActiveRule rule = createRuleInActiveRules();
+        final File file1 = new File("src/source.java");
+        final DefaultInputFile inputFile1 = addToFileSystem(file1);
+        final RuleViolation pmdViolation = createPmdViolation(file1, "RULE");
+        final NewIssue newIssue = mock(NewIssue.class);
+        final NewIssueLocation issueLocation = mock(NewIssueLocation.class);
 
-  @Test
-  public void should_ignore_violation_on_unknown_resource() {
-    org.sonar.api.rules.Rule sonarRule = createRuleInRuleFinder("RULE");
-    File unknownFile = new File("src/UNKNOWN.java");
-    RuleViolation pmdViolation = createPmdViolation(unknownFile, 42, "Description", "RULE");
+        when(mockContext.newIssue()).thenReturn(newIssue);
+        when(newIssue.forRule(rule.ruleKey())).thenReturn(newIssue);
+        when(newIssue.newLocation()).thenReturn(issueLocation);
+        when(newIssue.at(issueLocation)).thenReturn(newIssue);
+        when(issueLocation.on(inputFile1)).thenReturn(issueLocation);
+        when(issueLocation.message("Description")).thenReturn(issueLocation);
+        when(issueLocation.at(any(TextRange.class))).thenReturn(issueLocation);
 
-    pmdViolationRecorder.saveViolation(pmdViolation);
-    verifyZeroInteractions(sonarRule);
-  }
+        // when
+        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
 
-  @Test
-  public void should_ignore_violation_on_non_issuable_resource() {
-    org.sonar.api.rules.Rule sonarRule = createRuleInRuleFinder("RULE");
-    File file1 = new File("test/source.java");
-    addToFileSystem(file1);
-    RuleViolation pmdViolation = createPmdViolation(file1, 42, "Description", "RULE");
+        // then
+        verify(mockContext).newIssue();
+        verify(newIssue).save();
+    }
 
-    pmdViolationRecorder.saveViolation(pmdViolation);
-    verifyZeroInteractions(sonarRule);
-  }
+    @Test
+    public void should_ignore_violation_on_unknown_resource() {
 
-  @Test
-  public void should_ignore_violation_on_unknown_rule() {
-    File file1 = new File("test/source.java");
-    DefaultInputFile inputFile1 = addToFileSystem(file1);
-    Issuable issuable = createIssuable(inputFile1);
-    RuleViolation pmdViolation = createPmdViolation(file1, 42, "Description", "UNKNOWN");
+        // given
+        final File unknownFile = new File("src/UNKNOWN.java");
+        final RuleViolation pmdViolation = createPmdViolation(unknownFile, "RULE");
 
-    pmdViolationRecorder.saveViolation(pmdViolation);
-    verifyZeroInteractions(issuable);
-  }
+        // when
+        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
 
-  private DefaultInputFile addToFileSystem(File file) {
-    DefaultInputFile inputFile = new DefaultInputFile(file.getPath()).setAbsolutePath(file.getAbsolutePath());
-    fs.add(inputFile);
-    return inputFile;
-  }
+        // then
+        verifyZeroInteractions(mockActiveRules);
+        verifyZeroInteractions(mockContext);
+        verify(spiedFs).inputFile(any(FilePredicate.class));
+    }
 
-  private Issuable createIssuable(InputFile file) {
-    Issuable issuable = mock(Issuable.class);
-    when(perspectives.as(Issuable.class, file)).thenReturn(issuable);
-    return issuable;
-  }
+    @Test
+    public void should_ignore_violation_on_unknown_rule() {
 
-  private org.sonar.api.rules.Rule createRuleInRuleFinder(String ruleName) {
-    org.sonar.api.rules.Rule sonarRule = mock(org.sonar.api.rules.Rule.class);
-    when(ruleFinder.findByKey("pmd", ruleName)).thenReturn(sonarRule);
-    when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd", ruleName));
-    return sonarRule;
-  }
+        // given
+        final File file1 = new File("test/source.java");
+        addToFileSystem(file1);
+        final String ruleName = "UNKNOWN";
+        final RuleViolation pmdViolation = createPmdViolation(file1, ruleName);
+        final RuleKey expectedRuleKey1 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
+        final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
 
-  private RuleViolation createPmdViolation(File file, int line, String description, String ruleName) {
-    Rule rule = mock(Rule.class);
-    when(rule.getName()).thenReturn(ruleName);
-    RuleViolation pmdViolation = mock(RuleViolation.class);
-    when(pmdViolation.getFilename()).thenReturn(file.getAbsolutePath());
-    when(pmdViolation.getBeginLine()).thenReturn(line);
-    when(pmdViolation.getDescription()).thenReturn(description);
-    when(pmdViolation.getRule()).thenReturn(rule);
-    return pmdViolation;
-  }
+        // when
+        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
+
+        // then
+        verify(spiedFs).inputFile(any(FilePredicate.class));
+        verify(mockActiveRules).find(expectedRuleKey1);
+        verify(mockActiveRules).find(expectedRuleKey2);
+        verifyZeroInteractions(mockContext);
+    }
+
+    private DefaultInputFile addToFileSystem(File file) {
+        DefaultInputFile inputFile = TestInputFileBuilder
+                .create("test", spiedFs.baseDir(), file.getAbsoluteFile())
+                .setContents("This\nis\na text\nfile.")
+                .build();
+        spiedFs.add(inputFile);
+        return inputFile;
+    }
+
+    private ActiveRule createRuleInActiveRules() {
+        ActiveRule sonarRule = mock(ActiveRule.class);
+        RuleKey ruleKey = RuleKey.of("pmd", "RULE");
+        when(mockActiveRules.find(ruleKey)).thenReturn(sonarRule);
+        when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd", "RULE"));
+        return sonarRule;
+    }
+
+    private RuleViolation createPmdViolation(File file, String ruleName) {
+        final Rule rule = mock(Rule.class);
+        final RuleViolation pmdViolation = mock(RuleViolation.class);
+
+        when(rule.getName()).thenReturn(ruleName);
+        when(pmdViolation.getFilename()).thenReturn(file.toURI().toString());
+        when(pmdViolation.getBeginLine()).thenReturn(2);
+        when(pmdViolation.getDescription()).thenReturn("Description");
+        when(pmdViolation.getRule()).thenReturn(rule);
+
+        return pmdViolation;
+    }
 }

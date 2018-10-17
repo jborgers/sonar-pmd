@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,37 +13,41 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.ImmutableList;
-import org.sonar.api.SonarPlugin;
+import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.plugins.pmd.profile.PmdProfileExporter;
+import org.sonar.plugins.pmd.profile.PmdProfileImporter;
+import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
-import java.util.List;
+/**
+ * The {@link PmdPlugin} is the main entry-point of Sonar-PMD.
+ */
+public class PmdPlugin implements Plugin {
 
-public class PmdPlugin extends SonarPlugin {
+    @Override
+    public void define(Context context) {
+        context.addExtensions(
+                PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
+                        .defaultValue("false")
+                        .name("Generate XML Report")
+                        .hidden()
+                        .build(),
 
-  @Override
-  public List getExtensions() {
-    return ImmutableList.of(
-      PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
-        .defaultValue("false")
-        .name("Generate XML Report")
-        .hidden()
-        .build(),
-
-      PmdSensor.class,
-      PmdConfiguration.class,
-      PmdExecutor.class,
-      PmdRulesDefinition.class,
-      PmdUnitTestsRulesDefinition.class,
-      PmdProfileExporter.class,
-      PmdProfileImporter.class,
-      PmdViolationRecorder.class);
-  }
-
+                PmdSensor.class,
+                PmdConfiguration.class,
+                PmdExecutor.class,
+                PmdRulesDefinition.class,
+                PmdUnitTestsRulesDefinition.class,
+                PmdProfileExporter.class,
+                PmdProfileImporter.class,
+                PmdViolationRecorder.class
+        );
+    }
 }

@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,9 +13,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
 
@@ -26,22 +26,22 @@ import org.sonar.api.rules.RulePriority;
 import static com.google.common.collect.ImmutableMap.of;
 
 public final class PmdLevelUtils {
-  private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
-      RulePriority.BLOCKER, "1",
-      RulePriority.CRITICAL, "2",
-      RulePriority.MAJOR, "3",
-      RulePriority.MINOR, "4",
-      RulePriority.INFO, "5"));
+    private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
+            RulePriority.BLOCKER, "1",
+            RulePriority.CRITICAL, "2",
+            RulePriority.MAJOR, "3",
+            RulePriority.MINOR, "4",
+            RulePriority.INFO, "5"));
 
-  private PmdLevelUtils() {
-    // only static methods
-  }
+    private PmdLevelUtils() {
+        // only static methods
+    }
 
-  public static RulePriority fromLevel(String level) {
-    return LEVELS_PER_PRIORITY.inverse().get(level);
-  }
+    public static RulePriority fromLevel(String level) {
+        return LEVELS_PER_PRIORITY.inverse().get(level);
+    }
 
-  public static String toLevel(RulePriority priority) {
-    return LEVELS_PER_PRIORITY.get(priority);
-  }
+    public static String toLevel(RulePriority priority) {
+        return LEVELS_PER_PRIORITY.get(priority);
+    }
 }

@@ -3,7 +3,7 @@
   <rule ref="rulesets/java/comments.xml/CommentDefaultAccessModifier">
     <priority>2</priority>
     <properties>
-      <property name="regex" value="" />
+      <property name="regex" value=""/>
       <property name="violationSuppressRegex" value="nonEmptyValue"/>
       <property name="violationSuppressXPath" value="nonEmptyValue"/>
     </properties>

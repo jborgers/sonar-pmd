@@ -17,9 +17,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>${pom.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>it-pmd-plugin-plugins</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
       <type>pom</type>
     </dependency>
     <dependency>
