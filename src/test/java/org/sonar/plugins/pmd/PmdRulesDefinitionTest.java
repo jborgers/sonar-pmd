@@ -21,7 +21,6 @@ package org.sonar.plugins.pmd;
 
 import java.util.List;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import org.junit.Test;
 import org.sonar.api.PropertyType;
@@ -30,7 +29,7 @@ import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PmdRulesDefinitionTest {
 
@@ -71,7 +70,7 @@ public class PmdRulesDefinitionTest {
         RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
 
         for (Rule rule : repository.rules()) {
-            assertThat(rule.key()).excludes("JUnitStaticSuite");
+            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
         }
     }
 
@@ -82,12 +81,7 @@ public class PmdRulesDefinitionTest {
         definition.define(context);
         RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
 
-        Rule xpathRule = Iterables.find(repository.rules(), new Predicate<Rule>() {
-            @Override
-            public boolean apply(Rule rule) {
-                return rule.key().equals("XPathRule");
-            }
-        });
+        Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
 
         assertThat(xpathRule.param("xpath").type().type()).isEqualTo(PropertyType.TEXT.name());
     }

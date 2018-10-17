@@ -27,10 +27,9 @@ import java.util.List;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
-import org.fest.assertions.Condition;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -46,7 +45,7 @@ import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -59,10 +58,9 @@ public class PmdProfileExporterTest {
     @org.junit.Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    // FIXME: Make member private
-    PmdProfileExporter exporter = new PmdProfileExporter();
+    private PmdProfileExporter exporter = new PmdProfileExporter();
 
-    static RulesProfile importProfile(String configuration) {
+    private static RulesProfile importProfile(String configuration) {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
@@ -73,21 +71,18 @@ public class PmdProfileExporterTest {
         return importer.importProfile(new StringReader(configuration), ValidationMessages.create());
     }
 
-    static RuleFinder createRuleFinder(final List<RulesDefinition.Rule> rules) {
+    private static RuleFinder createRuleFinder(final List<RulesDefinition.Rule> rules) {
         RuleFinder ruleFinder = mock(RuleFinder.class);
         final List<Rule> convertedRules = convert(rules);
 
-        when(ruleFinder.find(any(RuleQuery.class))).then(new Answer<Rule>() {
-            @Override
-            public Rule answer(InvocationOnMock invocation) {
-                RuleQuery query = (RuleQuery) invocation.getArguments()[0];
-                for (Rule rule : convertedRules) {
-                    if (query.getConfigKey().equals(rule.getConfigKey())) {
-                        return rule;
-                    }
+        when(ruleFinder.find(any(RuleQuery.class))).then((Answer<Rule>) invocation -> {
+            RuleQuery query = (RuleQuery) invocation.getArguments()[0];
+            for (Rule rule : convertedRules) {
+                if (query.getConfigKey().equals(rule.getConfigKey())) {
+                    return rule;
                 }
-                return null;
             }
+            return null;
         });
         return ruleFinder;
     }
@@ -109,7 +104,7 @@ public class PmdProfileExporterTest {
         return results;
     }
 
-    public static Condition<String> equalsIgnoreEOL(String text) {
+    private static Condition<String> equalsIgnoreEOL(String text) {
         final String strippedText = EOLS.removeFrom(text);
 
         return new Condition<String>() {
@@ -217,7 +212,7 @@ public class PmdProfileExporterTest {
         rule.addProperty(new PmdProperty(PmdConstants.XPATH_EXPRESSION_PARAM, "xpathExpression"));
         rule.setName("MyOwnRule");
 
-        exporter.processXPathRule("xpathKey", rule);
+        PmdProfileExporter.processXPathRule("xpathKey", rule);
     }
 
     @Test
@@ -227,7 +222,7 @@ public class PmdProfileExporterTest {
         rule.addProperty(new PmdProperty(PmdConstants.XPATH_EXPRESSION_PARAM, "xpathExpression"));
         rule.addProperty(new PmdProperty(PmdConstants.XPATH_MESSAGE_PARAM, "message"));
 
-        exporter.processXPathRule("xpathKey", rule);
+        PmdProfileExporter.processXPathRule("xpathKey", rule);
 
         assertThat(rule.getMessage()).isEqualTo("message");
         assertThat(rule.getRef()).isNull();
@@ -243,6 +238,6 @@ public class PmdProfileExporterTest {
         rule.setName("MyOwnRule");
         rule.addProperty(new PmdProperty(PmdConstants.XPATH_MESSAGE_PARAM, "This is bad"));
 
-        exporter.processXPathRule("xpathKey", rule);
+        PmdProfileExporter.processXPathRule("xpathKey", rule);
     }
 }

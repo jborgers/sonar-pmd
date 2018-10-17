@@ -35,15 +35,15 @@ import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.PmdTestUtils;
 import org.sonar.plugins.pmd.xml.PmdRuleset;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class PmdProfileImporterTest {
-    // FIXME Make members private
-    PmdProfileImporter importer;
-    ValidationMessages messages;
+
+    private PmdProfileImporter importer;
+    private ValidationMessages messages;
 
     static Reader read(String path) {
         return new StringReader(PmdTestUtils.getResourceContent(path));

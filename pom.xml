@@ -53,6 +53,10 @@
     <system>Github</system>
     <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
   </issueManagement>
+  <ciManagement>
+    <system>Travis</system>
+    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
+  </ciManagement>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
@@ -82,29 +86,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!--<dependency>
-      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
-      <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.7.0.377</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.picocontainer</groupId>
-          <artifactId>picocontainer</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-lang</groupId>
-          <artifactId>commons-lang</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.code.findbugs</groupId>
-          <artifactId>jsr305</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>-->
     <dependency>
       <groupId>org.sonarsource.java</groupId>
       <artifactId>java-frontend</artifactId>
@@ -199,9 +180,9 @@
 
     <!-- Only here for transition purposes. -->
     <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-assert</artifactId>
-      <version>1.4</version>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.11.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

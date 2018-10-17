@@ -36,7 +36,7 @@ import org.junit.rules.ExpectedException;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.internal.MapSettings;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
