@@ -19,14 +19,14 @@
  */
 package org.sonar.plugins.pmd;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PmdConstantsTest {
+class PmdConstantsTest {
 
     @Test
-    public void checkDefinedKeys() {
+    void checkDefinedKeys() {
         assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD");
         assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
         assertThat(PmdConstants.REPOSITORY_KEY).isEqualTo("pmd");

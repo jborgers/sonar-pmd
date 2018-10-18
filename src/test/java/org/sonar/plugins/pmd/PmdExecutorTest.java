@@ -34,9 +34,8 @@ import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -49,6 +48,7 @@ import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -57,7 +57,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class PmdExecutorTest {
+class PmdExecutorTest {
 
     private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
     private final RulesProfile rulesProfile = RulesProfile.create("pmd", "pmd");
@@ -84,15 +84,15 @@ public class PmdExecutorTest {
                 .build();
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         pmdExecutor = Mockito.spy(realPmdExecutor);
         fileSystem.setEncoding(StandardCharsets.UTF_8);
         settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
     }
 
     @Test
-    public void should_execute_pmd_on_source_files_and_test_files() throws Exception {
+    void should_execute_pmd_on_source_files_and_test_files() throws Exception {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
@@ -112,7 +112,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void should_dump_configuration_as_xml() {
+    void should_dump_configuration_as_xml() {
         when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
         when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
 
@@ -122,7 +122,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void should_dump_ruleset_as_xml() throws Exception {
+    void should_dump_ruleset_as_xml() throws Exception {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
@@ -137,7 +137,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void should_ignore_empty_test_dir() throws Exception {
+    void should_ignore_empty_test_dir() throws Exception {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
@@ -150,7 +150,7 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void should_build_project_classloader_from_javaresourcelocator() throws Exception {
+    void should_build_project_classloader_from_javaresourcelocator() throws Exception {
         File file = new File("x");
         when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
         pmdExecutor.execute();
@@ -162,20 +162,20 @@ public class PmdExecutorTest {
     }
 
     @Test
-    public void invalid_classpath_element() {
+    void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
         when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
-        try {
-            pmdExecutor.execute();
-            Assert.fail();
-        } catch (IllegalStateException e) {
-            assertThat(e.getMessage()).containsIgnoringCase("classpath");
-        }
+
+        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
+
+        assertThat(thrown)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Classpath");
     }
 
     @Test
-    public void unknown_pmd_ruleset() {
+    void unknown_pmd_ruleset() {
         String profileContent = "content";
         when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(profileContent);
         when(pmdConfiguration.dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, profileContent)).thenReturn(new File("unknown"));
@@ -183,12 +183,11 @@ public class PmdExecutorTest {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         fileSystem.add(srcFile);
 
-        try {
-            pmdExecutor.execute();
-            Assert.fail("Expected an exception");
-        } catch (IllegalStateException e) {
-            assertThat(e.getCause()).isInstanceOf(RuleSetNotFoundException.class);
-        }
+        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
+
+        assertThat(thrown)
+                .isInstanceOf(IllegalStateException.class)
+                .hasCauseInstanceOf(RuleSetNotFoundException.class);
     }
 
     private void setupPmdRuleSet(String repositoryKey, String profileFileName) throws IOException {

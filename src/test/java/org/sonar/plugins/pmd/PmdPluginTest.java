@@ -21,8 +21,7 @@ package org.sonar.plugins.pmd;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarRuntime;
@@ -36,17 +35,13 @@ import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class PmdPluginTest {
+class PmdPluginTest {
 
-    private PmdPlugin subject;
+    private final PmdPlugin subject = new PmdPlugin();
 
-    @Before
-    public void setup() {
-        subject = new PmdPlugin();
-    }
-
+    @SuppressWarnings("unchecked")
     @Test
-    public void testPluginConfiguration() {
+    void testPluginConfiguration() {
         final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(7, 3), SonarQubeSide.SCANNER);
         final Plugin.Context context = new Plugin.Context(runtime);
 

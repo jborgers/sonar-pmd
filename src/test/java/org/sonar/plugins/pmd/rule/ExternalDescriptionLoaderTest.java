@@ -22,7 +22,7 @@ package org.sonar.plugins.pmd.rule;
 
 import java.net.URL;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.NewRepository;
 import org.sonar.api.server.rule.RulesDefinition.NewRule;
@@ -30,12 +30,13 @@ import org.sonar.api.server.rule.RulesDefinition.Repository;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 /**
  * Taken from <code>sslr-squid-bridge:org.sonar.squidbridge.rules.ExternalDescriptionLoaderTest</code>.
  */
-public class ExternalDescriptionLoaderTest {
+class ExternalDescriptionLoaderTest {
 
     private static final String REPO_KEY = "repoKey";
     private static final String LANGUAGE_KEY = "languageKey";
@@ -44,30 +45,60 @@ public class ExternalDescriptionLoaderTest {
     private NewRepository repository = context.createRepository(REPO_KEY, LANGUAGE_KEY);
 
     @Test
-    public void existing_rule_description() {
+    void existing_rule_description() {
+
+        // given
         repository.createRule("ruleWithExternalInfo").setName("name1");
+
+        // when
         Rule rule = buildRepository().rule("ruleWithExternalInfo");
-        assertThat(rule.htmlDescription()).isEqualTo("description for ruleWithExternalInfo");
+
+        // then
+        assertThat(rule)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("htmlDescription", "description for ruleWithExternalInfo");
     }
 
     @Test
-    public void rule_with_non_external_description() {
+    void rule_with_non_external_description() {
+
+        // given
         repository.createRule("ruleWithoutExternalInfo").setName("name1").setHtmlDescription("my description");
-        Rule rule = buildRepository().rule("ruleWithoutExternalInfo");
-        assertThat(rule.htmlDescription()).isEqualTo("my description");
+
+        // when
+        final Rule rule = buildRepository().rule("ruleWithoutExternalInfo");
+
+        // then
+        assertThat(rule)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("htmlDescription", "my description");
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void rule_without_description() {
+    @Test
+    void rule_without_description() {
+
+        // given
         repository.createRule("ruleWithoutExternalInfo").setName("name1");
-        buildRepository().rule("ruleWithoutExternalInfo");
+
+        // when
+        final Throwable thrown = catchThrowable(() -> buildRepository().rule("ruleWithoutExternalInfo"));
+
+        // then
+        assertThat(thrown).isInstanceOf(IllegalStateException.class);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void invalid_url() throws Exception {
-        ExternalDescriptionLoader loader = new ExternalDescriptionLoader(LANGUAGE_KEY);
-        NewRule rule = repository.createRule("ruleWithoutExternalInfo").setName("name1");
-        loader.addHtmlDescription(rule, new URL("file:///xx/yy"));
+    @Test
+    void invalid_url() {
+
+        // given
+        final ExternalDescriptionLoader loader = new ExternalDescriptionLoader(LANGUAGE_KEY);
+        final NewRule rule = repository.createRule("ruleWithoutExternalInfo").setName("name1");
+
+        // when
+        final Throwable thrown = catchThrowable(() -> loader.addHtmlDescription(rule, new URL("file:///xx/yy")));
+
+        // then
+        assertThat(thrown).isInstanceOf(IllegalStateException.class);
     }
 
     private Repository buildRepository() {

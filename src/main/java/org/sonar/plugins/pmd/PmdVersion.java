@@ -22,7 +22,6 @@ package org.sonar.plugins.pmd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;

@@ -21,7 +21,7 @@ package org.sonar.plugins.pmd;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
@@ -29,18 +29,20 @@ import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PmdUnitTestsRulesDefinitionTest {
+class PmdUnitTestsRulesDefinitionTest {
 
     @Test
-    public void test() {
+    void test() {
 
         PmdUnitTestsRulesDefinition definition = new PmdUnitTestsRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
         RulesDefinition.Repository repository = context.repository(PmdConstants.TEST_REPOSITORY_KEY);
 
-        assertThat(repository.name()).isEqualTo(PmdConstants.TEST_REPOSITORY_NAME);
-        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KEY);
+        assertThat(repository)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("name", PmdConstants.TEST_REPOSITORY_NAME)
+                .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_KEY);
 
         List<Rule> rules = repository.rules();
         assertThat(rules).hasSize(17);

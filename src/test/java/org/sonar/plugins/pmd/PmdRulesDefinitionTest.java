@@ -22,7 +22,7 @@ package org.sonar.plugins.pmd;
 import java.util.List;
 
 import com.google.common.collect.Iterables;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
@@ -31,10 +31,10 @@ import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PmdRulesDefinitionTest {
+class PmdRulesDefinitionTest {
 
     @Test
-    public void test() {
+    void test() {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
@@ -63,7 +63,7 @@ public class PmdRulesDefinitionTest {
     }
 
     @Test
-    public void should_exclude_junit_rules() {
+    void should_exclude_junit_rules() {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
@@ -75,7 +75,7 @@ public class PmdRulesDefinitionTest {
     }
 
     @Test
-    public void should_use_text_parameter_for_xpath_rule() {
+    void should_use_text_parameter_for_xpath_rule() {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);

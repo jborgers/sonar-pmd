@@ -21,19 +21,19 @@ package org.sonar.plugins.pmd;
 
 import java.lang.reflect.Constructor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class PmdVersionTest {
+class PmdVersionTest {
     @Test
-    public void should_get_pmd_version() {
+    void should_get_pmd_version() {
         assertThat(PmdVersion.getVersion()).isNotEmpty();
     }
 
     @Test
-    public void private_constructor() throws Exception {
+    void private_constructor() throws Exception {
         Constructor constructor = PmdVersion.class.getDeclaredConstructor();
         assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);

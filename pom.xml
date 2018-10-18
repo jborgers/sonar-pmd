@@ -11,7 +11,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
-  <version>2.7-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
@@ -64,6 +64,7 @@
     <pmd.version>5.4.2</pmd.version>
     <sonar.version>6.7</sonar.version>
     <sonar-java.version>5.5.0.14655</sonar-java.version>
+    <junit.jupiter.version>5.3.1</junit.jupiter.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>pmd</sonar.pluginKey>
@@ -152,13 +153,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
-      <artifactId>sonar-testing-harness</artifactId>
-      <scope>test</scope>
-      <version>${sonar.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
       <version>1.9.5</version>
@@ -178,7 +172,26 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Only here for transition purposes. -->
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>

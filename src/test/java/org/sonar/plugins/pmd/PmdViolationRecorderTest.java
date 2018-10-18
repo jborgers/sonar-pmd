@@ -23,7 +23,7 @@ import java.io.File;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleViolation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.TextRange;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
@@ -43,7 +43,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-public class PmdViolationRecorderTest {
+class PmdViolationRecorderTest {
 
     private final DefaultFileSystem spiedFs = spy(new DefaultFileSystem(new File("").getAbsoluteFile()));
     private final ActiveRules mockActiveRules = mock(ActiveRules.class);
@@ -52,7 +52,7 @@ public class PmdViolationRecorderTest {
     private final PmdViolationRecorder pmdViolationRecorder = new PmdViolationRecorder(spiedFs, mockActiveRules);
 
     @Test
-    public void should_convert_pmd_violation_to_sonar_violation() {
+    void should_convert_pmd_violation_to_sonar_violation() {
 
         // given
         final ActiveRule rule = createRuleInActiveRules();
@@ -79,7 +79,7 @@ public class PmdViolationRecorderTest {
     }
 
     @Test
-    public void should_ignore_violation_on_unknown_resource() {
+    void should_ignore_violation_on_unknown_resource() {
 
         // given
         final File unknownFile = new File("src/UNKNOWN.java");
@@ -95,7 +95,7 @@ public class PmdViolationRecorderTest {
     }
 
     @Test
-    public void should_ignore_violation_on_unknown_rule() {
+    void should_ignore_violation_on_unknown_rule() {
 
         // given
         final File file1 = new File("test/source.java");

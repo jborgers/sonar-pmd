@@ -25,10 +25,8 @@ import java.util.Iterator;
 import com.google.common.collect.Iterators;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
@@ -36,7 +34,7 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.profiles.RulesProfile;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -47,9 +45,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-public class PmdSensorTest {
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
+class PmdSensorTest {
+
     private final RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
     private final PmdExecutor executor = mock(PmdExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
@@ -68,14 +65,14 @@ public class PmdSensorTest {
         return report;
     }
 
-    @Before
-    public void setUpPmdSensor() {
+    @BeforeEach
+    void setUpPmdSensor() {
         pmdSensor = new PmdSensor(profile, executor, pmdViolationRecorder, fs);
         when(executor.execute()).thenReturn(mock(Report.class));
     }
 
     @Test
-    public void should_execute_on_project_without_main_files() {
+    void should_execute_on_project_without_main_files() {
 
         // given
         addOneJavaFile(Type.TEST);
@@ -88,7 +85,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_execute_on_project_without_test_files() {
+    void should_execute_on_project_without_test_files() {
 
         // given
         addOneJavaFile(Type.MAIN);
@@ -101,7 +98,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_not_execute_on_project_without_any_files() {
+    void should_not_execute_on_project_without_any_files() {
 
         // given
         // no files
@@ -114,7 +111,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_not_execute_on_project_without_active_rules() {
+    void should_not_execute_on_project_without_active_rules() {
 
         // given
         addOneJavaFile(Type.MAIN);
@@ -131,7 +128,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_report_violations() {
+    void should_report_violations() {
 
         // given
         addOneJavaFile(Type.MAIN);
@@ -147,7 +144,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_not_report_zero_violation() {
+    void should_not_report_zero_violation() {
 
         // given
         final Report report = report();
@@ -162,7 +159,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void should_not_report_invalid_violation() {
+    void should_not_report_invalid_violation() {
 
         // given
         final RuleViolation pmdViolation = violation();
@@ -179,7 +176,7 @@ public class PmdSensorTest {
     }
 
     @Test
-    public void pmdSensorShouldNotRethrowOtherExceptions() {
+    void pmdSensorShouldNotRethrowOtherExceptions() {
 
         // given
         addOneJavaFile(Type.MAIN);
@@ -187,16 +184,17 @@ public class PmdSensorTest {
         final RuntimeException expectedException = new RuntimeException();
         when(executor.execute()).thenThrow(expectedException);
 
-        // expect
-        exception.expect(RuntimeException.class);
-        exception.expect(equalTo(expectedException));
-
         // when
-        pmdSensor.execute(sensorContext);
+        final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
+
+        // then
+        assertThat(thrown)
+                .isInstanceOf(RuntimeException.class)
+                .isEqualTo(expectedException);
     }
 
     @Test
-    public void should_to_string() {
+    void should_to_string() {
         final String toString = pmdSensor.toString();
         assertThat(toString).isEqualTo("PmdSensor");
     }

@@ -27,41 +27,37 @@ import java.nio.file.Path;
 import java.util.List;
 
 import net.sourceforge.pmd.Report;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.internal.MapSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-public class PmdConfigurationTest {
+class PmdConfigurationTest {
 
     private static final File WORK_DIR = new File("test-work-dir");
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
+    private final FileSystem fs = mock(FileSystem.class);
     private PmdConfiguration configuration;
     private MapSettings settings;
-    private FileSystem fs = mock(FileSystem.class);
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    @BeforeClass
-    public static void createTempDir() {
+    @BeforeAll
+    static void createTempDir() {
         deleteTempDir();
         WORK_DIR.mkdir();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    @AfterClass
-    public static void deleteTempDir() {
+    @AfterAll
+    static void deleteTempDir() {
         if (WORK_DIR.exists()) {
             for (File file : WORK_DIR.listFiles()) {
                 file.delete();
@@ -70,14 +66,14 @@ public class PmdConfigurationTest {
         }
     }
 
-    @Before
-    public void setUpPmdConfiguration() {
+    @BeforeEach
+    void setUpPmdConfiguration() {
         settings = new MapSettings();
         configuration = new PmdConfiguration(fs, settings.asConfig());
     }
 
     @Test
-    public void should_dump_xml_rule_set() throws IOException {
+    void should_dump_xml_rule_set() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
         File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
@@ -87,17 +83,18 @@ public class PmdConfigurationTest {
     }
 
     @Test
-    public void should_fail_to_dump_xml_rule_set() {
+    void should_fail_to_dump_xml_rule_set() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
-        expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("Fail to save the PMD configuration");
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd", "<xml>"));
 
-        configuration.dumpXmlRuleSet("pmd", "<xml>");
+        assertThat(thrown)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Fail to save the PMD configuration");
     }
 
     @Test
-    public void should_dump_xml_report() throws IOException {
+    void should_dump_xml_report() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
@@ -110,19 +107,20 @@ public class PmdConfigurationTest {
     }
 
     @Test
-    public void should_fail_to_dump_xml_report() {
+    void should_fail_to_dump_xml_report() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
 
-        expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("Fail to save the PMD report");
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlReport(new Report()));
 
-        configuration.dumpXmlReport(new Report());
+        assertThat(thrown)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Fail to save the PMD report");
     }
 
     @Test
-    public void should_ignore_xml_report_when_property_is_not_set() {
+    void should_ignore_xml_report_when_property_is_not_set() {
         Path reportFile = configuration.dumpXmlReport(new Report());
 
         assertThat(reportFile).isNull();

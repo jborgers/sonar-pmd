@@ -21,15 +21,14 @@ package org.sonar.plugins.pmd;
 
 import java.lang.reflect.Constructor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.rules.RulePriority;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-public class PmdLevelUtilsTest {
+class PmdLevelUtilsTest {
     @Test
-    public void should_get_priority_from_level() {
+    void should_get_priority_from_level() {
         assertThat(PmdLevelUtils.fromLevel("1")).isSameAs(RulePriority.BLOCKER);
         assertThat(PmdLevelUtils.fromLevel("2")).isSameAs(RulePriority.CRITICAL);
         assertThat(PmdLevelUtils.fromLevel("3")).isSameAs(RulePriority.MAJOR);
@@ -40,7 +39,7 @@ public class PmdLevelUtilsTest {
     }
 
     @Test
-    public void should_get_level_from_priority() {
+    void should_get_level_from_priority() {
         assertThat(PmdLevelUtils.toLevel(RulePriority.BLOCKER)).isEqualTo("1");
         assertThat(PmdLevelUtils.toLevel(RulePriority.CRITICAL)).isEqualTo("2");
         assertThat(PmdLevelUtils.toLevel(RulePriority.MAJOR)).isEqualTo("3");
@@ -49,7 +48,7 @@ public class PmdLevelUtilsTest {
     }
 
     @Test
-    public void private_constructor() throws Exception {
+    void private_constructor() throws Exception {
         Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
         assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);

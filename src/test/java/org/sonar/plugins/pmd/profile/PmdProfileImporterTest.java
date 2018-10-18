@@ -22,8 +22,8 @@ package org.sonar.plugins.pmd.profile;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -40,21 +40,21 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PmdProfileImporterTest {
+class PmdProfileImporterTest {
 
     private PmdProfileImporter importer;
     private ValidationMessages messages;
 
-    static Reader read(String path) {
+    private static Reader read(String path) {
         return new StringReader(PmdTestUtils.getResourceContent(path));
     }
 
-    static RuleFinder createRuleFinder() {
+    private static RuleFinder createRuleFinder() {
         RuleFinder ruleFinder = mock(RuleFinder.class);
         when(ruleFinder.find(any(RuleQuery.class))).then((Answer<Rule>) invocation -> {
             RuleQuery query = (RuleQuery) invocation.getArguments()[0];
             String configKey = query.getConfigKey();
-            String key = configKey.substring(configKey.lastIndexOf('/') + 1, configKey.length());
+            String key = configKey.substring(configKey.lastIndexOf('/') + 1);
             Rule rule = Rule.create(query.getRepositoryKey(), key, "").setConfigKey(configKey).setSeverity(RulePriority.BLOCKER);
             if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
                 rule.createParameter("minimum");
@@ -64,14 +64,14 @@ public class PmdProfileImporterTest {
         return ruleFinder;
     }
 
-    @Before
-    public void setUpImporter() {
+    @BeforeEach
+    void setUpImporter() {
         messages = ValidationMessages.create();
         importer = new PmdProfileImporter(createRuleFinder());
     }
 
     @Test
-    public void should_import_pmd_ruleset() {
+    void should_import_pmd_ruleset() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         PmdRuleset pmdRuleset = importer.parsePmdRuleset(reader, messages);
@@ -80,7 +80,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_simple_profile() {
+    void should_import_simple_profile() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -92,7 +92,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_profile_with_xpath_rule() {
+    void should_import_profile_with_xpath_rule() {
         Reader reader = read("/org/sonar/plugins/pmd/export_xpath_rules.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -102,7 +102,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_parameter() {
+    void should_import_parameter() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -112,7 +112,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_default_priority() {
+    void should_import_default_priority() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -122,7 +122,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_priority() {
+    void should_import_priority() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -135,7 +135,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_import_pmd_configuration_with_unknown_nodes() {
+    void should_import_pmd_configuration_with_unknown_nodes() {
         Reader reader = read("/org/sonar/plugins/pmd/complex-with-unknown-nodes.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -144,7 +144,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_deal_with_unsupported_property() {
+    void should_deal_with_unsupported_property() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
@@ -155,7 +155,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_fail_on_invalid_xml() {
+    void should_fail_on_invalid_xml() {
         Reader reader = new StringReader("not xml");
 
         importer.importProfile(reader, messages);
@@ -164,7 +164,7 @@ public class PmdProfileImporterTest {
     }
 
     @Test
-    public void should_warn_on_unknown_rule() {
+    void should_warn_on_unknown_rule() {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         importer = new PmdProfileImporter(mock(RuleFinder.class));
