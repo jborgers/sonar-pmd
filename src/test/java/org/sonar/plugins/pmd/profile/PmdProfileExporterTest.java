@@ -125,7 +125,7 @@ class PmdProfileExporterTest {
 
     @Test
     void should_export_pmd_profile_on_writer_exception() throws IOException {
-        
+
         // given
         final String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_simple.xml");
         final Writer writer = mock(Writer.class);

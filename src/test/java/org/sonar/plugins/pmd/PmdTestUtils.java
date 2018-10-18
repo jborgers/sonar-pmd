@@ -20,18 +20,23 @@
 package org.sonar.plugins.pmd;
 
 import java.io.IOException;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class PmdTestUtils {
 
     public static String getResourceContent(String path) {
+
         try {
-            return Resources.toString(Resources.getResource(PmdTestUtils.class, path), Charsets.UTF_8);
+            final URI resource = PmdTestUtils.class.getResource(path).toURI();
+            return new String(Files.readAllBytes(Paths.get(resource)), StandardCharsets.UTF_8);
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Given Path " + path + " can not be resolved to a valid URI.", e);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Could not load resource " + path, e);
+            throw new IllegalStateException("Requested Path " + path + " seems to not be available.", e);
         }
     }
-
 }
