@@ -22,11 +22,9 @@ package org.sonar.plugins.pmd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Functions;
-import com.google.common.collect.ImmutableMap;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
@@ -42,19 +40,23 @@ public class PmdTemplate {
 
     private static final Logger LOG = Loggers.get(PmdTemplate.class);
 
-    private static final Map<String, String> JAVA_VERSIONS = ImmutableMap.<String, String>builder()
-            .put("1.1", "1.3")
-            .put("1.2", "1.3")
-            .put("5", "1.5")
-            .put("6", "1.6")
-            .put("7", "1.7")
-            .put("8", "1.8")
-            .build();
+    private static final Map<String, String> JAVA_VERSIONS = prepareVersions();
+
+    private static Map<String, String> prepareVersions() {
+        final Map<String, String> versions = new HashMap<>();
+        versions.put("1.1", "1.3");
+        versions.put("1.2", "1.3");
+        versions.put("5", "1.5");
+        versions.put("6", "1.6");
+        versions.put("7", "1.7");
+        versions.put("8", "1.8");
+
+        return versions;
+    }
 
     private SourceCodeProcessor processor;
     private PMDConfiguration configuration;
 
-    @VisibleForTesting
     PmdTemplate(PMDConfiguration configuration, SourceCodeProcessor processor) {
         this.configuration = configuration;
         this.processor = processor;
@@ -69,7 +71,6 @@ public class PmdTemplate {
         return new PmdTemplate(configuration, processor);
     }
 
-    @VisibleForTesting
     static LanguageVersion languageVersion(String javaVersion) {
         String version = normalize(javaVersion);
         LanguageVersion languageVersion = new JavaLanguageModule().getVersion(version);
@@ -81,10 +82,9 @@ public class PmdTemplate {
     }
 
     private static String normalize(String version) {
-        return Functions.forMap(JAVA_VERSIONS, version).apply(version);
+        return JAVA_VERSIONS.getOrDefault(version, version);
     }
 
-    @VisibleForTesting
     PMDConfiguration configuration() {
         return configuration;
     }

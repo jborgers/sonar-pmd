@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom.CDATA;
@@ -61,7 +60,6 @@ public class PmdProfileExporter extends ProfileExporter {
         }
     }
 
-    @VisibleForTesting
     static void processXPathRule(String sonarRuleKey, PmdRule rule) {
         if (PmdConstants.XPATH_CLASS.equals(rule.getRef())) {
             rule.setRef(null);

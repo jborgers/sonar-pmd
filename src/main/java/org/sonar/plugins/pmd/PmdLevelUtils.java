@@ -19,29 +19,43 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.EnumHashBiMap;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.sonar.api.rules.RulePriority;
 
-import static com.google.common.collect.ImmutableMap.of;
-
 public final class PmdLevelUtils {
-    private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
-            RulePriority.BLOCKER, "1",
-            RulePriority.CRITICAL, "2",
-            RulePriority.MAJOR, "3",
-            RulePriority.MINOR, "4",
-            RulePriority.INFO, "5"));
+
+    private static final Map<RulePriority, String> PRIORITY_TO_LEVEL = preparePriorityToLevel();
+    private static final Map<String, RulePriority> LEVEL_TO_PRIORITY = prepareLevelToPriority();
+
+    private static Map<RulePriority, String> preparePriorityToLevel() {
+        final Map<RulePriority, String> map = new HashMap<>();
+        map.put(RulePriority.BLOCKER, "1");
+        map.put(RulePriority.CRITICAL, "2");
+        map.put(RulePriority.MAJOR, "3");
+        map.put(RulePriority.MINOR, "4");
+        map.put(RulePriority.INFO, "5");
+
+        return map;
+    }
+
+    private static Map<String, RulePriority> prepareLevelToPriority() {
+        final Map<String, RulePriority> map = new HashMap<>();
+        preparePriorityToLevel().forEach((key, value) -> map.put(value, key));
+
+        return map;
+    }
 
     private PmdLevelUtils() {
         // only static methods
     }
 
     public static RulePriority fromLevel(String level) {
-        return LEVELS_PER_PRIORITY.inverse().get(level);
+        return LEVEL_TO_PRIORITY.get(level);
     }
 
     public static String toLevel(RulePriority priority) {
-        return LEVELS_PER_PRIORITY.get(priority);
+        return PRIORITY_TO_LEVEL.get(priority);
     }
 }

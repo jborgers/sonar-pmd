@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -148,7 +147,6 @@ public class PmdExecutor {
         }
     }
 
-    @VisibleForTesting
     PmdTemplate createPmdTemplate(URLClassLoader classLoader) {
         return PmdTemplate.create(getSourceVersion(), classLoader, fs.encoding());
     }
