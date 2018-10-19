@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -27,6 +28,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import net.sourceforge.pmd.PMDConfiguration;
+import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.SourceCodeProcessor;
@@ -92,7 +94,7 @@ public class PmdTemplate {
 
         try (InputStream inputStream = file.inputStream()) {
             processor.processSourceCode(inputStream, rulesets, ruleContext);
-        } catch (Throwable e) {
+        } catch (RuntimeException | IOException | PMDException e) {
             LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
         }
     }
