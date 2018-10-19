@@ -175,14 +175,6 @@
   </dependencies>
 
   <build>
-
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
     <testResources>
       <testResource>
         <directory>${basedir}/src/main/resources</directory>
@@ -206,7 +198,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>7000000</maxsize>
+                  <maxsize>5000000</maxsize>
                   <minsize>4200000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>

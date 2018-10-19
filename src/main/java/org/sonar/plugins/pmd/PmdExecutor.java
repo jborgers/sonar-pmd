@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -70,7 +71,7 @@ public class PmdExecutor {
     }
 
     public Report execute() {
-        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PmdVersion.getVersion());
+        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMD.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
         Report result = null;
 
