@@ -73,12 +73,11 @@ public class PmdExecutor {
     public Report execute() {
         final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMD.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-        Report result = null;
 
         try (URLClassLoader classLoader = createClassloader()) {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-            result = executePmd(classLoader);
+            return executePmd(classLoader);
         } catch (IOException e) {
             LOGGER.error("Failed to close URLClassLoader.", e);
         } finally {
@@ -86,7 +85,7 @@ public class PmdExecutor {
             profiler.stopInfo();
         }
 
-        return result;
+        return null;
     }
 
     private Report executePmd(URLClassLoader classLoader) {
@@ -152,6 +151,9 @@ public class PmdExecutor {
         return PmdTemplate.create(getSourceVersion(), classLoader, fs.encoding());
     }
 
+    /**
+     * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
+     */
     private URLClassLoader createClassloader() {
         Collection<File> classpathElements = javaResourceLocator.classpath();
         List<URL> urls = new ArrayList<>();
@@ -159,7 +161,7 @@ public class PmdExecutor {
             try {
                 urls.add(file.toURI().toURL());
             } catch (MalformedURLException e) {
-                throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + file, e);
+                throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
             }
         }
         return new URLClassLoader(urls.toArray(new URL[0]), null);
