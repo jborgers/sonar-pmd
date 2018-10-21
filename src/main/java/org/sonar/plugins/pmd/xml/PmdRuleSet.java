@@ -22,19 +22,9 @@ package org.sonar.plugins.pmd.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PmdRuleset {
-
-    private String description;
+public class PmdRuleSet {
 
     private List<PmdRule> rules = new ArrayList<>();
-
-    public PmdRuleset() {
-        // no description
-    }
-
-    public PmdRuleset(String description) {
-        this.description = description;
-    }
 
     public List<PmdRule> getPmdRules() {
         return rules;
@@ -44,16 +34,7 @@ public class PmdRuleset {
         this.rules = rules;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void addRule(PmdRule rule) {
         rules.add(rule);
     }
-
 }

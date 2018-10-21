@@ -41,7 +41,7 @@ import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
-import org.sonar.plugins.pmd.xml.PmdRuleset;
+import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
 public class PmdProfileExporter extends ProfileExporter {
     public PmdProfileExporter() {
@@ -80,7 +80,7 @@ public class PmdProfileExporter extends ProfileExporter {
         }
     }
 
-    private static void exportPmdRulesetToXml(PmdRuleset pmdRuleset, Writer writer, String profileName) {
+    private static void exportPmdRulesetToXml(PmdRuleSet pmdRuleset, Writer writer, String profileName) {
 
 // TODO Check if org.sonar.api.utils.text.XmlWriter instead of JDOM?
         Element eltRuleset = new Element("ruleset");
@@ -149,20 +149,20 @@ public class PmdProfileExporter extends ProfileExporter {
     @Override
     public void exportProfile(RulesProfile profile, Writer writer) {
         String profileName = profile.getName();
-        PmdRuleset tree = createPmdRuleset(PmdConstants.REPOSITORY_KEY, profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY), profileName);
+        PmdRuleSet tree = createPmdRuleset(PmdConstants.REPOSITORY_KEY, profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY));
         exportPmdRulesetToXml(tree, writer, profileName);
     }
 
     public String exportProfile(String repositoryKey, RulesProfile profile) {
         String profileName = profile.getName();
-        PmdRuleset tree = createPmdRuleset(repositoryKey, profile.getActiveRulesByRepository(repositoryKey), profileName);
+        PmdRuleSet tree = createPmdRuleset(repositoryKey, profile.getActiveRulesByRepository(repositoryKey));
         StringWriter stringWriter = new StringWriter();
         exportPmdRulesetToXml(tree, stringWriter, profileName);
         return stringWriter.toString();
     }
 
-    private PmdRuleset createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules, String profileName) {
-        PmdRuleset ruleset = new PmdRuleset(profileName);
+    private PmdRuleSet createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules) {
+        PmdRuleSet ruleset = new PmdRuleSet();
         for (ActiveRule activeRule : activeRules) {
             if (activeRule.getRule().getRepositoryKey().equals(repositoryKey)) {
                 String configKey = activeRule.getRule().getConfigKey();

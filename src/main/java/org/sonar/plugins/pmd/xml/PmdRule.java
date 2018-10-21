@@ -26,18 +26,12 @@ import javax.annotation.Nullable;
 public class PmdRule {
 
     private String ref;
-
     private String priority;
-
     private String name;
-
     private String message;
-
-    private List<PmdProperty> properties = new ArrayList<>();
-
     private String clazz;
-
     private String language;
+    private List<PmdProperty> properties = new ArrayList<>();
 
     public PmdRule(String ref) {
         this(ref, null);
@@ -72,10 +66,6 @@ public class PmdRule {
             }
         }
         return null;
-    }
-
-    public int compareTo(String o) {
-        return o.compareTo(ref);
     }
 
     @Nullable

@@ -33,7 +33,6 @@ import org.sonar.api.rules.RulePriority;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.PmdTestUtils;
-import org.sonar.plugins.pmd.xml.PmdRuleset;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -68,15 +67,6 @@ class PmdProfileImporterTest {
     void setUpImporter() {
         messages = ValidationMessages.create();
         importer = new PmdProfileImporter(createRuleFinder());
-    }
-
-    @Test
-    void should_import_pmd_ruleset() {
-        Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
-
-        PmdRuleset pmdRuleset = importer.parsePmdRuleset(reader, messages);
-
-        assertThat(pmdRuleset.getPmdRules()).hasSize(4);
     }
 
     @Test

@@ -20,13 +20,7 @@
 package org.sonar.plugins.pmd.profile;
 
 import java.io.Reader;
-import java.util.List;
-import javax.annotation.Nullable;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -34,17 +28,15 @@ import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
-import org.sonar.plugins.pmd.xml.PmdRuleset;
+import org.sonar.plugins.pmd.xml.PmdRuleSet;
+import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
 public class PmdProfileImporter extends ProfileImporter {
 
-    private static final Logger LOG = Loggers.get(PmdProfileImporter.class);
     private final RuleFinder ruleFinder;
 
     public PmdProfileImporter(RuleFinder ruleFinder) {
@@ -53,7 +45,7 @@ public class PmdProfileImporter extends ProfileImporter {
         this.ruleFinder = ruleFinder;
     }
 
-    private static void setParameters(ActiveRule activeRule, PmdRule pmdRule, Rule rule, ValidationMessages messages) {
+    private void setParameters(ActiveRule activeRule, PmdRule pmdRule, Rule rule, ValidationMessages messages) {
         for (PmdProperty prop : pmdRule.getProperties()) {
             String paramName = prop.getName();
             if (rule.getParam(paramName) == null) {
@@ -64,35 +56,9 @@ public class PmdProfileImporter extends ProfileImporter {
         }
     }
 
-    private static List<Element> getChildren(Element parent, String childName, @Nullable Namespace namespace) {
-        if (namespace == null) {
-            return parent.getChildren(childName);
-        } else {
-            return parent.getChildren(childName, namespace);
-        }
-    }
-
-    private static void parsePmdProperties(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
-        for (Element eltProperties : getChildren(eltRule, "properties", namespace)) {
-            for (Element eltProperty : getChildren(eltProperties, "property", namespace)) {
-                pmdRule.addProperty(new PmdProperty(eltProperty.getAttributeValue("name"), eltProperty.getAttributeValue("value")));
-            }
-        }
-    }
-
-    private static void parsePmdPriority(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
-        for (Element eltPriority : getChildren(eltRule, "priority", namespace)) {
-            pmdRule.setPriority(eltPriority.getValue());
-        }
-    }
-
     @Override
     public RulesProfile importProfile(Reader pmdConfigurationFile, ValidationMessages messages) {
-        PmdRuleset pmdRuleset = parsePmdRuleset(pmdConfigurationFile, messages);
-        return createRuleProfile(pmdRuleset, messages);
-    }
-
-    protected RulesProfile createRuleProfile(PmdRuleset pmdRuleset, ValidationMessages messages) {
+        PmdRuleSet pmdRuleset = PmdRuleSets.parse(pmdConfigurationFile, messages);
         RulesProfile profile = RulesProfile.create();
         for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
             String ruleClassName = pmdRule.getClazz();
@@ -115,30 +81,5 @@ public class PmdProfileImporter extends ProfileImporter {
             }
         }
         return profile;
-    }
-
-    PmdRuleset parsePmdRuleset(Reader pmdConfigurationFile, ValidationMessages messages) {
-        try {
-            SAXBuilder parser = new SAXBuilder();
-            Document dom = parser.build(pmdConfigurationFile);
-            Element eltResultset = dom.getRootElement();
-            Namespace namespace = eltResultset.getNamespace();
-            PmdRuleset pmdResultset = new PmdRuleset();
-            for (Element eltRule : getChildren(eltResultset, "rule", namespace)) {
-                PmdRule pmdRule = new PmdRule(eltRule.getAttributeValue("ref"));
-                pmdRule.setClazz(eltRule.getAttributeValue("class"));
-                pmdRule.setName(eltRule.getAttributeValue("name"));
-                pmdRule.setMessage(eltRule.getAttributeValue("message"));
-                parsePmdPriority(eltRule, pmdRule, namespace);
-                parsePmdProperties(eltRule, pmdRule, namespace);
-                pmdResultset.addRule(pmdRule);
-            }
-            return pmdResultset;
-        } catch (Exception e) {
-            String errorMessage = "The PMD configuration file is not valid";
-            messages.addErrorText(errorMessage + " : " + e.getMessage());
-            LOG.error(errorMessage, e);
-            return new PmdRuleset();
-        }
     }
 }

@@ -22,9 +22,7 @@ package org.sonar.plugins.pmd.xml;
 public class PmdProperty {
 
     private String name;
-
     private String value;
-
     private String cdataValue;
 
     public PmdProperty(String name, String value) {
