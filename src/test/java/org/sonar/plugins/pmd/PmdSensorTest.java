@@ -31,11 +31,13 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.profiles.RulesProfile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.atLeastOnce;
@@ -197,6 +199,21 @@ class PmdSensorTest {
     void should_to_string() {
         final String toString = pmdSensor.toString();
         assertThat(toString).isEqualTo("PmdSensor");
+    }
+
+    @Test
+    void whenDescribeCalledThenSensorDescriptionIsWritten() {
+
+        // given
+        final SensorDescriptor mockDescriptor = mock(SensorDescriptor.class);
+        when(mockDescriptor.onlyOnLanguage(anyString())).thenReturn(mockDescriptor);
+
+        // when
+        pmdSensor.describe(mockDescriptor);
+
+        // then
+        verify(mockDescriptor).onlyOnLanguage(PmdConstants.LANGUAGE_KEY);
+        verify(mockDescriptor).name("PmdSensor");
     }
 
     @SuppressWarnings("unchecked")
