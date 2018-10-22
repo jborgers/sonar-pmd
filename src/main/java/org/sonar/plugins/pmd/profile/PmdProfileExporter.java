@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
-import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom.CDATA;
 import org.jdom.Document;
@@ -44,10 +43,13 @@ import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
 public class PmdProfileExporter extends ProfileExporter {
+
+    private static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
+
     public PmdProfileExporter() {
         super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
         setSupportedLanguages(PmdConstants.LANGUAGE_KEY);
-        setMimeType("application/xml");
+        setMimeType(CONTENT_TYPE_APPLICATION_XML);
     }
 
     private static void addRuleProperties(ActiveRule activeRule, PmdRule pmdRule) {
@@ -75,7 +77,7 @@ public class PmdProfileExporter extends ProfileExporter {
             }
             xpathExp.setCdataValue(xpathExp.getValue());
             rule.setClazz(PmdConstants.XPATH_CLASS);
-            rule.setLanguage(JavaLanguageModule.TERSE_NAME);
+            rule.setLanguage(PmdConstants.LANGUAGE_KEY);
             rule.setName(sonarRuleKey);
         }
     }

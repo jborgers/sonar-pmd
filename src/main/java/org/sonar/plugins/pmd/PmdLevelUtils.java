@@ -22,6 +22,8 @@ package org.sonar.plugins.pmd;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.sonar.api.rules.RulePriority;
 
 public final class PmdLevelUtils {
@@ -51,7 +53,7 @@ public final class PmdLevelUtils {
         // only static methods
     }
 
-    public static RulePriority fromLevel(String level) {
+    public static RulePriority fromLevel(@Nullable String level) {
         return LEVEL_TO_PRIORITY.get(level);
     }
 
