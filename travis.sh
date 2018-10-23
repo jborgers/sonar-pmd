@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eo pipefail
 
 case "$TEST" in
 
@@ -18,7 +18,11 @@ plugin)
   unset SONARQUBE_SCANNER_PARAMS SONAR_TOKEN SONAR_SCANNER_HOME
 
   # Run integration tests
-  mvn clean package -Dtest.sonar.version=${SQ_VERSION} -Dmaven.test.redirectTestOutputToFile=false
+  if [ -n "$SJ_VERSION" ]; then
+    mvn clean package -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dmaven.test.redirectTestOutputToFile=false
+  else
+    mvn clean package -Dtest.sonar.version=${SQ_VERSION} -Dmaven.test.redirectTestOutputToFile=false
+  fi
   ;;
 
 *)
