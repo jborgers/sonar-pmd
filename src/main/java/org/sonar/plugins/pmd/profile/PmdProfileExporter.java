@@ -32,6 +32,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -42,6 +43,7 @@ import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
+@ScannerSide
 public class PmdProfileExporter extends ProfileExporter {
 
     private static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
