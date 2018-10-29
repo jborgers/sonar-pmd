@@ -6,6 +6,7 @@
 **Implemented enhancements:**
 - CodeStyle defined by _.editorconfig_
 - Tests migrated to JUnit 5 & AssertJ
+- Changed versioning scheme (_MAJOR.MINOR.PATCH_) 
 
 **Fixed bugs:**
 - Plugin doesn't work with SonarQube 7.3 [\#49](https://github.com/jensgerdes/sonar-pmd/issues/49)
