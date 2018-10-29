@@ -25,6 +25,11 @@ plugin)
   fi
   ;;
 
+javadoc)
+    # Create JavaDocs to check for problems with JavaDoc generation
+    mvn javadoc:javadoc
+    ;;
+
 *)
   echo "Unexpected TEST mode: $TEST"
   exit 1

@@ -18,6 +18,7 @@ env:
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[6.7]
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.2]
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.3]
+- TEST=javadoc
 
 cache:
   directories:
