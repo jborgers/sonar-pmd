@@ -1,7 +1,14 @@
 # Changelog
 
-## [3.0.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-10-22)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/2.6...master)
+## [3.0.1-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-10-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.0...master)
+
+**Fixed bugs:**
+- Plugin does not work with SonarQube 7.4 [\#55](https://github.com/jensgerdes/sonar-pmd/issues/55)
+
+
+## [3.0.0](https://github.com/jensgerdes/sonar-pmd/tree/3.0.0) (2018-10-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/2.6...3.0.0)
 
 **Implemented enhancements:**
 - CodeStyle defined by _.editorconfig_

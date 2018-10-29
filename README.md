@@ -22,7 +22,7 @@ Possible values:
 - 1.8 or 8
 
 ## Rules on test
-PMD tool provides some rules that can check the code of JUnit tests.Please note that these rules (and only these rules) will be applied only on the test files of your project.
+PMD tool provides some rules that can check the code of JUnit tests. Please note that these rules (and only these rules) will be applied only on the test files of your project.
 
 ## License
 Licensed under the [GNU Lesser General Public License, Version 3.0](https://github.com/jensgerdes/sonar-pmd/blob/master/LICENSE.md)
