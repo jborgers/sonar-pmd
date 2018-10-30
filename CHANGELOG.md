@@ -1,7 +1,7 @@
 # Changelog
 
-## [3.0.1-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-10-29)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.0...master)
+## [3.0.1](https://github.com/jensgerdes/sonar-pmd/tree/3.0.1) (2018-10-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.0...3.0.1)
 
 **Fixed bugs:**
 - Plugin does not work with SonarQube 7.4 [\#55](https://github.com/jensgerdes/sonar-pmd/issues/55)
