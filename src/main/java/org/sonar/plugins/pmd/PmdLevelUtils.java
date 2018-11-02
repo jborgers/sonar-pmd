@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
- * Copyright (C) 2012 ${owner}
- * sonarqube@googlegroups.com
+ * Copyright (C) 2012-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,35 +13,51 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.EnumHashBiMap;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import org.sonar.api.rules.RulePriority;
 
-import static com.google.common.collect.ImmutableMap.of;
-
 public final class PmdLevelUtils {
-  private static final BiMap<RulePriority, String> LEVELS_PER_PRIORITY = EnumHashBiMap.create(of(
-      RulePriority.BLOCKER, "1",
-      RulePriority.CRITICAL, "2",
-      RulePriority.MAJOR, "3",
-      RulePriority.MINOR, "4",
-      RulePriority.INFO, "5"));
 
-  private PmdLevelUtils() {
-    // only static methods
-  }
+    private static final Map<RulePriority, String> PRIORITY_TO_LEVEL = preparePriorityToLevel();
+    private static final Map<String, RulePriority> LEVEL_TO_PRIORITY = prepareLevelToPriority();
 
-  public static RulePriority fromLevel(String level) {
-    return LEVELS_PER_PRIORITY.inverse().get(level);
-  }
+    private static Map<RulePriority, String> preparePriorityToLevel() {
+        final Map<RulePriority, String> map = new HashMap<>();
+        map.put(RulePriority.BLOCKER, "1");
+        map.put(RulePriority.CRITICAL, "2");
+        map.put(RulePriority.MAJOR, "3");
+        map.put(RulePriority.MINOR, "4");
+        map.put(RulePriority.INFO, "5");
 
-  public static String toLevel(RulePriority priority) {
-    return LEVELS_PER_PRIORITY.get(priority);
-  }
+        return map;
+    }
+
+    private static Map<String, RulePriority> prepareLevelToPriority() {
+        final Map<String, RulePriority> map = new HashMap<>();
+        preparePriorityToLevel().forEach((key, value) -> map.put(value, key));
+
+        return map;
+    }
+
+    private PmdLevelUtils() {
+        // only static methods
+    }
+
+    public static RulePriority fromLevel(@Nullable String level) {
+        return LEVEL_TO_PRIORITY.get(level);
+    }
+
+    public static String toLevel(RulePriority priority) {
+        return PRIORITY_TO_LEVEL.get(priority);
+    }
 }

@@ -16,6 +16,4 @@
         <priority>4</priority>
     </rule>
     <rule name="Sample4" class="net.sourceforge.pmd.lang.java.rule.design.UseUtilityClassRule">
-    <priority>3</priority>
-  </rule>
 </ruleset>

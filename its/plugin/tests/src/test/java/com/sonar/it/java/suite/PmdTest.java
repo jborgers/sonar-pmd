@@ -1,7 +1,7 @@
 /*
  * PMD :: IT :: Plugin :: Tests
- * Copyright (C) 2013 SonarSource
- * sonarqube@googlegroups.com
+ * Copyright (C) 2013-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -13,22 +13,23 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package com.sonar.it.java.suite;
 
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sonar.orchestrator.Orchestrator;
+import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
-
-import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -45,12 +46,12 @@ public class PmdTest {
     return keyFor(projectKey, "src/main/java/", pkgDir, cls + ".java");
   }
 
-  private static String keyForTest(String projectKey, String pkgDir, String cls) {
-    return keyFor(projectKey, "src/test/java/", pkgDir, cls + ".java");
+  private static String keyForTest() {
+    return keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
   }
 
   @Before
-  public void resetData() throws Exception {
+  public void resetData() {
     orchestrator.resetData();
   }
 
@@ -58,19 +59,17 @@ public class PmdTest {
   public void pmdExtensions() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanSonarGoals()
-      .setProperty("sonar.profile", "pmd-extensions")
-      .setProperty("sonar.dynamicAnalysis", "false");
-    String log = orchestrator.executeBuild(build).getLogs();
+      .setProperty("sonar.java.binaries", ".")
+      .setProperty("sonar.profile", "pmd-extensions");
+    final BuildResult buildResult = orchestrator.executeBuild(build);
+    final String log = buildResult.getLogs();
 
-    // SONARJAVA-213
-    if (orchestrator.getConfiguration().getPluginVersion("java").isGreaterThanOrEquals("1.4")) {
-      assertThat(log).contains("Start MaximumMethodsCountCheck");
-      assertThat(log).contains("End MaximumMethodsCountCheck");
-    }
+    assertThat(log).contains("Start MaximumMethodsCountCheck");
+    assertThat(log).contains("End MaximumMethodsCountCheck");
 
     List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Errors"));
     assertThat(issues).hasSize(3);
-    List<String> messages = Lists.newArrayList();
+    List<String> messages = new ArrayList<>();
     for (Issue issue : issues) {
       messages.add(issue.message());
     }
@@ -87,7 +86,6 @@ public class PmdTest {
   public void ruleAvoidDuplicateLiterals() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-avoid-duplicate-literals"))
       .setCleanSonarGoals()
-      .withoutDynamicAnalysis()
       .setProperty("sonar.profile", "pmd");
     orchestrator.executeBuild(build);
 
@@ -105,11 +103,10 @@ public class PmdTest {
   public void junitRules() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-junit-rules"))
       .setCleanSonarGoals()
-      .withoutDynamicAnalysis()
       .setProperty("sonar.profile", "pmd-junit");
     orchestrator.executeBuild(build);
 
-    List<Issue> testIssues = retrieveIssues(keyForTest("pmd-junit-rules", "", "ProductionCodeTest"));
+    List<Issue> testIssues = retrieveIssues(keyForTest());
     assertThat(testIssues).hasSize(1);
     assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
     assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd-unit-tests:TestClassWithoutTestCases");
@@ -127,8 +124,7 @@ public class PmdTest {
   public void pmd_should_have_access_to_external_libraries_in_its_classpath() {
     MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
       .setCleanPackageSonarGoals()
-      .setProperty("sonar.profile", "pmd-extensions")
-      .setProperty("sonar.dynamicAnalysis", "false");
+      .setProperty("sonar.profile", "pmd-extensions");
     orchestrator.executeBuild(build);
 
     List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Bar"));

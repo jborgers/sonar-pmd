@@ -5,16 +5,16 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>24</version>
+    <version>48</version>
   </parent>
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
-  <version>2.7-SNAPSHOT</version>
+  <version>3.0.2-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
-  <description>PMD is a tool that looks for potential problems like possible bugs, dead code, suboptimal code, overcomplicated expressions or duplicate code.</description>
+  <description>Sonar-PMD is a plugin that provides coding rules from PMD.</description>
   <inceptionYear>2012</inceptionYear>
 
   <licenses>
@@ -27,6 +27,11 @@
 
   <developers>
     <developer>
+      <name>Jens Gerdes</name>
+      <email>jens@gerdes.digital</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
       <name>Tim Webster</name>
       <email>tim.webster@gmail.com</email>
     </developer>
@@ -37,38 +42,35 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-pmd.git</developerConnection>
-    <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
+    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
+    <url>https://github.com/jensgerdes/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>https://github.com/SonarQubeCommunity/sonar-pmd</url>
+  <url>https://github.com/jensgerdes/sonar-pmd</url>
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/SonarQubeCommunity/sonar-pmd/issues</url>
+    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
   </issueManagement>
+  <ciManagement>
+    <system>Travis</system>
+    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
+  </ciManagement>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
     <pmd.version>6.7.0</pmd.version>
-    <sonar.version>4.5.4</sonar.version>
-    <sonar-java.version>3.6</sonar-java.version>
-
-    <!-- Configuration for sonar-packaging-maven-plugin -->
-    <sonar.pluginKey>pmd</sonar.pluginKey>
-    <sonar.pluginName>PMD</sonar.pluginName>
-    <sonar.pluginClass>org.sonar.plugins.pmd.PmdPlugin</sonar.pluginClass>
-    <sonar.pluginDescription><![CDATA[Analyze Java code with <a href="http://pmd.sourceforge.net/">PMD</a>.]]></sonar.pluginDescription>
-    <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
+    <pmd.version>5.4.2</pmd.version>
+    <junit.jupiter.version>5.3.1</junit.jupiter.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
       <scope>provided</scope>
-      <version>${sonar.version}</version>
+      <version>7.4</version>
       <exclusions>
         <exclusion>
           <groupId>xml-apis</groupId>
@@ -77,16 +79,39 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <type>sonar-plugin</type>
-      <version>${sonar-java.version}</version>
+      <groupId>org.codehaus.staxmate</groupId>
+      <artifactId>staxmate</artifactId>
+      <version>2.0.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>java-frontend</artifactId>
+      <version>5.5.0.14655</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
       <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.6</version>
+      <version>2.7.0.377</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.picocontainer</groupId>
+          <artifactId>picocontainer</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-lang</groupId>
+          <artifactId>commons-lang</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -141,59 +166,48 @@
       <version>1.0</version>
     </dependency>
 
-    <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
-    We need following dependency, otherwise we will receive
-    java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
-    during call mock(org.sonar.api.resources.Project.class)
-    -->
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.0.7</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.codehaus.sonar</groupId>
-      <artifactId>sonar-testing-harness</artifactId>
-      <scope>test</scope>
-      <version>${sonar.version}</version>
-    </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
+      <artifactId>mockito-core</artifactId>
+      <version>2.23.0</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.11.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
-
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
-    <testResources>
-      <testResource>
-        <directory>${basedir}/src/main/resources</directory>
-      </testResource>
-      <testResource>
-        <directory>${basedir}/src/test/resources</directory>
-      </testResource>
-    </testResources>
-
     <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <configuration>
+          <sonarQubeMinVersion>6.6</sonarQubeMinVersion>
+          <pluginKey>pmd</pluginKey>
+          <pluginName>PMD</pluginName>
+          <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
+          <pluginDescription>Analyze Java code with PMD.</pluginDescription>
+          <requirePlugins>java:4.3.0.7717</requirePlugins>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -207,7 +221,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>5000000</maxsize>
+                  <maxsize>7000000</maxsize>
                   <minsize>4200000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
@@ -218,18 +232,44 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>de.jutzig</groupId>
+        <artifactId>github-release-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+          <description>Sonar PMD Plugin v${project.version}</description>
+          <releaseName>${project.version}</releaseName>
+          <tag>${project.version}</tag>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
+  <!-- Temporarily disabled until we receive access to the repository.-->
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>bintray</id>
+      <url />
     </repository>
   </distributionManagement>
+  <!--
+    <distributionManagement>
+      <snapshotRepository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <repository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
+    </distributionManagement>-->
 
 </project>
