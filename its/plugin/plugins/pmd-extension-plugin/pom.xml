@@ -25,13 +25,13 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-core</artifactId>
-      <version>6.7.0</version>
+      <version>6.9.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
-      <version>6.7.0</version>
+      <version>6.9.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

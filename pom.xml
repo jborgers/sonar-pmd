@@ -61,7 +61,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>6.7.0</pmd.version>
+    <pmd.version>6.9.0</pmd.version>
     <junit.jupiter.version>5.3.1</junit.jupiter.version>
   </properties>
 
