@@ -96,13 +96,12 @@ class PmdConfigurationTest {
     @Test
     void should_dump_xml_report() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
-
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
         Path reportFile = configuration.dumpXmlReport(new Report());
 
         assertThat(reportFile.toFile()).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
         List<String> writtenLines = Files.readAllLines(reportFile, StandardCharsets.UTF_8);
-        assertThat(writtenLines).hasSize(3);
+        assertThat(writtenLines).hasSize(6);
         assertThat(writtenLines.get(1)).contains("<pmd");
     }
 
