@@ -19,11 +19,13 @@
  */
 package org.sonar.examples.pmd;
 
+
+
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceBody;
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
-import net.sourceforge.pmd.lang.rule.properties.IntegerProperty;
+import net.sourceforge.pmd.properties.IntegerProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +35,7 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(MaximumMethodsCountCheck.class);
 
-  public static final IntegerProperty propertyDescriptor = new IntegerProperty("maxAuthorisedMethodsCount", 
+  public static final IntegerProperty propertyDescriptor = new IntegerProperty("maxAuthorisedMethodsCount",
     "Maximum number of methods authorised", 1, Integer.MAX_VALUE, 2, 1.0f);
 
   public MaximumMethodsCountCheck() {

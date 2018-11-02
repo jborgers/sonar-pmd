@@ -24,8 +24,14 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
-      <artifactId>pmd</artifactId>
-      <version>5.1.1</version>
+      <artifactId>pmd-core</artifactId>
+      <version>6.7.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-java</artifactId>
+      <version>6.7.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
