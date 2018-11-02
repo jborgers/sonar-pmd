@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset>
-    <description>Sonar PMD rules</description>
-    <rule name="Sample1" ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
-        <priority>2</priority>
-        <properties>
-            <property name="threshold" value="20"/>
-        </properties>
-    </rule>
-    <rule name="Sample2" ref="rulesets/java/coupling.xml/ExcessiveImports">
-        <properties>
-            <property name="minimum" value="30"/>
-        </properties>
-    </rule>
-    <rule name="Sample3" ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
-        <priority>4</priority>
-    </rule>
-    <rule name="Sample4" class="net.sourceforge.pmd.lang.java.rule.design.UseUtilityClassRule">
+  <description>Sonar PMD rules</description>
+  <rule name="Sample1" ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
+    <priority>2</priority>
+    <properties>
+      <property name="threshold" value="20"/>
+    </properties>
+  </rule>
+  <rule name="Sample2" ref="rulesets/java/coupling.xml/ExcessiveImports">
+    <properties>
+      <property name="minimum" value="30"/>
+    </properties>
+  </rule>
+  <rule name="Sample3" ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
+    <priority>4</priority>
+  </rule>
+  <rule name="Sample4" class="net.sourceforge.pmd.lang.java.rule.design.UseUtilityClassRule">
+    <priority>3</priority>
+  </rule>
 </ruleset>

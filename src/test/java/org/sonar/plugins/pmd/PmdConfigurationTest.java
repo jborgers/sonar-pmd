@@ -55,7 +55,7 @@ class PmdConfigurationTest {
         WORK_DIR.mkdir();
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
     @AfterAll
     static void deleteTempDir() {
         if (WORK_DIR.exists()) {
@@ -96,6 +96,7 @@ class PmdConfigurationTest {
     @Test
     void should_dump_xml_report() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
+
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
         Path reportFile = configuration.dumpXmlReport(new Report());
 

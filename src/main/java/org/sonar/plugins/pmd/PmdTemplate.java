@@ -52,7 +52,7 @@ public class PmdTemplate {
         versions.put("9", "9");
         versions.put("10", "10");
         versions.put("11", "11");
-  
+
         return versions;
     }
 
