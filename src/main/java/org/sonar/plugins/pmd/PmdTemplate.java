@@ -39,7 +39,6 @@ import org.sonar.api.utils.log.Loggers;
 public class PmdTemplate {
 
     private static final Logger LOG = Loggers.get(PmdTemplate.class);
-
     private static final Map<String, String> JAVA_VERSIONS = prepareVersions();
 
     private static Map<String, String> prepareVersions() {
@@ -50,6 +49,9 @@ public class PmdTemplate {
         versions.put("6", "1.6");
         versions.put("7", "1.7");
         versions.put("8", "1.8");
+        versions.put("9", "9");
+        versions.put("10", "10");
+        versions.put("11", "11");
 
         return versions;
     }

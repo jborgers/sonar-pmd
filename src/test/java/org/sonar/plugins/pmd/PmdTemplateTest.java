@@ -31,11 +31,7 @@ import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.SourceCodeProcessor;
-import net.sourceforge.pmd.lang.java.Java13Handler;
-import net.sourceforge.pmd.lang.java.Java15Handler;
-import net.sourceforge.pmd.lang.java.Java16Handler;
-import net.sourceforge.pmd.lang.java.Java17Handler;
-import net.sourceforge.pmd.lang.java.Java18Handler;
+import net.sourceforge.pmd.lang.java.JavaLanguageHandler;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 import org.sonar.api.batch.fs.InputFile;
@@ -89,27 +85,42 @@ class PmdTemplateTest {
 
     @Test
     void java12_version() {
-        assertThat(PmdTemplate.languageVersion("1.2").getLanguageVersionHandler()).isInstanceOf(Java13Handler.class);
+        assertThat(PmdTemplate.languageVersion("1.2").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
     void java5_version() {
-        assertThat(PmdTemplate.languageVersion("5").getLanguageVersionHandler()).isInstanceOf(Java15Handler.class);
+        assertThat(PmdTemplate.languageVersion("5").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
     void java6_version() {
-        assertThat(PmdTemplate.languageVersion("6").getLanguageVersionHandler()).isInstanceOf(Java16Handler.class);
+        assertThat(PmdTemplate.languageVersion("6").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
     void java7_version() {
-        assertThat(PmdTemplate.languageVersion("7").getLanguageVersionHandler()).isInstanceOf(Java17Handler.class);
+        assertThat(PmdTemplate.languageVersion("7").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
     void java8_version() {
-        assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(Java18Handler.class);
+        assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
+    void java9_version() {
+        assertThat(PmdTemplate.languageVersion("9").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
+    void java10_version() {
+        assertThat(PmdTemplate.languageVersion("10").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
+    void java11_version() {
+        assertThat(PmdTemplate.languageVersion("11").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
@@ -136,7 +147,7 @@ class PmdTemplateTest {
     @Test
     void should_set_encoding() {
         PmdTemplate pmdTemplate = PmdTemplate.create("6", mock(ClassLoader.class), StandardCharsets.UTF_16BE);
-        assertThat(pmdTemplate.configuration().getSourceEncoding()).isEqualTo("UTF-16BE");
+        assertThat(pmdTemplate.configuration().getSourceEncoding()).isEqualTo(StandardCharsets.UTF_16BE);
     }
 
 }

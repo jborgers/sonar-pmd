@@ -148,7 +148,7 @@ class PmdRuleSetsTest {
         final Optional<PmdRule> couplingBetweenObjects = pmdRuleSet.getPmdRules()
                 .stream()
                 .filter(rule -> rule.getClazz() != null)
-                .filter(rule -> rule.getClazz().endsWith("UseCollectionIsEmptyRule"))
+                .filter(rule -> rule.getClazz().endsWith("UseUtilityClassRule"))
                 .findFirst();
 
         assertThat(couplingBetweenObjects).isPresent()

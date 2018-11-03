@@ -1,11 +1,26 @@
 # Changelog
 
+## [3.1.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-11-03)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.1...master)
+
+**Implemented enhancements:**
+- Java 11 support
+- Updated PMD (6.9.0)
+
+**Closed issues:**
+- Upgrade pmd version to the latest one for parsing Java 8 code successfully [\#34](https://github.com/jensgerdes/sonar-pmd/issues/34) 
+- Please update PMD to at least 5.5.2 [\#38](https://github.com/jensgerdes/sonar-pmd/issues/38)
+- Java 10 compatibility [\#44](https://github.com/jensgerdes/sonar-pmd/issues/44)
+- Upgrade to a recent PMD version? [\#48](https://github.com/jensgerdes/sonar-pmd/issues/48)
+
+**Merged pull requests:**
+- Upgrade to latest PMD [\#51](https://github.com/jensgerdes/sonar-pmd/pull/51) ([spasam](https://github.com/spasam))
+
 ## [3.0.1](https://github.com/jensgerdes/sonar-pmd/tree/3.0.1) (2018-10-29)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.0...3.0.1)
 
 **Fixed bugs:**
 - Plugin does not work with SonarQube 7.4 [\#55](https://github.com/jensgerdes/sonar-pmd/issues/55)
-
 
 ## [3.0.0](https://github.com/jensgerdes/sonar-pmd/tree/3.0.0) (2018-10-29)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/2.6...3.0.0)

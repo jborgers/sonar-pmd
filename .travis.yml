@@ -8,17 +8,17 @@ addons:
       secure: "U299FqcJAMNfblrZF8R/ivqRk7KNdSOdcyWI4h5dgOLlQHj+HHrF2GJB2fOVeaB53snOkCycM/ZQgqTLlS1PU2NUca3TroNXj6jpNK1Erb/TXqFMKK+rmsN+hcxudDYGnQFIVnWy4lsg72jlK3Qvktt0XyfuYjMqQbsp3zwhlxw="
 
 jdk:
-- openjdk8
+- openjdk11
 
 install: true
 script: ./travis.sh
 env:
 - TEST=ci
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[6.6] SJ_VERSION=LATEST_RELEASE[4.3]
+- TEST=plugin SQ_VERSION=LATEST_RELEASE[6.6] SJ_VERSION=LATEST_RELEASE[4.15]
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[6.7]
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.2]
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[7.3]
 - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.4]
+- TEST=plugin SQ_VERSION=DEV
 - TEST=javadoc
 
 cache:

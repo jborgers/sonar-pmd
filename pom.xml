@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -10,7 +11,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd-plugin</artifactId>
-  <version>3.0.2-SNAPSHOT</version>
+  <version>3.1.0-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube PMD Plugin</name>
@@ -60,7 +61,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <pmd.version>5.4.2</pmd.version>
+    <pmd.version>6.9.0</pmd.version>
     <junit.jupiter.version>5.3.1</junit.jupiter.version>
   </properties>
 
@@ -88,6 +89,12 @@
       <artifactId>java-frontend</artifactId>
       <version>5.5.0.14655</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sslr-squid-bridge</groupId>
@@ -114,20 +121,12 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
-      <artifactId>pmd-core</artifactId>
+      <artifactId>pmd-java</artifactId>
       <version>${pmd.version}</version>
       <exclusions>
         <exclusion>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>xml-apis</groupId>
-          <artifactId>xml-apis</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>xerces</groupId>
-          <artifactId>xercesImpl</artifactId>
         </exclusion>
         <exclusion>
           <groupId>com.beust</groupId>
@@ -137,41 +136,29 @@
           <groupId>net.java.dev.javacc</groupId>
           <artifactId>javacc</artifactId>
         </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.pmd</groupId>
-      <artifactId>pmd-java</artifactId>
-      <version>${pmd.version}</version>
-      <exclusions>
         <exclusion>
-          <groupId>xml-apis</groupId>
-          <artifactId>xml-apis</artifactId>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>xerces</groupId>
-          <artifactId>xercesImpl</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>net.java.dev.javacc</groupId>
-          <artifactId>javacc</artifactId>
+          <groupId>org.antlr</groupId>
+          <artifactId>antlr4-runtime</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
-
     <dependency>
       <groupId>jdom</groupId>
       <artifactId>jdom</artifactId>
       <version>1.0</version>
     </dependency>
 
+    <!-- Test dependencies -->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>2.23.0</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -184,7 +171,6 @@
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -204,7 +190,7 @@
           <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
           <pluginDescription>Analyze Java code with PMD.</pluginDescription>
-          <requirePlugins>java:4.3.0.7717</requirePlugins>
+          <requirePlugins>java:4.15.0.12310</requirePlugins>
         </configuration>
       </plugin>
       <plugin>
@@ -256,7 +242,7 @@
   <distributionManagement>
     <repository>
       <id>bintray</id>
-      <url />
+      <url/>
     </repository>
   </distributionManagement>
   <!--
