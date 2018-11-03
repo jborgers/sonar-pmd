@@ -41,7 +41,7 @@ public final class PmdConstants {
     /**
      * Default value for property {@link #JAVA_SOURCE_VERSION}.
      */
-    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "1.5";
+    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "1.6";
 
     /**
      * The Java Language key.
