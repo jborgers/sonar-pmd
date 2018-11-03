@@ -190,7 +190,7 @@
           <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
           <pluginDescription>Analyze Java code with PMD.</pluginDescription>
-          <requirePlugins>java:4.3.0.7717</requirePlugins>
+          <requirePlugins>java:4.15.0.12310</requirePlugins>
         </configuration>
       </plugin>
       <plugin>
