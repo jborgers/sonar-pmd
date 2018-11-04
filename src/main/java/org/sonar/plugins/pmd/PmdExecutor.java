@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.pmd.PMD;
+import net.sourceforge.pmd.PMDVersion;
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.RuleSet;
@@ -71,7 +71,7 @@ public class PmdExecutor {
     }
 
     public Report execute() {
-        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMD.VERSION);
+        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMDVersion.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
 
         try (URLClassLoader classLoader = createClassloader()) {
