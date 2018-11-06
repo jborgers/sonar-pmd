@@ -1,5 +1,5 @@
 /*
- * Java :: IT :: Plugins :: PMD Extension Plugin
+ * PMD :: Integration Test :: Tests
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
@@ -17,17 +17,30 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.examples.pmd;
+package com.sonar.it.java.suite;
 
-import org.sonar.api.SonarPlugin;
+import java.io.File;
 
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.io.FileUtils;
 
-public class PmdExtensionPlugin extends SonarPlugin {
+public class TestUtils {
+    private static final File home;
 
-  public List getExtensions() {
-    return Arrays.asList(PmdExtensionRepository.class);
-  }
+    static {
 
+        File testResources = FileUtils.toFile(TestUtils.class.getResource("/TestUtils.txt"));
+        home = testResources // home/tests/src/tests/resources
+                .getParentFile() // home/tests/src/tests
+                .getParentFile() // home/tests/src
+                .getParentFile() // home/tests
+                .getParentFile(); // home
+    }
+
+    public static File homeDir() {
+        return home;
+    }
+
+    public static File projectPom(String projectName) {
+        return new File(homeDir(), "projects/" + projectName + "/pom.xml");
+    }
 }

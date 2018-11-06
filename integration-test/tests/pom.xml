@@ -4,23 +4,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.sonarsource.it</groupId>
-    <artifactId>it-pmd-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.sonarsource.pmd</groupId>
+    <artifactId>integration-test</artifactId>
+    <version>3.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>it-pmd-plugin-tests</artifactId>
-  <name>PMD :: IT :: Plugin :: Tests</name>
-  <properties>
-    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-  </properties>
+  <artifactId>tests</artifactId>
+  <name>PMD :: Integration Test :: Tests</name>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>it-pmd-plugin-plugins</artifactId>
+      <artifactId>integration-test-plugin</artifactId>
       <version>${project.version}</version>
-      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
@@ -31,24 +27,11 @@
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>6.7</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-assert</artifactId>
-      <scope>test</scope>
-      <version>1.4</version>
     </dependency>
   </dependencies>
 
-  <build>
+  <!--<build>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -64,6 +47,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
-  </build>
+  </build>-->
 
 </project>
