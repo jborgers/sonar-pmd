@@ -14,16 +14,12 @@ plugin)
   unset SONARQUBE_SCANNER_PARAMS SONAR_TOKEN SONAR_SCANNER_HOME
 
   # Run integration tests
-  if [ -n "$SJ_VERSION" ]; then
-    mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dskip.surefire.tests
-  else
-    mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dskip.surefire.tests
-  fi
+  mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dskip.surefire.tests
   ;;
 
 javadoc)
     # Create JavaDocs to check for problems with JavaDoc generation
-    mvn javadoc:javadoc
+    mvn install javadoc:javadoc -DskipTests
     ;;
 
 *)
