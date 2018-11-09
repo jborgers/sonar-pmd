@@ -1,5 +1,5 @@
 /*
- * Java :: IT :: Plugins :: PMD Extension Plugin
+ * PMD :: Integration Test :: PMD IT Extension Plugin
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
