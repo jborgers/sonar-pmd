@@ -58,6 +58,14 @@
     </license>
   </licenses>
 
+  <developers>
+    <developer>
+      <name>Jens Gerdes</name>
+      <email>jens@gerdes.digital</email>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+
   <properties>
     <pmd.version>6.9.0</pmd.version>
     <junit.jupiter.version>5.3.1</junit.jupiter.version>
@@ -90,6 +98,12 @@
             <artifactId>xml-apis</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.orchestrator</groupId>
+        <artifactId>sonar-orchestrator</artifactId>
+        <version>3.21.0.1721</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- PMD -->

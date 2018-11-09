@@ -21,8 +21,6 @@
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator</artifactId>
-      <version>3.21.0.1721</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
@@ -30,23 +28,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <!--<build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-          <argLine>-server</argLine>
-            <includes>
-              <include>com/sonar/it/java/suite/*TestSuite.java</include>
-              <include>com/sonar/it/java/*Test.java</include>
-            </includes>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>-->
-
 </project>
