@@ -1,5 +1,5 @@
 /*
- * PMD :: Integration Test :: Tests
+ * SonarQube PMD Plugin Integration Test
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
@@ -50,8 +50,8 @@ class PmdIT {
                         "sonar-java-plugin",
                         determineJavaPluginVersion()
                 ))
-                .addPlugin(byWildcardMavenFilename(new File("../../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
-                .addPlugin(byWildcardMavenFilename(new File("../integration-test-plugin/target"), "integration-test-plugin-*.jar"))
+                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
+                .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))

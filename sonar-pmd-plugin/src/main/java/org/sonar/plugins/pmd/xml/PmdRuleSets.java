@@ -117,7 +117,7 @@ public class PmdRuleSets implements Closeable {
     /**
      * Closes all resources.
      *
-     * @throws IOException
+     * @throws IOException If an I/O error occurs.
      */
     @Override
     public void close() throws IOException {

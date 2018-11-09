@@ -1,5 +1,5 @@
 /*
- * PMD :: Integration Test :: PMD IT Extension Plugin
+ * SonarQube PMD Plugin Integration Test
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *

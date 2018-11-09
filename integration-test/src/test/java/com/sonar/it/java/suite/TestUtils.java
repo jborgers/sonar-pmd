@@ -1,5 +1,5 @@
 /*
- * PMD :: Integration Test :: Tests
+ * SonarQube PMD Plugin Integration Test
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
@@ -24,23 +24,18 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 
 public class TestUtils {
-    private static final File home;
+    private static final File HOME;
 
     static {
 
         File testResources = FileUtils.toFile(TestUtils.class.getResource("/TestUtils.txt"));
-        home = testResources // home/tests/src/tests/resources
+        HOME = testResources // home/tests/src/tests/resources
                 .getParentFile() // home/tests/src/tests
                 .getParentFile() // home/tests/src
-                .getParentFile() // home/tests
                 .getParentFile(); // home
     }
 
-    public static File homeDir() {
-        return home;
-    }
-
     public static File projectPom(String projectName) {
-        return new File(homeDir(), "projects/" + projectName + "/pom.xml");
+        return new File(HOME, "projects/" + projectName + "/pom.xml");
     }
 }

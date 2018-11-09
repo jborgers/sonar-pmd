@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ SonarQube PMD Plugin
+  ~ SonarQube PMD Plugin Integration Test
   ~ Copyright (C) 2012-2018 SonarSource SA
   ~ mailto:info AT sonarsource DOT com
   ~
@@ -21,21 +21,47 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.sonarsource.pmd</groupId>
-        <artifactId>sonar-pmd</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
-    </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sonarsource.pmd</groupId>
+    <artifactId>sonar-pmd</artifactId>
+    <version>3.1.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>integration-test</artifactId>
-    <name>PMD :: Integration Test</name>
-    <packaging>pom</packaging>
-    <inceptionYear>2013</inceptionYear>
+  <artifactId>integration-test</artifactId>
+  <name>SonarQube PMD Plugin Integration Test</name>
+  <packaging>sonar-plugin</packaging>
+  <inceptionYear>2013</inceptionYear>
 
-    <modules>
-        <module>integration-test-plugin</module>
-        <module>tests</module>
-    </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.sonarsource.orchestrator</groupId>
+      <artifactId>sonar-orchestrator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-java</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
+
+          <!-- This is important. It means that this plugin extends the PMD plugin -->
+          <basePlugin>pmd</basePlugin>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

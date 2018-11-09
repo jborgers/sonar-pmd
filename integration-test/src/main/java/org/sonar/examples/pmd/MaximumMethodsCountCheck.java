@@ -1,5 +1,5 @@
 /*
- * PMD :: Integration Test :: PMD IT Extension Plugin
+ * SonarQube PMD Plugin Integration Test
  * Copyright (C) 2013-2018 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
@@ -34,7 +34,7 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
 
     private static final Logger LOG = Loggers.get(MaximumMethodsCountCheck.class);
 
-    public static final IntegerProperty propertyDescriptor = new IntegerProperty("maxAuthorisedMethodsCount",
+    private static final IntegerProperty propertyDescriptor = new IntegerProperty("maxAuthorisedMethodsCount",
             "Maximum number of methods authorised", 1, Integer.MAX_VALUE, 2, 1.0f);
 
     public MaximumMethodsCountCheck() {
