@@ -33,14 +33,15 @@ import org.junit.jupiter.api.Test;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
 
+import static com.sonar.it.java.suite.TestUtils.determineJavaPluginVersion;
+import static com.sonar.it.java.suite.TestUtils.determineSonarqubeVersion;
+import static com.sonar.it.java.suite.TestUtils.keyFor;
+import static com.sonar.it.java.suite.TestUtils.keyForTest;
 import static com.sonar.orchestrator.locator.FileLocation.byWildcardMavenFilename;
 import static com.sonar.orchestrator.locator.FileLocation.ofClasspath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
-
-    private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
-    private static final String SONAR_VERSION_KEY = "test.sonar.version";
 
     private static final Orchestrator ORCHESTRATOR = Orchestrator
                 .builderEnv()
@@ -55,6 +56,7 @@ class PmdIT {
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
+                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
                 .build();
 
     @BeforeAll
@@ -65,26 +67,6 @@ class PmdIT {
     @AfterEach
     void resetData() {
         ORCHESTRATOR.resetData();
-    }
-
-    private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "DEV");
-    }
-
-    private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[6.7]");
-    }
-
-    private static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {
-        return "com.sonarsource.it.projects:" + projectKey + ":" + srcDir + pkgDir + cls;
-    }
-
-    private static String keyFor(String projectKey, String pkgDir, String cls) {
-        return keyFor(projectKey, "src/main/java/", pkgDir, cls + ".java");
-    }
-
-    private static String keyForTest() {
-        return keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
     }
 
     @Test
@@ -115,7 +97,7 @@ class PmdIT {
      * SONAR-3346
      */
     @Test
-    void ruleAvoidDuplicateLiterals() {
+    void testRuleAvoidDuplicateLiterals() {
         MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-avoid-duplicate-literals"))
                 .setCleanSonarGoals()
                 .setProperty("sonar.profile", "pmd");
@@ -132,7 +114,7 @@ class PmdIT {
      * SONAR-1076
      */
     @Test
-    void junitRules() {
+    void testJunitRules() {
         MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-junit-rules"))
                 .setCleanSonarGoals()
                 .setProperty("sonar.profile", "pmd-junit");
@@ -153,7 +135,7 @@ class PmdIT {
      * SONARPLUGINS-3318
      */
     @Test
-    void pmd_should_have_access_to_external_libraries_in_its_classpath() {
+    void pmdShouldHaveAccessToExternalLibrariesInItsClasspath() {
         MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
                 .setCleanPackageSonarGoals()
                 .setProperty("sonar.profile", "pmd-extensions");
@@ -161,6 +143,16 @@ class PmdIT {
 
         List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Bar"));
         assertThat(issues).hasSize(1);
+    }
+
+    @Test
+    void pmdShouldRunWithAllRulesEnabled() {
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
+                .setCleanPackageSonarGoals()
+                .setProperty("sonar.profile", "pmd-all-rules");
+        ORCHESTRATOR.executeBuild(build);
+        List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Bar"));
+        assertThat(issues).isNotEmpty();
     }
 
     private List<Issue> retrieveIssues(IssueQuery query) {

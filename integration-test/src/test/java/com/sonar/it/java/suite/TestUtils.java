@@ -23,7 +23,10 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 
-public class TestUtils {
+class TestUtils {
+
+    private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
+    private static final String SONAR_VERSION_KEY = "test.sonar.version";
     private static final File HOME;
 
     static {
@@ -35,7 +38,28 @@ public class TestUtils {
                 .getParentFile(); // home
     }
 
-    public static File projectPom(String projectName) {
+    static File projectPom(String projectName) {
         return new File(HOME, "projects/" + projectName + "/pom.xml");
     }
+
+    static String determineJavaPluginVersion() {
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "DEV");
+    }
+
+    static String determineSonarqubeVersion() {
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[6.7]");
+    }
+
+    static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {
+        return "com.sonarsource.it.projects:" + projectKey + ":" + srcDir + pkgDir + cls;
+    }
+
+    static String keyFor(String projectKey, String pkgDir, String cls) {
+        return keyFor(projectKey, "src/main/java/", pkgDir, cls + ".java");
+    }
+
+    static String keyForTest() {
+        return keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
+    }
+
 }
