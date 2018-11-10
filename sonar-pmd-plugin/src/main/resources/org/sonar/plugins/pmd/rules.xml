@@ -1371,8 +1371,8 @@
   <rule key="AvoidUsingHardCodedIP">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/basic.xml/AvoidUsingHardCodedIP]]></configKey>
-    <param key="pattern" type="REGULAR_EXPRESSION">
-      <defaultValue><![CDATA[^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$]]></defaultValue>
+    <param key="checkAddressTypes" type="STRING">
+      <defaultValue>IPv4|IPv6|IPv4 mapped IPv6</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>

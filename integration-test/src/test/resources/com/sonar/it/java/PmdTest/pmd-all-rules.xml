@@ -300,8 +300,8 @@
       <priority>MAJOR</priority>
       <parameters>
         <parameter>
-          <key>pattern</key>
-          <value>^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$</value>
+          <key>checkAddressTypes</key>
+          <value>IPv4|IPv6|IPv4 mapped IPv6</value>
         </parameter>
       </parameters>
     </rule>
@@ -554,7 +554,7 @@
         </parameter>
       </parameters>
     </rule>
-    <rule>
+    <!--<rule>
       <repositoryKey>pmd</repositoryKey>
       <key>CyclomaticComplexity</key>
       <priority>MAJOR</priority>
@@ -573,6 +573,7 @@
         </parameter>
       </parameters>
     </rule>
+    -->
     <rule>
       <repositoryKey>pmd</repositoryKey>
       <key>DataflowAnomalyAnalysis</key>
@@ -1849,6 +1850,113 @@
       <repositoryKey>pmd</repositoryKey>
       <key>WhileLoopsMustUseBraces</key>
       <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnit4TestShouldUseAfterAnnotation</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnit4TestShouldUseBeforeAnnotation</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnit4TestShouldUseTestAnnotation</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitAssertionsShouldIncludeMessage</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitSpelling</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitStaticSuite</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitTestContainsTooManyAsserts</key>
+      <priority>MAJOR</priority>
+      <parameters>
+        <parameter>
+          <key>maximumAsserts</key>
+          <value>1</value>
+        </parameter>
+      </parameters>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitTestsShouldIncludeAssert</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>JUnitUseExpected</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>SimplifyBooleanAssertion</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>TestClassWithoutTestCases</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>UnnecessaryBooleanAssertion</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>UseAssertEqualsInsteadOfAssertTrue</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>UseAssertNullInsteadOfAssertTrue</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>UseAssertSameInsteadOfAssertTrue</key>
+      <priority>MINOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <key>UseAssertTrueInsteadOfAssertEquals</key>
+      <priority>MINOR</priority>
       <parameters/>
     </rule>
   </rules>
