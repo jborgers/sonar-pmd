@@ -7,12 +7,27 @@
 - Java 11 support
 - Updated PMD (6.9.0)
 
+**Breaking changes:**
+- Config parameters of Rule [CyclomaticComplexity](https://pmd.github.io/pmd-6.9.0/pmd_rules_java_design.html#cyclomaticcomplexity) changed.
+  - Removed: 
+    - `reportLevel`
+    - `showClassesComplexity`
+    - `showMethodsComplexity`
+  - Added
+    - `classReportLevel`
+    - `methodReportLevel`
+- Config parameters of Rule [AvoidUsingHardCodedIP](https://pmd.github.io/pmd-6.9.0/pmd_rules_java_bestpractices.html#avoidusinghardcodedip) changed.
+  - Removed: `pattern`
+  - Added: `checkAddressTypes`
+
+
 **Closed issues:**
 - Upgrade pmd version to the latest one for parsing Java 8 code successfully [\#34](https://github.com/jensgerdes/sonar-pmd/issues/34) 
 - Please update PMD to at least 5.5.2 [\#38](https://github.com/jensgerdes/sonar-pmd/issues/38)
 - Java 10 compatibility [\#44](https://github.com/jensgerdes/sonar-pmd/issues/44)
 - Upgrade to a recent PMD version? [\#48](https://github.com/jensgerdes/sonar-pmd/issues/48)
 - Convert project into Multi module Maven Project [\#59](https://github.com/jensgerdes/sonar-pmd/issues/59)
+- Sonar-PMD can not be used with all rules [\#64](https://github.com/jensgerdes/sonar-pmd/issues/64)
 
 **Merged pull requests:**
 - Upgrade to latest PMD [\#51](https://github.com/jensgerdes/sonar-pmd/pull/51) ([spasam](https://github.com/spasam))
