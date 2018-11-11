@@ -554,26 +554,21 @@
         </parameter>
       </parameters>
     </rule>
-    <!--<rule>
+    <rule>
       <repositoryKey>pmd</repositoryKey>
       <key>CyclomaticComplexity</key>
       <priority>MAJOR</priority>
       <parameters>
         <parameter>
-          <key>showMethodsComplexity</key>
-          <value>false</value>
+          <key>classReportLevel</key>
+          <value>80</value>
         </parameter>
         <parameter>
-          <key>reportLevel</key>
+          <key>methodReportLevel</key>
           <value>10</value>
-        </parameter>
-        <parameter>
-          <key>showClassesComplexity</key>
-          <value>true</value>
         </parameter>
       </parameters>
     </rule>
-    -->
     <rule>
       <repositoryKey>pmd</repositoryKey>
       <key>DataflowAnomalyAnalysis</key>

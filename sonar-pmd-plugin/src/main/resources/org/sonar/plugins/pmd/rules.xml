@@ -76,14 +76,11 @@
     <priority>MAJOR</priority>
     <tag>size</tag>
     <configKey>rulesets/java/codesize.xml/CyclomaticComplexity</configKey>
-    <param key="reportLevel" type="INTEGER">
+    <param key="classReportLevel" type="INTEGER">
+      <defaultValue>80</defaultValue>
+    </param>
+    <param key="methodReportLevel" type="INTEGER">
       <defaultValue>10</defaultValue>
-    </param>
-    <param key="showClassesComplexity" type="BOOLEAN">
-      <defaultValue>true</defaultValue>
-    </param>
-    <param key="showMethodsComplexity" type="BOOLEAN">
-      <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1370,7 +1367,7 @@
 
   <rule key="AvoidUsingHardCodedIP">
     <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/basic.xml/AvoidUsingHardCodedIP]]></configKey>
+    <configKey>rulesets/java/basic.xml/AvoidUsingHardCodedIP</configKey>
     <param key="checkAddressTypes" type="STRING">
       <defaultValue>IPv4|IPv6|IPv4 mapped IPv6</defaultValue>
     </param>
