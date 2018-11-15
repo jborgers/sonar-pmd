@@ -193,7 +193,7 @@
 
   <rule key="UnnecessaryParentheses">
     <priority>MINOR</priority>
-    <configKey><![CDATA[rulesets/java/controversial.xml/UnnecessaryParentheses]]></configKey>
+    <configKey>rulesets/java/unnecessary.xml/UselessParentheses</configKey>
     <status>DEPRECATED</status>
   </rule>
 
@@ -341,7 +341,7 @@
 
   <rule key="UnusedModifier">
     <priority>INFO</priority>
-    <configKey><![CDATA[rulesets/java/unusedcode.xml/UnusedModifier]]></configKey>
+    <configKey>rulesets/java/unnecessary.xml/UnnecessaryModifier</configKey>
   </rule>
 
   <rule key="AssignmentInOperand">
@@ -543,7 +543,7 @@
 
   <rule key="EmptyStaticInitializer">
     <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/empty.xml/EmptyStaticInitializer]]></configKey>
+    <configKey>rulesets/java/empty.xml/EmptyInitializer</configKey>
     <status>DEPRECATED</status>
   </rule>
 
@@ -566,7 +566,7 @@
 
   <rule key="UnnecessaryFinalModifier">
     <priority>INFO</priority>
-    <configKey><![CDATA[rulesets/java/unnecessary.xml/UnnecessaryFinalModifier]]></configKey>
+    <configKey>rulesets/java/unnecessary.xml/UnnecessaryModifier</configKey>
   </rule>
 
   <rule key="CollapsibleIfStatements">
@@ -856,7 +856,7 @@
 
   <rule key="AvoidConstantsInterface">
     <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/design.xml/AvoidConstantsInterface]]></configKey>
+    <configKey>rulesets/java/design.xml/ConstantsInInterface</configKey>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1277,7 +1277,7 @@
 
   <rule key="MisleadingVariableName">
     <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/naming.xml/MisleadingVariableName]]></configKey>
+    <configKey>rulesets/java/naming.xml/MIsLeadingVariableName</configKey>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1621,7 +1621,7 @@
 
   <rule key="GuardLogStatementJavaUtil">
     <priority>MAJOR</priority>
-    <configKey><![CDATA[rulesets/java/logging-java.xml/GuardLogStatementJavaUtil]]></configKey>
+    <configKey>rulesets/java/logging-jakarta-commons.xml/GuardLogStatement</configKey>
   </rule>
 
   <rule key="ShortClassName">
