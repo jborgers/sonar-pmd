@@ -55,6 +55,8 @@ class PmdRuleSetsTest {
 
         // then
         assertThat(result).isNotNull()
+                .hasFieldOrPropertyWithValue("name", "Sonar")
+                .hasFieldOrPropertyWithValue("description", "Sonar PMD rules")
                 .satisfies(this::hasRuleCouplingBetweenObjects)
                 .satisfies(this::hasRuleExcessiveImports)
                 .satisfies(this::hasRuleUseNotifyAllInsteadOfNotify)

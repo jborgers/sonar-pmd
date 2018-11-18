@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset>
+<ruleset name="pmd">
+  <description>Sonar Profile: pmd</description>
   <rule class="net.sourceforge.pmd.lang.rule.XPathRule" message="This is bad" name="MyOwnRule" language="java">
     <priority>3</priority>
     <properties>

@@ -154,8 +154,9 @@ class PmdProfileExporterTest {
         String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_rule_with_empty_param.xml");
 
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<ruleset>\n" +
-                "  <rule ref=\"rulesets/java/comments.xml/CommentDefaultAccessModifier\">\n" +
+                "<ruleset name=\"pmd\">\n" +
+                "  <description>Sonar Profile: pmd</description>\n" +
+                "  <rule ref=\"category/java/codestyle.xml/CommentDefaultAccessModifier\">\n" +
                 "    <priority>2</priority>\n" +
                 "    <properties>\n" +
                 "      <property name=\"violationSuppressRegex\" value=\"nonEmptyValue\" />\n" +
@@ -173,8 +174,9 @@ class PmdProfileExporterTest {
         String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_rule_with_all_params_empty.xml");
 
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<ruleset>\n" +
-                "  <rule ref=\"rulesets/java/comments.xml/CommentDefaultAccessModifier\">\n" +
+                "<ruleset name=\"pmd\">\n" +
+                "  <description>Sonar Profile: pmd</description>\n" +
+                "  <rule ref=\"category/java/codestyle.xml/CommentDefaultAccessModifier\">\n" +
                 "    <priority>2</priority>\n" +
                 "  </rule>\n" +
                 "</ruleset>";
@@ -187,7 +189,8 @@ class PmdProfileExporterTest {
     void should_export_empty_configuration_as_xml() {
         String exportedXml = exporter.exportProfile(PmdConstants.REPOSITORY_KEY, RulesProfile.create());
 
-        assertThat(exportedXml).satisfies(equalsIgnoreEOL("<?xml version=\"1.0\" encoding=\"UTF-8\"?><ruleset />"));
+        assertThat(exportedXml).satisfies(equalsIgnoreEOL("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                "<ruleset name=\"pmd\">  <description>Sonar Profile: pmd</description></ruleset>"));
     }
 
     @Test

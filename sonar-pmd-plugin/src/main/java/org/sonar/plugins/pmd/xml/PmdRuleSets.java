@@ -62,6 +62,15 @@ public class PmdRuleSets implements Closeable {
         final Namespace namespace = eltResultset.getNamespace();
         final PmdRuleSet result = new PmdRuleSet();
 
+        final String name = eltResultset.getAttributeValue("name");
+        final Element descriptionElement = getChild(eltResultset, "description", namespace);
+
+        result.setName(name);
+
+        if (descriptionElement != null) {
+            result.setDescription(descriptionElement.getValue());
+        }
+
         for (Element eltRule : getChildren(eltResultset, "rule", namespace)) {
             PmdRule pmdRule = new PmdRule(eltRule.getAttributeValue("ref"));
             pmdRule.setClazz(eltRule.getAttributeValue("class"));
@@ -98,6 +107,12 @@ public class PmdRuleSets implements Closeable {
         } else {
             return parent.getChildren(childName, namespace);
         }
+    }
+
+    private Element getChild(Element parent, String childName, @Nullable Namespace namespace) {
+        final List<Element> children = getChildren(parent, childName, namespace);
+
+        return (children != null && !children.isEmpty()) ? children.get(0) : null;
     }
 
     private void parsePmdProperties(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {

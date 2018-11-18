@@ -85,9 +85,9 @@ public class PmdProfileExporter extends ProfileExporter {
     }
 
     private static void exportPmdRulesetToXml(PmdRuleSet pmdRuleset, Writer writer, String profileName) {
-
-// TODO Check if org.sonar.api.utils.text.XmlWriter instead of JDOM?
         Element eltRuleset = new Element("ruleset");
+        addAttribute(eltRuleset, "name", pmdRuleset.getName());
+        addChild(eltRuleset, "description", pmdRuleset.getDescription());
         for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
             Element eltRule = new Element("rule");
             addAttribute(eltRule, "ref", pmdRule.getRef());
@@ -167,6 +167,8 @@ public class PmdProfileExporter extends ProfileExporter {
 
     private PmdRuleSet createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules) {
         PmdRuleSet ruleset = new PmdRuleSet();
+        ruleset.setName(repositoryKey);
+        ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));
         for (ActiveRule activeRule : activeRules) {
             if (activeRule.getRule().getRepositoryKey().equals(repositoryKey)) {
                 String configKey = activeRule.getRule().getConfigKey();
