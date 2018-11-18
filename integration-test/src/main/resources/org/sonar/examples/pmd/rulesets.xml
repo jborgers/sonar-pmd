@@ -64,7 +64,7 @@
       <property name="xpath">
         <value>
           <![CDATA[
-            //ClassOrInterfaceType[typeof(@Image, 'java.io.IOException', 'IOException')]
+            //ClassOrInterfaceType[typeIs('java.io.IOException')]
         ]]>
         </value>
       </property>
