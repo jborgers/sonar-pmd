@@ -1,7 +1,7 @@
 # Changelog
 
-## [3.1.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-11-03)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.1...master)
+## [3.1.0](https://github.com/jensgerdes/sonar-pmd/tree/3.1.0) (2018-11-19)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.1...3.1.0)
 
 **Implemented enhancements:**
 - Java 11 support
