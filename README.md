@@ -2,7 +2,7 @@
 Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.io/).
 
 ## Description / Features
-PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6|3.0.0|3.1.0-SNAPSHOT
+PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6|3.0.0|3.1.0
 -------|---|---|---|---|---|---|---|---|---
 PMD|4.3|4.3|5.1.1|5.2.1|5.3.1|5.4.0|5.4.2|5.4.2|6.9.0
 Max. supported Java Version | |  |  |  |  | 1.7 | 1.8 | 1.8 | 11
