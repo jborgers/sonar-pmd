@@ -68,7 +68,7 @@
   <properties>
     <pmd.version>6.9.0</pmd.version>
     <junit.jupiter.version>5.3.1</junit.jupiter.version>
-    <mockito.version>2.23.0</mockito.version>
+    <mockito.version>2.23.4</mockito.version>
     <assertj.version>3.11.1</assertj.version>
 
     <!-- Sonar settings -->
