@@ -114,13 +114,28 @@ class PmdTemplateTest {
     }
 
     @Test
+    void java9_version_with_outdated_versioning_scheme() {
+        assertThat(PmdTemplate.languageVersion("1.9").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
     void java10_version() {
         assertThat(PmdTemplate.languageVersion("10").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test
+    void java10_version_with_outdated_versioning_scheme() {
+        assertThat(PmdTemplate.languageVersion("1.10").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
     void java11_version() {
         assertThat(PmdTemplate.languageVersion("11").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+    }
+
+    @Test
+    void java11_version_with_outdated_versioning_scheme() {
+        assertThat(PmdTemplate.languageVersion("1.11").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
     }
 
     @Test

@@ -50,8 +50,11 @@ public class PmdTemplate {
         versions.put("7", "1.7");
         versions.put("8", "1.8");
         versions.put("9", "9");
+        versions.put("1.9", "9");
         versions.put("10", "10");
+        versions.put("1.10", "10");
         versions.put("11", "11");
+        versions.put("1.11", "11");
 
         return versions;
     }
