@@ -25,7 +25,6 @@ import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.fs.TextPointer;
 import org.sonar.api.batch.fs.TextRange;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -61,7 +60,7 @@ public class PmdViolationRecorder {
         final NewIssue issue = context.newIssue()
                 .forRule(ruleKey);
 
-        final TextRange issueTextRange = issueRangeFor(pmdViolation, inputFile);
+        final TextRange issueTextRange = TextRangeCalculator.calculate(pmdViolation, inputFile);
 
         final NewIssueLocation issueLocation = issue.newLocation()
                 .on(inputFile)
@@ -70,19 +69,6 @@ public class PmdViolationRecorder {
 
         issue.at(issueLocation)
                 .save();
-    }
-
-    private TextRange issueRangeFor(RuleViolation pmdViolation, InputFile inputFile) {
-
-        final int startLine = pmdViolation.getBeginLine();
-        final int endLine = pmdViolation.getEndLine() > 0 ? pmdViolation.getEndLine() : pmdViolation.getBeginLine();
-
-        // PMD counts TABs differently, so we can not use RuleViolation#getBeginColumn and RuleViolation#getEndColumn
-        // Therefore, we select complete lines.
-        final TextPointer startPointer = inputFile.selectLine(startLine).start();
-        final TextPointer endPointer = inputFile.selectLine(endLine).end();
-
-        return inputFile.newRange(startPointer, endPointer);
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
