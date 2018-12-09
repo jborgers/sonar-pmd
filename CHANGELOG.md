@@ -1,5 +1,26 @@
 # Changelog
 
+## [3.2.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-12-09)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.3...master)
+
+**Implemented enhancements:**
+- Updated PMD (6.10.0)
+
+
+## [3.1.3](https://github.com/jensgerdes/sonar-pmd/tree/3.1.3) (2018-11-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.2...3.1.3)
+
+**Closed issues:**
+- Sonar-PMD may break analysis due to illegally formatted violation reports [\#70](https://github.com/jensgerdes/sonar-pmd/issues/70) 
+
+
+## [3.1.2](https://github.com/jensgerdes/sonar-pmd/tree/3.1.2) (2018-11-26)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.0...3.1.2)
+
+**Closed issues:**
+- Sonar PMD can not be used with Java 9+ using the sonar-scanner-gradle plugin [\#69](https://github.com/jensgerdes/sonar-pmd/issues/69) 
+
+
 ## [3.1.0](https://github.com/jensgerdes/sonar-pmd/tree/3.1.0) (2018-11-19)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.0.1...3.1.0)
 

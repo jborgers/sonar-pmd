@@ -29,7 +29,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.1.4-SNAPSHOT</version>
+  <version>3.2.0-SNAPSHOT</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -66,7 +66,7 @@
   </developers>
 
   <properties>
-    <pmd.version>6.9.0</pmd.version>
+    <pmd.version>6.10.0</pmd.version>
     <junit.jupiter.version>5.3.2</junit.jupiter.version>
     <mockito.version>2.23.4</mockito.version>
     <assertj.version>3.11.1</assertj.version>
