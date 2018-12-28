@@ -25,8 +25,6 @@ import org.apache.commons.io.FileUtils;
 
 class TestUtils {
 
-    private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
-    private static final String SONAR_VERSION_KEY = "test.sonar.version";
     private static final File HOME;
 
     static {
@@ -40,14 +38,6 @@ class TestUtils {
 
     static File projectPom(String projectName) {
         return new File(HOME, "projects/" + projectName + "/pom.xml");
-    }
-
-    static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "DEV");
-    }
-
-    static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[6.7]");
     }
 
     static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {

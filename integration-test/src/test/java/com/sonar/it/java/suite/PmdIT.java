@@ -19,45 +19,25 @@
  */
 package com.sonar.it.java.suite;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sonar.orchestrator.Orchestrator;
+import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
-import com.sonar.orchestrator.locator.MavenLocation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
 
-import static com.sonar.it.java.suite.TestUtils.determineJavaPluginVersion;
-import static com.sonar.it.java.suite.TestUtils.determineSonarqubeVersion;
 import static com.sonar.it.java.suite.TestUtils.keyFor;
 import static com.sonar.it.java.suite.TestUtils.keyForTest;
-import static com.sonar.orchestrator.locator.FileLocation.byWildcardMavenFilename;
-import static com.sonar.orchestrator.locator.FileLocation.ofClasspath;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
 
-    private static final Orchestrator ORCHESTRATOR = Orchestrator
-                .builderEnv()
-                .setSonarVersion(determineSonarqubeVersion())
-                .addPlugin(MavenLocation.create(
-                        "org.sonarsource.java",
-                        "sonar-java-plugin",
-                        determineJavaPluginVersion()
-                ))
-                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
-                .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
-                .build();
+    private static final PmdTestOrchestrator ORCHESTRATOR = PmdTestOrchestrator.init();
 
     @BeforeAll
     static void startSonar() {
@@ -103,9 +83,11 @@ class PmdIT {
                 .setProperty("sonar.profile", "pmd");
         ORCHESTRATOR.executeBuild(build);
 
-        List<Issue> issues = retrieveIssues(IssueQuery.create()
-                .rules("pmd:AvoidDuplicateLiterals")
-                .components(keyFor("pmd-avoid-duplicate-literals", "", "AvoidDuplicateLiterals")));
+        List<Issue> issues = ORCHESTRATOR.retrieveIssues(
+                IssueQuery.create()
+                        .rules("pmd:AvoidDuplicateLiterals")
+                        .components(keyFor("pmd-avoid-duplicate-literals", "", "AvoidDuplicateLiterals"))
+        );
         assertThat(issues).hasSize(1);
         assertThat(issues.get(0).message()).contains("appears 5 times in this file");
     }
@@ -155,11 +137,7 @@ class PmdIT {
         assertThat(issues).isNotEmpty();
     }
 
-    private List<Issue> retrieveIssues(IssueQuery query) {
-        return ORCHESTRATOR.getServer().wsClient().issueClient().find(query).list();
-    }
-
     private List<Issue> retrieveIssues(String componentKey) {
-        return retrieveIssues(IssueQuery.create().components(componentKey));
+        return ORCHESTRATOR.retrieveIssues(IssueQuery.create().components(componentKey));
     }
 }

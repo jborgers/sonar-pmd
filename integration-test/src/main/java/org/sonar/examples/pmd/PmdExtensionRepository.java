@@ -21,38 +21,36 @@ package org.sonar.examples.pmd;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RuleRepository;
-import org.sonar.api.rules.XMLRuleParser;
+import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
-public class PmdExtensionRepository extends RuleRepository {
+public class PmdExtensionRepository implements RulesDefinition {
+
+    private static final Logger LOGGER = Loggers.get(PmdExtensionRepository.class);
 
     // Must be the same than the PMD plugin
     private static final String REPOSITORY_KEY = "pmd";
-    private XMLRuleParser ruleParser;
-
-    public PmdExtensionRepository(XMLRuleParser ruleParser) {
-        // FIXME: Usage of PmdConstants possible?
-        super(REPOSITORY_KEY, "java");
-        this.ruleParser = ruleParser;
-    }
+    private static final String LANGUAGE_KEY = "java";
 
     @Override
-    public List<Rule> createRules() {
-        // In this example, new rules are declared in a XML file
-        InputStream input = getClass().getResourceAsStream("/org/sonar/examples/pmd/extensions.xml");
-        try {
-            return ruleParser.parse(input);
+    public void define(Context context) {
+        NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
 
-        } finally {
-            // FIXME Get rid of double close
-            try {
-                input.close();
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to close stream.", e);
-            }
+        try (InputStream inputStream = PmdExtensionRepository.class.getResourceAsStream("/org/sonar/examples/pmd/extensions.xml")) {
+            new RulesDefinitionXmlLoader()
+                    .load(
+                            repository,
+                            inputStream,
+                            StandardCharsets.UTF_8
+                    );
+        } catch (IOException e) {
+            LOGGER.error("Failed to load PMD RuleSet.", e);
         }
+
+        repository.done();
     }
 }
