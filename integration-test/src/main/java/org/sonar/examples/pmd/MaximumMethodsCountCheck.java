@@ -26,7 +26,9 @@ import net.sourceforge.pmd.RuleContext;
 import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceBody;
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
-import net.sourceforge.pmd.properties.IntegerProperty;
+import net.sourceforge.pmd.properties.PropertyDescriptor;
+import net.sourceforge.pmd.properties.PropertyFactory;
+import net.sourceforge.pmd.properties.constraints.NumericConstraints;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -34,8 +36,12 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
 
     private static final Logger LOG = Loggers.get(MaximumMethodsCountCheck.class);
 
-    private static final IntegerProperty propertyDescriptor = new IntegerProperty("maxAuthorisedMethodsCount",
-            "Maximum number of methods authorised", 1, Integer.MAX_VALUE, 2, 1.0f);
+    private static final PropertyDescriptor<Integer> propertyDescriptor = PropertyFactory.intProperty("maxAuthorisedMethodsCount")
+            .desc("Maximum number of methods authorised")
+            .require(NumericConstraints.positive())
+            .defaultValue(2)
+            .build();
+
 
     public MaximumMethodsCountCheck() {
         definePropertyDescriptor(propertyDescriptor);
@@ -59,5 +65,4 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
         }
         return super.visit(node, data);
     }
-
 }
