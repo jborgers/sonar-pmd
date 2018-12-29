@@ -125,7 +125,7 @@ public class PmdRuleSets implements Closeable {
 
     private void parsePmdPriority(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
         for (Element eltPriority : getChildren(eltRule, "priority", namespace)) {
-            pmdRule.setPriority(eltPriority.getValue());
+            pmdRule.setPriority(Integer.valueOf(eltPriority.getValue()));
         }
     }
 

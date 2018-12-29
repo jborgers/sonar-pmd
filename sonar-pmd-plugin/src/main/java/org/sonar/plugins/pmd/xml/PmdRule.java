@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 public class PmdRule {
 
     private String ref;
-    private String priority;
+    private Integer priority;
     private String name;
     private String message;
     private String clazz;
@@ -37,7 +37,7 @@ public class PmdRule {
         this(ref, null);
     }
 
-    public PmdRule(String ref, @Nullable String priority) {
+    public PmdRule(String ref, @Nullable Integer priority) {
         this.ref = ref;
         this.priority = priority;
     }
@@ -69,11 +69,11 @@ public class PmdRule {
     }
 
     @Nullable
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

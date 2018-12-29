@@ -102,7 +102,7 @@ class PmdRuleSetsTest {
 
         assertThat(couplingBetweenObjects).isPresent()
                 .get()
-                .hasFieldOrPropertyWithValue("priority", "2")
+                .hasFieldOrPropertyWithValue("priority", 2)
                 .extracting("properties")
                 .element(0)
                 .asList()
@@ -121,7 +121,7 @@ class PmdRuleSetsTest {
 
         assertThat(useNotifyAllInsteadOfNotify).isPresent()
                 .get()
-                .hasFieldOrPropertyWithValue("priority", "4")
+                .hasFieldOrPropertyWithValue("priority", 4)
                 .extracting("properties")
                 .element(0)
                 .asList()
@@ -155,7 +155,7 @@ class PmdRuleSetsTest {
 
         assertThat(couplingBetweenObjects).isPresent()
                 .get()
-                .hasFieldOrPropertyWithValue("priority", "3")
+                .hasFieldOrPropertyWithValue("priority", 3)
                 .extracting("properties")
                 .element(0).asList()
                 .isEmpty();

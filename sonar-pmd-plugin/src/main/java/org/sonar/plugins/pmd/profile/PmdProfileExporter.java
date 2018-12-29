@@ -95,7 +95,7 @@ public class PmdProfileExporter extends ProfileExporter {
             addAttribute(eltRule, "message", pmdRule.getMessage());
             addAttribute(eltRule, "name", pmdRule.getName());
             addAttribute(eltRule, "language", pmdRule.getLanguage());
-            addChild(eltRule, "priority", pmdRule.getPriority());
+            addChild(eltRule, "priority", String.valueOf(pmdRule.getPriority()));
             if (pmdRule.hasProperties()) {
                 Element ruleProperties = processRuleProperties(pmdRule);
                 if (ruleProperties.getContentSize() > 0) {

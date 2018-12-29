@@ -52,7 +52,7 @@ public final class PmdRulesDefinition implements RulesDefinition {
         }
 
         ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
-        loadNames(repository, PmdRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/pmd.properties"));
+        loadNames(repository);
         SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model.xml");
     }
 
@@ -67,13 +67,16 @@ public final class PmdRulesDefinition implements RulesDefinition {
         repository.done();
     }
 
-    private static void loadNames(NewRepository repository, InputStream stream) {
+    private static void loadNames(NewRepository repository) {
+
         Properties properties = new Properties();
-        try {
+
+        try (InputStream stream = PmdRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/pmd.properties")) {
             properties.load(stream);
         } catch (IOException e) {
             throw new IllegalArgumentException("Could not read names from properties", e);
         }
+
         for (NewRule rule : repository.rules()) {
             String baseKey = "rule." + repository.key() + "." + rule.key();
             String nameKey = baseKey + ".name";
