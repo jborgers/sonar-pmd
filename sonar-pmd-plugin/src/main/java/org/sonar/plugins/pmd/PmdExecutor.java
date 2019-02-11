@@ -21,6 +21,7 @@ package org.sonar.plugins.pmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -47,6 +48,8 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.profile.PmdProfileExporter;
+import org.sonar.plugins.pmd.xml.PmdRuleSet;
+import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
 @ScannerSide
 public class PmdExecutor {
@@ -133,7 +136,7 @@ public class PmdExecutor {
     }
 
     private RuleSets createRuleSets(String repositoryKey) {
-        String rulesXml = PmdProfileExporter.exportProfileFromScannerSide(repositoryKey, rulesProfile);
+        String rulesXml = dumpXml(rulesProfile, repositoryKey);
         File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         String ruleSetFilePath = ruleSetFile.getAbsolutePath();
         RuleSetFactory ruleSetFactory = new RuleSetFactory();
@@ -143,6 +146,14 @@ public class PmdExecutor {
         } catch (RuleSetNotFoundException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
+        final StringWriter writer = new StringWriter();
+        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey);
+        ruleSet.writeTo(writer);
+
+        return writer.toString();
     }
 
     PmdTemplate createPmdTemplate(URLClassLoader classLoader) {

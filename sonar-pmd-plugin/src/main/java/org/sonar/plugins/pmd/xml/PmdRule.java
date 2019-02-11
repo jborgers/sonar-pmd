@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import org.sonar.plugins.pmd.PmdConstants;
+
 public class PmdRule {
 
     private String ref;
@@ -123,4 +125,26 @@ public class PmdRule {
         this.language = language;
     }
 
+    public void processXpath(String sonarRuleKey) {
+        if (PmdConstants.XPATH_CLASS.equals(ref)) {
+            ref = null;
+            PmdProperty xpathMessage = getProperty(PmdConstants.XPATH_MESSAGE_PARAM);
+            if (xpathMessage == null) {
+                throw new IllegalArgumentException("Property '" + PmdConstants.XPATH_MESSAGE_PARAM + "' should be set for PMD rule " + sonarRuleKey);
+            }
+
+            message = xpathMessage.getValue();
+            removeProperty(PmdConstants.XPATH_MESSAGE_PARAM);
+            PmdProperty xpathExp = getProperty(PmdConstants.XPATH_EXPRESSION_PARAM);
+
+            if (xpathExp == null) {
+                throw new IllegalArgumentException("Property '" + PmdConstants.XPATH_EXPRESSION_PARAM + "' should be set for PMD rule " + sonarRuleKey);
+            }
+
+            xpathExp.setCdataValue(xpathExp.getValue());
+            clazz = PmdConstants.XPATH_CLASS;
+            language = PmdConstants.LANGUAGE_KEY;
+            name = sonarRuleKey;
+        }
+    }
 }

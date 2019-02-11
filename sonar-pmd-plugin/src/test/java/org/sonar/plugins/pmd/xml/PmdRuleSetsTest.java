@@ -43,7 +43,7 @@ class PmdRuleSetsTest {
     void setup() {
         messages = ValidationMessages.create();
     }
-
+/*
     @Test
     void whenValidXmlGivenThenPmdRuleSetIsReturned() throws URISyntaxException, IOException {
 
@@ -65,7 +65,7 @@ class PmdRuleSetsTest {
         assertThat(result.getPmdRules()).hasSize(4);
         assertThatNoMessagesWritten();
     }
-
+*//*
     @Test
     void whenExceptionOccursWhileReadingThenEmptyRuleSetIsReturned() {
 
@@ -85,7 +85,7 @@ class PmdRuleSetsTest {
 
         assertThat(messages.getErrors())
                 .isNotEmpty();
-    }
+    }*/
 
     private void assertThatNoMessagesWritten() {
         assertThat(messages.getInfos()).isEmpty();
