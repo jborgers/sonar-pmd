@@ -243,6 +243,7 @@
         <version>3.0.1</version>
         <configuration>
           <quiet>true</quiet>
+          <source>8</source>
         </configuration>
         <executions>
           <execution>
