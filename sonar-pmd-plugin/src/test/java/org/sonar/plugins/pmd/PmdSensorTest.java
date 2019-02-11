@@ -30,9 +30,9 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
-import org.sonar.api.profiles.RulesProfile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -48,8 +48,8 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 class PmdSensorTest {
-/*
-    private final RulesProfile profile = mock(RulesProfile.class, RETURNS_DEEP_STUBS);
+
+    private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
     private final PmdExecutor executor = mock(PmdExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
     private final SensorContext sensorContext = mock(SensorContext.class);
@@ -119,8 +119,8 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
         addOneJavaFile(Type.TEST);
 
-        when(profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
-        when(profile.getActiveRulesByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when
         pmdSensor.execute(sensorContext);
@@ -239,5 +239,5 @@ class PmdSensorTest {
                         .setType(type)
                         .build()
         );
-    }*/
+    }
 }

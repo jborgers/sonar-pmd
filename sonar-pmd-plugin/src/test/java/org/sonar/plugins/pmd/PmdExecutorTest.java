@@ -20,12 +20,10 @@
 package org.sonar.plugins.pmd;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -42,14 +40,14 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.internal.MapSettings;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.plugins.java.api.JavaResourceLocator;
-import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -58,18 +56,16 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 class PmdExecutorTest {
-/*
+
     private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
-    private final RulesProfile rulesProfile = RulesProfile.create("pmd", "pmd");
-    private final PmdProfileExporter pmdProfileExporter = mock(PmdProfileExporter.class);
+    private final ActiveRules activeRules = mock(ActiveRules.class);
     private final PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
     private final PmdTemplate pmdTemplate = mock(PmdTemplate.class);
     private final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
     private final MapSettings settings = new MapSettings();
     private final PmdExecutor realPmdExecutor = new PmdExecutor(
             fileSystem,
-            rulesProfile,
-            pmdProfileExporter,
+            activeRules,
             pmdConfiguration,
             javaResourceLocator,
             settings.asConfig()
@@ -92,7 +88,18 @@ class PmdExecutorTest {
     }
 
     @Test
-    void should_execute_pmd_on_source_files_and_test_files() throws Exception {
+    void whenNoFilesToAnalyzeThenExecutionSucceedsWithBlankReport() {
+
+        // when
+        final Report result = pmdExecutor.execute();
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.isEmpty()).isTrue();
+    }
+
+    @Test
+    void should_execute_pmd_on_source_files_and_test_files() {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
@@ -103,41 +110,18 @@ class PmdExecutorTest {
         Report report = pmdExecutor.execute();
 
         assertThat(report).isNotNull();
+        verify(pmdConfiguration).dumpXmlReport(report);
 
         // setting java source version to the default value
         settings.removeProperty(PmdConstants.JAVA_SOURCE_VERSION);
         report = pmdExecutor.execute();
 
         assertThat(report).isNotNull();
-    }
-
-    @Test
-    void should_dump_configuration_as_xml() {
-        when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-        when(pmdProfileExporter.exportProfile(PmdConstants.TEST_REPOSITORY_KEY, rulesProfile)).thenReturn(PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
-
-        Report report = pmdExecutor.execute();
-
         verify(pmdConfiguration).dumpXmlReport(report);
     }
 
     @Test
-    void should_dump_ruleset_as_xml() throws Exception {
-        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
-        DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
-        setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
-        setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
-        fileSystem.add(srcFile);
-        fileSystem.add(tstFile);
-
-        pmdExecutor.execute();
-
-        verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/simple.xml"));
-        verify(pmdConfiguration).dumpXmlRuleSet(PmdConstants.TEST_REPOSITORY_KEY, PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/junit.xml"));
-    }
-
-    @Test
-    void should_ignore_empty_test_dir() throws Exception {
+    void should_ignore_empty_test_dir() {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
@@ -176,9 +160,7 @@ class PmdExecutorTest {
 
     @Test
     void unknown_pmd_ruleset() {
-        String profileContent = "content";
-        when(pmdProfileExporter.exportProfile(PmdConstants.REPOSITORY_KEY, rulesProfile)).thenReturn(profileContent);
-        when(pmdConfiguration.dumpXmlRuleSet(PmdConstants.REPOSITORY_KEY, profileContent)).thenReturn(new File("unknown"));
+        when(pmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
 
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         fileSystem.add(srcFile);
@@ -190,10 +172,8 @@ class PmdExecutorTest {
                 .hasCauseInstanceOf(RuleSetNotFoundException.class);
     }
 
-    private void setupPmdRuleSet(String repositoryKey, String profileFileName) throws IOException {
+    private void setupPmdRuleSet(String repositoryKey, String profileFileName) {
         final Path sourcePath = Paths.get("src/test/resources/org/sonar/plugins/pmd/").resolve(profileFileName);
-        String profileContent = new String(Files.readAllBytes(sourcePath));
-        when(pmdProfileExporter.exportProfile(repositoryKey, rulesProfile)).thenReturn(profileContent);
-        when(pmdConfiguration.dumpXmlRuleSet(repositoryKey, profileContent)).thenReturn(sourcePath.toFile());
-    }*/
+        when(pmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString())).thenReturn(sourcePath.toFile());
+    }
 }

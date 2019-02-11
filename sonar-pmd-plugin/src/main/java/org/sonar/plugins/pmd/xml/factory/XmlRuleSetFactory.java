@@ -48,10 +48,6 @@ public class XmlRuleSetFactory implements RuleSetFactory {
     private final Reader source;
     private final ValidationMessages messages;
 
-    public XmlRuleSetFactory(Reader source) {
-        this(source, null);
-    }
-
     public XmlRuleSetFactory(Reader source, ValidationMessages messages) {
         this.source = source;
         this.messages = messages;
