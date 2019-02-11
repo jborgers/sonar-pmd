@@ -19,34 +19,32 @@
  */
 package org.sonar.plugins.pmd.profile;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jdom.CDATA;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.ActiveRuleParam;
+import org.sonar.api.rules.RulePriority;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdLevelUtils;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
-@ScannerSide
 public class PmdProfileExporter extends ProfileExporter {
 
     private static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
+    private static final Logger LOG = Loggers.get(PmdProfileExporter.class);
 
     public PmdProfileExporter() {
         super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
@@ -59,6 +57,16 @@ public class PmdProfileExporter extends ProfileExporter {
             List<PmdProperty> properties = new ArrayList<>();
             for (ActiveRuleParam activeRuleParam : activeRule.getActiveRuleParams()) {
                 properties.add(new PmdProperty(activeRuleParam.getRuleParam().getKey(), activeRuleParam.getValue()));
+            }
+            pmdRule.setProperties(properties);
+        }
+    }
+
+    private static void addRuleProperties(org.sonar.api.batch.rule.ActiveRule activeRule, PmdRule pmdRule) {
+        if ((activeRule.params() != null) && !activeRule.params().isEmpty()) {
+            List<PmdProperty> properties = new ArrayList<>();
+            for (Map.Entry<String, String> activeRuleParam : activeRule.params().entrySet()) {
+                properties.add(new PmdProperty(activeRuleParam.getKey(), activeRuleParam.getValue()));
             }
             pmdRule.setProperties(properties);
         }
@@ -84,88 +92,40 @@ public class PmdProfileExporter extends ProfileExporter {
         }
     }
 
-    private static void exportPmdRulesetToXml(PmdRuleSet pmdRuleset, Writer writer, String profileName) {
-        Element eltRuleset = new Element("ruleset");
-        addAttribute(eltRuleset, "name", pmdRuleset.getName());
-        addChild(eltRuleset, "description", pmdRuleset.getDescription());
-        for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
-            Element eltRule = new Element("rule");
-            addAttribute(eltRule, "ref", pmdRule.getRef());
-            addAttribute(eltRule, "class", pmdRule.getClazz());
-            addAttribute(eltRule, "message", pmdRule.getMessage());
-            addAttribute(eltRule, "name", pmdRule.getName());
-            addAttribute(eltRule, "language", pmdRule.getLanguage());
-            addChild(eltRule, "priority", String.valueOf(pmdRule.getPriority()));
-            if (pmdRule.hasProperties()) {
-                Element ruleProperties = processRuleProperties(pmdRule);
-                if (ruleProperties.getContentSize() > 0) {
-                    eltRule.addContent(ruleProperties);
-                }
-            }
-            eltRuleset.addContent(eltRule);
-        }
-        XMLOutputter serializer = new XMLOutputter(Format.getPrettyFormat());
+    @Override
+    public void exportProfile(RulesProfile profile, Writer writer) {
+        final String profileName = profile.getName();
+        final PmdRuleSet tree = createPmdRuleset(PmdConstants.REPOSITORY_KEY, profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY));
+
         try {
-            serializer.output(new Document(eltRuleset), writer);
-        } catch (IOException e) {
+            tree.writeTo(writer);
+        } catch (IllegalStateException e) {
             throw new IllegalStateException("An exception occurred while generating the PMD configuration file from profile: " + profileName, e);
         }
     }
 
-    private static Element processRuleProperties(PmdRule pmdRule) {
-        Element eltProperties = new Element("properties");
-        for (PmdProperty prop : pmdRule.getProperties()) {
-            if (isPropertyValueNotEmpty(prop)) {
-                Element eltProperty = new Element("property");
-                eltProperty.setAttribute("name", prop.getName());
-                if (prop.isCdataValue()) {
-                    Element eltValue = new Element("value");
-                    eltValue.addContent(new CDATA(prop.getCdataValue()));
-                    eltProperty.addContent(eltValue);
-                } else {
-                    eltProperty.setAttribute("value", prop.getValue());
-                }
-                eltProperties.addContent(eltProperty);
-            }
-        }
-        return eltProperties;
-    }
-
-    private static boolean isPropertyValueNotEmpty(PmdProperty prop) {
-        if (prop.isCdataValue()) {
-            return StringUtils.isNotEmpty(prop.getCdataValue());
-        }
-        return StringUtils.isNotEmpty(prop.getValue());
-    }
-
-    private static void addChild(Element elt, String name, @Nullable String text) {
-        if (text != null) {
-            elt.addContent(new Element(name).setText(text));
-        }
-    }
-
-    private static void addAttribute(Element elt, String name, @Nullable String value) {
-        if (value != null) {
-            elt.setAttribute(name, value);
-        }
-    }
-
-    @Override
-    public void exportProfile(RulesProfile profile, Writer writer) {
-        String profileName = profile.getName();
-        PmdRuleSet tree = createPmdRuleset(PmdConstants.REPOSITORY_KEY, profile.getActiveRulesByRepository(PmdConstants.REPOSITORY_KEY));
-        exportPmdRulesetToXml(tree, writer, profileName);
-    }
-
-    public String exportProfile(String repositoryKey, RulesProfile profile) {
-        String profileName = profile.getName();
-        PmdRuleSet tree = createPmdRuleset(repositoryKey, profile.getActiveRulesByRepository(repositoryKey));
+    public static String exportProfileFromScannerSide(String repositoryKey, ActiveRules profile) {
+        PmdRuleSet tree = createPmdRulesetB(repositoryKey, profile.findByRepository(repositoryKey));
         StringWriter stringWriter = new StringWriter();
-        exportPmdRulesetToXml(tree, stringWriter, profileName);
+        tree.writeTo(stringWriter);
         return stringWriter.toString();
     }
 
-    private PmdRuleSet createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules) {
+    private static PmdRuleSet createPmdRulesetB(String repositoryKey, Collection<org.sonar.api.batch.rule.ActiveRule> activeRules) {
+        PmdRuleSet ruleset = new PmdRuleSet();
+        ruleset.setName(repositoryKey);
+        ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));
+        for (org.sonar.api.batch.rule.ActiveRule activeRule : activeRules) {
+                String configKey = activeRule.internalKey();
+                PmdRule rule = new PmdRule(configKey, PmdLevelUtils.toLevel(RulePriority.valueOfString(activeRule.severity())));
+                addRuleProperties(activeRule, rule);
+                ruleset.addRule(rule);
+                processXPathRule(activeRule.internalKey(), rule);
+        }
+        return ruleset;
+    }
+
+    private static PmdRuleSet createPmdRuleset(String repositoryKey, List<ActiveRule> activeRules) {
         PmdRuleSet ruleset = new PmdRuleSet();
         ruleset.setName(repositoryKey);
         ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));

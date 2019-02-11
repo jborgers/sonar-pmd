@@ -40,8 +40,8 @@ import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
@@ -54,17 +54,15 @@ public class PmdExecutor {
     private static final Logger LOGGER = Loggers.get(PmdExecutor.class);
 
     private final FileSystem fs;
-    private final RulesProfile rulesProfile;
-    private final PmdProfileExporter pmdProfileExporter;
+    private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
     private final JavaResourceLocator javaResourceLocator;
     private final Configuration settings;
 
-    public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
+    public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
                        PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
-        this.pmdProfileExporter = pmdProfileExporter;
         this.pmdConfiguration = pmdConfiguration;
         this.javaResourceLocator = javaResourceLocator;
         this.settings = settings;
@@ -135,7 +133,7 @@ public class PmdExecutor {
     }
 
     private RuleSets createRuleSets(String repositoryKey) {
-        String rulesXml = pmdProfileExporter.exportProfile(repositoryKey, rulesProfile);
+        String rulesXml = PmdProfileExporter.exportProfileFromScannerSide(repositoryKey, rulesProfile);
         File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         String ruleSetFilePath = ruleSetFile.getAbsolutePath();
         RuleSetFactory ruleSetFactory = new RuleSetFactory();
