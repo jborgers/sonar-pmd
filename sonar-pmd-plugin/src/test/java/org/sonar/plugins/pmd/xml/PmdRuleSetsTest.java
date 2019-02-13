@@ -22,18 +22,15 @@ package org.sonar.plugins.pmd.xml;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class PmdRuleSetsTest {
 
@@ -43,37 +40,17 @@ class PmdRuleSetsTest {
     void setup() {
         messages = ValidationMessages.create();
     }
-/*
+
     @Test
-    void whenValidXmlGivenThenPmdRuleSetIsReturned() throws URISyntaxException, IOException {
+    void whenClosingTheResourceAfterParsingFailsThenReturnsResultQuietly() {
 
         // given
-        final Reader reader = createReader("/org/sonar/plugins/pmd/simple.xml");
+        final Reader mockReader = mock(Reader.class, invocationOnMock -> {
+            throw new IOException();
+        });
 
         // when
-        final PmdRuleSet result = PmdRuleSets.parse(reader, messages);
-
-        // then
-        assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("name", "Sonar")
-                .hasFieldOrPropertyWithValue("description", "Sonar PMD rules")
-                .satisfies(this::hasRuleCouplingBetweenObjects)
-                .satisfies(this::hasRuleExcessiveImports)
-                .satisfies(this::hasRuleUseNotifyAllInsteadOfNotify)
-                .satisfies(this::hasRuleUseCollectionIsEmptyRule);
-
-        assertThat(result.getPmdRules()).hasSize(4);
-        assertThatNoMessagesWritten();
-    }
-*//*
-    @Test
-    void whenExceptionOccursWhileReadingThenEmptyRuleSetIsReturned() {
-
-        // given
-        final Reader nullReader = null;
-
-        // when
-        final PmdRuleSet result = PmdRuleSets.parse(nullReader, messages);
+        final PmdRuleSet result = PmdRuleSets.from(mockReader, messages);
 
         // then
         assertThat(result)
@@ -82,90 +59,35 @@ class PmdRuleSetsTest {
                 .element(0)
                 .asList()
                 .isEmpty();
-
-        assertThat(messages.getErrors())
-                .isNotEmpty();
-    }*/
-
-    private void assertThatNoMessagesWritten() {
-        assertThat(messages.getInfos()).isEmpty();
-        assertThat(messages.getWarnings()).isEmpty();
-        assertThat(messages.getErrors()).isEmpty();
     }
 
-    private void hasRuleCouplingBetweenObjects(PmdRuleSet pmdRuleSet) {
-        final Optional<PmdRule> couplingBetweenObjects = pmdRuleSet.getPmdRules()
-                .stream()
-                .filter(rule -> rule.getRef() != null)
-                .filter(rule -> rule.getRef().endsWith("CouplingBetweenObjects"))
-                .findFirst();
+    @Test
+    void whenActiveRulesGivenThenRuleSetIsReturned() {
 
-        assertThat(couplingBetweenObjects).isPresent()
-                .get()
-                .hasFieldOrPropertyWithValue("priority", 2)
-                .extracting("properties")
-                .element(0)
-                .asList()
-                .element(0)
-                .hasFieldOrPropertyWithValue("name", "threshold")
-                .hasFieldOrPropertyWithValue("value", "20")
-                .hasNoNullFieldsOrPropertiesExcept("cdataValue");
+        // given
+        final ActiveRules mockedRules = mock(ActiveRules.class);
+        final String anyRepoKey = "TEST";
+
+        // when
+        final PmdRuleSet result = PmdRuleSets.from(mockedRules, anyRepoKey);
+
+        // then
+        assertThat(result)
+                .isNotNull();
     }
 
-    private void hasRuleUseNotifyAllInsteadOfNotify(PmdRuleSet pmdRuleSet) {
-        final Optional<PmdRule> useNotifyAllInsteadOfNotify = pmdRuleSet.getPmdRules()
-                .stream()
-                .filter(rule -> rule.getRef() != null)
-                .filter(rule -> rule.getRef().endsWith("UseNotifyAllInsteadOfNotify"))
-                .findFirst();
+    @Test
+    void whenRulesProfileGivenThenRuleSetIsReturned() {
 
-        assertThat(useNotifyAllInsteadOfNotify).isPresent()
-                .get()
-                .hasFieldOrPropertyWithValue("priority", 4)
-                .extracting("properties")
-                .element(0)
-                .asList()
-                .isEmpty();
-    }
+        // given
+        final RulesProfile mockedProfile = mock(RulesProfile.class);
+        final String anyRepoKey = "TEST";
 
-    private void hasRuleExcessiveImports(PmdRuleSet pmdRuleSet) {
-        final Optional<PmdRule> excessiveImports = pmdRuleSet.getPmdRules()
-                .stream()
-                .filter(rule -> rule.getRef() != null)
-                .filter(rule -> rule.getRef().endsWith("ExcessiveImports"))
-                .findFirst();
+        // when
+        final PmdRuleSet result = PmdRuleSets.from(mockedProfile, anyRepoKey);
 
-        assertThat(excessiveImports).isPresent()
-                .get()
-                .hasFieldOrPropertyWithValue("priority", null)
-                .extracting("properties")
-                .element(0)
-                .asList()
-                .element(0)
-                .hasFieldOrPropertyWithValue("name", "minimum")
-                .hasFieldOrPropertyWithValue("value", "30");
-    }
-
-    private void hasRuleUseCollectionIsEmptyRule(PmdRuleSet pmdRuleSet) {
-        final Optional<PmdRule> couplingBetweenObjects = pmdRuleSet.getPmdRules()
-                .stream()
-                .filter(rule -> rule.getClazz() != null)
-                .filter(rule -> rule.getClazz().endsWith("UseUtilityClassRule"))
-                .findFirst();
-
-        assertThat(couplingBetweenObjects).isPresent()
-                .get()
-                .hasFieldOrPropertyWithValue("priority", 3)
-                .extracting("properties")
-                .element(0).asList()
-                .isEmpty();
-    }
-
-    private Reader createReader(String path) throws URISyntaxException, IOException {
-        final URI resource = PmdRuleSetsTest.class.getResource(path).toURI();
-        return Files.newBufferedReader(
-                Paths.get(resource),
-                StandardCharsets.UTF_8
-        );
+        // then
+        assertThat(result)
+                .isNotNull();
     }
 }

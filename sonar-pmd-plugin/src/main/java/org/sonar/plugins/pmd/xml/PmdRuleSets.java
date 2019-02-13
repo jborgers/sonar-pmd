@@ -55,7 +55,7 @@ public class PmdRuleSets {
      * @return An instance of PmdRuleSet. The output may be empty but never null.
      */
     public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey) {
-        return createQuietly(new ActiveRulesRuleSetFactory(activeRules, repositoryKey));
+        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey));
     }
 
     /**
@@ -64,18 +64,23 @@ public class PmdRuleSets {
      * @return An instance of PmdRuleSet. The output may be empty but never null.
      */
     public static PmdRuleSet from(RulesProfile rulesProfile, String repositoryKey) {
-        return createQuietly(new RulesProfileRuleSetFactory(rulesProfile, repositoryKey));
+        return create(new RulesProfileRuleSetFactory(rulesProfile, repositoryKey));
     }
 
-    private static PmdRuleSet createQuietly(RuleSetFactory factory) {
+    private static PmdRuleSet create(RuleSetFactory factory) {
+        return factory.create();
+    }
+
+    private static PmdRuleSet createQuietly(XmlRuleSetFactory factory) {
+
+        final PmdRuleSet result = create(factory);
+
         try {
-            return factory.create();
-        } finally {
-            try {
-                factory.close();
-            } catch (IOException e) {
-                LOG.warn("Failed to close the given resource.", e);
-            }
+            factory.close();
+        } catch (IOException e) {
+            LOG.warn("Failed to close the given resource.", e);
         }
+
+        return result;
     }
 }
