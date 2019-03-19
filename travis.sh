@@ -14,7 +14,7 @@ plugin)
   unset SONARQUBE_SCANNER_PARAMS SONAR_TOKEN SONAR_SCANNER_HOME
 
   # Run integration tests
-  mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dskip.surefire.tests
+  mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dskip.surefire.tests -Dorchestrator.artifactory.url=https://repox.jfrog.io/repox
   ;;
 
 javadoc)
