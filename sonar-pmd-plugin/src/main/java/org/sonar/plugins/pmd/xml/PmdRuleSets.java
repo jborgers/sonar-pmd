@@ -20,122 +20,67 @@
 
 package org.sonar.plugins.pmd.xml;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
-import javax.annotation.Nullable;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+import org.sonar.plugins.pmd.xml.factory.ActiveRulesRuleSetFactory;
+import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
+import org.sonar.plugins.pmd.xml.factory.RulesProfileRuleSetFactory;
+import org.sonar.plugins.pmd.xml.factory.XmlRuleSetFactory;
 
 /**
- * Creates {@link PmdRuleSet} from classpath resources.
+ * Convenience class that creates {@link PmdRuleSet} instances out of the given input.
  */
-public class PmdRuleSets implements Closeable {
+public class PmdRuleSets {
 
     private static final Logger LOG = Loggers.get(PmdRuleSets.class);
-    private static final String INVALID_INPUT = "The PMD configuration file is not valid";
-    private final Reader reader;
-
-    public PmdRuleSets(Reader configReader) {
-        this.reader = configReader;
-    }
 
     /**
-     * Parses the given ConfigReader for PmdRuleSets.
-     *
-     * @return The extracted PmdRuleSet.
-     * @throws JDOMException May throw exceptions on illegal XML input.
-     * @throws IOException   May throw exceptions when problems occur while reading the content.
-     */
-    public PmdRuleSet parse() throws JDOMException, IOException {
-        final SAXBuilder parser = new SAXBuilder();
-        final Document dom = parser.build(reader);
-        final Element eltResultset = dom.getRootElement();
-        final Namespace namespace = eltResultset.getNamespace();
-        final PmdRuleSet result = new PmdRuleSet();
-
-        final String name = eltResultset.getAttributeValue("name");
-        final Element descriptionElement = getChild(eltResultset, "description", namespace);
-
-        result.setName(name);
-
-        if (descriptionElement != null) {
-            result.setDescription(descriptionElement.getValue());
-        }
-
-        for (Element eltRule : getChildren(eltResultset, "rule", namespace)) {
-            PmdRule pmdRule = new PmdRule(eltRule.getAttributeValue("ref"));
-            pmdRule.setClazz(eltRule.getAttributeValue("class"));
-            pmdRule.setName(eltRule.getAttributeValue("name"));
-            pmdRule.setMessage(eltRule.getAttributeValue("message"));
-            parsePmdPriority(eltRule, pmdRule, namespace);
-            parsePmdProperties(eltRule, pmdRule, namespace);
-            result.addRule(pmdRule);
-        }
-        return result;
-    }
-
-    /**
-     * Convenience method that parses the given InputStream while handling exceptions and closing resources.
-     *
      * @param configReader A character stream containing the data of the {@link PmdRuleSet}.
      * @param messages     SonarQube validation messages - allow to inform the enduser about processing problems.
      * @return An instance of PmdRuleSet. The output may be empty but never null.
      */
-    public static PmdRuleSet parse(Reader configReader, ValidationMessages messages) {
-        try (PmdRuleSets parser = new PmdRuleSets(configReader)) {
-            return parser.parse();
-        } catch (Exception e) {
-            messages.addErrorText(INVALID_INPUT + " : " + e.getMessage());
-            LOG.error(INVALID_INPUT, e);
-            return new PmdRuleSet();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private List<Element> getChildren(Element parent, String childName, @Nullable Namespace namespace) {
-        if (namespace == null) {
-            return parent.getChildren(childName);
-        } else {
-            return parent.getChildren(childName, namespace);
-        }
-    }
-
-    private Element getChild(Element parent, String childName, @Nullable Namespace namespace) {
-        final List<Element> children = getChildren(parent, childName, namespace);
-
-        return (children != null && !children.isEmpty()) ? children.get(0) : null;
-    }
-
-    private void parsePmdProperties(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
-        for (Element eltProperties : getChildren(eltRule, "properties", namespace)) {
-            for (Element eltProperty : getChildren(eltProperties, "property", namespace)) {
-                pmdRule.addProperty(new PmdProperty(eltProperty.getAttributeValue("name"), eltProperty.getAttributeValue("value")));
-            }
-        }
-    }
-
-    private void parsePmdPriority(Element eltRule, PmdRule pmdRule, @Nullable Namespace namespace) {
-        for (Element eltPriority : getChildren(eltRule, "priority", namespace)) {
-            pmdRule.setPriority(Integer.valueOf(eltPriority.getValue()));
-        }
+    public static PmdRuleSet from(Reader configReader, ValidationMessages messages) {
+        return createQuietly(new XmlRuleSetFactory(configReader, messages));
     }
 
     /**
-     * Closes all resources.
-     *
-     * @throws IOException If an I/O error occurs.
+     * @param activeRules   The currently active rules.
+     * @param repositoryKey The key identifier of the rule repository.
+     * @return An instance of PmdRuleSet. The output may be empty but never null.
      */
-    @Override
-    public void close() throws IOException {
-        reader.close();
+    public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey) {
+        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey));
+    }
+
+    /**
+     * @param rulesProfile  The current rulesprofile.
+     * @param repositoryKey The key identifier of the rule repository.
+     * @return An instance of PmdRuleSet. The output may be empty but never null.
+     */
+    public static PmdRuleSet from(RulesProfile rulesProfile, String repositoryKey) {
+        return create(new RulesProfileRuleSetFactory(rulesProfile, repositoryKey));
+    }
+
+    private static PmdRuleSet create(RuleSetFactory factory) {
+        return factory.create();
+    }
+
+    private static PmdRuleSet createQuietly(XmlRuleSetFactory factory) {
+
+        final PmdRuleSet result = create(factory);
+
+        try {
+            factory.close();
+        } catch (IOException e) {
+            LOG.warn("Failed to close the given resource.", e);
+        }
+
+        return result;
     }
 }

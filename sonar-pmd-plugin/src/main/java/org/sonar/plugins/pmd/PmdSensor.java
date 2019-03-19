@@ -23,18 +23,18 @@ import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
-import org.sonar.api.profiles.RulesProfile;
 
 public class PmdSensor implements Sensor {
-    private final RulesProfile profile;
+    private final ActiveRules profile;
     private final PmdExecutor executor;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
 
-    public PmdSensor(RulesProfile profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+    public PmdSensor(ActiveRules profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
         this.executor = executor;
         this.pmdViolationRecorder = pmdViolationRecorder;
@@ -51,7 +51,7 @@ public class PmdSensor implements Sensor {
         final boolean hasMatchingFiles = fs.hasFiles(predicates.and(
                 predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
                 predicates.hasType(type)));
-        return hasMatchingFiles && !profile.getActiveRulesByRepository(repositoryKey).isEmpty();
+        return hasMatchingFiles && !profile.findByRepository(repositoryKey).isEmpty();
     }
 
     @Override

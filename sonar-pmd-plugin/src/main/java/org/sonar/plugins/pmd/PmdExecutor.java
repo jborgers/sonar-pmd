@@ -21,6 +21,7 @@ package org.sonar.plugins.pmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -40,13 +41,14 @@ import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
-import org.sonar.plugins.pmd.profile.PmdProfileExporter;
+import org.sonar.plugins.pmd.xml.PmdRuleSet;
+import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
 @ScannerSide
 public class PmdExecutor {
@@ -54,17 +56,15 @@ public class PmdExecutor {
     private static final Logger LOGGER = Loggers.get(PmdExecutor.class);
 
     private final FileSystem fs;
-    private final RulesProfile rulesProfile;
-    private final PmdProfileExporter pmdProfileExporter;
+    private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
     private final JavaResourceLocator javaResourceLocator;
     private final Configuration settings;
 
-    public PmdExecutor(FileSystem fileSystem, RulesProfile rulesProfile, PmdProfileExporter pmdProfileExporter,
+    public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
                        PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
-        this.pmdProfileExporter = pmdProfileExporter;
         this.pmdConfiguration = pmdConfiguration;
         this.javaResourceLocator = javaResourceLocator;
         this.settings = settings;
@@ -135,7 +135,7 @@ public class PmdExecutor {
     }
 
     private RuleSets createRuleSets(String repositoryKey) {
-        String rulesXml = pmdProfileExporter.exportProfile(repositoryKey, rulesProfile);
+        String rulesXml = dumpXml(rulesProfile, repositoryKey);
         File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         String ruleSetFilePath = ruleSetFile.getAbsolutePath();
         RuleSetFactory ruleSetFactory = new RuleSetFactory();
@@ -145,6 +145,14 @@ public class PmdExecutor {
         } catch (RuleSetNotFoundException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
+        final StringWriter writer = new StringWriter();
+        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey);
+        ruleSet.writeTo(writer);
+
+        return writer.toString();
     }
 
     PmdTemplate createPmdTemplate(URLClassLoader classLoader) {

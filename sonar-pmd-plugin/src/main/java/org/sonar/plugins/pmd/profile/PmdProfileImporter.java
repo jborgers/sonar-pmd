@@ -58,7 +58,7 @@ public class PmdProfileImporter extends ProfileImporter {
 
     @Override
     public RulesProfile importProfile(Reader pmdConfigurationFile, ValidationMessages messages) {
-        PmdRuleSet pmdRuleset = PmdRuleSets.parse(pmdConfigurationFile, messages);
+        PmdRuleSet pmdRuleset = PmdRuleSets.from(pmdConfigurationFile, messages);
         RulesProfile profile = RulesProfile.create();
         for (PmdRule pmdRule : pmdRuleset.getPmdRules()) {
             String ruleClassName = pmdRule.getClazz();
