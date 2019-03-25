@@ -42,6 +42,7 @@ public class PmdTestOrchestrator {
 
     private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
     private static final String SONAR_VERSION_KEY = "test.sonar.version";
+    private static final String LANGUAGE_KEY = "java";
 
     private final Orchestrator delegate;
 
@@ -72,6 +73,12 @@ public class PmdTestOrchestrator {
                 .issueClient()
                 .find(query)
                 .list();
+    }
+
+    public void associateProjectToQualityProfile(String profile, String project) {
+        final String projectKey = String.format("com.sonarsource.it.projects:%s", project);
+        delegate.getServer().provisionProject(projectKey, project);
+        delegate.getServer().associateProjectToQualityProfile(projectKey, LANGUAGE_KEY, profile);
     }
 
     public static PmdTestOrchestrator init() {

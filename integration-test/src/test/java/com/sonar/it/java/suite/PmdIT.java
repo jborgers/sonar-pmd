@@ -51,17 +51,19 @@ class PmdIT {
 
     @Test
     void pmdExtensions() {
-        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
+        final String projectName = "pmd-extensions";
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals()
-                .setProperty("sonar.java.binaries", ".")
-                .setProperty("sonar.profile", "pmd-extensions");
+                .setProperty("sonar.java.binaries", ".");
+
+        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
         final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
         final String log = buildResult.getLogs();
 
         assertThat(log).contains("Start MaximumMethodsCountCheck");
         assertThat(log).contains("End MaximumMethodsCountCheck");
 
-        List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Errors"));
+        List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors"));
         assertThat(issues).hasSize(3);
         List<String> messages = new ArrayList<>();
         for (Issue issue : issues) {
@@ -78,15 +80,17 @@ class PmdIT {
      */
     @Test
     void testRuleAvoidDuplicateLiterals() {
-        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-avoid-duplicate-literals"))
-                .setCleanSonarGoals()
-                .setProperty("sonar.profile", "pmd");
+        final String projectName = "pmd-avoid-duplicate-literals";
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
+                .setCleanSonarGoals();
+
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd", projectName);
         ORCHESTRATOR.executeBuild(build);
 
         List<Issue> issues = ORCHESTRATOR.retrieveIssues(
                 IssueQuery.create()
                         .rules("pmd:AvoidDuplicateLiterals")
-                        .components(keyFor("pmd-avoid-duplicate-literals", "", "AvoidDuplicateLiterals"))
+                        .components(keyFor(projectName, "", "AvoidDuplicateLiterals"))
         );
         assertThat(issues).hasSize(1);
         assertThat(issues.get(0).message()).contains("appears 5 times in this file");
@@ -97,9 +101,11 @@ class PmdIT {
      */
     @Test
     void testJunitRules() {
-        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-junit-rules"))
-                .setCleanSonarGoals()
-                .setProperty("sonar.profile", "pmd-junit");
+        final String projectName = "pmd-junit-rules";
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
+                .setCleanSonarGoals();
+
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-junit", projectName);
         ORCHESTRATOR.executeBuild(build);
 
         List<Issue> testIssues = retrieveIssues(keyForTest());
@@ -107,7 +113,7 @@ class PmdIT {
         assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
         assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd-unit-tests:TestClassWithoutTestCases");
 
-        List<Issue> prodIssues = retrieveIssues(keyFor("pmd-junit-rules", "", "ProductionCode"));
+        List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
         assertThat(prodIssues).hasSize(1);
         assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
         assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd:UnusedPrivateField");
@@ -118,22 +124,26 @@ class PmdIT {
      */
     @Test
     void pmdShouldHaveAccessToExternalLibrariesInItsClasspath() {
-        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
-                .setCleanPackageSonarGoals()
-                .setProperty("sonar.profile", "pmd-extensions");
+        final String projectName = "pmd-extensions";
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
+                .setCleanPackageSonarGoals();
+
+        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
         ORCHESTRATOR.executeBuild(build);
 
-        List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Bar"));
+        List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
         assertThat(issues).hasSize(1);
     }
 
     @Test
     void pmdShouldRunWithAllRulesEnabled() {
-        MavenBuild build = MavenBuild.create(TestUtils.projectPom("pmd-extensions"))
-                .setCleanPackageSonarGoals()
-                .setProperty("sonar.profile", "pmd-all-rules");
+        final String projectName = "pmd-extensions";
+        MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
+                .setCleanPackageSonarGoals();
+
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules", projectName);
         ORCHESTRATOR.executeBuild(build);
-        List<Issue> issues = retrieveIssues(keyFor("pmd-extensions", "pmd/", "Bar"));
+        List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
         assertThat(issues).isNotEmpty();
     }
 
