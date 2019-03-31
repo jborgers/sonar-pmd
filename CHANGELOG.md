@@ -1,10 +1,18 @@
 # Changelog
 
-## [3.2.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2018-12-09)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.3...master)
+## [3.2.1-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2019-03-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.0...master)
+
+None, yet.
+
+## [3.2.0](https://github.com/jensgerdes/sonar-pmd/tree/3.2.0) (2019-03-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.3...3.2.0)
 
 **Implemented enhancements:**
 - Updated PMD (6.10.0)
+
+**Closed issues:**
+- SonarQube 7.6+ Support [\#81](https://github.com/jensgerdes/sonar-pmd/issues/81) 
 
 
 ## [3.1.3](https://github.com/jensgerdes/sonar-pmd/tree/3.1.3) (2018-11-29)
