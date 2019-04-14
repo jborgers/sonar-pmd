@@ -1,6 +1,6 @@
 /*
  * SonarQube PMD Plugin Integration Test
- * Copyright (C) 2013-2018 SonarSource SA
+ * Copyright (C) 2013-2019 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
