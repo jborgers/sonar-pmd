@@ -29,7 +29,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.2.1</version>
+  <version>3.2.2-SNAPSHOT</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -37,7 +37,7 @@
     <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
     <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
     <url>https://github.com/jensgerdes/sonar-pmd</url>
-    <tag>3.2.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <url>https://github.com/jensgerdes/sonar-pmd</url>
   <issueManagement>
