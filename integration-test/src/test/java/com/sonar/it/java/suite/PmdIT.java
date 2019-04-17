@@ -148,6 +148,8 @@ class PmdIT {
     }
 
     private List<Issue> retrieveIssues(String componentKey) {
-        return ORCHESTRATOR.retrieveIssues(IssueQuery.create().components(componentKey));
+        final IssueQuery issueQuery = IssueQuery.create();
+        issueQuery.urlParams().put("componentKeys", componentKey);
+        return ORCHESTRATOR.retrieveIssues(issueQuery);
     }
 }
