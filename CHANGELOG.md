@@ -1,9 +1,16 @@
 # Changelog
 
-## [3.2.1-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2019-03-29)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.0...master)
+## [3.2.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2019-04-17)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.1...master)
 
 None, yet.
+
+## [3.2.1](https://github.com/jensgerdes/sonar-pmd/tree/3.2.1) (2019-04-15)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.0...3.2.1)
+
+**Closed issues:**
+- OptimizableToArrayCall message doesn't reflect PMD 6.x changes on this rule [\#75](https://github.com/jensgerdes/sonar-pmd/issues/75) 
+- Code samples in rule documentation appeared in one single line
 
 ## [3.2.0](https://github.com/jensgerdes/sonar-pmd/tree/3.2.0) (2019-03-29)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.1.3...3.2.0)
