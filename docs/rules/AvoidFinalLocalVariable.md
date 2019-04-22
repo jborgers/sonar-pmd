@@ -1,0 +1,17 @@
+
+# AvoidFinalLocalVariable
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:AvoidFinalLocalVariable`<br/>
+
+
+-----
+
+Avoid using final local variables, turn them into fields. Example :
+<pre>
+public class MyClass {
+    public void foo() {
+        final String finalLocalVariable;
+    }
+}
+  </pre>
+

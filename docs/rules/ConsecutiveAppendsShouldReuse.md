@@ -1,0 +1,21 @@
+
+# ConsecutiveAppendsShouldReuse
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:ConsecutiveAppendsShouldReuse`<br/>
+
+
+-----
+
+Consecutively calls to StringBuffer/StringBuilder .append should reuse the target object. This can improve the performance. Example:
+<pre>
+String foo = " ";
+
+StringBuffer buf = new StringBuffer();
+buf.append("Hello"); // poor
+buf.append(foo);
+buf.append("World");
+
+StringBuffer buf = new StringBuffer();
+buf.append("Hello").append(foo).append("World"); // good
+</pre>
+

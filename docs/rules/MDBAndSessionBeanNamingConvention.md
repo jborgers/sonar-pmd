@@ -1,0 +1,10 @@
+
+# MDBAndSessionBeanNamingConvention
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:MDBAndSessionBeanNamingConvention`<br/>
+
+
+-----
+
+The EJB Specification state that any MessageDrivenBean or SessionBean should be suffixed by Bean.
+

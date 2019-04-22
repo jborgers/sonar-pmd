@@ -1,0 +1,32 @@
+
+# CheckSkipResult
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:CheckSkipResult`<br/>
+> :warning: This rule is **deprecated** in favour of [S2674](https://rules.sonarsource.com/java/RSPEC-2674).
+
+-----
+
+The skip() method may skip a smaller number of bytes than requested. Check the returned value to find out if it was the case or not. Example:
+<pre>
+public class Foo {
+
+   private FileInputStream _s = new FileInputStream("file");
+
+   public void skip(int n) throws IOException {
+      _s.skip(n); // You are not sure that exactly n bytes are skipped
+   }
+
+   public void skipExactly(int n) throws IOException {
+      while (n != 0) {
+         long skipped = _s.skip(n);
+         if (skipped == 0)
+            throw new EOFException();
+         n -= skipped;
+      }
+   }
+</pre>
+
+<p>
+  This rule is deprecated, use {rule:squid:S2674} instead.
+</p>
+

@@ -10,6 +10,9 @@ The PMD rules are divided into two sub categories:
 * PMD Rules
 * PMD Unit Test Rules
 
+## Working notes
+- In case of alternative squid rules, link them: `https://rules.sonarsource.com/java/RSPEC-{squid_number}`
+
 ## PMD Rules
 
 Rule name | Deprecated? | Alternative | Description up-to-date | Checked on

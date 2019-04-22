@@ -1,0 +1,10 @@
+
+# SimplifyStartsWith
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:SimplifyStartsWith`<br/>
+
+
+-----
+
+Since it passes in a literal of length 1, this call to String.startsWith can be rewritten using String.charAt(0) to save some time.
+

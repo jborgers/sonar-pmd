@@ -1,0 +1,16 @@
+
+# GuardLogStatement
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:GuardLogStatement`<br/>
+
+
+-----
+
+Whenever using a log level, one should check if the loglevel is actually enabled, or
+otherwise skip the associate String creation and manipulation. Example:
+<pre>
+// Add this for performance
+if (log.isDebugEnabled() { ...
+  log.debug("This happens");
+</pre>
+

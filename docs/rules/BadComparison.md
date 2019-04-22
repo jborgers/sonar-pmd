@@ -1,0 +1,10 @@
+
+# BadComparison
+**Category:** `pmd`<br/>
+**Rule Key:** `pmd:BadComparison`<br/>
+
+
+-----
+
+Avoid equality comparisons with Double.NaN - these are likely to be logic errors.
+
