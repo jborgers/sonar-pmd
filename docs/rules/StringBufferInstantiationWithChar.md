@@ -1,4 +1,3 @@
-
 # StringBufferInstantiationWithChar
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:StringBufferInstantiationWithChar`<br/>
@@ -7,8 +6,3 @@
 -----
 
 StringBuffer sb = new StringBuffer('c'); The char will be converted into int to intialize StringBuffer size.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1317} instead.
-</p>
-

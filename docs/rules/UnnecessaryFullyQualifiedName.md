@@ -1,4 +1,3 @@
-
 # UnnecessaryFullyQualifiedName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnnecessaryFullyQualifiedName`<br/>
@@ -16,4 +15,3 @@ public class Foo {
    private List list2; // More appropriate given import of 'java.util.List'
 }
 </pre>
-

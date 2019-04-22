@@ -1,4 +1,3 @@
-
 # UnnecessaryWrapperObjectCreation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnnecessaryWrapperObjectCreation`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Parsing method should be called directy instead.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1158} instead.
-</p>
-

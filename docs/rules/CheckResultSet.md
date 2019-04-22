@@ -1,4 +1,3 @@
-
 # CheckResultSet
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CheckResultSet`<br/>
@@ -7,4 +6,3 @@
 -----
 
 Always check the return of one of the navigation method (next,previous,first,last) of a ResultSet. Indeed, if the value return is "false", the developer should deal with it !
-

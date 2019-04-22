@@ -1,4 +1,3 @@
-
 # DontImportSun
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DontImportSun`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid importing anything from the 'sun.*' packages. These packages are not portable and are likely to change.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1191} instead.
-</p>
-

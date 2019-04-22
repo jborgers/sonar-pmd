@@ -1,4 +1,3 @@
-
 # SuspiciousConstantFieldName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SuspiciousConstantFieldName`<br/>
@@ -15,8 +14,3 @@ public class Foo {
   double PI = 3.16;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00116} instead.
-</p>
-

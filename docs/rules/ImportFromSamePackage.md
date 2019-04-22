@@ -1,4 +1,3 @@
-
 # ImportFromSamePackage
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ImportFromSamePackage`<br/>
@@ -11,4 +10,3 @@ No need to import a type that lives in the same package.
 <p>
   This rule is deprecated, use {rule:squid:UselessImportCheck} instead.
 </p>
-

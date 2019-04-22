@@ -1,4 +1,3 @@
-
 # NonCaseLabelInSwitchStatement
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:NonCaseLabelInSwitchStatement`<br/>
@@ -7,8 +6,3 @@
 -----
 
 A non-case label (e.g. a named break/continue label) was present in a switch statement. This legal, but confusing. It is easy to mix up the case labels and the non-case labels.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1219} instead.
-</p>
-

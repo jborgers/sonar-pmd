@@ -1,4 +1,3 @@
-
 # UnnecessaryCaseChange
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnnecessaryCaseChange`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Using equalsIgnoreCase() is faster than using toUpperCase/toLowerCase().equals()
-
-<p>
-  This rule is deprecated, use {rule:squid:S1157} instead.
-</p>
-

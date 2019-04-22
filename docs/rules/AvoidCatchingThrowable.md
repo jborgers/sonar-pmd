@@ -1,4 +1,3 @@
-
 # AvoidCatchingThrowable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidCatchingThrowable`<br/>
@@ -7,8 +6,3 @@
 -----
 
 This is dangerous because it casts too wide a net; it can catch things like OutOfMemoryError.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1181} instead.
-</p>
-

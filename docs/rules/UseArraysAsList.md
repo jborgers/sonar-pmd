@@ -1,4 +1,3 @@
-
 # UseArraysAsList
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseArraysAsList`<br/>
@@ -7,4 +6,3 @@
 -----
 
 The class java.util.Arrays has a asList method that should be use when you want to create a new List from an array of objects. It is faster than executing a loop to cpy all the elements of the array one by one
-

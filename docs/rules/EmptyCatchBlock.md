@@ -1,4 +1,3 @@
-
 # EmptyCatchBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyCatchBlock`<br/>
@@ -10,8 +9,3 @@
   Empty Catch Block finds instances where an exception is caught, but nothing is done. In most circumstances, this
   swallows an exception which should either be acted on or reported.
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

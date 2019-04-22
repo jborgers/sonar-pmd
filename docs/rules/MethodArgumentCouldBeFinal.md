@@ -1,4 +1,3 @@
-
 # MethodArgumentCouldBeFinal
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MethodArgumentCouldBeFinal`<br/>
@@ -7,8 +6,3 @@
 -----
 
 A method argument that is never assigned can be declared final.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1226} instead.
-</p>
-

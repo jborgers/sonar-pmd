@@ -1,4 +1,3 @@
-
 # UselessOverridingMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UselessOverridingMethod`<br/>
@@ -7,8 +6,3 @@
 -----
 
 The overriding method merely calls the same method defined in a superclass
-
-<p>
-  This rule is deprecated, use {rule:squid:S1185} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # ClassWithOnlyPrivateConstructorsShouldBeFinal
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ClassWithOnlyPrivateConstructorsShouldBeFinal`<br/>
@@ -12,8 +11,3 @@ public class Foo {  //Should be final
     private Foo() { }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S2974} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # ClassNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ClassNamingConventions`<br/>
@@ -13,4 +12,3 @@
 <p>
   This rule is deprecated, use {rule:squid:S00101} and {rule:squid:S00114} instead.
 </p>
-

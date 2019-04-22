@@ -1,4 +1,3 @@
-
 # CloneMethodMustImplementCloneable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloneMethodMustImplementCloneable`<br/>
@@ -7,8 +6,3 @@
 -----
 
 The method clone() should only be implemented if the class implements the Cloneable interface with the exception of a final method that only throws CloneNotSupportedException.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1182} instead.
-</p>
-

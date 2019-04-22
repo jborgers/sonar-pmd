@@ -1,4 +1,3 @@
-
 # SignatureDeclareThrowsExceptionWithTypeResolution
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SignatureDeclareThrowsExceptionWithTypeResolution`<br/>
@@ -15,8 +14,3 @@ JUnit classes are excluded. Example:
 public void methodThrowingException() throws Exception {
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00112} instead.
-</p>
-

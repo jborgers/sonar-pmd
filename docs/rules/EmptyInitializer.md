@@ -1,4 +1,3 @@
-
 # EmptyInitializer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyInitializer`<br/>
@@ -16,8 +15,3 @@ public class Foo {
 
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

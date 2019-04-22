@@ -1,4 +1,3 @@
-
 # CallSuperFirst
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CallSuperFirst`<br/>
@@ -15,4 +14,3 @@ public class DummyActivity extends Activity {
   }
 }
 </pre>
-

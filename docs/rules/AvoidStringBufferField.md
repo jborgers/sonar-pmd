@@ -1,4 +1,3 @@
-
 # AvoidStringBufferField
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidStringBufferField`<br/>
@@ -12,8 +11,3 @@ class Foo {
   private StringBuffer memoryLeak;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1149} instead.
-</p>
-

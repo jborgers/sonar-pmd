@@ -1,4 +1,3 @@
-
 # AssignmentInOperand
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AssignmentInOperand`<br/>
@@ -11,4 +10,3 @@ Avoid assignments in operands; this can make code more complicated and harder to
 <p>
   This rule is deprecated, use {rule:squid:AssignmentInSubExpressionCheck} instead.
 </p>
-

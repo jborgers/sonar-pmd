@@ -1,4 +1,3 @@
-
 # CloneThrowsCloneNotSupportedException
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloneThrowsCloneNotSupportedException`<br/>
@@ -7,8 +6,3 @@
 -----
 
 The method clone() should throw a CloneNotSupportedException.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1182} instead.
-</p>
-

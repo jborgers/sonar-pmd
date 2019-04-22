@@ -1,4 +1,3 @@
-
 # AvoidMultipleUnaryOperators
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidMultipleUnaryOperators`<br/>
@@ -26,8 +25,3 @@ boolean c = false;
 int i = ~-2;
 int j = -~7;
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S881} instead.
-</p>
-

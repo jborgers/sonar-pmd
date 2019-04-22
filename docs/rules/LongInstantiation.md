@@ -1,4 +1,3 @@
-
 # LongInstantiation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LongInstantiation`<br/>
@@ -13,4 +12,3 @@ private Long i = new Long(0); // change to Long i =
 Long.valueOf(0);
 }
   </pre>
-

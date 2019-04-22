@@ -1,4 +1,3 @@
-
 # ConstructorCallsOverridableMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ConstructorCallsOverridableMethod`<br/>
@@ -33,8 +32,3 @@ public class JuniorClass extends SeniorClass {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1699} instead.
-</p>
-

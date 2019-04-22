@@ -1,4 +1,3 @@
-
 # UseCorrectExceptionLogging
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseCorrectExceptionLogging`<br/>
@@ -7,8 +6,3 @@
 -----
 
 To make sure the full stacktrace is printed out, use the logging statement with 2 arguments: a String and a Throwable.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1166} instead.
-</p>
-

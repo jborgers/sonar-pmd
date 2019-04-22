@@ -1,4 +1,3 @@
-
 # AvoidDollarSigns
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidDollarSigns`<br/>
@@ -14,4 +13,3 @@
   This rule is deprecated, use {rule:squid:S00114}, {rule:squid:S00115}, {rule:squid:S00116} and {rule:squid:S00117}
   instead.
 </p>
-

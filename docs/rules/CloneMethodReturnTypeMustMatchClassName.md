@@ -1,4 +1,3 @@
-
 # CloneMethodReturnTypeMustMatchClassName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloneMethodReturnTypeMustMatchClassName`<br/>
@@ -29,4 +28,3 @@ public class Foo implements Cloneable {
     }
 }
 </pre>
-

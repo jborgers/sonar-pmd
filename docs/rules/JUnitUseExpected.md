@@ -1,4 +1,3 @@
-
 # JUnitUseExpected
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitUseExpected`<br/>
@@ -24,4 +23,3 @@ public class MyTest {
     }
 }
 </pre>
-

@@ -1,4 +1,3 @@
-
 # UseAssertTrueInsteadOfAssertEquals
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:UseAssertTrueInsteadOfAssertEquals`<br/>
@@ -20,4 +19,3 @@ public class MyTestCase extends TestCase {
 	}
 }
 </pre>
-

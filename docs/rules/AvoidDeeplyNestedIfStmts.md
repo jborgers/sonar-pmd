@@ -1,4 +1,3 @@
-
 # AvoidDeeplyNestedIfStmts
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidDeeplyNestedIfStmts`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Deeply nested if..then statements are hard to read.
-
-<p>
-  This rule is deprecated, use {rule:squid:S134} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # AvoidUsingOctalValues
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidUsingOctalValues`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Integer literals should not start with zero. Zero means that the rest of literal will be interpreted as an octal value.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1314} instead.
-</p>
-

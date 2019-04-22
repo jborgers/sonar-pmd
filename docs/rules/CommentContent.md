@@ -1,4 +1,3 @@
-
 # CommentContent
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CommentContent`<br/>
@@ -10,4 +9,3 @@ A rule for the politically correct... we don't want to offend anyone. Example:
 <pre>
 // OMG, this is horrible, Bob is an idiot !!!
 </pre>
-

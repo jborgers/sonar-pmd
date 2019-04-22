@@ -1,4 +1,3 @@
-
 # EmptyFinalizer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyFinalizer`<br/>
@@ -7,8 +6,3 @@
 -----
 
 <p>If the finalize() method is empty, then it does not need to exist.</p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1186} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # UseAssertEqualsInsteadOfAssertTrue
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:UseAssertEqualsInsteadOfAssertTrue`<br/>
@@ -16,4 +15,3 @@ public class FooTest extends TestCase {
     assertEquals("a should equals b", a, b); // good usage
   }
 }</pre>
-

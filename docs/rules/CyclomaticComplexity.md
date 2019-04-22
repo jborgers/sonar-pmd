@@ -1,4 +1,3 @@
-
 # CyclomaticComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CyclomaticComplexity`<br/>
@@ -16,4 +15,3 @@
   This rule is deprecated, use {rule:squid:MethodCyclomaticComplexity} or {rule:squid:ClassCyclomaticComplexity}
   instead.
 </p>
-

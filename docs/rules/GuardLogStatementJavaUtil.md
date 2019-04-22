@@ -1,4 +1,3 @@
-
 # GuardLogStatementJavaUtil
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:GuardLogStatementJavaUtil`<br/>
@@ -13,4 +12,3 @@ otherwise skip the associate String creation and manipulation. Example:
 if (log.isLoggable(Level.FINE)) { ...
   log.fine("This happens");
 </pre>
-

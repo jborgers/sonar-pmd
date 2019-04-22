@@ -1,4 +1,3 @@
-
 # EqualsNull
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EqualsNull`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Inexperienced programmers sometimes confuse comparison concepts and use equals() to compare to null.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2159} instead.
-</p>
-

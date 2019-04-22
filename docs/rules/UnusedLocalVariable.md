@@ -1,4 +1,3 @@
-
 # UnusedLocalVariable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedLocalVariable`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Detects when a local variable is declared and/or assigned, but not used.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1481} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # GenericsNaming
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:GenericsNaming`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Generics names should be a one letter long and upper case.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00119} instead.
-</p>
-

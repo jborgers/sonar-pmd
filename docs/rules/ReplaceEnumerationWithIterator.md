@@ -1,4 +1,3 @@
-
 # ReplaceEnumerationWithIterator
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ReplaceEnumerationWithIterator`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Consider replacing this Enumeration with the newer java.util.Iterator
-
-<p>
-  This rule is deprecated, use {rule:squid:S1150} instead.
-</p>
-

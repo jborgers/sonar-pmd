@@ -1,4 +1,3 @@
-
 # UnconditionalIfStatement
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnconditionalIfStatement`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Do not use if statements that are always true or always false.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2583} instead.
-</p>
-

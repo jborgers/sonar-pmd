@@ -1,4 +1,3 @@
-
 # ShortInstantiation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ShortInstantiation`<br/>
@@ -13,4 +12,3 @@ private Short i = new Short(0); // change to Short i =
 Short.valueOf(0);
 }
   </pre>
-

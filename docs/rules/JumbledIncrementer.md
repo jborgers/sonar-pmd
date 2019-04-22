@@ -1,4 +1,3 @@
-
 # JumbledIncrementer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:JumbledIncrementer`<br/>
@@ -22,4 +21,3 @@ public class JumbledIncrementerRule1 {
 <p>
   This rule is deprecated, use {rule:squid:ForLoopCounterChangedCheck} instead.
 </p>
-

@@ -1,4 +1,3 @@
-
 # IfStmtsMustUseBraces
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:IfStmtsMustUseBraces`<br/>
@@ -9,8 +8,3 @@
 <p>
   Avoid using if statements without using curly braces.
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00121} instead.
-</p>
-

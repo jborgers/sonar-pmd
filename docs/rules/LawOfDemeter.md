@@ -1,4 +1,3 @@
-
 # LawOfDemeter
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LawOfDemeter`<br/>
@@ -36,4 +35,3 @@ public class Foo {
     }
 }
 </pre>
-

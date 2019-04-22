@@ -1,4 +1,3 @@
-
 # SimplifiedTernary
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SimplifiedTernary`<br/>
@@ -30,4 +29,3 @@ public class Foo {
   }
 }
 </pre>
-

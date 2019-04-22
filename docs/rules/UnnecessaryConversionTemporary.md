@@ -1,4 +1,3 @@
-
 # UnnecessaryConversionTemporary
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnnecessaryConversionTemporary`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid unnecessary temporaries when converting primitives to Strings
-
-<p>
-  This rule is deprecated, use {rule:squid:S1158} instead.
-</p>
-

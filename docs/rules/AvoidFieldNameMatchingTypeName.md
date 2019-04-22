@@ -1,4 +1,3 @@
-
 # AvoidFieldNameMatchingTypeName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidFieldNameMatchingTypeName`<br/>
@@ -13,8 +12,3 @@ public class Foo extends Bar {
   int foo;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1700} instead.
-</p>
-

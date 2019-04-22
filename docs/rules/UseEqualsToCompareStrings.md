@@ -1,4 +1,3 @@
-
 # UseEqualsToCompareStrings
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseEqualsToCompareStrings`<br/>
@@ -11,4 +10,3 @@ Using "==" or "!=" to compare strings only works if intern version is used on bo
 <p>
   This rule is deprecated, use {rule:squid:StringEqualityComparisonCheck} or {rule:squid:S1698} instead.
 </p>
-

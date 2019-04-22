@@ -1,4 +1,3 @@
-
 # NPathComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:NPathComplexity`<br/>
@@ -14,4 +13,3 @@ public class Foo {
   }
  }
 </pre>
-

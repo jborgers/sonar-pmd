@@ -1,4 +1,3 @@
-
 # CommentDefaultAccessModifier
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CommentDefaultAccessModifier`<br/>
@@ -34,4 +33,3 @@ public class Foo {
   }
 }
 </pre>
-

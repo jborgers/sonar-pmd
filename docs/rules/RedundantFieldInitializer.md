@@ -1,4 +1,3 @@
-
 # RedundantFieldInitializer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:RedundantFieldInitializer`<br/>
@@ -29,4 +28,3 @@ public class C {
   }
 }
 </pre>
-

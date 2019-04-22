@@ -1,4 +1,3 @@
-
 # UnusedImports
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedImports`<br/>
@@ -16,4 +15,3 @@ public class Foo {}
 <p>
   This rule is deprecated, use {rule:squid:UselessImportCheck} instead.
 </p>
-

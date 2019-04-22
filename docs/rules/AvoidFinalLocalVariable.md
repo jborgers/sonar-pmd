@@ -1,4 +1,3 @@
-
 # AvoidFinalLocalVariable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidFinalLocalVariable`<br/>
@@ -14,4 +13,3 @@ public class MyClass {
     }
 }
   </pre>
-

@@ -1,4 +1,3 @@
-
 # AvoidSynchronizedAtMethodLevel
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidSynchronizedAtMethodLevel`<br/>
@@ -7,4 +6,3 @@
 -----
 
 Method level synchronization can backfire when new code is added to the method. Block-level synchronization helps to ensure that only the code that needs synchronization gets it.
-

@@ -1,4 +1,3 @@
-
 # LoosePackageCoupling
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LoosePackageCoupling`<br/>
@@ -21,4 +20,3 @@ public class Bar {
 <p>
   This rule is deprecated, use {rule:squid:ArchitecturalConstraint} instead.
 </p>
-

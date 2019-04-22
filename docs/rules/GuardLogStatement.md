@@ -1,4 +1,3 @@
-
 # GuardLogStatement
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:GuardLogStatement`<br/>
@@ -13,4 +12,3 @@ otherwise skip the associate String creation and manipulation. Example:
 if (log.isDebugEnabled() { ...
   log.debug("This happens");
 </pre>
-

@@ -1,4 +1,3 @@
-
 # EmptySynchronizedBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptySynchronizedBlock`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid empty synchronized blocks - they're useless.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

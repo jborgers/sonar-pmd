@@ -1,4 +1,3 @@
-
 # AvoidFieldNameMatchingMethodName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidFieldNameMatchingMethodName`<br/>
@@ -15,8 +14,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1845} instead.
-</p>
-

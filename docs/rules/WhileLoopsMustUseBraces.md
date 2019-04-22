@@ -1,4 +1,3 @@
-
 # WhileLoopsMustUseBraces
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:WhileLoopsMustUseBraces`<br/>
@@ -9,8 +8,3 @@
 <p>
   Avoid using 'while' statements without using curly braces.
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00121} instead.
-</p>
-

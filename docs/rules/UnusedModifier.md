@@ -1,4 +1,3 @@
-
 # UnusedModifier
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedModifier`<br/>
@@ -7,4 +6,3 @@
 -----
 
 Fields in interfaces are automatically public static final, and methods are public abstract. Classes or interfaces nested in an interface are automatically public and static (all nested interfaces are automatically static). For historical reasons, modifiers which are implied by the context are accepted by the compiler, but are superfluous.
-

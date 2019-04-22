@@ -1,4 +1,3 @@
-
 # DontUseFloatTypeForLoopIndices
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DontUseFloatTypeForLoopIndices`<br/>
@@ -22,4 +21,3 @@ public class Count {
     }
 }
 </pre>
-

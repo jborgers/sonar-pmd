@@ -1,4 +1,3 @@
-
 # OverrideBothEqualsAndHashcode
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:OverrideBothEqualsAndHashcode`<br/>
@@ -32,8 +31,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1206} instead.
-</p>
-

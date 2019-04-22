@@ -1,4 +1,3 @@
-
 # JUnitAssertionsShouldIncludeMessage
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitAssertionsShouldIncludeMessage`<br/>
@@ -14,8 +13,3 @@ public class Foo extends TestCase {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S2698} instead.
-</p>
-

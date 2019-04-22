@@ -1,4 +1,3 @@
-
 # NcssTypeCount
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:NcssTypeCount`<br/>
@@ -11,4 +10,3 @@ This rule uses the NCSS (Non Commenting Source Statements) algorithm to determin
 <p>
   This rule is deprecated, use {rule:common-java:InsufficientCommentDensity} instead.
 </p>
-

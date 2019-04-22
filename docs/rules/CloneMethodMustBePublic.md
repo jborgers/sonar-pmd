@@ -1,4 +1,3 @@
-
 # CloneMethodMustBePublic
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloneMethodMustBePublic`<br/>
@@ -30,4 +29,3 @@ public class Foo implements Cloneable {
   public Object clone() // Ok
 }
 </pre>
-

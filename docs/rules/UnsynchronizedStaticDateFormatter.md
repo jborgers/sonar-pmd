@@ -1,4 +1,3 @@
-
 # UnsynchronizedStaticDateFormatter
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnsynchronizedStaticDateFormatter`<br/>
@@ -7,8 +6,3 @@
 -----
 
 SimpleDateFormat is not synchronized. Sun recomends separate format instances for each thread. If multiple threads must access a static formatter, the formatter must be synchronized either on method or block level.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2156} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # JUnit4TestShouldUseBeforeAnnotation
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnit4TestShouldUseBeforeAnnotation`<br/>
@@ -20,4 +19,3 @@ public class MyTest2 {
     }
 }
 </pre>
-

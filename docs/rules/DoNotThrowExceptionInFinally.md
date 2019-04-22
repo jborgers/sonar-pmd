@@ -1,4 +1,3 @@
-
 # DoNotThrowExceptionInFinally
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DoNotThrowExceptionInFinally`<br/>
@@ -26,8 +25,3 @@ public class Foo
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1163} instead.
-</p>
-

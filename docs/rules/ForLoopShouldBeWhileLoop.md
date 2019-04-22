@@ -1,4 +1,3 @@
-
 # ForLoopShouldBeWhileLoop
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ForLoopShouldBeWhileLoop`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Some for loops can be simplified to while loops - this makes them more concise.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1264} instead.
-</p>
-

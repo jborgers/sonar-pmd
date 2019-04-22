@@ -1,4 +1,3 @@
-
 # EmptyStaticInitializer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyStaticInitializer`<br/>
@@ -7,8 +6,3 @@
 -----
 
 An empty static initializer was found.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

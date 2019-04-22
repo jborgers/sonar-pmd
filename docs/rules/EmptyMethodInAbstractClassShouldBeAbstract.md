@@ -1,4 +1,3 @@
-
 # EmptyMethodInAbstractClassShouldBeAbstract
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyMethodInAbstractClassShouldBeAbstract`<br/>
@@ -21,4 +20,3 @@ public abstract class ShouldBeAbstract
   }
 }
 </pre>
-

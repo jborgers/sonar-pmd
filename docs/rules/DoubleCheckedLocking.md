@@ -1,4 +1,3 @@
-
 # DoubleCheckedLocking
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DoubleCheckedLocking`<br/>
@@ -23,4 +22,3 @@ public class Foo {
   }
 }
 </pre>
-

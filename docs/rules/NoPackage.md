@@ -1,4 +1,3 @@
-
 # NoPackage
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:NoPackage`<br/>
@@ -12,8 +11,3 @@ Detects when a class or interface does not have a package definition. Example :
 public class ClassInDefaultPackage {
 }
   </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1220} instead.
-</p>
-

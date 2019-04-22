@@ -1,4 +1,3 @@
-
 # CommentRequired
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CommentRequired`<br/>
@@ -14,4 +13,3 @@ Denotes whether comments are required (or unwanted) for specific language elemen
 * @author George Bush
 */
 </pre>
-

@@ -1,4 +1,3 @@
-
 # CallSuperInConstructor
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CallSuperInConstructor`<br/>
@@ -7,4 +6,3 @@
 -----
 
 It is a good practice to call super() in a constructor. If super() is not called but another constructor (such as an overloaded constructor) is called, this rule will not report it.
-

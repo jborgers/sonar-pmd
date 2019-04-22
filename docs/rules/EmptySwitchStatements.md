@@ -1,4 +1,3 @@
-
 # EmptySwitchStatements
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptySwitchStatements`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid empty switch statements.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # DuplicateImports
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DuplicateImports`<br/>
@@ -11,4 +10,3 @@ Avoid duplicate import statements.
 <p>
   This rule is deprecated, use {rule:squid:UselessImportCheck} instead.
 </p>
-

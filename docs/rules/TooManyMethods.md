@@ -1,4 +1,3 @@
-
 # TooManyMethods
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:TooManyMethods`<br/>
@@ -7,8 +6,3 @@
 -----
 
 A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1448} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # SystemPrintln
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SystemPrintln`<br/>
@@ -7,8 +6,3 @@
 -----
 
 System.(out|err).print is used, consider using a logger.
-
-<p>
-  This rule is deprecated, use {rule:squid:S106} instead.
-</p>
-

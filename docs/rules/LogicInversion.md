@@ -1,4 +1,3 @@
-
 # LogicInversion
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LogicInversion`<br/>
@@ -19,8 +18,3 @@ public boolean bar(int a, int b) {
   return true;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1940} instead.
-</p>
-

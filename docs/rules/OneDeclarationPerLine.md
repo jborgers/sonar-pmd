@@ -1,4 +1,3 @@
-
 # OneDeclarationPerLine
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:OneDeclarationPerLine`<br/>
@@ -14,8 +13,3 @@ String lastname;
 
 String name, lastname; // combined declaration, a violation
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00122} instead.
-</p>
-

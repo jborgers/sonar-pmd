@@ -1,4 +1,3 @@
-
 # UselessStringValueOf
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UselessStringValueOf`<br/>
@@ -7,8 +6,3 @@
 -----
 
 No need to call String.valueOf to append to a string; just use the valueOf() argument directly.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1153} instead.
-</p>
-

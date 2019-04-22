@@ -1,4 +1,3 @@
-
 # JUnit4SuitesShouldUseSuiteAnnotation
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnit4SuitesShouldUseSuiteAnnotation`<br/>
@@ -21,4 +20,3 @@ public class BadExample extends TestCase{
 public class GoodTest {
 }
 </pre>
-

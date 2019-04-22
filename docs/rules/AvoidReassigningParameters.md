@@ -1,4 +1,3 @@
-
 # AvoidReassigningParameters
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidReassigningParameters`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Reassigning values to parameters is a questionable practice. Use a temporary local variable instead.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1226} instead.
-</p>
-

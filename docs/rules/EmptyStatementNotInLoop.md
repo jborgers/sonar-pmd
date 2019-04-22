@@ -1,4 +1,3 @@
-
 # EmptyStatementNotInLoop
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyStatementNotInLoop`<br/>
@@ -11,4 +10,3 @@ An empty statement (aka a semicolon by itself) that is not used as the sole body
 <p>
   This rule is deprecated, use {rule:squid:EmptyStatementUsageCheck} instead.
 </p>
-

@@ -1,4 +1,3 @@
-
 # SimplifyBooleanAssertion
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:SimplifyBooleanAssertion`<br/>
@@ -15,4 +14,3 @@ public class SimpleTest extends TestCase {
   }
 }
 </pre>
-

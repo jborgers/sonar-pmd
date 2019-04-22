@@ -1,4 +1,3 @@
-
 # EmptyTryBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyTryBlock`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid empty try blocks - what's the point?
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

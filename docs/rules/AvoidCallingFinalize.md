@@ -1,4 +1,3 @@
-
 # AvoidCallingFinalize
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidCallingFinalize`<br/>
@@ -11,4 +10,3 @@ Object.finalize() is called by the garbage collector on an object when garbage c
 <p>
   This rule is deprecated, use {rule:squid:ObjectFinalizeCheck} instead.
 </p>
-

@@ -1,4 +1,3 @@
-
 # FinalizeOnlyCallsSuperFinalize
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:FinalizeOnlyCallsSuperFinalize`<br/>
@@ -7,8 +6,3 @@
 -----
 
 If the finalize() is implemented, it should do something besides just calling super.finalize().
-
-<p>
-  This rule is deprecated, use {rule:squid:S1185} instead.
-</p>
-

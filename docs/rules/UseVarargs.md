@@ -1,4 +1,3 @@
-
 # UseVarargs
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseVarargs`<br/>
@@ -20,4 +19,3 @@ public class Foo {
    }
 }
 </pre>
-

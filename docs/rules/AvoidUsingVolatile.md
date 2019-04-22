@@ -1,4 +1,3 @@
-
 # AvoidUsingVolatile
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidUsingVolatile`<br/>
@@ -7,4 +6,3 @@
 -----
 
 Use of the keyword "volatile" is general used to fine tune a Java application, and therefore, requires a good expertise of the Java Memory Model. Morover, its range of action is somewhat misknown. Therefore, the volatile keyword should not be used for maintenance purpose and portability.
-

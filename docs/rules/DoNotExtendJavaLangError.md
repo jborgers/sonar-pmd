@@ -1,4 +1,3 @@
-
 # DoNotExtendJavaLangError
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DoNotExtendJavaLangError`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Errors are system exceptions. Do not extend them.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1194} instead.
-</p>
-

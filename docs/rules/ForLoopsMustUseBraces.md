@@ -1,4 +1,3 @@
-
 # ForLoopsMustUseBraces
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ForLoopsMustUseBraces`<br/>
@@ -9,8 +8,3 @@
 <p>
   Avoid using 'for' statements without using curly braces, like <code>for (int i=0; i<42;i++) foo();</code>
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00121} instead.
-</p>
-

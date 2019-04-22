@@ -1,4 +1,3 @@
-
 # SimplifyBooleanExpressions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SimplifyBooleanExpressions`<br/>
@@ -16,8 +15,3 @@ public class Bar {
  public isFoo() { return false;}
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1125} instead.
-</p>
-

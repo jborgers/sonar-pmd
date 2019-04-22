@@ -1,4 +1,3 @@
-
 # AvoidDuplicateLiterals
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidDuplicateLiterals`<br/>
@@ -18,8 +17,3 @@ public class Foo {
  private void buz(String x) {}
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1192} instead.
-</p>
-

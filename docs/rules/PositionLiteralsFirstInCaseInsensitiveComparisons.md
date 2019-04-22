@@ -1,4 +1,3 @@
-
 # PositionLiteralsFirstInCaseInsensitiveComparisons
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:PositionLiteralsFirstInCaseInsensitiveComparisons`<br/>
@@ -15,8 +14,3 @@ class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1132} instead.
-</p>
-

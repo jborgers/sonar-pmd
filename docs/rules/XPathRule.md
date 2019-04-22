@@ -1,4 +1,3 @@
-
 # XPathRule
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:XPathRule`<br/>
@@ -32,4 +31,3 @@ See the <a href="http://pmd.sourceforge.net/xpathruletutorial.html" target="_bla
   This rule is deprecated, please see the documentation on <a href="http://docs.sonarqube.org/x/HQxR" target="_blank">Extending
   Coding Rules</a>.
 </p>
-

@@ -1,4 +1,3 @@
-
 # VariableNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:VariableNamingConventions`<br/>
@@ -11,4 +10,3 @@ A variable naming conventions rule - customize this to your liking. Currently, i
 <p>
   This rule is deprecated, use {rule:squid:S00115} and {rule:squid:S00116} instead.
 </p>
-

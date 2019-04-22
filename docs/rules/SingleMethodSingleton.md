@@ -1,4 +1,3 @@
-
 # SingleMethodSingleton
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SingleMethodSingleton`<br/>
@@ -29,4 +28,3 @@ public class Singleton {
   }
 }
 </pre>
-

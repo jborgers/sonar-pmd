@@ -1,4 +1,3 @@
-
 # CallSuperLast
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CallSuperLast`<br/>
@@ -15,4 +14,3 @@ public class DummyActivity extends Activity {
   }
 }
 </pre>
-

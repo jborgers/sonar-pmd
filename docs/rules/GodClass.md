@@ -1,4 +1,3 @@
-
 # GodClass
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:GodClass`<br/>
@@ -13,4 +12,3 @@ The violations are reported against the entire class. See also the references:
 Michele Lanza and Radu Marinescu. Object-Oriented Metrics in Practice:
 Using Software Metrics to Characterize, Evaluate, and Improve the Design
 of Object-Oriented Systems. Springer, Berlin, 1 edition, October 2006. Page 80.
-

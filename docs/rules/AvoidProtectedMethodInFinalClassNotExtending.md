@@ -1,4 +1,3 @@
-
 # AvoidProtectedMethodInFinalClassNotExtending
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidProtectedMethodInFinalClassNotExtending`<br/>
@@ -15,8 +14,3 @@ public final class Foo {
   protected int baz() {} // Foo cannot be subclassed, and doesn't extend anything, so is baz() really private or package visible? 
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S2156} instead.
-</p>
-

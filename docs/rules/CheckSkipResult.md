@@ -1,4 +1,3 @@
-
 # CheckSkipResult
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CheckSkipResult`<br/>
@@ -25,8 +24,3 @@ public class Foo {
       }
    }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S2674} instead.
-</p>
-

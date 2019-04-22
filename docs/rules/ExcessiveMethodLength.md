@@ -1,4 +1,3 @@
-
 # ExcessiveMethodLength
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ExcessiveMethodLength`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Violations of this rule usually indicate that the method is doing too much. Try to reduce the method size by creating helper methods and removing any copy/pasted code.
-
-<p>
-  This rule is deprecated, use {rule:squid:S138} instead.
-</p>
-

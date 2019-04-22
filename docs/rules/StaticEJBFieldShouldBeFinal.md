@@ -1,4 +1,3 @@
-
 # StaticEJBFieldShouldBeFinal
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:StaticEJBFieldShouldBeFinal`<br/>
@@ -7,4 +6,3 @@
 -----
 
 According to the J2EE specification (p.494), an EJB should not have any static fields with write access. However, static read only fields are allowed. This ensures proper behavior especially when instances are distributed by the container on several JREs.
-

@@ -1,4 +1,3 @@
-
 # ShortClassName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ShortClassName`<br/>
@@ -11,8 +10,3 @@ Classnames with fewer than five characters are not recommended. Example:
 public class Foo {
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00101} instead.
-</p>
-

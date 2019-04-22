@@ -1,4 +1,3 @@
-
 # AvoidPrefixingMethodParameters
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidPrefixingMethodParameters`<br/>
@@ -19,8 +18,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00117} instead.
-</p>
-

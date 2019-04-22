@@ -1,4 +1,3 @@
-
 # FinalFieldCouldBeStatic
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:FinalFieldCouldBeStatic`<br/>
@@ -7,8 +6,3 @@
 -----
 
 If a final field is assigned to a compile-time constant, it could be made static, thus saving overhead in each object at runtime.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1170} instead.
-</p>
-

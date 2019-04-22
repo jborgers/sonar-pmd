@@ -1,4 +1,3 @@
-
 # UseAssertSameInsteadOfAssertTrue
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:UseAssertSameInsteadOfAssertTrue`<br/>
@@ -17,4 +16,3 @@ public class FooTest extends TestCase {
   }
 }
 </pre>
-

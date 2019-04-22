@@ -1,4 +1,3 @@
-
 # EmptyFinallyBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyFinallyBlock`<br/>
@@ -9,8 +8,3 @@
 <p>
   Avoid empty finally blocks - these can be deleted.
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00108} instead.
-</p>
-

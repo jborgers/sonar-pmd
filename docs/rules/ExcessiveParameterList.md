@@ -1,4 +1,3 @@
-
 # ExcessiveParameterList
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ExcessiveParameterList`<br/>
@@ -10,8 +9,3 @@
   Long parameter lists can indicate that a new object should be created to wrap the numerous parameters. Basically, try
   to group the parameters together.
 </p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00107} instead.
-</p>
-

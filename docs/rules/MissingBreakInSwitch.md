@@ -1,4 +1,3 @@
-
 # MissingBreakInSwitch
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MissingBreakInSwitch`<br/>
@@ -7,8 +6,3 @@
 -----
 
 A switch statement without an enclosed break statement may be a bug.
-
-<p>
-  This rule is deprecated, use {rule:squid:S128} instead.
-</p>
-

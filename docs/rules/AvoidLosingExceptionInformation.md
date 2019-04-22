@@ -1,4 +1,3 @@
-
 # AvoidLosingExceptionInformation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidLosingExceptionInformation`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Statements in a catch block that invoke accessors on the exception without using the information only add to code size.  Either remove the invocation, or use the return result.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1166} instead.
-</p>
-

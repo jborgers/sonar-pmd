@@ -1,4 +1,3 @@
-
 # UseObjectForClearerAPI
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseObjectForClearerAPI`<br/>
@@ -27,8 +26,3 @@ public class MyClass {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00107} instead.
-</p>
-

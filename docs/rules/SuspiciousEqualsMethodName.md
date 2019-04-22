@@ -1,4 +1,3 @@
-
 # SuspiciousEqualsMethodName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SuspiciousEqualsMethodName`<br/>
@@ -17,8 +16,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1201} instead.
-</p>
-

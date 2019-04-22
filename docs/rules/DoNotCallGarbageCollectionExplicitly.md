@@ -1,4 +1,3 @@
-
 # DoNotCallGarbageCollectionExplicitly
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DoNotCallGarbageCollectionExplicitly`<br/>
@@ -26,8 +25,3 @@ Calls to System.gc(), Runtime.getRuntime().gc(), and System.runFinalization() ar
   public void doSomething() { // Explicit gc call ! Runtime.getRuntime().gc(); }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1215} instead.
-</p>
-

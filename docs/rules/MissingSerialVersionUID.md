@@ -1,4 +1,3 @@
-
 # MissingSerialVersionUID
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MissingSerialVersionUID`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Classes that are serializable should provide a serialVersionUID field.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2057} instead.
-</p>
-

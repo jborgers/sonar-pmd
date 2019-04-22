@@ -1,4 +1,3 @@
-
 # UnusedPrivateField
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedPrivateField`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Detects when a private field is declared and/or assigned a value, but not used.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1068} instead.
-</p>
-

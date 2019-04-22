@@ -1,4 +1,3 @@
-
 # AbstractNaming
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AbstractNaming`<br/>
@@ -11,8 +10,3 @@ Abstract classes should be named 'AbstractXXX'. Example :
 public abstract class Foo { // should be AbstractFoo
 }
   </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00118} instead.
-</p>
-

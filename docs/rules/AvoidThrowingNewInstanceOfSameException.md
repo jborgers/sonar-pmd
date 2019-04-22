@@ -1,4 +1,3 @@
-
 # AvoidThrowingNewInstanceOfSameException
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidThrowingNewInstanceOfSameException`<br/>
@@ -19,8 +18,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1166} instead.
-</p>
-

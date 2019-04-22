@@ -1,4 +1,3 @@
-
 # UselessQualifiedThis
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UselessQualifiedThis`<br/>
@@ -36,4 +35,3 @@ public class Foo {
   }
 }
 </pre>
-

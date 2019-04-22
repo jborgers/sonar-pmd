@@ -1,4 +1,3 @@
-
 # TestClassWithoutTestCases
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:TestClassWithoutTestCases`<br/>
@@ -16,4 +15,3 @@ public class CarTest { // violation, consider changing the name of the class if 
   }
 }
 </pre>
-

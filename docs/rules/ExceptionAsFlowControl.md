@@ -1,4 +1,3 @@
-
 # ExceptionAsFlowControl
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ExceptionAsFlowControl`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Using Exceptions as flow control leads to GOTOish code and obscures true exceptions when debugging.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1141} instead.
-</p>
-

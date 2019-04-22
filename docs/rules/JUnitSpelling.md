@@ -1,4 +1,3 @@
-
 # JUnitSpelling
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitSpelling`<br/>
@@ -15,4 +14,3 @@ public class Foo extends TestCase {
   public void TearDown() {} // violation, should be tearDown()
 }
 </pre>
-

@@ -1,4 +1,3 @@
-
 # AbstractClassWithoutAnyMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AbstractClassWithoutAnyMethod`<br/>
@@ -13,8 +12,3 @@ public class abstract Example {
   int otherField;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1694} instead.
-</p>
-

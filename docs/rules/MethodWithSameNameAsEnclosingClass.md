@@ -1,4 +1,3 @@
-
 # MethodWithSameNameAsEnclosingClass
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MethodWithSameNameAsEnclosingClass`<br/>
@@ -15,8 +14,3 @@ public class MyClass {
   public MyClass() {}
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1223} instead.
-</p>
-

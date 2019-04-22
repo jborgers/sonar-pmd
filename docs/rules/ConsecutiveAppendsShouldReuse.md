@@ -1,4 +1,3 @@
-
 # ConsecutiveAppendsShouldReuse
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ConsecutiveAppendsShouldReuse`<br/>
@@ -18,4 +17,3 @@ buf.append("World");
 StringBuffer buf = new StringBuffer();
 buf.append("Hello").append(foo).append("World"); // good
 </pre>
-

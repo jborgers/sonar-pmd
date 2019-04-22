@@ -1,4 +1,3 @@
-
 # ProperCloneImplementation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ProperCloneImplementation`<br/>
@@ -14,8 +13,3 @@ class Foo{
     }
 }
   </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1182} instead.
-</p>
-

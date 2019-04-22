@@ -1,4 +1,3 @@
-
 # SwitchStmtsShouldHaveDefault
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SwitchStmtsShouldHaveDefault`<br/>
@@ -21,4 +20,3 @@ public class Foo {
 <p>
   This rule is deprecated, use {rule:squid:SwitchLastCaseIsDefaultCheck} instead.
 </p>
-

@@ -1,4 +1,3 @@
-
 # UnnecessaryBooleanAssertion
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:UnnecessaryBooleanAssertion`<br/>
@@ -13,4 +12,3 @@ public class SimpleTest extends TestCase {
     assertTrue(true); // violation
   }
 }</pre>
-

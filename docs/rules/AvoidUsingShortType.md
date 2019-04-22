@@ -1,4 +1,3 @@
-
 # AvoidUsingShortType
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidUsingShortType`<br/>
@@ -7,4 +6,3 @@
 -----
 
 Java uses the short type to reduce memory usage, not to optimize calculation. On the contrary, the JVM does not have arithmetic capabilities with the type short. So, the P-code must convert the short into int, then do the proper calculation and then again, convert int to short. So, use of the short type may have a great effect on memory usage.
-

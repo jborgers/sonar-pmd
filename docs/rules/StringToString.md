@@ -1,4 +1,3 @@
-
 # StringToString
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:StringToString`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid calling toString() on String objects; this is unnecessary.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1858} instead.
-</p>
-

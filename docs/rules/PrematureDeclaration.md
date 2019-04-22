@@ -1,4 +1,3 @@
-
 # PrematureDeclaration
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:PrematureDeclaration`<br/>
@@ -21,8 +20,3 @@ public int getLength(String[] strings) {
   return length;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1941} instead.
-</p>
-

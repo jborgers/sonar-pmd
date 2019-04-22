@@ -1,4 +1,3 @@
-
 # JUnitTestsShouldIncludeAssert
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitTestsShouldIncludeAssert`<br/>
@@ -16,4 +15,3 @@ public class Foo extends TestCase {
   }
 }
 </pre>
-

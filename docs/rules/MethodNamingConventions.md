@@ -1,4 +1,3 @@
-
 # MethodNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MethodNamingConventions`<br/>
@@ -13,8 +12,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00100} instead.
-</p>
-

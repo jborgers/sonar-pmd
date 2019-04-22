@@ -1,4 +1,3 @@
-
 # FieldDeclarationsShouldBeAtStartOfClass
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:FieldDeclarationsShouldBeAtStartOfClass`<br/>
@@ -21,8 +20,3 @@ public class HelloWorldBean {
   private String _fieldInWrongLocation;
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1213} instead.
-</p>
-

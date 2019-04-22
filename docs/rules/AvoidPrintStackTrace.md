@@ -1,4 +1,3 @@
-
 # AvoidPrintStackTrace
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidPrintStackTrace`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid printStackTrace(); use a logger call instead.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1148} instead.
-</p>
-

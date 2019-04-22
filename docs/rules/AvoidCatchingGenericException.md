@@ -1,4 +1,3 @@
-
 # AvoidCatchingGenericException
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidCatchingGenericException`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2221} instead.
-</p>
-

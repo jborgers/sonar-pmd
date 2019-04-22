@@ -1,4 +1,3 @@
-
 # ExtendsObject
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ExtendsObject`<br/>
@@ -11,8 +10,3 @@ No need to explicitly extend Object. Example:
 public class Foo extends Object { // not required
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1939} instead.
-</p>
-

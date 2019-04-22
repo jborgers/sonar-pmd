@@ -1,4 +1,3 @@
-
 # SingletonClassReturningNewInstance
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SingletonClassReturningNewInstance`<br/>
@@ -24,4 +23,3 @@ class Singleton {
   }
 }
 </pre>
-

@@ -1,4 +1,3 @@
-
 # LocalVariableCouldBeFinal
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LocalVariableCouldBeFinal`<br/>
@@ -15,4 +14,3 @@ public class Bar {
  }
 }
   </pre>
-

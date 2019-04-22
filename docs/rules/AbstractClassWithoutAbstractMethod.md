@@ -1,4 +1,3 @@
-
 # AbstractClassWithoutAbstractMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AbstractClassWithoutAbstractMethod`<br/>
@@ -7,8 +6,3 @@
 -----
 
 The abstract class does not contain any abstract methods. An abstract class suggests an incomplete implementation, which is to be completed by subclasses implementing the abstract methods. If the class is intended to be used as a base class only (not to be instantiated direcly) a protected constructor can be provided prevent direct instantiation.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1694} instead.
-</p>
-

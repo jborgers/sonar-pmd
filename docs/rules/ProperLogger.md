@@ -1,4 +1,3 @@
-
 # ProperLogger
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ProperLogger`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Logger should normally be defined private static final and have the correct class. Private final Log log; is also allowed for rare cases when loggers need to be passed around, but the logger needs to be passed into the constructor.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1312} instead.
-</p>
-

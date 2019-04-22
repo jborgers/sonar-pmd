@@ -1,4 +1,3 @@
-
 # ReturnFromFinallyBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ReturnFromFinallyBlock`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid returning from a finally block - this can discard exceptions.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1143} instead.
-</p>
-

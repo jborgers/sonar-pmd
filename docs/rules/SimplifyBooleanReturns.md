@@ -1,4 +1,3 @@
-
 # SimplifyBooleanReturns
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SimplifyBooleanReturns`<br/>
@@ -22,8 +21,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1126} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # LongVariable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LongVariable`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Detects when a field, formal or local variable is declared with a long name.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00117} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # JUnitStaticSuite
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitStaticSuite`<br/>
@@ -15,4 +14,3 @@ public class Foo extends TestCase {
   private static void suite() {} // violation, should be public
 }
 </pre>
-

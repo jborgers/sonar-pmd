@@ -1,4 +1,3 @@
-
 # CloneMethodMustImplementCloneableWithTypeResolution
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloneMethodMustImplementCloneableWithTypeResolution`<br/>
@@ -16,8 +15,3 @@ public class MyClass {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1182} instead.
-</p>
-

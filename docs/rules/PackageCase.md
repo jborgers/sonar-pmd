@@ -1,4 +1,3 @@
-
 # PackageCase
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:PackageCase`<br/>
@@ -12,8 +11,3 @@ package com.MyCompany;  // <- should be lower case name
 public class SomeClass {
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S00120} instead.
-</p>
-

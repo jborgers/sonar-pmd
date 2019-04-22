@@ -1,4 +1,3 @@
-
 # JUnitTestContainsTooManyAsserts
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:JUnitTestContainsTooManyAsserts`<br/>
@@ -25,4 +24,3 @@ public class MyTestCase extends TestCase {
 	}
 }
 </pre>
-

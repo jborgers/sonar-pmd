@@ -1,4 +1,3 @@
-
 # DefaultLabelNotLastInSwitchStmt
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DefaultLabelNotLastInSwitchStmt`<br/>
@@ -25,4 +24,3 @@ public class Foo {
 <p>
   This rule is deprecated, use {rule:squid:SwitchLastCaseIsDefaultCheck} instead.
 </p>
-

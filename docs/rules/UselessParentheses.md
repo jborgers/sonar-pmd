@@ -1,4 +1,3 @@
-
 # UselessParentheses
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UselessParentheses`<br/>
@@ -24,4 +23,3 @@ public class Foo {
 <p>
   This rule is deprecated, use {rule:squid:UselessParenthesesCheck} instead.
 </p>
-

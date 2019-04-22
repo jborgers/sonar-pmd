@@ -1,4 +1,3 @@
-
 # UnnecessaryLocalBeforeReturn
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnnecessaryLocalBeforeReturn`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid unnecessarily creating local variables
-
-<p>
-  This rule is deprecated, use {rule:squid:S1488} instead.
-</p>
-

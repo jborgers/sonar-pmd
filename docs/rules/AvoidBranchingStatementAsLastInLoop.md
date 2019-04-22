@@ -1,4 +1,3 @@
-
 # AvoidBranchingStatementAsLastInLoop
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidBranchingStatementAsLastInLoop`<br/>
@@ -24,4 +23,3 @@ for (int i = 0; i < 10; i++) {
   }
 }
 </pre>
-

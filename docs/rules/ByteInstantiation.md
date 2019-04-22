@@ -1,4 +1,3 @@
-
 # ByteInstantiation
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ByteInstantiation`<br/>
@@ -13,4 +12,3 @@ private Byte i = new Byte(0); // change to Byte i =
 Byte.valueOf(0);
 }
 </pre>
-

@@ -1,4 +1,3 @@
-
 # UseAssertNullInsteadOfAssertTrue
 **Category:** `pmd-unit-tests`<br/>
 **Rule Key:** `pmd-unit-tests:UseAssertNullInsteadOfAssertTrue`<br/>
@@ -19,4 +18,3 @@ public class FooTest extends TestCase {
   }
 }
 </pre>
-

@@ -1,4 +1,3 @@
-
 # ShortVariable
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ShortVariable`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Detects when a field, local, or parameter has a very short name.
-
-<p>
-  This rule is deprecated, use {rule:squid:S00117} instead.
-</p>
-

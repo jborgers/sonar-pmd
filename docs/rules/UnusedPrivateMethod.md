@@ -1,4 +1,3 @@
-
 # UnusedPrivateMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedPrivateMethod`<br/>
@@ -15,4 +14,3 @@
 <p>
   This rule is deprecated, use {rule:squid:UnusedPrivateMethod} instead.
 </p>
-

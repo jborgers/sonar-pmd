@@ -1,4 +1,3 @@
-
 # AtLeastOneConstructor
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AtLeastOneConstructor`<br/>
@@ -11,4 +10,3 @@ Each class should declare at least one constructor.
 <p>
   This rule is deprecated, use {rule:squid:S1118} or {rule:squid:S1258} instead.
 </p>
-

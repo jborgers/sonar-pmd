@@ -1,4 +1,3 @@
-
 # ReplaceHashtableWithMap
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ReplaceHashtableWithMap`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Consider replacing this Hashtable with the newer java.util.Map
-
-<p>
-  This rule is deprecated, use {rule:squid:S1149} instead.
-</p>
-

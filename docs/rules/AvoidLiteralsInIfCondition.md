@@ -1,4 +1,3 @@
-
 # AvoidLiteralsInIfCondition
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidLiteralsInIfCondition`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid using hard coded literals in conditional statements, declare those as static variables or private members.
-
-<p>
-  This rule is deprecated, use {rule:squid:S109} instead.
-</p>
-

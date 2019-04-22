@@ -1,4 +1,3 @@
-
 # TooFewBranchesForASwitchStatement
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:TooFewBranchesForASwitchStatement`<br/>
@@ -22,8 +21,3 @@ public class Foo {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1301} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # ReturnEmptyArrayRatherThanNull
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ReturnEmptyArrayRatherThanNull`<br/>
@@ -25,8 +24,3 @@ public class Example
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1168} instead.
-</p>
-

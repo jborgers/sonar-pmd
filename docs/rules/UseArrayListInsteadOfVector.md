@@ -1,4 +1,3 @@
-
 # UseArrayListInsteadOfVector
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseArrayListInsteadOfVector`<br/>
@@ -7,8 +6,3 @@
 -----
 
 ArrayList is a much better Collection implementation than Vector.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1149} instead.
-</p>
-

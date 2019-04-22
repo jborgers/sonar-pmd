@@ -1,4 +1,3 @@
-
 # AvoidProtectedFieldInFinalClass
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidProtectedFieldInFinalClass`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Do not use protected fields in final classes since they cannot be subclassed. Clarify your intent by using private or package access modifiers instead.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2156} instead.
-</p>
-

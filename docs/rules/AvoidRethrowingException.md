@@ -1,4 +1,3 @@
-
 # AvoidRethrowingException
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidRethrowingException`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Catch blocks that merely rethrow a caught exception only add to code size and runtime complexity.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1166} instead.
-</p>
-

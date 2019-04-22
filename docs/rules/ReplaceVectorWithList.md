@@ -1,4 +1,3 @@
-
 # ReplaceVectorWithList
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ReplaceVectorWithList`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Consider replacing Vector usages with the newer java.util.ArrayList if expensive threadsafe operation is not required.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1149} instead.
-</p>
-

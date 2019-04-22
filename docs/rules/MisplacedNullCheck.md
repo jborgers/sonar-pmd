@@ -1,4 +1,3 @@
-
 # MisplacedNullCheck
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MisplacedNullCheck`<br/>
@@ -18,4 +17,3 @@ if (object1!=null && object2.equals(object1)) {
 <p>
   This rule is deprecated, use {rule:squid:S1697} or {rule:squid:S2259} instead.
 </p>
-

@@ -1,4 +1,3 @@
-
 # UseNotifyAllInsteadOfNotify
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseNotifyAllInsteadOfNotify`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Thread.notify() awakens a thread monitoring the object. If more than one thread is monitoring, then only one is chosen. The thread chosen is arbitrary; thus it's usually safer to call notifyAll() instead.
-
-<p>
-  This rule is deprecated, use {rule:squid:S2446} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # LooseCouplingWithTypeResolution
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LooseCouplingWithTypeResolution`<br/>
@@ -22,9 +21,3 @@ public class Bar {
   }
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1319} instead.
-</p>
-
-

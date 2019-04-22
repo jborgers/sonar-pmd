@@ -1,4 +1,3 @@
-
 # FinalizeDoesNotCallSuperFinalize
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:FinalizeDoesNotCallSuperFinalize`<br/>
@@ -11,4 +10,3 @@ If the finalize() is implemented, its last action should be to call super.finali
 <p>
   This rule is deprecated, use {rule:squid:ObjectFinalizeOverridenCallsSuperFinalizeCheck} instead.
 </p>
-

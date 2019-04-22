@@ -27,15 +27,29 @@ def extractRuleFromContent = {
         }
 }
 
+def removeDeprecationMessage = {
+    content ->
+        def regex = /(?ms)<p>(\s*)This rule is deprecated, use \{rule:squid:S(\d+)\} instead.(\s*)<\/p>/
+
+        if (content =~ regex) {
+            return content.replaceFirst(regex, "")
+        }
+
+        return content
+}
+
 def createMarkdownPagesForCategory = {
     category ->
         def currentDir = new File("${ruleSourcePath}/${category}")
         currentDir.eachFile FileType.FILES, {
             String rulename = it.name.tokenize('.')[0]
+
+            println " * Processing Rule ${rulename}"
+
             String htmlContent = it.text
             String deprecationWarning = createDeprecationWarning(extractRuleFromContent(htmlContent))
-            String ruleContent = """
-# ${rulename}
+            htmlContent = removeDeprecationMessage(htmlContent).trim()
+            String ruleContent = """# ${rulename}
 **Category:** `${category}`<br/>
 **Rule Key:** `${category}:${rulename}`<br/>
 ${deprecationWarning}

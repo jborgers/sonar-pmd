@@ -1,4 +1,3 @@
-
 # CloseResource
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CloseResource`<br/>
@@ -15,8 +14,3 @@ try {
   c.close();
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S2095} instead.
-</p>
-

@@ -1,4 +1,3 @@
-
 # ModifiedCyclomaticComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ModifiedCyclomaticComplexity`<br/>
@@ -11,4 +10,3 @@ Complexity directly affects maintenance costs is determined by the number of dec
 <p>
   This rule is deprecated, use {rule:squid:MethodCyclomaticComplexity} instead.
 </p>
-

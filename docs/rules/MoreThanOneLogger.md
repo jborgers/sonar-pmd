@@ -1,4 +1,3 @@
-
 # MoreThanOneLogger
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MoreThanOneLogger`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Normally only one logger is used in each class.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1312} instead.
-</p>
-

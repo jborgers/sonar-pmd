@@ -1,4 +1,3 @@
-
 # PositionLiteralsFirstInComparisons
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:PositionLiteralsFirstInComparisons`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Position literals first in String comparisons - that way if the String is null you won't get a NullPointerException, it'll just return false.
-
-<p>
-  This rule is deprecated, use {rule:squid:S1132} instead.
-</p>
-

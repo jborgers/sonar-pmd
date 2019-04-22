@@ -1,4 +1,3 @@
-
 # UnusedFormalParameter
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedFormalParameter`<br/>
@@ -7,8 +6,3 @@
 -----
 
 <p>Avoid passing parameters to methods or constructors and then not using those parameters.</p>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1172} instead.
-</p>
-

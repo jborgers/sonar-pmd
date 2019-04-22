@@ -1,4 +1,3 @@
-
 # LooseCoupling
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LooseCoupling`<br/>
@@ -7,8 +6,3 @@
 -----
 
 Avoid using implementation types (i.e., HashSet); use the interface (i.e, Set) instead
-
-<p>
-  This rule is deprecated, use {rule:squid:S1319} instead.
-</p>
-

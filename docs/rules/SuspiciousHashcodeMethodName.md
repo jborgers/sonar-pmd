@@ -1,4 +1,3 @@
-
 # SuspiciousHashcodeMethodName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SuspiciousHashcodeMethodName`<br/>
@@ -13,8 +12,3 @@ public class Foo {
   // oops, this probably was supposed to be hashCode
   }
 }</pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1221} instead.
-</p>
-

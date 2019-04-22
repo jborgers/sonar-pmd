@@ -1,4 +1,3 @@
-
 # DontImportJavaLang
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:DontImportJavaLang`<br/>
@@ -11,4 +10,3 @@ Avoid importing anything from the package 'java.lang'. These classes are automat
 <p>
   This rule is deprecated, use {rule:squid:UselessImportCheck} instead.
 </p>
-

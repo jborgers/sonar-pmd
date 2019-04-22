@@ -1,4 +1,3 @@
-
 # OptimizableToArrayCall
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:OptimizableToArrayCall`<br/>
@@ -40,4 +39,3 @@ List&lt;Foo&gt; foos = getFoos();
 // the zeroing, since each array element will be overridden anyways
 Foo[] fooArray = foos.toArray(new Foo[0]);
 </pre>
-
