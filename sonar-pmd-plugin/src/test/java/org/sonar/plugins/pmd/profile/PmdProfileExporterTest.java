@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.collect.Lists;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
@@ -41,8 +41,6 @@ import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdTestUtils;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
-import org.sonar.plugins.pmd.xml.PmdProperty;
-import org.sonar.plugins.pmd.xml.PmdRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -86,7 +84,7 @@ class PmdProfileExporterTest {
     }
 
     private static List<Rule> convert(List<RulesDefinition.Rule> rules) {
-        List<Rule> results = Lists.newArrayListWithCapacity(rules.size());
+        List<Rule> results = new ArrayList<>(rules.size());
         for (RulesDefinition.Rule rule : rules) {
             Rule newRule = Rule.create(rule.repository().key(), rule.key(), rule.name())
                     .setDescription(rule.htmlDescription())

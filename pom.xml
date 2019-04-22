@@ -29,7 +29,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.2.2-SNAPSHOT</version>
+  <version>3.3.0-SNAPSHOT</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -90,7 +90,7 @@
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api</artifactId>
         <scope>provided</scope>
-        <version>7.6</version>
+        <version>7.7</version>
         <exclusions>
           <exclusion>
             <groupId>xml-apis</groupId>
