@@ -19,8 +19,8 @@ Rule name | Deprecated? | Alternative | Description up-to-date | Checked on
 [AbstractNaming](./rules/AbstractNaming.md) | :ballot_box_with_check: | [S00118](https://rules.sonarsource.com/java/RSPEC-118) | :white_check_mark: | 2019-04-23
 [AccessorClassGeneration](./rules/AccessorClassGeneration.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
 [AddEmptyString](./rules/AddEmptyString.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
-[AppendCharacterWithChar](./rules/AppendCharacterWithChar.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[ArrayIsStoredDirectly](./rules/ArrayIsStoredDirectly.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
+[AppendCharacterWithChar](./rules/AppendCharacterWithChar.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
+[ArrayIsStoredDirectly](./rules/ArrayIsStoredDirectly.md) | :ballot_box_with_check: | [S2384](https://rules.sonarsource.com/java/RSPEC-2384) | :white_check_mark: | 2019-04-23
 [AssignmentInOperand](./rules/AssignmentInOperand.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AssignmentToNonFinalStatic](./rules/AssignmentToNonFinalStatic.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AtLeastOneConstructor](./rules/AtLeastOneConstructor.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
