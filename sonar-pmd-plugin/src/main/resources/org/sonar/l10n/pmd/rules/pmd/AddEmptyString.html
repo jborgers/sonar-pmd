@@ -1,5 +1,9 @@
-Finds empty string literals which are being added. This is an inefficient way to convert any type to a String.
+<!-- (c) 2019 PMD -->
+The conversion of literals to strings by concatenating them with empty strings is inefficient.
+It is much better to use one of the type-specific toString() methods instead.
 
-<p>
-  This rule is deprecated, use {rule:squid:S2131} instead.
-</p>
+<h2>Example:</h2>
+<pre>
+String s = "" + 123;                // inefficient
+String t = Integer.toString(456);   // preferred approach
+</pre>

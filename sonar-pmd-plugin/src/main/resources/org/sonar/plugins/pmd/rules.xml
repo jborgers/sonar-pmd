@@ -1469,7 +1469,6 @@
   <rule key="AddEmptyString">
     <priority>MAJOR</priority>
     <configKey>category/java/performance.xml/AddEmptyString</configKey>
-    <status>DEPRECATED</status>
   </rule>
 
   <rule key="BooleanGetMethodName">

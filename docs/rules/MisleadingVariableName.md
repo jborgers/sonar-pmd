@@ -1,7 +1,7 @@
 # MisleadingVariableName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MisleadingVariableName`<br/>
-> :warning: This rule is **deprecated** in favour of [S00117](https://rules.sonarsource.com/java/RSPEC-00117).
+> :warning: This rule is **deprecated** in favour of [S00117](https://rules.sonarsource.com/java/RSPEC-117).
 
 -----
 

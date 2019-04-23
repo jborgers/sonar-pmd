@@ -1,7 +1,7 @@
 # VariableNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:VariableNamingConventions`<br/>
-> :warning: This rule is **deprecated** in favour of [S00115](https://rules.sonarsource.com/java/RSPEC-00115).
+> :warning: This rule is **deprecated** in favour of [S00115](https://rules.sonarsource.com/java/RSPEC-115).
 
 -----
 

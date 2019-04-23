@@ -1,8 +1,16 @@
 # AddEmptyString
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AddEmptyString`<br/>
-> :warning: This rule is **deprecated** in favour of [S2131](https://rules.sonarsource.com/java/RSPEC-2131).
+
 
 -----
 
-Finds empty string literals which are being added. This is an inefficient way to convert any type to a String.
+<!-- (c) 2019 PMD -->
+The conversion of literals to strings by concatenating them with empty strings is inefficient.
+It is much better to use one of the type-specific toString() methods instead.
+
+<h2>Example:</h2>
+<pre>
+String s = "" + 123;                // inefficient
+String t = Integer.toString(456);   // preferred approach
+</pre>

@@ -1,7 +1,7 @@
 # ClassNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ClassNamingConventions`<br/>
-> :warning: This rule is **deprecated** in favour of [S00101](https://rules.sonarsource.com/java/RSPEC-00101).
+> :warning: This rule is **deprecated** in favour of [S00101](https://rules.sonarsource.com/java/RSPEC-101).
 
 -----
 

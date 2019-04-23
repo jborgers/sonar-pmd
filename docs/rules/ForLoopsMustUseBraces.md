@@ -1,7 +1,7 @@
 # ForLoopsMustUseBraces
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ForLoopsMustUseBraces`<br/>
-> :warning: This rule is **deprecated** in favour of [S00121](https://rules.sonarsource.com/java/RSPEC-00121).
+> :warning: This rule is **deprecated** in favour of [S00121](https://rules.sonarsource.com/java/RSPEC-121).
 
 -----
 

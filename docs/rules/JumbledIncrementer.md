@@ -1,7 +1,7 @@
 # JumbledIncrementer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:JumbledIncrementer`<br/>
-> :warning: This rule is **deprecated** in favour of [ForLoopCounterChangedCheck](https://rules.sonarsource.com/java/RSPEC-orLoopCounterChangedCheck).
+> :warning: This rule is **deprecated** in favour of `squid:ForLoopCounterChangedCheck`.
 
 -----
 
@@ -17,7 +17,3 @@ public class JumbledIncrementerRule1 {
    }
   }
 }</pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:ForLoopCounterChangedCheck} instead.
-</p>

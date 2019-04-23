@@ -1,7 +1,7 @@
 # CyclomaticComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CyclomaticComplexity`<br/>
-> :warning: This rule is **deprecated** in favour of [MethodCyclomaticComplexity](https://rules.sonarsource.com/java/RSPEC-ethodCyclomaticComplexity).
+> :warning: This rule is **deprecated** in favour of `squid:MethodCyclomaticComplexity`.
 
 -----
 

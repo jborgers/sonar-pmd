@@ -1,7 +1,7 @@
 # LoosePackageCoupling
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LoosePackageCoupling`<br/>
-> :warning: This rule is **deprecated** in favour of [ArchitecturalConstraint](https://rules.sonarsource.com/java/RSPEC-rchitecturalConstraint).
+> :warning: This rule is **deprecated** in favour of `squid:ArchitecturalConstraint`.
 
 -----
 
@@ -16,7 +16,3 @@ public class Bar {
    DontUseThisClass boo = new DontUseThisClass();
 }
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:ArchitecturalConstraint} instead.
-</p>

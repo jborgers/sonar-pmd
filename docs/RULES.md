@@ -14,11 +14,11 @@ The PMD rules are divided into two sub categories:
 
 Rule name | Deprecated? | Alternative | Description up-to-date | Checked on
 ----------|-------------|-------------|------------------------|-----------
-[AbstractClassWithoutAbstractMethod](./rules/AbstractClassWithoutAbstractMethod.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AbstractClassWithoutAnyMethod](./rules/AbstractClassWithoutAnyMethod.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AbstractNaming](./rules/AbstractNaming.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AccessorClassGeneration](./rules/AccessorClassGeneration.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AddEmptyString](./rules/AddEmptyString.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
+[AbstractClassWithoutAbstractMethod](./rules/AbstractClassWithoutAbstractMethod.md) | :ballot_box_with_check: | [S1694](https://rules.sonarsource.com/java/RSPEC-1694) | :white_check_mark: | 2019-04-23
+[AbstractClassWithoutAnyMethod](./rules/AbstractClassWithoutAnyMethod.md) | :ballot_box_with_check: | [S1694](https://rules.sonarsource.com/java/RSPEC-1694) | :white_check_mark: | 2019-04-23
+[AbstractNaming](./rules/AbstractNaming.md) | :ballot_box_with_check: | [S00118](https://rules.sonarsource.com/java/RSPEC-118) | :white_check_mark: | 2019-04-23
+[AccessorClassGeneration](./rules/AccessorClassGeneration.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
+[AddEmptyString](./rules/AddEmptyString.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
 [AppendCharacterWithChar](./rules/AppendCharacterWithChar.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [ArrayIsStoredDirectly](./rules/ArrayIsStoredDirectly.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AssignmentInOperand](./rules/AssignmentInOperand.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:

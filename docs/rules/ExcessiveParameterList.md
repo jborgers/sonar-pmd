@@ -1,7 +1,7 @@
 # ExcessiveParameterList
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:ExcessiveParameterList`<br/>
-> :warning: This rule is **deprecated** in favour of [S00107](https://rules.sonarsource.com/java/RSPEC-00107).
+> :warning: This rule is **deprecated** in favour of [S00107](https://rules.sonarsource.com/java/RSPEC-107).
 
 -----
 
