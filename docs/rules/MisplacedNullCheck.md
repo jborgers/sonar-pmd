@@ -1,7 +1,7 @@
 # MisplacedNullCheck
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MisplacedNullCheck`<br/>
-> :warning: This rule is **deprecated** in favour of [S1697](https://rules.sonarsource.com/java/RSPEC-1697).
+> :warning: This rule is **deprecated** in favour of [S1697](https://rules.sonarsource.com/java/RSPEC-1697), [S2259](https://rules.sonarsource.com/java/RSPEC-2259).
 
 -----
 
@@ -13,7 +13,3 @@ if (object1!=null && object2.equals(object1)) {
   ...
 }      
 </pre>
-
-<p>
-  This rule is deprecated, use {rule:squid:S1697} or {rule:squid:S2259} instead.
-</p>

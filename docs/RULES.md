@@ -10,6 +10,7 @@ The PMD rules are divided into two sub categories:
 * PMD Rules
 * PMD Unit Test Rules
 
+
 ## PMD Rules
 
 Rule name | Deprecated? | Alternative | Description up-to-date | Checked on
@@ -21,9 +22,9 @@ Rule name | Deprecated? | Alternative | Description up-to-date | Checked on
 [AddEmptyString](./rules/AddEmptyString.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
 [AppendCharacterWithChar](./rules/AppendCharacterWithChar.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
 [ArrayIsStoredDirectly](./rules/ArrayIsStoredDirectly.md) | :ballot_box_with_check: | [S2384](https://rules.sonarsource.com/java/RSPEC-2384) | :white_check_mark: | 2019-04-23
-[AssignmentInOperand](./rules/AssignmentInOperand.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AssignmentToNonFinalStatic](./rules/AssignmentToNonFinalStatic.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AtLeastOneConstructor](./rules/AtLeastOneConstructor.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
+[AssignmentInOperand](./rules/AssignmentInOperand.md) | :ballot_box_with_check: | `squid:AssignmentInSubExpressionCheck` | :white_check_mark: | 2019-04-23
+[AssignmentToNonFinalStatic](./rules/AssignmentToNonFinalStatic.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
+[AtLeastOneConstructor](./rules/AtLeastOneConstructor.md) | :ballot_box_with_check: | [S1118](https://rules.sonarsource.com/java/RSPEC-1118), [S1258](https://rules.sonarsource.com/java/RSPEC-1258) | :white_check_mark: | 2019-04-23
 [AvoidAccessibilityAlteration](./rules/AvoidAccessibilityAlteration.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AvoidArrayLoops](./rules/AvoidArrayLoops.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AvoidAssertAsIdentifier](./rules/AvoidAssertAsIdentifier.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:

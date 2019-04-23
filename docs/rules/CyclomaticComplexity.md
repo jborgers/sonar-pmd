@@ -1,7 +1,7 @@
 # CyclomaticComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:CyclomaticComplexity`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:MethodCyclomaticComplexity`.
+> :warning: This rule is **deprecated** in favour of `squid:MethodCyclomaticComplexity`, `squid:ClassCyclomaticComplexity`.
 
 -----
 
@@ -9,9 +9,4 @@
   Complexity is determined by the number of decision points in a method plus one for the method entry. The decision
   points are 'if', 'while', 'for', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate
   complexity, 8-10 is high complexity, and 11+ is very high complexity.
-</p>
-
-<p>
-  This rule is deprecated, use {rule:squid:MethodCyclomaticComplexity} or {rule:squid:ClassCyclomaticComplexity}
-  instead.
 </p>

@@ -1,7 +1,7 @@
 # AvoidDollarSigns
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidDollarSigns`<br/>
-> :warning: This rule is **deprecated** in favour of [S00114](https://rules.sonarsource.com/java/RSPEC-114).
+> :warning: This rule is **deprecated** in favour of [S00114](https://rules.sonarsource.com/java/RSPEC-114), [S00115](https://rules.sonarsource.com/java/RSPEC-115), [S00116](https://rules.sonarsource.com/java/RSPEC-116), [S00117](https://rules.sonarsource.com/java/RSPEC-117).
 
 -----
 

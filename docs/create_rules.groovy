@@ -9,33 +9,33 @@ def ruleSourcePath = '../sonar-pmd-plugin/src/main/resources/org/sonar/l10n/pmd/
 def ruleTargetPath = './rules'
 
 def createDeprecationWarning = {
-    rule ->
-        if (rule) {
-            def ruleNumber = rule.substring(1)
-            String ruleText = "`squid:${rule}`"
+    rules ->
 
-            if (ruleNumber.isInteger()) {
-                ruleText = "[${rule}](https://rules.sonarsource.com/java/RSPEC-${ruleNumber.toInteger()})"
+        if (!rules.isEmpty()) {
+            def parsedRules = rules.collect {
+                def ruleNumber = it.substring(1)
+                (ruleNumber.isInteger()) ?
+                        "[${it}](https://rules.sonarsource.com/java/RSPEC-${ruleNumber.toInteger()})" : "`squid:${it}`"
             }
 
-            return "> :warning: This rule is **deprecated** in favour of ${ruleText}."
+            return "> :warning: This rule is **deprecated** in favour of ${parsedRules.join(', ')}."
         }
         ""
 }
 
-def extractRuleFromContent = {
+def extractRulesFromContent = {
     content ->
         def pattern = /(rule):(squid):(\w+)/
         def group = (content =~ /$pattern/)
 
-        if (group.size() > 0) {
-            return group[0][3]
+        return group.collect {
+            it[3]
         }
 }
 
 def removeDeprecationMessage = {
     content ->
-        def regex = /(?ms)<p>(\s*)This rule is deprecated, use \{rule:squid:(\w+)\} instead.(\s*)<\/p>/
+        def regex = /(?ms)<p>(\s*)This rule is deprecated, use \{rule:squid:(\w+)\} (.*)instead.(\s*)<\/p>/
 
         if (content =~ regex) {
             return content.replaceFirst(regex, "")
@@ -53,7 +53,7 @@ def createMarkdownPagesForCategory = {
             println " * Processing Rule ${rulename}"
 
             String htmlContent = it.text
-            String deprecationWarning = createDeprecationWarning(extractRuleFromContent(htmlContent))
+            String deprecationWarning = createDeprecationWarning(extractRulesFromContent(htmlContent))
             htmlContent = removeDeprecationMessage(htmlContent).trim()
             String ruleContent = """# ${rulename}
 **Category:** `${category}`<br/>
