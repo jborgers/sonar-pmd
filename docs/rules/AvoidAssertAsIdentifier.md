@@ -5,4 +5,5 @@
 
 -----
 
-Finds all places 'assert' is used as an identifier is used.
+<!-- (c) 2019 PMD -->
+Use of the term <code>assert</code> will conflict with newer versions of Java since it is a reserved word.

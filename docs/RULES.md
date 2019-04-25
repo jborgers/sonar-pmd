@@ -25,11 +25,11 @@ Rule name | Deprecated? | Alternative | Description up-to-date | Checked on
 [AssignmentInOperand](./rules/AssignmentInOperand.md) | :ballot_box_with_check: | `squid:AssignmentInSubExpressionCheck` | :white_check_mark: | 2019-04-23
 [AssignmentToNonFinalStatic](./rules/AssignmentToNonFinalStatic.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-23
 [AtLeastOneConstructor](./rules/AtLeastOneConstructor.md) | :ballot_box_with_check: | [S1118](https://rules.sonarsource.com/java/RSPEC-1118), [S1258](https://rules.sonarsource.com/java/RSPEC-1258) | :white_check_mark: | 2019-04-23
-[AvoidAccessibilityAlteration](./rules/AvoidAccessibilityAlteration.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AvoidArrayLoops](./rules/AvoidArrayLoops.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AvoidAssertAsIdentifier](./rules/AvoidAssertAsIdentifier.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AvoidBranchingStatementAsLastInLoop](./rules/AvoidBranchingStatementAsLastInLoop.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[AvoidCallingFinalize](./rules/AvoidCallingFinalize.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
+[AvoidAccessibilityAlteration](./rules/AvoidAccessibilityAlteration.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-25
+[AvoidArrayLoops](./rules/AvoidArrayLoops.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-25
+[AvoidAssertAsIdentifier](./rules/AvoidAssertAsIdentifier.md) | :ballot_box_with_check: | [S1190](https://rules.sonarsource.com/java/RSPEC-1190) | :white_check_mark: | 2019-04-25
+[AvoidBranchingStatementAsLastInLoop](./rules/AvoidBranchingStatementAsLastInLoop.md) | :x: | :heavy_minus_sign: | :white_check_mark: | 2019-04-25
+[AvoidCallingFinalize](./rules/AvoidCallingFinalize.md) | :ballot_box_with_check: | `squid:ObjectFinalizeCheck` | :white_check_mark: | 2019-04-25
 [AvoidCatchingGenericException](./rules/AvoidCatchingGenericException.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AvoidCatchingNPE](./rules/AvoidCatchingNPE.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [AvoidCatchingThrowable](./rules/AvoidCatchingThrowable.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:

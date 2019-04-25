@@ -1,1 +1,24 @@
-Instead of copying data between two arrays, use System.arrayCopy method
+<!-- (c) 2019 PMD -->
+Instead of manually copying data between two arrays, use the efficient Arrays.copyOf or System.arraycopy method instead.
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+int[] a = new int[10];
+int[] b = new int[10];
+
+for (int i = 0; i < 10; i++) {
+  b[i] = a[i];
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+int[] a = new int[10];
+int[] b;
+
+// Option 1
+b = Arrays.copyOf(a, a.length);
+
+// Option 2
+System.arraycopy(a, 0, b, 0, a.length);
+</pre>
