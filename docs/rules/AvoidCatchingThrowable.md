@@ -5,4 +5,6 @@
 
 -----
 
-This is dangerous because it casts too wide a net; it can catch things like OutOfMemoryError.
+<!-- (c) 2019 PMD -->
+Catching <code>Throwable</code> errors is not recommended since its scope is very broad. It includes runtime issues such as
+<code>OutOfMemoryError</code> that should be exposed and managed separately.

@@ -5,4 +5,6 @@
 
 -----
 
-Code should never throw NPE under normal circumstances. A catch block may hide the original error, causing other more subtle errors in its wake.
+<!-- (c) 2019 PMD -->
+Code should never throw <code>NullPointerException</code>s under normal circumstances.
+A catch block may hide the original error, causing other, more subtle problems later on.

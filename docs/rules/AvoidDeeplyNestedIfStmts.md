@@ -5,4 +5,5 @@
 
 -----
 
-Deeply nested if..then statements are hard to read.
+<!-- (c) 2019 PMD -->
+Avoid creating deeply nested if-then statements since they are harder to read and error-prone to maintain.
