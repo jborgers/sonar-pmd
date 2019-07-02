@@ -101,7 +101,7 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
-        <version>3.24.0.1993</version>
+        <version>3.25.0.2094</version>
         <scope>test</scope>
       </dependency>
 
