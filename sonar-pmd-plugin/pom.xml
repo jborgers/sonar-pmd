@@ -52,7 +52,7 @@
     <dependency>
       <groupId>org.sonarsource.java</groupId>
       <artifactId>java-frontend</artifactId>
-      <version>5.12.1.17771</version>
+      <version>5.14.0.18788</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
