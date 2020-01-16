@@ -44,7 +44,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 class PmdSensorTest {
@@ -157,7 +157,7 @@ class PmdSensorTest {
 
         // then
         verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
-        verifyZeroInteractions(sensorContext);
+        verifyNoMoreInteractions(sensorContext);
     }
 
     @Test
@@ -174,7 +174,7 @@ class PmdSensorTest {
 
         // then
         verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
-        verifyZeroInteractions(sensorContext);
+        verifyNoMoreInteractions(sensorContext);
     }
 
     @Test

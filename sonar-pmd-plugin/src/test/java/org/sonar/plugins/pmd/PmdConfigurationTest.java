@@ -37,7 +37,7 @@ import org.sonar.api.config.internal.MapSettings;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 class PmdConfigurationTest {
@@ -124,6 +124,6 @@ class PmdConfigurationTest {
         Path reportFile = configuration.dumpXmlReport(new Report());
 
         assertThat(reportFile).isNull();
-        verifyZeroInteractions(fs);
+        verifyNoMoreInteractions(fs);
     }
 }

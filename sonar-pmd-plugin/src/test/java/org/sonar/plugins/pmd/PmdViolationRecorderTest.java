@@ -40,7 +40,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 class PmdViolationRecorderTest {
@@ -89,8 +89,8 @@ class PmdViolationRecorderTest {
         pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
 
         // then
-        verifyZeroInteractions(mockActiveRules);
-        verifyZeroInteractions(mockContext);
+        verifyNoMoreInteractions(mockActiveRules);
+        verifyNoMoreInteractions(mockContext);
         verify(spiedFs).inputFile(any(FilePredicate.class));
     }
 
@@ -112,7 +112,7 @@ class PmdViolationRecorderTest {
         verify(spiedFs).inputFile(any(FilePredicate.class));
         verify(mockActiveRules).find(expectedRuleKey1);
         verify(mockActiveRules).find(expectedRuleKey2);
-        verifyZeroInteractions(mockContext);
+        verifyNoMoreInteractions(mockContext);
     }
 
     private DefaultInputFile addToFileSystem(File file) {
