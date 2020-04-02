@@ -53,7 +53,7 @@ class PmdLevelUtilsTest {
 
     @Test
     void private_constructor() throws Exception {
-        Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
+        Constructor<PmdLevelUtils> constructor = PmdLevelUtils.class.getDeclaredConstructor();
         assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);
         constructor.newInstance();
