@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,7 @@ class PmdTemplateTest {
 
         new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
 
-        verify(ruleContext).setSourceCodeFilename(inputFile.uri().toString());
+        verify(ruleContext).setSourceCodeFile(Paths.get(inputFile.uri()).toFile());
         verify(processor).processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
     }
 

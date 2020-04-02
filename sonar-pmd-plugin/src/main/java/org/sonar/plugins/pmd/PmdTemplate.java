@@ -22,6 +22,7 @@ package org.sonar.plugins.pmd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public class PmdTemplate {
     }
 
     public void process(InputFile file, RuleSets rulesets, RuleContext ruleContext) {
-        ruleContext.setSourceCodeFilename(file.uri().toString());
+        ruleContext.setSourceCodeFile(Paths.get(file.uri()).toFile());
 
         try (InputStream inputStream = file.inputStream()) {
             processor.processSourceCode(inputStream, rulesets, ruleContext);
