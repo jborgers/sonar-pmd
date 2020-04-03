@@ -174,7 +174,7 @@ public class PmdExecutor {
                 throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
             }
         }
-        return new URLClassLoader(urls.toArray(new URL[0]), null);
+        return new URLClassLoader(urls.toArray(new URL[0]));
     }
 
     private String getSourceVersion() {
