@@ -49,11 +49,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PmdExecutorTest {
 
@@ -103,6 +99,7 @@ class PmdExecutorTest {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
+        setupPmdRuleSet(PmdConstants.P3C_REPOSITORY_KEY, "simple.xml");
         setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
         fileSystem.add(srcFile);
         fileSystem.add(tstFile);
@@ -125,11 +122,12 @@ class PmdExecutorTest {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
+        setupPmdRuleSet(PmdConstants.P3C_REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);
 
         pmdExecutor.execute();
 
-        verify(pmdTemplate).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
+        verify(pmdTemplate, times(2)).process(eq(srcFile), any(RuleSets.class), any(RuleContext.class));
         verifyNoMoreInteractions(pmdTemplate);
     }
 

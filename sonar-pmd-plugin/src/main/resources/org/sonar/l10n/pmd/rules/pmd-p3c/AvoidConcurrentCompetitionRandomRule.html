@@ -1,0 +1,32 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Positive example 1：
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    public class RandomInThread extends Thread {
+        private Random random = new Random();
+        @Override
+        public void run() {
+            long t = random.nextLong();
+        }
+    }
+        ]]>
+    </example>
+    <example>
+            <![CDATA[
+    Positive example 2：
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    public class RandomInThread extends Thread {
+        private Random random = ThreadLocalRandom.current();
+        @Override
+        public void run() {
+            long t = random.nextLong();
+        }
+    }
+</pre>

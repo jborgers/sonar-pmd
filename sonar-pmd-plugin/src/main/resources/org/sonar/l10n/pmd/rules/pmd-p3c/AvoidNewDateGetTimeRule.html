@@ -1,0 +1,15 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    public class TimeMillisDemo {
+        public static void main(String args[]) {
+            // Positive example:
+            long a = System.currentTimeMillis();
+            // Negative example:
+            long b = new Date().getTime();
+
+            System.out.println(a);
+            System.out.println(b);
+        }
+    }
+</pre>

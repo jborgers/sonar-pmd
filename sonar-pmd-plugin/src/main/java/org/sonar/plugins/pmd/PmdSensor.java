@@ -33,38 +33,37 @@ public class PmdSensor implements Sensor {
     private final PmdExecutor executor;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
-
+    
     public PmdSensor(ActiveRules profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
         this.executor = executor;
         this.pmdViolationRecorder = pmdViolationRecorder;
         this.fs = fs;
     }
-
+    
     private boolean shouldExecuteOnProject() {
-        return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
-                || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
+        return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY)) ||
+               (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY)) ||
+               (hasFilesToCheck(Type.TEST, PmdConstants.P3C_REPOSITORY_KEY));
     }
-
+    
     private boolean hasFilesToCheck(Type type, String repositoryKey) {
         FilePredicates predicates = fs.predicates();
-        final boolean hasMatchingFiles = fs.hasFiles(predicates.and(
-                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
-                predicates.hasType(type)));
+        final boolean hasMatchingFiles =
+            fs.hasFiles(predicates.and(predicates.hasLanguage(PmdConstants.LANGUAGE_KEY), predicates.hasType(type)));
         return hasMatchingFiles && !profile.findByRepository(repositoryKey).isEmpty();
     }
-
+    
     @Override
     public String toString() {
         return getClass().getSimpleName();
     }
-
+    
     @Override
     public void describe(SensorDescriptor descriptor) {
-        descriptor.onlyOnLanguage(PmdConstants.LANGUAGE_KEY)
-                .name("PmdSensor");
+        descriptor.onlyOnLanguage(PmdConstants.LANGUAGE_KEY).name("PmdSensor");
     }
-
+    
     @Override
     public void execute(SensorContext context) {
         if (shouldExecuteOnProject()) {

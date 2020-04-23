@@ -18,7 +18,8 @@
   ~ Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -27,27 +28,13 @@
     <version>52</version>
   </parent>
 
-  <groupId>org.sonarsource.pmd</groupId>
+  <!--<groupId>org.sonarsource.pmd</groupId>-->
+  <groupId>io.github.xyz327.sonar</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.3.0-SNAPSHOT</version>
+  <version>3.3.2</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
-  <scm>
-    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
-    <url>https://github.com/jensgerdes/sonar-pmd</url>
-    <tag>HEAD</tag>
-  </scm>
-  <url>https://github.com/jensgerdes/sonar-pmd</url>
-  <issueManagement>
-    <system>Github</system>
-    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
-  </issueManagement>
-  <ciManagement>
-    <system>Travis</system>
-    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
-  </ciManagement>
 
   <licenses>
     <license>
@@ -56,14 +43,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <developers>
-    <developer>
-      <name>Jens Gerdes</name>
-      <email>jens@gerdes.digital</email>
-      <timezone>+1</timezone>
-    </developer>
-  </developers>
 
   <properties>
     <pmd.version>6.13.0</pmd.version>
@@ -287,20 +266,8 @@
     </profile>
   </profiles>
 
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
   <modules>
     <module>sonar-pmd-plugin</module>
-    <module>integration-test</module>
+    <!--<module>integration-test</module>-->
   </modules>
 </project>

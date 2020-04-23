@@ -1,0 +1,16 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Negative example:
+    String result;
+    for (String string : tagNameList) {
+        result = result + string;
+    }
+
+    Positive example:
+    StringBuilder stringBuilder = new StringBuilder();
+    for (String string : tagNameList) {
+        stringBuilder.append(string);
+    }
+    String result = stringBuilder.toString();
+</pre>

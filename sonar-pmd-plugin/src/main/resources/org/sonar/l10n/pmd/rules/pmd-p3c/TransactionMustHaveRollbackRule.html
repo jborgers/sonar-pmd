@@ -1,0 +1,59 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Positive example 1：
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    @Service
+    @Transactional(rollbackFor = Exception.class)
+    public class UserServiceImpl implements UserService {
+        @Override
+        public void save(User user) {
+            //some code
+            //db operation
+        }
+    }
+    Positive example 2：
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    @Service
+    public class UserServiceImpl implements UserService {
+        @Override
+        @Transactional(rollbackFor = Exception.class)
+        public void save(User user) {
+            //some code
+            //db operation
+        }
+    }
+    Positive example 3：
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    @Service
+    public class UserServiceImpl implements UserService {
+        @Autowired
+        private DataSourceTransactionManager transactionManager;
+        @Override
+        @Transactional
+        public void save(User user) {
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            // explicitly setting the transaction name is something that can only be done programmatically
+            def.setName("SomeTxName");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            TransactionStatus status = transactionManager.getTransaction(def);
+            try {
+                // execute your business logic here
+                //db operation
+            } catch (Exception ex) {
+                transactionManager.rollback(status);
+                throw ex;
+            }
+        }
+    }
+</pre>
+

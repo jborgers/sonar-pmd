@@ -1,0 +1,13 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    public class XxxClass {
+        // Use precompile
+        private static Pattern NUMBER_PATTERN = Pattern.compile("[0-9]+");
+        public Pattern getNumberPattern() {
+            // Avoid use Pattern.compile in method body.
+            Pattern localPattern = Pattern.compile("[0-9]+");
+            return localPattern;
+        }
+    }
+</pre>
