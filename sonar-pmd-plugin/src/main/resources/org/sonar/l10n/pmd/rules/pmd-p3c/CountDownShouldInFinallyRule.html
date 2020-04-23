@@ -1,0 +1,19 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    public class CountDownExample {
+        public void operate(CountDownLatch countDownLatch){
+            try{
+                System.out.println("business logic");
+            }catch (RuntimeException e){
+                // do something
+            }finally {
+                countDownLatch.countDown();
+            }
+        }
+    }
+</pre>

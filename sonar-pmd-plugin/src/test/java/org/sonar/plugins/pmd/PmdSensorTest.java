@@ -120,6 +120,7 @@ class PmdSensorTest {
         addOneJavaFile(Type.TEST);
 
         when(profile.findByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.P3C_REPOSITORY_KEY).isEmpty()).thenReturn(true);
         when(profile.findByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when

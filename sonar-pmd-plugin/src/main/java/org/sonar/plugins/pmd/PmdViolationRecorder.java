@@ -85,7 +85,11 @@ public class PmdViolationRecorder {
         if (activeRules.find(ruleKey) != null) {
             return ruleKey;
         }
-
+        ruleKey = RuleKey.of(PmdConstants.P3C_REPOSITORY_KEY, internalRuleKey);
+    
+        if (activeRules.find(ruleKey) != null) {
+            return ruleKey;
+        }
         // Let's try the test repo.
         ruleKey = RuleKey.of(PmdConstants.TEST_REPOSITORY_KEY, internalRuleKey);
 

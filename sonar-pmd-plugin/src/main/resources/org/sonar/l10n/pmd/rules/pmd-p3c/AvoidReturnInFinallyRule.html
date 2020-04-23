@@ -1,0 +1,18 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Negative example:
+    public static Long readFileLength(String fileName) {
+        try {
+            File file = new File(fileName);
+            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+            return randomAccessFile.length();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+            countDownLatch.countDown();
+            return 0L;
+        }
+    }
+</pre>
+

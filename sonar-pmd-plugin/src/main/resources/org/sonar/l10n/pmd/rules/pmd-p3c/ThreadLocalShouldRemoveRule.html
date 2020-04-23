@@ -1,0 +1,37 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    public class UserHolder {
+        private static final ThreadLocal<User> userThreadLocal = new ThreadLocal<User>();
+        public static void set(User user){
+            userThreadLocal.set(user);
+        }
+        public static User get(){
+            return userThreadLocal.get();
+        }
+        public static void remove(){
+            userThreadLocal.remove();
+        }
+    }
+    /**
+     * @author caikang
+     * @date 2017/04/07
+     */
+    public class UserInterceptor extends HandlerInterceptorAdapter {
+        @Override
+        public boolean preHandle(HttpServletRequest request,
+            HttpServletResponse response, Object handler) throws Exception {
+            UserHolder.set(new User());
+            return true;
+        }
+        @Override
+        public void afterCompletion(HttpServletRequest request,
+            HttpServletResponse response, Object handler, Exception ex) throws Exception {
+            UserHolder.remove();
+        }
+    }
+</pre>

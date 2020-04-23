@@ -1,0 +1,14 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Negative example:
+    if ((file.open(fileName, "w") != null) && (...) || (...)) {
+        // ...
+    }
+
+    Positive example:
+    boolean existed = (file.open(fileName, "w") != null) && (...) || (...);
+    if (existed) {
+        //...
+    }
+</pre>

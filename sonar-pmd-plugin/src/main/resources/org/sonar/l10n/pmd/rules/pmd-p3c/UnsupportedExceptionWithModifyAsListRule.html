@@ -1,0 +1,13 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Positive example:
+    List<String> t   = Arrays.asList("a","b","c");
+    //warn
+    t.add("22");
+    //warn
+    t.remove("22");
+    //warn
+    t.clear();
+
+</pre>

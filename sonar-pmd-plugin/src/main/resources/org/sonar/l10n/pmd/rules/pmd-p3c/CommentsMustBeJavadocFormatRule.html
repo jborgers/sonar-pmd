@@ -1,0 +1,30 @@
+<p>说明：在IDE编辑窗口中，javadoc方式会提示相关注释，生成javadoc可以正确输出相应注释；在IDE中，工程调用方法时，不进入方法即可悬浮提示方法、参数、返回值的意义，提高阅读效率.</p>
+<p>Examples:</p>
+<pre>
+/**
+*
+* XXX class function description.
+*
+*/
+public class XxClass implements Serializable {
+   private static final long serialVersionUID = 113323427779853001L;
+   /**
+   * id
+   */
+   private Long id;
+   /**
+   * title
+   */
+   private String title;
+   /**
+   * find by id
+   *
+   * @param ruleId rule id
+   * @param page start from 1
+   * @return Result<Xxxx>
+   */
+   public Result<Xxxx> funcA(Long ruleId, Integer page) {
+       return null;
+   }
+}
+</pre>

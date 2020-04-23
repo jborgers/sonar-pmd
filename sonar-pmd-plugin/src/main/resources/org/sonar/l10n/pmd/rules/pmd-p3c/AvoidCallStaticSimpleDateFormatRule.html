@@ -1,0 +1,26 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Positive example 1：
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public String getFormat(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT);
+        return sdf.format(date);
+    }
+
+    Positive example 2：
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public void getFormat(){
+        synchronized (sdf){
+        sdf.format(new Date());
+        ….;
+    }
+
+    Positive example 3：
+    private static final ThreadLocal<DateFormat> DATE_FORMATTER = new ThreadLocal<DateFormat>() {
+        @Override
+        protected DateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd");
+        }
+    };
+</pre>

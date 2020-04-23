@@ -21,8 +21,11 @@ package org.sonar.plugins.pmd;
 
 import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.plugins.pmd.profile.P3cPmdProfileExporter;
+import org.sonar.plugins.pmd.profile.P3cPmdProfileImporter;
 import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 import org.sonar.plugins.pmd.profile.PmdProfileImporter;
+import org.sonar.plugins.pmd.rule.PmdP3cRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
@@ -44,9 +47,12 @@ public class PmdPlugin implements Plugin {
                 PmdConfiguration.class,
                 PmdExecutor.class,
                 PmdRulesDefinition.class,
+                PmdP3cRulesDefinition.class,
                 PmdUnitTestsRulesDefinition.class,
                 PmdProfileExporter.class,
                 PmdProfileImporter.class,
+                P3cPmdProfileExporter.class,
+                P3cPmdProfileImporter.class,
                 PmdViolationRecorder.class
         );
     }

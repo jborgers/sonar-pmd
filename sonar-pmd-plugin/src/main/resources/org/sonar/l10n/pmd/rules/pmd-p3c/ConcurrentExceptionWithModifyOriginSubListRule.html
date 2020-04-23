@@ -1,0 +1,10 @@
+<p>Look for qualified this usages in the same class.</p>
+<p>Examples:</p>
+<pre>
+    Negative example:
+    List<String> originList = new ArrayList<String>();
+    originList.add("22");
+    List<String> subList = originList.subList(0, 1);
+    //warn
+    originList.add("22");
+</pre>
