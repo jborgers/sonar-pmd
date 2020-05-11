@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.pagoda.platform.sonar</groupId>
+    <groupId>io.github.xyz327.sonar</groupId>
     <artifactId>sonar-pmd</artifactId>
     <version>3.3.2</version>
     <relativePath>../</relativePath>
@@ -21,6 +21,8 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>
+
+
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.alibaba.p3c/p3c-pmd -->

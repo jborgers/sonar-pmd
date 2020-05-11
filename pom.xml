@@ -29,14 +29,12 @@
   </parent>
 
   <!--<groupId>org.sonarsource.pmd</groupId>-->
-  <groupId>com.pagoda.platform.sonar</groupId>
+  <groupId>io.github.xyz327.sonar</groupId>
   <artifactId>sonar-pmd</artifactId>
   <version>3.3.2</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
-
-  <url>http://stash.pagoda.com.cn/projects/PAGPLT/repos/sonar-pmd-p3c-plugin/browse</url>
 
   <licenses>
     <license>
@@ -268,23 +266,7 @@
     </profile>
   </profiles>
 
-
-  <!--项目发布-->
-  <distributionManagement>
-    <repository>
-      <id>pagoda-release</id>
-      <name>User Project Release</name>
-      <url>http://maven.dev.pagoda.com.cn:10008/nexus/content/repositories/releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>pagoda-snapshots</id>
-      <name>User Project SNAPSHOTS</name>
-      <url>http://maven.dev.pagoda.com.cn:10008/nexus/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <modules>
     <module>sonar-pmd-plugin</module>
-    <!--<module>integration-test</module>-->
   </modules>
 </project>
