@@ -6,7 +6,7 @@
 
  修改sonar规则说明为中文  
 
- ![截图](docs/p3c.png)
+ ![截图](./docs/p3c.png)
 
 ## 安装
 
