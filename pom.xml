@@ -90,7 +90,7 @@
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api</artifactId>
         <scope>provided</scope>
-        <version>7.7</version>
+        <version>8.4.1.35646</version>
         <exclusions>
           <exclusion>
             <groupId>xml-apis</groupId>
