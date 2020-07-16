@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
+import java.io.File;
 import java.net.URI;
 
 import net.sourceforge.pmd.RuleViolation;
@@ -72,7 +73,12 @@ public class PmdViolationRecorder {
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
-        final URI uri = URI.create(violation.getFilename());
+        final URI uri;
+        if (violation.getFilename().startsWith("file:/")) {
+            uri = URI.create(violation.getFilename());
+        } else {
+            uri = new File(violation.getFilename()).toURI();
+        }
         return fs.inputFile(
                 fs.predicates().hasURI(uri)
         );
