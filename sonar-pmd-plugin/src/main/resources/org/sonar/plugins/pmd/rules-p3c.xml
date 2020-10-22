@@ -7,7 +7,6 @@
   </rule>
   <rule key="AbstractMethodOrInterfaceMethodMustUseJavadocRule">
     <priority>MAJOR</priority>
-    <type>BUG</type>
     <configKey>
       <![CDATA[rulesets/java/ali-comment.xml/AbstractMethodOrInterfaceMethodMustUseJavadocRule]]></configKey>
   </rule>

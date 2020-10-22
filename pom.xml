@@ -31,7 +31,7 @@
   <!--<groupId>org.sonarsource.pmd</groupId>-->
   <groupId>io.github.xyz327.sonar</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.3.2</version>
+  <version>3.3.3</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
