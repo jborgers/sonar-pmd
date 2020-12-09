@@ -34,19 +34,19 @@
   <packaging>pom</packaging>
 
   <scm>
-    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
-    <url>https://github.com/jensgerdes/sonar-pmd</url>
+    <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:jborgers/sonar-pmd.git</developerConnection>
+    <url>https://github.com/jborgers/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>https://github.com/jensgerdes/sonar-pmd</url>
+  <url>https://github.com/jborgers/sonar-pmd</url>
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
+    <url>https://github.com/jborgers/sonar-pmd/issues</url>
   </issueManagement>
   <ciManagement>
     <system>Travis</system>
-    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
+    <url>https://travis-ci.org/jborgers/sonar-pmd</url>
   </ciManagement>
 
   <licenses>
@@ -66,7 +66,7 @@
   </developers>
 
   <properties>
-    <pmd.version>6.13.0</pmd.version>
+    <pmd.version>6.29.0</pmd.version>
     <junit.jupiter.version>5.6.0</junit.jupiter.version>
     <mockito.version>3.2.4</mockito.version>
     <assertj.version>3.14.0</assertj.version>
