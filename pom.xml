@@ -34,19 +34,19 @@
   <packaging>pom</packaging>
 
   <scm>
-    <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:jborgers/sonar-pmd.git</developerConnection>
-    <url>https://github.com/jborgers/sonar-pmd</url>
+    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
+    <url>https://github.com/jensgerdes/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>https://github.com/jborgers/sonar-pmd</url>
+  <url>https://github.com/jensgerdes/sonar-pmd</url>
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/jborgers/sonar-pmd/issues</url>
+    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
   </issueManagement>
   <ciManagement>
     <system>Travis</system>
-    <url>https://travis-ci.org/jborgers/sonar-pmd</url>
+    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
   </ciManagement>
 
   <licenses>
