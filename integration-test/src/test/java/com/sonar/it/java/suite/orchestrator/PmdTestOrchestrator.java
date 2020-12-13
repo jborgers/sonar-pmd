@@ -19,9 +19,6 @@
  */
 package com.sonar.it.java.suite.orchestrator;
 
-import java.io.File;
-import java.util.List;
-
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
@@ -29,6 +26,9 @@ import com.sonar.orchestrator.locator.MavenLocation;
 import org.sonar.wsclient.SonarClient;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
+
+import java.io.File;
+import java.util.List;
 
 import static com.sonar.orchestrator.container.Server.ADMIN_LOGIN;
 import static com.sonar.orchestrator.container.Server.ADMIN_PASSWORD;
@@ -50,14 +50,16 @@ public class PmdTestOrchestrator {
         this.delegate = delegate;
     }
 
-    public void resetData() {
-        SonarClient client = SonarClient.builder()
+    public void resetData(String project) {
+        SonarClient
+                .builder()
                 .url(delegate.getServer().getUrl())
                 .login(ADMIN_LOGIN)
                 .password(ADMIN_PASSWORD)
                 .connectTimeoutMilliseconds(300_000)
-                .readTimeoutMilliseconds(600_000).build();
-        client.post("/api/orchestrator/reset");
+                .readTimeoutMilliseconds(600_000)
+                .build()
+                .post("/api/projects/delete?project=" + deriveProjectKey(project));
     }
 
     public void start() {
@@ -76,13 +78,13 @@ public class PmdTestOrchestrator {
     }
 
     public void associateProjectToQualityProfile(String profile, String project) {
-        final String projectKey = String.format("com.sonarsource.it.projects:%s", project);
+        final String projectKey = deriveProjectKey(project);
         delegate.getServer().provisionProject(projectKey, project);
         delegate.getServer().associateProjectToQualityProfile(projectKey, LANGUAGE_KEY, profile);
     }
 
     public static PmdTestOrchestrator init() {
-        final Orchestrator build = Orchestrator
+        final Orchestrator orchestrator = Orchestrator
                 .builderEnv()
                 .setSonarVersion(determineSonarqubeVersion())
                 .addPlugin(MavenLocation.create(
@@ -98,7 +100,11 @@ public class PmdTestOrchestrator {
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
                 .build();
 
-        return new PmdTestOrchestrator(build);
+        return new PmdTestOrchestrator(orchestrator);
+    }
+
+    private static String deriveProjectKey(String projectName) {
+        return String.format("com.sonarsource.it.projects:%s", projectName);
     }
 
     private static String determineJavaPluginVersion() {
@@ -106,6 +112,6 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[6.7]");
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[7.9]");
     }
 }

@@ -66,8 +66,8 @@
   </developers>
 
   <properties>
-    <pmd.version>6.13.0</pmd.version>
-    <junit.jupiter.version>5.6.0</junit.jupiter.version>
+    <pmd.version>6.29.0</pmd.version>
+    <junit.jupiter.version>5.7.0</junit.jupiter.version>
     <mockito.version>3.2.4</mockito.version>
     <assertj.version>3.14.0</assertj.version>
 
@@ -101,7 +101,13 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
-        <version>3.26.0.2111</version>
+        <version>3.34.0.2692</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.sonar</groupId>
+        <artifactId>sonar-ws-client</artifactId>
+        <version>5.1</version>
         <scope>test</scope>
       </dependency>
 
@@ -159,6 +165,12 @@
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
