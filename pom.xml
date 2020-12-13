@@ -101,7 +101,13 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
-        <version>3.26.0.2111</version>
+        <version>3.34.0.2692</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.sonar</groupId>
+        <artifactId>sonar-ws-client</artifactId>
+        <version>5.1</version>
         <scope>test</scope>
       </dependency>
 

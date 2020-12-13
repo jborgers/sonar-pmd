@@ -44,11 +44,6 @@ class PmdIT {
         ORCHESTRATOR.start();
     }
 
-    @AfterEach
-    void resetData() {
-        ORCHESTRATOR.resetData();
-    }
-
     @Test
     void pmdExtensions() {
         final String projectName = "pmd-extensions";
@@ -73,6 +68,9 @@ class PmdIT {
                 "Avoid too many methods",
                 "A catch statement should never catch throwable since it includes errors.",
                 "Avoid if without using brace");
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
     }
 
     /**
@@ -94,6 +92,9 @@ class PmdIT {
         );
         assertThat(issues).hasSize(1);
         assertThat(issues.get(0).message()).contains("appears 5 times in this file");
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
     }
 
     /**
@@ -117,6 +118,9 @@ class PmdIT {
         assertThat(prodIssues).hasSize(1);
         assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
         assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd:UnusedPrivateField");
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
     }
 
     /**
@@ -133,6 +137,9 @@ class PmdIT {
 
         List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
         assertThat(issues).hasSize(1);
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
     }
 
     @Test
@@ -145,6 +152,9 @@ class PmdIT {
         ORCHESTRATOR.executeBuild(build);
         List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
         assertThat(issues).isNotEmpty();
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
     }
 
     private List<Issue> retrieveIssues(String componentKey) {
