@@ -67,8 +67,8 @@
 
   <properties>
     <pmd.version>6.29.0</pmd.version>
-    <junit.jupiter.version>5.6.0</junit.jupiter.version>
-    <mockito.version>3.2.4</mockito.version>
+    <junit.jupiter.version>5.7.0</junit.jupiter.version>
+    <mockito.version>3.6.28</mockito.version>
     <assertj.version>3.18.1</assertj.version>
 
     <!-- Sonar settings -->
@@ -165,6 +165,12 @@
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
