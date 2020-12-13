@@ -19,6 +19,15 @@
  */
 package org.sonar.plugins.pmd;
 
+import net.sourceforge.pmd.*;
+import net.sourceforge.pmd.lang.LanguageVersionHandler;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.stubbing.Answer;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,25 +36,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.PMDException;
-import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.SourceCodeProcessor;
-import net.sourceforge.pmd.lang.java.JavaLanguageHandler;
-import org.junit.jupiter.api.Test;
-import org.mockito.stubbing.Answer;
-import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class PmdTemplateTest {
 
@@ -84,59 +79,16 @@ class PmdTemplateTest {
         new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
     }
 
-    @Test
-    void java12_version() {
-        assertThat(PmdTemplate.languageVersion("1.2").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "1.2", "5", "6", "7", "8", "9", "1.9", "10", "1.10", "11", "1.11", "12", "13", "14", "15"
+    })
+    void verifyCanHandleJavaLanguageVersion(String javaVersion) {
+        final LanguageVersionHandler languageVersionHandler = PmdTemplate
+                .languageVersion(javaVersion)
+                .getLanguageVersionHandler();
 
-    @Test
-    void java5_version() {
-        assertThat(PmdTemplate.languageVersion("5").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java6_version() {
-        assertThat(PmdTemplate.languageVersion("6").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java7_version() {
-        assertThat(PmdTemplate.languageVersion("7").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java8_version() {
-        assertThat(PmdTemplate.languageVersion("8").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java9_version() {
-        assertThat(PmdTemplate.languageVersion("9").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java9_version_with_outdated_versioning_scheme() {
-        assertThat(PmdTemplate.languageVersion("1.9").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java10_version() {
-        assertThat(PmdTemplate.languageVersion("10").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java10_version_with_outdated_versioning_scheme() {
-        assertThat(PmdTemplate.languageVersion("1.10").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java11_version() {
-        assertThat(PmdTemplate.languageVersion("11").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
-    }
-
-    @Test
-    void java11_version_with_outdated_versioning_scheme() {
-        assertThat(PmdTemplate.languageVersion("1.11").getLanguageVersionHandler()).isInstanceOf(JavaLanguageHandler.class);
+        assertThat(languageVersionHandler).isNotNull();
     }
 
     @Test
