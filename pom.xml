@@ -72,7 +72,7 @@
     <assertj.version>3.18.1</assertj.version>
 
     <!-- Sonar settings -->
-    <version.sonar-packaging.plugin>1.18.0.372</version.sonar-packaging.plugin>
+    <version.sonar-packaging.plugin>1.20.0.405</version.sonar-packaging.plugin>
 
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
