@@ -118,16 +118,8 @@
         <version>${pmd.version}</version>
         <exclusions>
           <exclusion>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-          </exclusion>
-          <exclusion>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>net.java.dev.javacc</groupId>
-            <artifactId>javacc</artifactId>
           </exclusion>
           <exclusion>
             <groupId>com.google.code.gson</groupId>
