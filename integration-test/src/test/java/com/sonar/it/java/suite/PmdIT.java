@@ -19,17 +19,16 @@
  */
 package com.sonar.it.java.suite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.sonar.it.java.suite.TestUtils.keyFor;
 import static com.sonar.it.java.suite.TestUtils.keyForTest;

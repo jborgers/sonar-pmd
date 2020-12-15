@@ -68,7 +68,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>19.0</version>
+      <version>30.1-jre</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sslr-squid-bridge</groupId>
@@ -135,7 +135,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>7500000</maxsize>
+                  <maxsize>8000000</maxsize>
                   <minsize>6500000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
