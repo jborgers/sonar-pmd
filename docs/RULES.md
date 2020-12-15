@@ -183,7 +183,7 @@ IntegerInstantiation | :question: | :heavy_minus_sign: | :question: | :heavy_min
 [NPathComplexity](./rules/NPathComplexity.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [NcssConstructorCount](./rules/NcssConstructorCount.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [NcssMethodCount](./rules/NcssMethodCount.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
-[NcssTypeCount](./rules/NcssTypeCount.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
+[NcssTypeCount](./rules/NcssTypeCount.md) | :ballot_box_with_check: | [S104](https://jira.sonarsource.com/browse/RSPEC-104) | :white_check_mark: | 2020-12-15
 [NoPackage](./rules/NoPackage.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [NonCaseLabelInSwitchStatement](./rules/NonCaseLabelInSwitchStatement.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
 [NonStaticInitializer](./rules/NonStaticInitializer.md) | :question: | :heavy_minus_sign: | :question: | :heavy_minus_sign:
