@@ -95,7 +95,10 @@ class PmdExecutorTest {
 
         // then
         assertThat(result).isNotNull();
-        assertThat(result.isEmpty()).isTrue();
+        assertThat(result.getViolations())
+                .isEmpty();
+        assertThat(result.getProcessingErrors())
+                .isEmpty();
     }
 
     @Test
