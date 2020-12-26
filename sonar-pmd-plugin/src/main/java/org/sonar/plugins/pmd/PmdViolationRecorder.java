@@ -23,7 +23,7 @@ import java.net.URI;
 import java.nio.file.Paths;
 
 import net.sourceforge.pmd.RuleViolation;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.TextRange;
