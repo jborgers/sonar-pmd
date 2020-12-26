@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.lang.reflect.Constructor;
-
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,13 +47,5 @@ class PmdLevelUtilsTest {
         assertThat(PmdLevelUtils.toLevel(MAJOR)).isEqualTo(3);
         assertThat(PmdLevelUtils.toLevel(MINOR)).isEqualTo(4);
         assertThat(PmdLevelUtils.toLevel(INFO)).isEqualTo(5);
-    }
-
-    @Test
-    void private_constructor() throws Exception {
-        Constructor constructor = PmdLevelUtils.class.getDeclaredConstructor();
-        assertThat(constructor.isAccessible()).isFalse();
-        constructor.setAccessible(true);
-        constructor.newInstance();
     }
 }

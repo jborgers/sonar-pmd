@@ -20,6 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import java.net.URI;
+import java.nio.file.Paths;
 
 import net.sourceforge.pmd.RuleViolation;
 import org.sonar.api.batch.ScannerSide;
@@ -72,7 +73,7 @@ public class PmdViolationRecorder {
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
-        final URI uri = URI.create(violation.getFilename());
+        final URI uri = Paths.get(violation.getFilename()).toUri();
         return fs.inputFile(
                 fs.predicates().hasURI(uri)
         );

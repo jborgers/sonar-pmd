@@ -36,6 +36,8 @@ import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
+
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
@@ -138,7 +140,7 @@ public class PmdExecutor {
         String rulesXml = dumpXml(rulesProfile, repositoryKey);
         File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         String ruleSetFilePath = ruleSetFile.getAbsolutePath();
-        RuleSetFactory ruleSetFactory = new RuleSetFactory();
+        RuleSetFactory ruleSetFactory = RulesetsFactoryUtils.defaultFactory();
         try {
             RuleSet ruleSet = ruleSetFactory.createRuleSet(ruleSetFilePath);
             return new RuleSets(ruleSet);
@@ -172,7 +174,7 @@ public class PmdExecutor {
                 throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
             }
         }
-        return new URLClassLoader(urls.toArray(new URL[0]), null);
+        return new URLClassLoader(urls.toArray(new URL[0]));
     }
 
     private String getSourceVersion() {
