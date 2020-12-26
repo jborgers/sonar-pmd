@@ -23,10 +23,8 @@ env:
 
 cache:
   directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar'
-  - '$HOME/jvm'
-  - '$HOME/maven'
+  - $HOME/.m2
+  - $HOME/.sonar
 
 notifications:
   email:

@@ -18,7 +18,8 @@
   ~ Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -78,9 +79,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <skipTests>false</skipTests>
-    <skip.surefire.tests>${skipTests}</skip.surefire.tests>
-    <skip.failsafe.tests>${skipTests}</skip.failsafe.tests>
+
+    <!-- Code Coverage -->
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <dependencyManagement>
@@ -179,8 +181,6 @@
         <version>2.22.2</version>
         <configuration>
           <runOrder>random</runOrder>
-          <excludedGroups>integration-test</excludedGroups>
-          <skipTests>${skip.surefire.tests}</skipTests>
         </configuration>
       </plugin>
       <plugin>
@@ -189,13 +189,13 @@
         <version>2.22.2</version>
         <configuration>
           <argLine>-server</argLine>
-          <skipTests>${skip.failsafe.tests}</skipTests>
         </configuration>
         <executions>
           <execution>
+            <id>integration-test</id>
             <goals>
-              <goal>verify</goal>
               <goal>integration-test</goal>
+              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
