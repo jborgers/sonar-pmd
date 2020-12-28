@@ -1,5 +1,9 @@
+os: linux
+dist: focal
 language: java
-sudo: false
+jdk: openjdk11
+install: true
+script: ./travis.sh
 
 addons:
   sonarcloud:
@@ -7,27 +11,19 @@ addons:
     token:
       secure: "U299FqcJAMNfblrZF8R/ivqRk7KNdSOdcyWI4h5dgOLlQHj+HHrF2GJB2fOVeaB53snOkCycM/ZQgqTLlS1PU2NUca3TroNXj6jpNK1Erb/TXqFMKK+rmsN+hcxudDYGnQFIVnWy4lsg72jlK3Qvktt0XyfuYjMqQbsp3zwhlxw="
 
-jdk:
-- openjdk11
-
-install: true
-script: ./travis.sh
 env:
-- TEST=ci
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[6.7] SJ_VERSION=LATEST_RELEASE[5.0]
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[7.9] SJ_VERSION=DEV
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[8.2] SJ_VERSION=DEV
-- TEST=plugin SQ_VERSION=LATEST_RELEASE[8.6] SJ_VERSION=DEV
-- TEST=plugin SQ_VERSION=DEV SJ_VERSION=DEV
-- TEST=javadoc
+  - TEST=ci
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[6.7] SJ_VERSION=LATEST_RELEASE[5.0]
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[7.9] SJ_VERSION=DEV
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[8.2] SJ_VERSION=DEV
+  - TEST=plugin SQ_VERSION=LATEST_RELEASE[8.6] SJ_VERSION=DEV
+  - TEST=plugin SQ_VERSION=DEV SJ_VERSION=DEV
+  - TEST=javadoc
 
 cache:
   directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar'
-  - '$HOME/jvm'
-  - '$HOME/maven'
+    - $HOME/.m2
 
 notifications:
   email:
-  - jens@gerdes.digital
+    - jens@gerdes.digital

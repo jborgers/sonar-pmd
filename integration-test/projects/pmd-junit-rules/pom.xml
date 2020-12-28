@@ -5,6 +5,7 @@
   <groupId>com.sonarsource.it.projects</groupId>
   <artifactId>pmd-junit-rules</artifactId>
   <version>1.0-SNAPSHOT</version>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -13,4 +14,19 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>skipSonar</id>
+      <activation>
+        <property>
+          <name>skipTestProjects</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
+    </profile>
+  </profiles>
 </project>

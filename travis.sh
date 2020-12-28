@@ -5,7 +5,7 @@ set -eo pipefail
 case "$TEST" in
 
 ci)
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar verify -B -e -V -Dskip.failsafe.tests
+  mvn test sonar:sonar -DskipTestProjects=true
   ;;
 
 plugin)
@@ -14,12 +14,12 @@ plugin)
   unset SONARQUBE_SCANNER_PARAMS SONAR_TOKEN SONAR_SCANNER_HOME
 
   # Run integration tests
-  mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dskip.surefire.tests -Dorchestrator.artifactory.url=https://repox.jfrog.io/repox
+  mvn verify -Dtest.sonar.version=${SQ_VERSION} -Dtest.sonar.plugin.version.java=${SJ_VERSION} -Dorchestrator.artifactory.url=https://repox.jfrog.io/repox
   ;;
 
 javadoc)
     # Create JavaDocs to check for problems with JavaDoc generation
-    mvn install javadoc:javadoc -DskipTests
+    mvn javadoc:javadoc -DskipTests
     ;;
 
 *)
