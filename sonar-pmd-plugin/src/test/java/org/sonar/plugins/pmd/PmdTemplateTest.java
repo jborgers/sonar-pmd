@@ -73,10 +73,19 @@ class PmdTemplateTest {
 
     @Test
     void should_ignore_PMD_error() throws PMDException {
-        doThrow(new PMDException("BUG"))
-                .when(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), any(RuleContext.class));
 
-        new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
+        // given
+        doThrow(new PMDException("BUG"))
+                .when(processor)
+                .processSourceCode(any(InputStream.class), any(RuleSets.class), any(RuleContext.class));
+
+        // when
+        new PmdTemplate(configuration, processor)
+                .process(inputFile, rulesets, ruleContext);
+
+        // then
+        verify(processor)
+                .processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
     }
 
     @ParameterizedTest
@@ -93,13 +102,24 @@ class PmdTemplateTest {
 
     @Test
     void should_fail_on_invalid_java_version() {
+
+        // when
         final Throwable thrown = catchThrowable(() -> PmdTemplate.create("12.2", mock(ClassLoader.class), StandardCharsets.UTF_8));
-        assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
+
+        // then
+        assertThat(thrown)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void shouldnt_fail_on_valid_java_version() {
-        PmdTemplate.create("6", mock(ClassLoader.class), StandardCharsets.UTF_8);
+
+        // when
+        PmdTemplate result = PmdTemplate.create("6", mock(ClassLoader.class), StandardCharsets.UTF_8);
+
+        // then
+        assertThat(result)
+                .isNotNull();
     }
 
     /**

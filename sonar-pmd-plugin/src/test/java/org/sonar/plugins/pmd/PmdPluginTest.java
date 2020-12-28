@@ -42,22 +42,27 @@ class PmdPluginTest {
     @SuppressWarnings("unchecked")
     @Test
     void testPluginConfiguration() {
+        // given
         final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(7, 3), SonarQubeSide.SCANNER);
         final Plugin.Context context = new Plugin.Context(runtime);
 
+        // when
         subject.define(context);
+
+        // then
         final List extensions = context.getExtensions();
-        assertThat(extensions).hasSize(9);
-        assertThat(extensions).contains(
-                PmdSensor.class,
-                PmdConfiguration.class,
-                PmdExecutor.class,
-                PmdRulesDefinition.class,
-                PmdUnitTestsRulesDefinition.class,
-                PmdProfileExporter.class,
-                PmdProfileImporter.class,
-                PmdViolationRecorder.class
-        );
+        assertThat(extensions)
+                .hasSize(9)
+                .contains(
+                        PmdSensor.class,
+                        PmdConfiguration.class,
+                        PmdExecutor.class,
+                        PmdRulesDefinition.class,
+                        PmdUnitTestsRulesDefinition.class,
+                        PmdProfileExporter.class,
+                        PmdProfileImporter.class,
+                        PmdViolationRecorder.class
+                );
     }
 
     // TODO Compare expected classes with all classes annotated with ScannerSide annotation.

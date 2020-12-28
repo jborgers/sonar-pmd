@@ -20,9 +20,6 @@
 
 package org.sonar.plugins.pmd.xml;
 
-import java.io.IOException;
-import java.io.Reader;
-
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
@@ -33,12 +30,18 @@ import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.RulesProfileRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.XmlRuleSetFactory;
 
+import java.io.IOException;
+import java.io.Reader;
+
 /**
  * Convenience class that creates {@link PmdRuleSet} instances out of the given input.
  */
 public class PmdRuleSets {
 
     private static final Logger LOG = Loggers.get(PmdRuleSets.class);
+
+    private PmdRuleSets() {
+    }
 
     /**
      * @param configReader A character stream containing the data of the {@link PmdRuleSet}.

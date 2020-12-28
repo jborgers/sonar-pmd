@@ -93,10 +93,10 @@ public class PmdExecutor {
     private Report executePmd(URLClassLoader classLoader) {
         Report report = new Report();
 
-        RuleContext context = new RuleContext();
+        final RuleContext context = new RuleContext();
         context.setReport(report);
 
-        PmdTemplate pmdFactory = createPmdTemplate(classLoader);
+        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
         executeRules(pmdFactory, context, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
         executeRules(pmdFactory, context, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
 

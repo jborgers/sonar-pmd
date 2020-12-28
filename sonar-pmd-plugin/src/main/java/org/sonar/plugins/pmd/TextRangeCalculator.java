@@ -29,6 +29,9 @@ import org.sonar.api.batch.fs.TextRange;
  */
 class TextRangeCalculator {
 
+    private TextRangeCalculator() {
+    }
+
     static TextRange calculate(RuleViolation pmdViolation, InputFile inputFile) {
         final int startLine = calculateBeginLine(pmdViolation);
         final int endLine = calculateEndLine(pmdViolation);
