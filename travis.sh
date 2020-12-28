@@ -5,7 +5,7 @@ set -eo pipefail
 case "$TEST" in
 
 ci)
-  mvn clean test sonar:sonar -DskipTestProjects=true
+  mvn test sonar:sonar -DskipTestProjects=true
   ;;
 
 plugin)
@@ -19,7 +19,7 @@ plugin)
 
 javadoc)
     # Create JavaDocs to check for problems with JavaDoc generation
-    mvn install javadoc:javadoc -DskipTests
+    mvn javadoc:javadoc -DskipTests
     ;;
 
 *)
