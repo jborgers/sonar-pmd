@@ -19,19 +19,20 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-
-import net.sourceforge.pmd.*;
+import net.sourceforge.pmd.PMD;
+import net.sourceforge.pmd.PMDConfiguration;
+import net.sourceforge.pmd.Report;
+import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
+import net.sourceforge.pmd.renderers.XMLRenderer;
+import net.sourceforge.pmd.util.datasource.DataSource;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+
+import java.nio.charset.Charset;
+import java.util.*;
 
 public class PmdTemplate {
 
@@ -53,12 +54,10 @@ public class PmdTemplate {
         return versions;
     }
 
-    private final SourceCodeProcessor processor;
     private final PMDConfiguration configuration;
 
-    PmdTemplate(PMDConfiguration configuration, SourceCodeProcessor processor) {
+    PmdTemplate(PMDConfiguration configuration) {
         this.configuration = configuration;
-        this.processor = processor;
     }
 
     public static PmdTemplate create(String javaVersion, ClassLoader classloader, Charset charset) {
@@ -66,8 +65,10 @@ public class PmdTemplate {
         configuration.setDefaultLanguageVersion(languageVersion(javaVersion));
         configuration.setClassLoader(classloader);
         configuration.setSourceEncoding(charset.name());
-        SourceCodeProcessor processor = new SourceCodeProcessor(configuration);
-        return new PmdTemplate(configuration, processor);
+        configuration.setFailOnViolation(false);
+        configuration.setReportFormat(XMLRenderer.NAME);
+
+        return new PmdTemplate(configuration);
     }
 
     static LanguageVersion languageVersion(String javaVersion) {
@@ -88,13 +89,20 @@ public class PmdTemplate {
         return configuration;
     }
 
-    public void process(InputFile file, RuleSet ruleset, RuleContext ruleContext) {
-        ruleContext.setSourceCodeFile(Paths.get(file.uri()).toFile());
+    private Collection<DataSource> toDataSources(Iterable<InputFile> files) {
+        final Collection<DataSource> dataSources = new ArrayList<>();
 
-        try (InputStream inputStream = file.inputStream()) {
-            processor.processSourceCode(inputStream, new RuleSets(ruleset), ruleContext);
-        } catch (RuntimeException | IOException | PMDException e) {
-            LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
-        }
+        files.forEach(file -> dataSources.add(new ProjectDataSource(file)));
+
+        return dataSources;
+    }
+
+    public Report process(Iterable<InputFile> files, RuleSet ruleset) {
+        return PMD.processFiles(
+                configuration,
+                Collections.singletonList(ruleset),
+                toDataSources(files),
+                Collections.singletonList(configuration.createRenderer())
+        );
     }
 }

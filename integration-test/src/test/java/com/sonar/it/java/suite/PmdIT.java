@@ -22,9 +22,11 @@ package com.sonar.it.java.suite;
 import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
+import org.apache.commons.lang3.JavaVersion;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
@@ -46,22 +48,13 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-            "1.8",
-            "1.9",
-            "1.10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"
-    })
-    void testPmdExtensionsWithDifferentJavaVersions(String javaVersion) {
+    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.EXCLUDE, names = {"JAVA_0_9", "JAVA_16", "JAVA_RECENT"})
+    void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
         final String projectName = "pmd-extensions";
         MavenBuild build = MavenBuild.create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals()
-                .setProperty("maven.compiler.source", javaVersion)
-                .setProperty("maven.compiler.target", javaVersion)
+                .setProperty("maven.compiler.source", version.toString())
+                .setProperty("maven.compiler.target", version.toString())
                 .setProperty("sonar.java.binaries", ".");
 
         ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);

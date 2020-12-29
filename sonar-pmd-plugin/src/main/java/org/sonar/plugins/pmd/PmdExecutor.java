@@ -43,6 +43,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @ScannerSide
 public class PmdExecutor {
@@ -83,14 +84,19 @@ public class PmdExecutor {
     }
 
     private Report executePmd(URLClassLoader classLoader) {
-        Report report = new Report();
-
-        final RuleContext context = new RuleContext();
-        context.setReport(report);
 
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        executeRules(pmdFactory, context, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
-        executeRules(pmdFactory, context, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
+        final Optional<Report> mainReport = executeRules(pmdFactory, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
+        final Optional<Report> testReport = executeRules(pmdFactory, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
+
+        final Report report = mainReport
+                .orElse(
+                        testReport.orElse(new Report())
+                );
+
+        if (mainReport.isPresent() && testReport.isPresent()) {
+            report.merge(testReport.get());
+        }
 
         pmdConfiguration.dumpXmlReport(report);
 
@@ -107,26 +113,20 @@ public class PmdExecutor {
         );
     }
 
-    private void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<InputFile> files, String repositoryKey) {
+    private Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
-            return;
+            return Optional.empty();
         }
 
         final RuleSet ruleSet = createRuleSet(repositoryKey);
 
         if (ruleSet.size() < 1) {
             // No rule
-            return;
+            return Optional.empty();
         }
 
-        ruleSet.start(ruleContext);
-
-        for (InputFile file : files) {
-            pmdFactory.process(file, ruleSet, ruleContext);
-        }
-
-        ruleSet.end(ruleContext);
+        return Optional.ofNullable(pmdFactory.process(files, ruleSet));
     }
 
     private RuleSet createRuleSet(String repositoryKey) {

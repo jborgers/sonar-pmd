@@ -122,8 +122,7 @@ class PmdExecutorTest {
         fileSystem.add(srcFile);
 
         pmdExecutor.execute();
-
-        verify(pmdTemplate).process(eq(srcFile), any(RuleSet.class), any(RuleContext.class));
+        verify(pmdTemplate).process(anyIterable(), any(RuleSet.class));
         verifyNoMoreInteractions(pmdTemplate);
     }
 
