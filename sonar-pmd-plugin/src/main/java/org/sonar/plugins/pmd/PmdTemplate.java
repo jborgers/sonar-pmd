@@ -102,7 +102,7 @@ public class PmdTemplate {
                 configuration,
                 Collections.singletonList(ruleset),
                 toDataSources(files),
-                Collections.singletonList(configuration.createRenderer())
+                Collections.emptyList()
         );
     }
 }
