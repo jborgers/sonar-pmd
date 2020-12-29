@@ -44,7 +44,7 @@ import static org.mockito.Mockito.*;
 
 class PmdTemplateTest {
 
-    private final RuleSets rulesets = mock(RuleSets.class);
+    private final RuleSet ruleSet = mock(RuleSet.class);
     private final RuleContext ruleContext = mock(RuleContext.class);
     private final PMDConfiguration configuration = mock(PMDConfiguration.class);
     private final SourceCodeProcessor processor = mock(SourceCodeProcessor.class);
@@ -63,12 +63,13 @@ class PmdTemplateTest {
                             .collect(Collectors.toList());
             assertThat(inputStreamLines).containsExactly("Example source");
             return null;
-        }).when(processor).processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
+        }).when(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), eq(ruleContext));
 
-        new PmdTemplate(configuration, processor).process(inputFile, rulesets, ruleContext);
+        new PmdTemplate(configuration, processor)
+                .process(inputFile, ruleSet, ruleContext);
 
         verify(ruleContext).setSourceCodeFile(Paths.get(inputFile.uri()).toFile());
-        verify(processor).processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
+        verify(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), eq(ruleContext));
     }
 
     @Test
@@ -81,11 +82,11 @@ class PmdTemplateTest {
 
         // when
         new PmdTemplate(configuration, processor)
-                .process(inputFile, rulesets, ruleContext);
+                .process(inputFile, ruleSet, ruleContext);
 
         // then
         verify(processor)
-                .processSourceCode(any(InputStream.class), eq(rulesets), eq(ruleContext));
+                .processSourceCode(any(InputStream.class), any(RuleSets.class), eq(ruleContext));
     }
 
     @ParameterizedTest

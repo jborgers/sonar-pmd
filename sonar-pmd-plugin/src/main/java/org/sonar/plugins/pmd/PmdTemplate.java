@@ -26,11 +26,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.PMDException;
-import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.SourceCodeProcessor;
+import net.sourceforge.pmd.*;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import org.sonar.api.batch.fs.InputFile;
@@ -57,8 +53,8 @@ public class PmdTemplate {
         return versions;
     }
 
-    private SourceCodeProcessor processor;
-    private PMDConfiguration configuration;
+    private final SourceCodeProcessor processor;
+    private final PMDConfiguration configuration;
 
     PmdTemplate(PMDConfiguration configuration, SourceCodeProcessor processor) {
         this.configuration = configuration;
@@ -92,11 +88,11 @@ public class PmdTemplate {
         return configuration;
     }
 
-    public void process(InputFile file, RuleSets rulesets, RuleContext ruleContext) {
+    public void process(InputFile file, RuleSet ruleset, RuleContext ruleContext) {
         ruleContext.setSourceCodeFile(Paths.get(file.uri()).toFile());
 
         try (InputStream inputStream = file.inputStream()) {
-            processor.processSourceCode(inputStream, rulesets, ruleContext);
+            processor.processSourceCode(inputStream, new RuleSets(ruleset), ruleContext);
         } catch (RuntimeException | IOException | PMDException e) {
             LOG.error("Fail to execute PMD. Following file is ignored: " + file, e);
         }
