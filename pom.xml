@@ -166,8 +166,8 @@
           <artifactId>sonar-packaging-maven-plugin</artifactId>
           <version>${version.sonar-packaging.plugin}</version>
           <configuration>
-            <sonarQubeMinVersion>6.6</sonarQubeMinVersion>
-            <requirePlugins>java:4.15.0.12310</requirePlugins>
+            <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+            <requirePlugins>java:5.14.0.18788</requirePlugins>
           </configuration>
         </plugin>
       </plugins>
