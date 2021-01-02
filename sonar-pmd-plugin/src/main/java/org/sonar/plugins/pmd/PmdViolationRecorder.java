@@ -73,7 +73,7 @@ public class PmdViolationRecorder {
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
-        final URI uri = Paths.get(violation.getFilename()).toUri();
+        final URI uri = URI.create(violation.getFilename());
         return fs.inputFile(
                 fs.predicates().hasURI(uri)
         );

@@ -116,6 +116,7 @@ public class PmdExecutor {
     private Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
+            LOGGER.debug("No files to analyze for {}", repositoryKey);
             return Optional.empty();
         }
 
@@ -123,9 +124,11 @@ public class PmdExecutor {
 
         if (ruleSet.size() < 1) {
             // No rule
+            LOGGER.debug("No rules to apply for {}", repositoryKey);
             return Optional.empty();
         }
 
+        LOGGER.debug("Found {} rules for {}", ruleSet.size(), repositoryKey);
         return Optional.ofNullable(pmdFactory.process(files, ruleSet));
     }
 

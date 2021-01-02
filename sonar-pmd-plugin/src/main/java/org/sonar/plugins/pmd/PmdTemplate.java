@@ -25,7 +25,7 @@ import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
-import net.sourceforge.pmd.renderers.XMLRenderer;
+import net.sourceforge.pmd.renderers.EmptyRenderer;
 import net.sourceforge.pmd.util.datasource.DataSource;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.utils.log.Logger;
@@ -66,7 +66,8 @@ public class PmdTemplate {
         configuration.setClassLoader(classloader);
         configuration.setSourceEncoding(charset.name());
         configuration.setFailOnViolation(false);
-        configuration.setReportFormat(XMLRenderer.NAME);
+        configuration.setIgnoreIncrementalAnalysis(true);
+        configuration.setReportFormat(EmptyRenderer.NAME);
 
         return new PmdTemplate(configuration);
     }

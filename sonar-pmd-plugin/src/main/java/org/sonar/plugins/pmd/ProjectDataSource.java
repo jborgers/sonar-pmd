@@ -40,7 +40,7 @@ public class ProjectDataSource implements DataSource {
 
     @Override
     public String getNiceFileName(boolean shortNames, String inputFileName) {
-        return inputFile.filename();
+        return inputFile.uri().toString();
     }
 
     @Override
