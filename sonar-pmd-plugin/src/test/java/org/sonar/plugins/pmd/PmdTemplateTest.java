@@ -19,68 +19,18 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.lang.LanguageVersionHandler;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class PmdTemplateTest {
-
-    private final RuleSet ruleSet = mock(RuleSet.class);
-    private final RuleContext ruleContext = mock(RuleContext.class);
-    private final PMDConfiguration configuration = mock(PMDConfiguration.class);
-    private final InputFile inputFile = TestInputFileBuilder.create(
-            "src",
-            "test/resources/org/sonar/plugins/pmd/source.txt"
-    ).build();
-
-    @Test
-    @Disabled
-    void should_process_input_file() throws Exception {
-        /*doAnswer((Answer<Void>) invocation -> {
-            final InputStream inputStreamArg = (InputStream) invocation.getArguments()[0];
-            final List<String> inputStreamLines =
-                    new BufferedReader(new InputStreamReader(inputStreamArg))
-                            .lines()
-                            .collect(Collectors.toList());
-            assertThat(inputStreamLines).containsExactly("Example source");
-            return null;
-        }).when(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), eq(ruleContext));*/
-
-        new PmdTemplate(configuration)
-                .process(Collections.singleton(inputFile), ruleSet);
-
-        verify(ruleContext).setSourceCodeFile(Paths.get(inputFile.uri()).toFile());
-        //verify(processor).processSourceCode(any(InputStream.class), any(RuleSets.class), eq(ruleContext));
-    }
-
-    @Test
-    @Disabled()
-    void should_ignore_PMD_error() {
-
-        // given
-        //How to test?
-
-        // when
-        new PmdTemplate(configuration)
-                .process(Collections.singleton(inputFile), ruleSet);
-
-    }
 
     @ParameterizedTest
     @ValueSource(strings = {
