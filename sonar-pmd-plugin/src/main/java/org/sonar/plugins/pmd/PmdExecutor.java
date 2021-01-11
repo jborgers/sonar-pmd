@@ -19,25 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import net.sourceforge.pmd.PMDVersion;
-import net.sourceforge.pmd.Report;
-import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSet;
-import net.sourceforge.pmd.RuleSetFactory;
-import net.sourceforge.pmd.RuleSetNotFoundException;
-import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.RulesetsFactoryUtils;
-
+import net.sourceforge.pmd.*;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
@@ -51,6 +33,17 @@ import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @ScannerSide
 public class PmdExecutor {
@@ -91,14 +84,19 @@ public class PmdExecutor {
     }
 
     private Report executePmd(URLClassLoader classLoader) {
-        Report report = new Report();
-
-        final RuleContext context = new RuleContext();
-        context.setReport(report);
 
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        executeRules(pmdFactory, context, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
-        executeRules(pmdFactory, context, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
+        final Optional<Report> mainReport = executeRules(pmdFactory, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
+        final Optional<Report> testReport = executeRules(pmdFactory, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
+
+        final Report report = mainReport
+                .orElse(
+                        testReport.orElse(new Report())
+                );
+
+        if (mainReport.isPresent() && testReport.isPresent()) {
+            report.merge(testReport.get());
+        }
 
         pmdConfiguration.dumpXmlReport(report);
 
@@ -115,36 +113,34 @@ public class PmdExecutor {
         );
     }
 
-    private void executeRules(PmdTemplate pmdFactory, RuleContext ruleContext, Iterable<InputFile> files, String repositoryKey) {
+    private Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
-            return;
+            LOGGER.debug("No files to analyze for {}", repositoryKey);
+            return Optional.empty();
         }
 
-        RuleSets rulesets = createRuleSets(repositoryKey);
-        if (rulesets.getAllRules().isEmpty()) {
+        final RuleSet ruleSet = createRuleSet(repositoryKey);
+
+        if (ruleSet.size() < 1) {
             // No rule
-            return;
+            LOGGER.debug("No rules to apply for {}", repositoryKey);
+            return Optional.empty();
         }
 
-        rulesets.start(ruleContext);
-
-        for (InputFile file : files) {
-            pmdFactory.process(file, rulesets, ruleContext);
-        }
-
-        rulesets.end(ruleContext);
+        LOGGER.debug("Found {} rules for {}", ruleSet.size(), repositoryKey);
+        return Optional.ofNullable(pmdFactory.process(files, ruleSet));
     }
 
-    private RuleSets createRuleSets(String repositoryKey) {
-        String rulesXml = dumpXml(rulesProfile, repositoryKey);
-        File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
-        String ruleSetFilePath = ruleSetFile.getAbsolutePath();
-        RuleSetFactory ruleSetFactory = RulesetsFactoryUtils.defaultFactory();
+    private RuleSet createRuleSet(String repositoryKey) {
+        final String rulesXml = dumpXml(rulesProfile, repositoryKey);
+        final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
+        final String ruleSetFilePath = ruleSetFile.getAbsolutePath();
+
         try {
-            RuleSet ruleSet = ruleSetFactory.createRuleSet(ruleSetFilePath);
-            return new RuleSets(ruleSet);
-        } catch (RuleSetNotFoundException e) {
+            return new RuleSetLoader()
+                    .loadFromResource(ruleSetFilePath);
+        } catch (RuleSetLoadException e) {
             throw new IllegalStateException(e);
         }
     }

@@ -23,6 +23,7 @@ import java.io.File;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleViolation;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.TextRange;
@@ -49,7 +50,7 @@ class PmdViolationRecorderTest {
     private final ActiveRules mockActiveRules = mock(ActiveRules.class);
     private final SensorContext mockContext = mock(SensorContext.class);
 
-    private final PmdViolationRecorder pmdViolationRecorder = new PmdViolationRecorder(spiedFs, mockActiveRules);
+    private final PmdViolationRecorder subject = new PmdViolationRecorder(spiedFs, mockActiveRules);
 
     @Test
     void should_convert_pmd_violation_to_sonar_violation() {
@@ -71,7 +72,7 @@ class PmdViolationRecorderTest {
         when(issueLocation.at(any(TextRange.class))).thenReturn(issueLocation);
 
         // when
-        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
+        subject.saveViolation(pmdViolation, mockContext);
 
         // then
         verify(mockContext).newIssue();
@@ -86,7 +87,7 @@ class PmdViolationRecorderTest {
         final RuleViolation pmdViolation = createPmdViolation(unknownFile, "RULE");
 
         // when
-        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
+        subject.saveViolation(pmdViolation, mockContext);
 
         // then
         verifyNoMoreInteractions(mockActiveRules);
@@ -106,7 +107,7 @@ class PmdViolationRecorderTest {
         final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
 
         // when
-        pmdViolationRecorder.saveViolation(pmdViolation, mockContext);
+        subject.saveViolation(pmdViolation, mockContext);
 
         // then
         verify(spiedFs).inputFile(any(FilePredicate.class));
@@ -137,7 +138,7 @@ class PmdViolationRecorderTest {
         final RuleViolation pmdViolation = mock(RuleViolation.class);
 
         when(rule.getName()).thenReturn(ruleName);
-        when(pmdViolation.getFilename()).thenReturn(file.getPath());
+        when(pmdViolation.getFilename()).thenReturn(file.toURI().toString());
         when(pmdViolation.getBeginLine()).thenReturn(2);
         when(pmdViolation.getDescription()).thenReturn("Description");
         when(pmdViolation.getRule()).thenReturn(rule);
