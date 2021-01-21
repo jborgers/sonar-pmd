@@ -30,8 +30,6 @@ import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
 
-import java.net.URI;
-
 @ScannerSide
 public class PmdViolationRecorder {
 
@@ -72,9 +70,10 @@ public class PmdViolationRecorder {
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
-        final URI uri = URI.create(violation.getFilename());
         return fs.inputFile(
-                fs.predicates().hasURI(uri)
+                fs.predicates().hasAbsolutePath(
+                        violation.getFilename()
+                )
         );
     }
 

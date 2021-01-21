@@ -24,6 +24,7 @@ import org.sonar.api.batch.fs.InputFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 public class ProjectDataSource implements DataSource {
 
@@ -40,7 +41,9 @@ public class ProjectDataSource implements DataSource {
 
     @Override
     public String getNiceFileName(boolean shortNames, String inputFileName) {
-        return inputFile.uri().toString();
+        return Paths.get(inputFile.uri())
+                .toAbsolutePath()
+                .toString();
     }
 
     @Override
