@@ -1,9 +1,40 @@
 # Changelog
 
-## [3.2.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2019-04-17)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.1...master)
+## [3.3.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2021-01-30)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.1...master)
 
 None, yet.
+
+## [3.3.1](https://github.com/jensgerdes/sonar-pmd/tree/3.3.1) (2021-01-29)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.0...3.3.1)
+
+**Contributors:**
+- [jborgers](https://github.com/jborgers)
+
+**Closed issues:**
+- Fixed Windows incompatibility introduced in 3.3.0 [\#244](https://github.com/jensgerdes/sonar-pmd/issues/244)
+
+## [3.3.0](https://github.com/jensgerdes/sonar-pmd/tree/3.3.0) (2019-01-11)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.1...3.3.0)
+
+**Contributors:**
+- [jborgers](https://github.com/jborgers)
+- [robinverduijn](https://github.com/robinverduijn)
+
+**Implemented enhancements:**
+- Updated PMD (6.30.0)
+- Support for Java 15
+- Updated Sonar-Java API (6.0.1)
+
+**Closed issues:**
+- Fixed deprecated PMD API Usage [\#239](https://github.com/jensgerdes/sonar-pmd/issues/239)
+- Fixed CVE-2018-10237 [\#230](https://github.com/jensgerdes/sonar-pmd/issues/230)
+- Fixed incorrect rule description [\#78](https://github.com/jensgerdes/sonar-pmd/issues/78)
+
+**Merged pull requests:**
+- Move to pmd-6.29 and solve api incompatibility [\#228](https://github.com/jensgerdes/sonar-pmd/pull/228) ([jborgers](https://github.com/jborgers))
+- Update pmd-java dependency to 6.22.0 [\#167](https://github.com/jensgerdes/sonar-pmd/pull/167) ([robinverduijn](https://github.com/robinverduijn))
+- Use correct parent classloader to fix Java 9 style modules [\#168](https://github.com/jensgerdes/sonar-pmd/pull/168) ([robinverduijn](https://github.com/robinverduijn))
 
 ## [3.2.1](https://github.com/jensgerdes/sonar-pmd/tree/3.2.1) (2019-04-15)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.0...3.2.1)
