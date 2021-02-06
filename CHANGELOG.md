@@ -14,7 +14,7 @@ None, yet.
 **Closed issues:**
 - Fixed Windows incompatibility introduced in 3.3.0 [\#244](https://github.com/jensgerdes/sonar-pmd/issues/244)
 
-## [3.3.0](https://github.com/jensgerdes/sonar-pmd/tree/3.3.0) (2019-01-11)
+## [3.3.0](https://github.com/jensgerdes/sonar-pmd/tree/3.3.0) (2021-01-11)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.2.1...3.3.0)
 
 **Contributors:**
