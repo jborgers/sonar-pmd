@@ -3,7 +3,8 @@
 ## [3.3.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2021-01-30)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.1...master)
 
-None, yet.
+**Implemented enhancements:**
+- Updated PMD (6.31.0)
 
 ## [3.3.1](https://github.com/jensgerdes/sonar-pmd/tree/3.3.1) (2021-01-29)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.0...3.3.1)
