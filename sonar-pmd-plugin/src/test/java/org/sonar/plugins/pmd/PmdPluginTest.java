@@ -19,10 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.sonar.api.Plugin;
+import org.sonar.api.SonarEdition;
 import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.internal.SonarRuntimeImpl;
@@ -31,6 +30,8 @@ import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 import org.sonar.plugins.pmd.profile.PmdProfileImporter;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,7 +44,7 @@ class PmdPluginTest {
     @Test
     void testPluginConfiguration() {
         // given
-        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(7, 3), SonarQubeSide.SCANNER);
+        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(7, 3), SonarQubeSide.SCANNER, SonarEdition.COMMUNITY);
         final Plugin.Context context = new Plugin.Context(runtime);
 
         // when

@@ -73,6 +73,7 @@
 
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.20.0.405</version.sonar-packaging.plugin>
+    <sonar-plugin-api.version>8.6.1.40680</sonar-plugin-api.version>
 
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -91,13 +92,13 @@
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api</artifactId>
         <scope>provided</scope>
-        <version>7.7</version>
-        <exclusions>
-          <exclusion>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-          </exclusion>
-        </exclusions>
+        <version>${sonar-plugin-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-plugin-api-impl</artifactId>
+        <scope>test</scope>
+        <version>${sonar-plugin-api.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
