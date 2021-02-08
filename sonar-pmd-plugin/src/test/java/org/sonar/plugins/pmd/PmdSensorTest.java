@@ -19,9 +19,6 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.File;
-import java.util.Arrays;
-
 import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.RuleViolation;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,33 +29,30 @@ import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.plugins.java.api.JavaResourceLocator;
+
+import java.io.File;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 class PmdSensorTest {
 
-    private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
-    private final PmdExecutor executor = mock(PmdExecutor.class);
-    private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
-    private final SensorContext sensorContext = mock(SensorContext.class);
+    private final ActiveRules mockProfile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
+    private final PmdExecutor mockExecutor = mock(PmdExecutor.class);
+    private final PmdViolationRecorder mockRecorder = mock(PmdViolationRecorder.class);
+    private final SensorContext mockContext = mock(SensorContext.class);
+    private final JavaResourceLocator mockLocator = mock(JavaResourceLocator.class);
     private final DefaultFileSystem fs = new DefaultFileSystem(new File("."));
 
     private PmdSensor pmdSensor;
 
     @BeforeEach
     void setUpPmdSensor() {
-        pmdSensor = new PmdSensor(profile, executor, pmdViolationRecorder, fs);
+        pmdSensor = new PmdSensor(mockProfile, mockExecutor, mockRecorder, fs, mockLocator);
     }
 
     @Test
@@ -68,10 +62,10 @@ class PmdSensorTest {
         addOneJavaFile(Type.TEST);
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(executor, atLeastOnce()).execute();
+        verify(mockExecutor, atLeastOnce()).execute(mockLocator);
     }
 
     @Test
@@ -81,10 +75,10 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(executor, atLeastOnce()).execute();
+        verify(mockExecutor, atLeastOnce()).execute(mockLocator);
     }
 
     @Test
@@ -94,10 +88,10 @@ class PmdSensorTest {
         // no files
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(executor, never()).execute();
+        verify(mockExecutor, never()).execute(mockLocator);
     }
 
     @Test
@@ -107,14 +101,14 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
         addOneJavaFile(Type.TEST);
 
-        when(profile.findByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
-        when(profile.findByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(mockProfile.findByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(mockProfile.findByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(executor, never()).execute();
+        verify(mockExecutor, never()).execute(mockLocator);
     }
 
     @Test
@@ -126,10 +120,10 @@ class PmdSensorTest {
         mockExecutorResult(pmdViolation);
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(pmdViolationRecorder).saveViolation(pmdViolation, sensorContext);
+        verify(mockRecorder).saveViolation(pmdViolation, mockContext);
     }
 
     @Test
@@ -139,11 +133,11 @@ class PmdSensorTest {
         mockExecutorResult();
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
-        verifyNoMoreInteractions(sensorContext);
+        verify(mockRecorder, never()).saveViolation(any(RuleViolation.class), eq(mockContext));
+        verifyNoMoreInteractions(mockContext);
     }
 
     @Test
@@ -153,11 +147,11 @@ class PmdSensorTest {
         mockExecutorResult(violation());
 
         // when
-        pmdSensor.execute(sensorContext);
+        pmdSensor.execute(mockContext);
 
         // then
-        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
-        verifyNoMoreInteractions(sensorContext);
+        verify(mockRecorder, never()).saveViolation(any(RuleViolation.class), eq(mockContext));
+        verifyNoMoreInteractions(mockContext);
     }
 
     @Test
@@ -167,10 +161,10 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
 
         final RuntimeException expectedException = new RuntimeException();
-        when(executor.execute()).thenThrow(expectedException);
+        when(mockExecutor.execute(mockLocator)).thenThrow(expectedException);
 
         // when
-        final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
+        final Throwable thrown = catchThrowable(() -> pmdSensor.execute(mockContext));
 
         // then
         assertThat(thrown)
@@ -208,7 +202,7 @@ class PmdSensorTest {
         Arrays.stream(violations)
                 .forEach(report::addRuleViolation);
 
-        when(executor.execute())
+        when(mockExecutor.execute(mockLocator))
                 .thenReturn(report);
     }
 

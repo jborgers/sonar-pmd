@@ -20,13 +20,13 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.*;
-import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
@@ -53,23 +53,25 @@ public class PmdExecutor {
     private final FileSystem fs;
     private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
-    private final JavaResourceLocator javaResourceLocator;
     private final Configuration settings;
 
-    public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
-                       PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
+    public PmdExecutor(
+            FileSystem fileSystem,
+            ActiveRules rulesProfile,
+            PmdConfiguration pmdConfiguration,
+            Configuration settings
+    ) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
         this.pmdConfiguration = pmdConfiguration;
-        this.javaResourceLocator = javaResourceLocator;
         this.settings = settings;
     }
 
-    public Report execute() {
+    public Report execute(JavaResourceLocator javaResourceLocator) {
         final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMDVersion.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
 
-        try (URLClassLoader classLoader = createClassloader()) {
+        try (URLClassLoader classLoader = createClassloader(javaResourceLocator)) {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
             return executePmd(classLoader);
@@ -158,11 +160,12 @@ public class PmdExecutor {
     }
 
     /**
+     * @param javaResourceLocator
      * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
      */
-    private URLClassLoader createClassloader() {
-        Collection<File> classpathElements = javaResourceLocator.classpath();
-        List<URL> urls = new ArrayList<>();
+    private URLClassLoader createClassloader(JavaResourceLocator javaResourceLocator) {
+        final Collection<File> classpathElements = javaResourceLocator.classpath();
+        final List<URL> urls = new ArrayList<>();
         for (File file : classpathElements) {
             try {
                 urls.add(file.toURI().toURL());
