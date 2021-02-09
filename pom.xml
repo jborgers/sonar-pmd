@@ -29,7 +29,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.3.2-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -168,7 +168,7 @@
           <artifactId>sonar-packaging-maven-plugin</artifactId>
           <version>${version.sonar-packaging.plugin}</version>
           <configuration>
-            <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+            <sonarQubeMinVersion>7.6</sonarQubeMinVersion>
             <requirePlugins>java:5.14.0.18788</requirePlugins>
           </configuration>
         </plugin>

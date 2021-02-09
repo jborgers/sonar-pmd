@@ -1,10 +1,15 @@
 # Changelog
 
-## [3.3.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2021-01-30)
-[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.1...master)
+## [4.0.0-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2021-02-09)
+[Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.1...4.x)
+
+**Breaking changes:**
+- Dropped Support for SonarQube < 7.6
 
 **Implemented enhancements:**
 - Updated PMD (6.31.0)
+- Updated Sonar Plugin API (8.6.x)
+- Updated Sonar Parent POM
 
 ## [3.3.1](https://github.com/jensgerdes/sonar-pmd/tree/3.3.1) (2021-01-29)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.0...3.3.1)
