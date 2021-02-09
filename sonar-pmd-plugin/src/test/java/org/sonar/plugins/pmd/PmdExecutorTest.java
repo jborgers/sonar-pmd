@@ -49,15 +49,16 @@ import static org.mockito.Mockito.*;
 class PmdExecutorTest {
 
     private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
-    private final ActiveRules mockedActiveRules = mock(ActiveRules.class);
-    private final PmdConfiguration mockedPmdConfiguration = mock(PmdConfiguration.class);
-    private final PmdTemplate mockedPmdTemplate = mock(PmdTemplate.class);
-    private final JavaResourceLocator mockedLocator = mock(JavaResourceLocator.class);
+    private final ActiveRules activeRules = mock(ActiveRules.class);
+    private final PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
+    private final PmdTemplate pmdTemplate = mock(PmdTemplate.class);
+    private final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
     private final MapSettings settings = new MapSettings();
     private final PmdExecutor realPmdExecutor = new PmdExecutor(
             fileSystem,
-            mockedActiveRules,
-            mockedPmdConfiguration,
+            activeRules,
+            pmdConfiguration,
+            javaResourceLocator,
             settings.asConfig()
     );
 
@@ -81,7 +82,7 @@ class PmdExecutorTest {
     void whenNoFilesToAnalyzeThenExecutionSucceedsWithBlankReport() {
 
         // when
-        final Report result = pmdExecutor.execute(mockedLocator);
+        final Report result = pmdExecutor.execute();
 
         // then
         assertThat(result).isNotNull();
@@ -100,39 +101,36 @@ class PmdExecutorTest {
         fileSystem.add(srcFile);
         fileSystem.add(tstFile);
 
-        Report report = pmdExecutor.execute(mockedLocator);
+        Report report = pmdExecutor.execute();
 
         assertThat(report).isNotNull();
-        verify(mockedPmdConfiguration).dumpXmlReport(report);
+        verify(pmdConfiguration).dumpXmlReport(report);
 
         // setting java source version to the default value
         settings.removeProperty(PmdConstants.JAVA_SOURCE_VERSION);
-        report = pmdExecutor.execute(mockedLocator);
+        report = pmdExecutor.execute();
 
         assertThat(report).isNotNull();
-        verify(mockedPmdConfiguration).dumpXmlReport(report);
+        verify(pmdConfiguration).dumpXmlReport(report);
     }
 
     @Test
     void should_ignore_empty_test_dir() {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
-        doReturn(mockedPmdTemplate)
-                .when(pmdExecutor)
-                .createPmdTemplate(any(URLClassLoader.class));
-
+        doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);
 
-        pmdExecutor.execute(mockedLocator);
-        verify(mockedPmdTemplate).process(anyIterable(), any(RuleSet.class));
-        verifyNoMoreInteractions(mockedPmdTemplate);
+        pmdExecutor.execute();
+        verify(pmdTemplate).process(anyIterable(), any(RuleSet.class));
+        verifyNoMoreInteractions(pmdTemplate);
     }
 
     @Test
     void should_build_project_classloader_from_javaresourcelocator() throws Exception {
         File file = new File("x");
-        when(mockedLocator.classpath()).thenReturn(ImmutableList.of(file));
-        pmdExecutor.execute(mockedLocator);
+        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
+        pmdExecutor.execute();
         ArgumentCaptor<URLClassLoader> classLoaderArgument = ArgumentCaptor.forClass(URLClassLoader.class);
         verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
         URLClassLoader classLoader = classLoaderArgument.getValue();
@@ -144,9 +142,9 @@ class PmdExecutorTest {
     void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
-        when(mockedLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
+        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
 
-        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute(mockedLocator));
+        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
@@ -155,12 +153,12 @@ class PmdExecutorTest {
 
     @Test
     void unknown_pmd_ruleset() {
-        when(mockedPmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
+        when(pmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
 
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         fileSystem.add(srcFile);
 
-        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute(mockedLocator));
+        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
@@ -169,6 +167,6 @@ class PmdExecutorTest {
 
     private void setupPmdRuleSet(String repositoryKey, String profileFileName) {
         final Path sourcePath = Paths.get("src/test/resources/org/sonar/plugins/pmd/").resolve(profileFileName);
-        when(mockedPmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString())).thenReturn(sourcePath.toFile());
+        when(pmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString())).thenReturn(sourcePath.toFile());
     }
 }
