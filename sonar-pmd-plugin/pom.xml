@@ -109,8 +109,10 @@
       <artifactId>jdom</artifactId>
       <version>1.0</version>
     </dependency>
-
-
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -173,6 +175,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven.enforcer.plugin.version}</version>
         <executions>
           <execution>
             <id>enforce-plugin-size</id>
