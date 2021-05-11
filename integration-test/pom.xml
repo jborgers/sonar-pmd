@@ -72,7 +72,7 @@
 
           <!-- This is important. It means that this plugin extends the PMD plugin -->
           <basePlugin>pmd</basePlugin>
-		  <pluginDescription>Analyze Java code with PMD.</pluginDescription>
+          <pluginDescription>Analyze Java code with PMD.</pluginDescription>
         </configuration>
       </plugin>
     </plugins>
