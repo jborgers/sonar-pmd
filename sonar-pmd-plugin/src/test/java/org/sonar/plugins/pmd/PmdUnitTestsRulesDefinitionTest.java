@@ -45,7 +45,8 @@ class PmdUnitTestsRulesDefinitionTest {
                 .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_KEY);
 
         List<Rule> rules = repository.rules();
-        assertThat(rules).hasSize(17);
+        //assertThat(rules).hasSize(17); NOTE: 5 rules have been removed in pmd-7
+        assertThat(rules).hasSize(12);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -56,11 +57,11 @@ class PmdUnitTestsRulesDefinitionTest {
                     "JUnitTestsShouldIncludeAssert",
                     "TestClassWithoutTestCases",
                     "UnnecessaryBooleanAssertion",
-                    "UseAssertEqualsInsteadOfAssertTrue",
-                    "UseAssertSameInsteadOfAssertTrue",
-                    "UseAssertNullInsteadOfAssertTrue",
-                    "SimplifyBooleanAssertion",
-                    "UseAssertTrueInsteadOfAssertEquals",
+                    //"UseAssertEqualsInsteadOfAssertTrue", // 5 rules have been removed in pmd-7
+                    //"UseAssertSameInsteadOfAssertTrue",
+                    //"UseAssertNullInsteadOfAssertTrue",
+                    //"SimplifyBooleanAssertion",
+                    //"UseAssertTrueInsteadOfAssertEquals",
                     "JUnitTestContainsTooManyAsserts",
                     "JUnit4SuitesShouldUseSuiteAnnotation",
                     "JUnit4TestShouldUseAfterAnnotation",

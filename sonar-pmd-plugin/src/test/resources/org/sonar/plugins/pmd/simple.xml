@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Sonar">
+<ruleset name="Sonar" >
   <description>Sonar PMD rules</description>
   <rule name="Sample1" ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
     <priority>2</priority>
@@ -15,7 +15,7 @@
   <rule name="Sample3" ref="rulesets/java/design.xml/UseNotifyAllInsteadOfNotify">
     <priority>4</priority>
   </rule>
-  <rule name="Sample4" class="net.sourceforge.pmd.lang.java.rule.design.UseUtilityClassRule">
+  <rule name="Sample4" class="net.sourceforge.pmd.lang.java.rule.design.UseUtilityClassRule" language="java">
     <priority>3</priority>
   </rule>
 </ruleset>
