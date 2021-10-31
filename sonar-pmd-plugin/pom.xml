@@ -183,7 +183,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>8500000</maxsize>
+                  <!--maxsize>8500000</maxsize> For pmd-7 size is currently 11710369 -->
+                  <maxsize>12000000</maxsize>
                   <minsize>7000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
