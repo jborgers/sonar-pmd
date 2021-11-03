@@ -26,7 +26,9 @@ public final class PmdConstants {
     public static final String PLUGIN_NAME = "PMD";
     public static final String PLUGIN_KEY = "pmd";
     public static final String REPOSITORY_KEY = PLUGIN_KEY;
+    public static final String REPOSITORY_KOTLIN_KEY = "pmd-kotlin";
     public static final String REPOSITORY_NAME = "PMD";
+    public static final String REPOSITORY_KOTLIN_NAME = "PMD Kotlin";
     public static final String TEST_REPOSITORY_KEY = "pmd-unit-tests";
     public static final String TEST_REPOSITORY_NAME = "PMD Unit Tests";
     public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.XPathRule";
@@ -47,6 +49,7 @@ public final class PmdConstants {
      * The Java Language key.
      */
     public static final String LANGUAGE_KEY = "java";
+    public static final String LANGUAGE_KOTLIN_KEY = "kotlin";
 
     private PmdConstants() {
     }
