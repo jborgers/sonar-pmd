@@ -19,14 +19,11 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.Iterables;
 import org.junit.jupiter.api.Test;
-import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
-import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
 import java.util.List;
 
@@ -39,7 +36,7 @@ class PmdKotlinRulesDefinitionTest {
         PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KOTLIN_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         assertThat(repository).withFailMessage("repository is null, does key exist").isNotNull();
         assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_KOTLIN_NAME);
@@ -69,7 +66,7 @@ class PmdKotlinRulesDefinitionTest {
         PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KOTLIN_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         for (Rule rule : repository.rules()) {
             assertThat(rule.key()).doesNotContain("AbstractClassWithoutAbstractMethod");
@@ -81,7 +78,7 @@ class PmdKotlinRulesDefinitionTest {
         PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KOTLIN_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         for (Rule rule : repository.rules()) {
             assertThat(rule.key()).doesNotContain("JUnitStaticSuite");

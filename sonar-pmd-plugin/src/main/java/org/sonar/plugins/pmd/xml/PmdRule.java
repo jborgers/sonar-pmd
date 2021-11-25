@@ -19,11 +19,11 @@
  */
 package org.sonar.plugins.pmd.xml;
 
+import org.sonar.plugins.pmd.PmdConstants;
+
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
-
-import org.sonar.plugins.pmd.PmdConstants;
 
 public class PmdRule {
 
@@ -143,7 +143,7 @@ public class PmdRule {
 
             xpathExp.setCdataValue(xpathExp.getValue());
             clazz = PmdConstants.XPATH_CLASS;
-            language = PmdConstants.LANGUAGE_KEY;
+            language = PmdConstants.LANGUAGE_JAVA_KEY;
             name = sonarRuleKey;
         }
     }

@@ -37,11 +37,7 @@ import org.sonar.api.rule.RuleKey;
 import java.io.File;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PmdViolationRecorderTest {
 
@@ -102,8 +98,8 @@ class PmdViolationRecorderTest {
         addToFileSystem(file1);
         final String ruleName = "UNKNOWN";
         final RuleViolation pmdViolation = createPmdViolation(file1, ruleName);
-        final RuleKey expectedRuleKey1 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
-        final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
+        final RuleKey expectedRuleKey1 = RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, ruleName);
+        final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, ruleName);
 
         // when
         subject.saveViolation(pmdViolation, mockContext);

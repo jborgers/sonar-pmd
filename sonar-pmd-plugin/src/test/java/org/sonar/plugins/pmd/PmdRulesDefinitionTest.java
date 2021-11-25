@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.util.List;
-
 import com.google.common.collect.Iterables;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.PropertyType;
@@ -28,6 +26,8 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,10 +38,10 @@ class PmdRulesDefinitionTest {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
 
         assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_NAME);
-        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KEY);
+        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();
         assertThat(rules).hasSize(228);
@@ -67,7 +67,7 @@ class PmdRulesDefinitionTest {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
 
         for (Rule rule : repository.rules()) {
             assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
@@ -79,7 +79,7 @@ class PmdRulesDefinitionTest {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
 
         Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
 

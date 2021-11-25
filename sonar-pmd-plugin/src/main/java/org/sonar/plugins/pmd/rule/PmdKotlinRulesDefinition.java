@@ -64,7 +64,7 @@ public final class PmdKotlinRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
         NewRepository repository = context
-                .createRepository(PmdConstants.REPOSITORY_KOTLIN_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY)
+                .createRepository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY)
                 .setName(PmdConstants.REPOSITORY_KOTLIN_NAME);
 
         extractRulesData(repository, "/org/sonar/plugins/pmd/rules-kotlin.xml", "/org/sonar/l10n/pmd/rules/pmd-kotlin");

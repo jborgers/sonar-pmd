@@ -42,14 +42,15 @@ public class PmdSensor implements Sensor {
     }
 
     private boolean shouldExecuteOnProject() {
-        return (hasFilesToCheck(Type.MAIN, PmdConstants.REPOSITORY_KEY))
-                || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_REPOSITORY_KEY));
+        return (hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY))
+                || (hasFilesToCheck(Type.TEST, PmdConstants.TEST_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY))
+                || (hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY));
     }
 
-    private boolean hasFilesToCheck(Type type, String repositoryKey) {
+    private boolean hasFilesToCheck(Type type, String repositoryKey, String languageKey) {
         FilePredicates predicates = fs.predicates();
         final boolean hasMatchingFiles = fs.hasFiles(predicates.and(
-                predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
+                predicates.hasLanguage(languageKey),
                 predicates.hasType(type)));
         return hasMatchingFiles && !profile.findByRepository(repositoryKey).isEmpty();
     }
@@ -61,7 +62,7 @@ public class PmdSensor implements Sensor {
 
     @Override
     public void describe(SensorDescriptor descriptor) {
-        descriptor.onlyOnLanguage(PmdConstants.LANGUAGE_KEY)
+        descriptor.onlyOnLanguages(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY)
                 .name("PmdSensor");
     }
 
