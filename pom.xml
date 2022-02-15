@@ -68,7 +68,7 @@
   <properties>
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jens AT gerdes DOT digital</license.mailto>
-    <pmd.version>6.31.0</pmd.version>
+    <pmd.version>6.42.0</pmd.version>
     <junit.jupiter.version>5.7.1</junit.jupiter.version>
     <mockito.version>3.8.0</mockito.version>
     <assertj.version>3.19.0</assertj.version>
