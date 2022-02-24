@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="pmd7">
+  <description>Sonar Profile: pmd7</description>
+  <rule ref="category/java/codestyle.xml/CommentDefaultAccessModifier">
+    <priority>2</priority>
+    <properties>
+      <property name="regex" value=""/>
+      <property name="violationSuppressRegex" value=""/>
+      <property name="violationSuppressXPath" value=""/>
+    </properties>
+  </rule>
+</ruleset>
+

@@ -1,6 +1,6 @@
 # JUnitTestsShouldIncludeAssert
-**Category:** `pmd-unit-tests`<br/>
-**Rule Key:** `pmd-unit-tests:JUnitTestsShouldIncludeAssert`<br/>
+**Category:** `pmd7-unit-tests`<br/>
+**Rule Key:** `pmd7-unit-tests:JUnitTestsShouldIncludeAssert`<br/>
 
 
 -----

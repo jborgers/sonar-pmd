@@ -9,7 +9,7 @@
       <priority>MAJOR</priority>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>TestClassWithoutTestCases</key>
       <priority>MAJOR</priority>
     </rule>

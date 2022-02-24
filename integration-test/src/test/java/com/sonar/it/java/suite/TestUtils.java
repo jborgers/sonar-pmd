@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin Integration Test
+ * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
  * mailto:jens AT gerdes DOT digital
  *

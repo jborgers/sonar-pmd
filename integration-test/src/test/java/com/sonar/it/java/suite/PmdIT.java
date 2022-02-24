@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin Integration Test
+ * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
  * mailto:jens AT gerdes DOT digital
  *
@@ -146,7 +146,7 @@ class PmdIT {
         final List<Issue> testIssues = retrieveIssues(keyForTest());
         assertThat(testIssues).hasSize(1);
         assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
-        assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd-unit-tests:TestClassWithoutTestCases");
+        assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd7-unit-tests:TestClassWithoutTestCases");
 
         final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
         assertThat(prodIssues).hasSize(1);
@@ -192,7 +192,7 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules", projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd7-all-rules", projectName);
 
         // when
         ORCHESTRATOR.executeBuild(build);

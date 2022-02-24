@@ -1,6 +1,6 @@
 # JUnitStaticSuite
-**Category:** `pmd-unit-tests`<br/>
-**Rule Key:** `pmd-unit-tests:JUnitStaticSuite`<br/>
+**Category:** `pmd7-unit-tests`<br/>
+**Rule Key:** `pmd7-unit-tests:JUnitStaticSuite`<br/>
 
 
 -----

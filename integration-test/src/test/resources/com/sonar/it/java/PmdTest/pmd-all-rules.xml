@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <profile>
-  <name>pmd-all-rules</name>
+  <name>pmd7-all-rules</name>
   <language>java</language>
   <rules>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AbstractClassWithoutAbstractMethod</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AbstractClassWithoutAnyMethod</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AbstractNaming</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -27,109 +27,109 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AccessorClassGeneration</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AddEmptyString</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AppendCharacterWithChar</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ArrayIsStoredDirectly</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AssignmentInOperand</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AssignmentToNonFinalStatic</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AtLeastOneConstructor</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidAccessibilityAlteration</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidArrayLoops</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidAssertAsIdentifier</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidBranchingStatementAsLastInLoop</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidCallingFinalize</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidCatchingGenericException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidCatchingNPE</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidCatchingThrowable</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidConstantsInterface</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidDecimalLiteralsInBigDecimalConstructor</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidDeeplyNestedIfStmts</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -140,13 +140,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidDollarSigns</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidDuplicateLiterals</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -169,133 +169,133 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidEnumAsIdentifier</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidFieldNameMatchingMethodName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidFieldNameMatchingTypeName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidFinalLocalVariable</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidInstanceofChecksInCatchClause</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidInstantiatingObjectsInLoops</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidLiteralsInIfCondition</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidLosingExceptionInformation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidMultipleUnaryOperators</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidPrefixingMethodParameters</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidPrintStackTrace</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidProtectedFieldInFinalClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidProtectedMethodInFinalClassNotExtending</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidReassigningParameters</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidRethrowingException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidStringBufferField</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidSynchronizedAtMethodLevel</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidThreadGroup</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidThrowingNewInstanceOfSameException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidThrowingNullPointerException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidThrowingRawExceptionTypes</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingHardCodedIP</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -306,49 +306,49 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingNativeCode</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingOctalValues</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingShortType</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingVolatile</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BadComparison</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BeanMembersShouldSerialize</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BigIntegerInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BooleanGetMethodName</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -359,103 +359,103 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BooleanInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>BrokenNullCheck</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ByteInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CallSuperFirst</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CallSuperInConstructor</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CallSuperLast</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CheckResultSet</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CheckSkipResult</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ClassCastExceptionWithToArray</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ClassNamingConventions</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ClassWithOnlyPrivateConstructorsShouldBeFinal</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloneMethodMustBePublic</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloneMethodMustImplementCloneable</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloneMethodMustImplementCloneableWithTypeResolution</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloneMethodReturnTypeMustMatchClassName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloneThrowsCloneNotSupportedException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CloseResource</key>
       <priority>CRITICAL</priority>
       <parameters>
@@ -470,31 +470,31 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CollapsibleIfStatements</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CommentContent</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CommentDefaultAccessModifier</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CommentRequired</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CommentSize</key>
       <priority>MINOR</priority>
       <parameters>
@@ -509,25 +509,25 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CompareObjectsWithEquals</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ConfusingTernary</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ConsecutiveAppendsShouldReuse</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ConsecutiveLiteralAppends</key>
       <priority>MINOR</priority>
       <parameters>
@@ -538,13 +538,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ConstructorCallsOverridableMethod</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CouplingBetweenObjects</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -555,7 +555,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>CyclomaticComplexity</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -570,7 +570,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DataflowAnomalyAnalysis</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -585,91 +585,91 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DefaultLabelNotLastInSwitchStmt</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DefaultPackage</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotCallGarbageCollectionExplicitly</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotCallSystemExit</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotExtendJavaLangError</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotHardCodeSDCard</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotThrowExceptionInFinally</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotUseThreads</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DontCallThreadRun</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DontImportJavaLang</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DontImportSun</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DontUseFloatTypeForLoopIndices</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoubleCheckedLocking</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DuplicateImports</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyCatchBlock</key>
       <priority>CRITICAL</priority>
       <parameters>
@@ -680,91 +680,91 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyFinalizer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyFinallyBlock</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyIfStmt</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyInitializer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyMethodInAbstractClassShouldBeAbstract</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyStatementBlock</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyStatementNotInLoop</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyStaticInitializer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptySwitchStatements</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptySynchronizedBlock</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyTryBlock</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EmptyWhileStmt</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>EqualsNull</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExceptionAsFlowControl</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveClassLength</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -775,7 +775,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveImports</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -786,7 +786,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveMethodLength</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -797,7 +797,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveParameterList</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -808,7 +808,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExcessivePublicCount</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -819,13 +819,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ExtendsObject</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FieldDeclarationsShouldBeAtStartOfClass</key>
       <priority>MINOR</priority>
       <parameters>
@@ -840,187 +840,187 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FinalFieldCouldBeStatic</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FinalizeDoesNotCallSuperFinalize</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FinalizeOnlyCallsSuperFinalize</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FinalizeOverloaded</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>FinalizeShouldBeProtected</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ForLoopShouldBeWhileLoop</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ForLoopsMustUseBraces</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>GenericsNaming</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>GodClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>GuardDebugLogging</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>GuardLogStatement</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>GuardLogStatementJavaUtil</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>IdempotentOperations</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>IfElseStmtsMustUseBraces</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>IfStmtsMustUseBraces</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ImmutableField</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ImportFromSamePackage</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>InefficientEmptyStringCheck</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>InefficientStringBuffering</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>InstantiationToGetClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>InsufficientStringBufferDeclaration</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>IntegerInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>JumbledIncrementer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LawOfDemeter</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LocalHomeNamingConvention</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LocalInterfaceSessionNamingConvention</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LocalVariableCouldBeFinal</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LoggerIsNotStaticFinal</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LogicInversion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LongInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LongVariable</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1031,85 +1031,85 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LooseCoupling</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LooseCouplingWithTypeResolution</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>LoosePackageCoupling</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MDBAndSessionBeanNamingConvention</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MethodArgumentCouldBeFinal</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MethodNamingConventions</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MethodReturnsInternalArray</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MethodWithSameNameAsEnclosingClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MisleadingVariableName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MisplacedNullCheck</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MissingBreakInSwitch</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MissingSerialVersionUID</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MissingStaticMethodInNonInstantiatableClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ModifiedCyclomaticComplexity</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1128,13 +1128,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MoreThanOneLogger</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NPathComplexity</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1145,7 +1145,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NcssConstructorCount</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1156,7 +1156,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NcssMethodCount</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1167,7 +1167,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NcssTypeCount</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1178,25 +1178,25 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NoPackage</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NonCaseLabelInSwitchStatement</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NonStaticInitializer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NonThreadSafeSingleton</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1211,73 +1211,73 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>NullAssignment</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>OneDeclarationPerLine</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>OnlyOneReturn</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>OptimizableToArrayCall</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>OverrideBothEqualsAndHashcode</key>
       <priority>BLOCKER</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>PackageCase</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>PositionLiteralsFirstInCaseInsensitiveComparisons</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>PositionLiteralsFirstInComparisons</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>PrematureDeclaration</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>PreserveStackTrace</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ProperCloneImplementation</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ProperLogger</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1288,55 +1288,55 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>RedundantFieldInitializer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>RemoteInterfaceNamingConvention</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>RemoteSessionInterfaceNamingConvention</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ReplaceEnumerationWithIterator</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ReplaceHashtableWithMap</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ReplaceVectorWithList</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ReturnEmptyArrayRatherThanNull</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ReturnFromFinallyBlock</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ShortClassName</key>
       <priority>MINOR</priority>
       <parameters>
@@ -1347,13 +1347,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ShortInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ShortMethodName</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1364,7 +1364,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>ShortVariable</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1375,13 +1375,13 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SignatureDeclareThrowsException</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SignatureDeclareThrowsExceptionWithTypeResolution</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1392,67 +1392,67 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimpleDateFormatNeedsLocale</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimplifiedTernary</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimplifyBooleanExpressions</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimplifyBooleanReturns</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimplifyConditional</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SimplifyStartsWith</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SingleMethodSingleton</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SingletonClassReturningNewInstance</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SingularField</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>StaticEJBFieldShouldBeFinal</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>StdCyclomaticComplexity</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1471,49 +1471,49 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>StringBufferInstantiationWithChar</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>StringInstantiation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>StringToString</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SuspiciousConstantFieldName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SuspiciousEqualsMethodName</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SuspiciousHashcodeMethodName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SuspiciousOctalEscape</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SwitchDensity</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1524,19 +1524,19 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SwitchStmtsShouldHaveDefault</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>SystemPrintln</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>TooFewBranchesForASwitchStatement</key>
       <priority>MINOR</priority>
       <parameters>
@@ -1547,7 +1547,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>TooManyFields</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1558,7 +1558,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>TooManyMethods</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1569,7 +1569,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>TooManyStaticImports</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1580,7 +1580,7 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UncommentedEmptyConstructor</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1591,223 +1591,223 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UncommentedEmptyMethodBody</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnconditionalIfStatement</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryCaseChange</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryConstructor</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryConversionTemporary</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryFinalModifier</key>
       <priority>INFO</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryFullyQualifiedName</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryLocalBeforeReturn</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryParentheses</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryReturn</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnnecessaryWrapperObjectCreation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnsynchronizedStaticDateFormatter</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedFormalParameter</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedImports</key>
       <priority>INFO</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedImportsWithTypeResolution</key>
       <priority>INFO</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedLocalVariable</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedModifier</key>
       <priority>INFO</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedNullCheckInEquals</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedPrivateField</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UnusedPrivateMethod</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseArrayListInsteadOfVector</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseArraysAsList</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseCollectionIsEmpty</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseConcurrentHashMap</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseCorrectExceptionLogging</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseEqualsToCompareStrings</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseIndexOfChar</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseLocaleWithCaseConversions</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseNotifyAllInsteadOfNotify</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseObjectForClearerAPI</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseProperClassLoader</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseStringBufferForStringAppends</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseStringBufferLength</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseUtilityClass</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UseVarargs</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UselessOperationOnImmutable</key>
       <priority>CRITICAL</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UselessOverridingMethod</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1818,79 +1818,79 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UselessParentheses</key>
       <priority>INFO</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UselessQualifiedThis</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>UselessStringValueOf</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>VariableNamingConventions</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>WhileLoopsMustUseBraces</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnit4TestShouldUseAfterAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnit4TestShouldUseBeforeAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnit4TestShouldUseTestAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitAssertionsShouldIncludeMessage</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitSpelling</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitStaticSuite</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitTestContainsTooManyAsserts</key>
       <priority>MAJOR</priority>
       <parameters>
@@ -1901,55 +1901,55 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitTestsShouldIncludeAssert</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>JUnitUseExpected</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>SimplifyBooleanAssertion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>TestClassWithoutTestCases</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>UnnecessaryBooleanAssertion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>UseAssertEqualsInsteadOfAssertTrue</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>UseAssertNullInsteadOfAssertTrue</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>UseAssertSameInsteadOfAssertTrue</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd7-unit-tests</repositoryKey>
       <key>UseAssertTrueInsteadOfAssertEquals</key>
       <priority>MINOR</priority>
       <parameters/>
