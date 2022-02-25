@@ -190,7 +190,7 @@ class PmdProfileExporterTest {
         exporter.exportProfile(RulesProfile.create(), writer);
 
         assertThat(writer.toString()).satisfies(equalsIgnoreEOL("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<ruleset name=\"pmd\">  <description>Sonar Profile: pmd</description></ruleset>"));
+                "<ruleset name=\"pmd7\">  <description>Sonar Profile: pmd7</description></ruleset>"));
     }
 
     @Test

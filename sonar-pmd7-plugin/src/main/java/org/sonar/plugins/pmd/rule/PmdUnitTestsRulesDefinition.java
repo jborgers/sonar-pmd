@@ -34,7 +34,7 @@ public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
                 .createRepository(PmdConstants.TEST_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY)
                 .setName(PmdConstants.TEST_REPOSITORY_NAME);
 
-        PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd7-unit-tests");
+        PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd-unit-tests");
 
         repository.done();
     }

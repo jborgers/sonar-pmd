@@ -102,7 +102,7 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd", projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd7", projectName);
 
         // when
         ORCHESTRATOR.executeBuild(build);
