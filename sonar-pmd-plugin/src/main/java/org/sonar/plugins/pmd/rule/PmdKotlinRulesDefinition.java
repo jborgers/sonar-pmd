@@ -31,38 +31,43 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-public final class PmdRulesDefinition implements RulesDefinition {
+public final class PmdKotlinRulesDefinition implements RulesDefinition {
 
-    private static final Logger LOGGER = Loggers.get(PmdRulesDefinition.class);
+    private static final Logger LOGGER = Loggers.get(PmdKotlinRulesDefinition.class);
 
-    public PmdRulesDefinition() {
+    public PmdKotlinRulesDefinition() {
         // do nothing
     }
 
     static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
-        try (InputStream inputStream = PmdRulesDefinition.class.getResourceAsStream(xmlRulesFilePath)) {
-            new RulesDefinitionXmlLoader()
+        try (InputStream inputStream = PmdKotlinRulesDefinition.class.getResourceAsStream(xmlRulesFilePath)) {
+            if (inputStream == null) {
+                LOGGER.error("Cannot read {}", xmlRulesFilePath);
+            }
+            else {
+                new RulesDefinitionXmlLoader()
                     .load(
-                            repository,
-                            inputStream,
-                            StandardCharsets.UTF_8
+                        repository,
+                        inputStream,
+                        StandardCharsets.UTF_8
                     );
+            }
         } catch (IOException e) {
             LOGGER.error("Failed to load PMD RuleSet.", e);
         }
 
         ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
         loadNames(repository);
-        SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model.xml");
+        SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model-kotlin.xml");
     }
 
     @Override
     public void define(Context context) {
         NewRepository repository = context
-                .createRepository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY)
-                .setName(PmdConstants.REPOSITORY_NAME);
+                .createRepository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY)
+                .setName(PmdConstants.REPOSITORY_KOTLIN_NAME);
 
-        extractRulesData(repository, "/org/sonar/plugins/pmd/rules.xml", "/org/sonar/l10n/pmd/rules/pmd");
+        extractRulesData(repository, "/org/sonar/plugins/pmd/rules-kotlin.xml", "/org/sonar/l10n/pmd/rules/pmd-kotlin");
 
         repository.done();
     }
@@ -71,8 +76,14 @@ public final class PmdRulesDefinition implements RulesDefinition {
 
         Properties properties = new Properties();
 
-        try (InputStream stream = PmdRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/pmd.properties")) {
-            properties.load(stream);
+        String propertiesFile = "/org/sonar/l10n/pmd-kotlin.properties";
+        try (InputStream stream = PmdKotlinRulesDefinition.class.getResourceAsStream(propertiesFile)) {
+            if (stream == null) {
+                LOGGER.error("Cannot read {}", propertiesFile);
+            }
+            else {
+                properties.load(stream);
+            }
         } catch (IOException e) {
             throw new IllegalArgumentException("Could not read names from properties", e);
         }

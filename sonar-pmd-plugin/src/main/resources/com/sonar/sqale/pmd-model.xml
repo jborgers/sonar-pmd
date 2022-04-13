@@ -3690,7 +3690,7 @@
           <txt>min</txt>
         </prop>
       </chc>
-      <chc>
+      <!--chc NOTE: the following rule has been removed in pmd-7>
         <rule-repo>pmd-unit-tests</rule-repo>
         <rule-key>UseAssertTrueInsteadOfAssertEquals</rule-key>
         <prop>
@@ -3702,7 +3702,7 @@
           <val>10</val>
           <txt>min</txt>
         </prop>
-      </chc>
+      </chc-->
       <chc>
         <rule-repo>pmd-unit-tests</rule-repo>
         <rule-key>JUnit4SuitesShouldUseSuiteAnnotation</rule-key>
@@ -3832,7 +3832,7 @@
           <txt>min</txt>
         </prop>
       </chc>
-      <chc>
+      <!--chc NOTE: the following rules have been removed in pmd-7 >
         <rule-repo>pmd-unit-tests</rule-repo>
         <rule-key>SimplifyBooleanAssertion</rule-key>
         <prop>
@@ -3870,7 +3870,7 @@
           <val>10</val>
           <txt>min</txt>
         </prop>
-      </chc>
+      </chc-->
       <chc>
         <rule-repo>pmd-unit-tests</rule-repo>
         <rule-key>JUnitSpelling</rule-key>
@@ -3910,7 +3910,7 @@
           <txt>min</txt>
         </prop>
       </chc>
-      <chc>
+      <!--chc NOTE: the following rule has been removed in pmd-7>
         <rule-repo>pmd-unit-tests</rule-repo>
         <rule-key>UseAssertEqualsInsteadOfAssertTrue</rule-key>
         <prop>
@@ -3922,7 +3922,7 @@
           <val>10</val>
           <txt>min</txt>
         </prop>
-      </chc>
+      </chc-->
     </chc>
   </chc>
 </sqale>

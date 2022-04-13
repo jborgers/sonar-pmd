@@ -86,28 +86,47 @@ public class PmdExecutor {
     private Report executePmd(URLClassLoader classLoader) {
 
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> mainReport = executeRules(pmdFactory, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
-        final Optional<Report> testReport = executeRules(pmdFactory, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
+        final Optional<Report> mainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        final Optional<Report> testReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.TEST_JAVA_REPOSITORY_KEY);
+        final Optional<Report> kotlinReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
-        final Report report = mainReport
-                .orElse(
-                        testReport.orElse(new Report())
-                );
-
-        if (mainReport.isPresent() && testReport.isPresent()) {
-            report.merge(testReport.get());
+        if (LOGGER.isDebugEnabled()) {
+            mainReport.ifPresent(this::writeDebugLine);
+            testReport.ifPresent(this::writeDebugLine);
+            kotlinReport.ifPresent(this::writeDebugLine);
         }
+
+        final Report report = new Report();
+        mainReport.ifPresent(report::merge);
+        testReport.ifPresent(report::merge);
+        kotlinReport.ifPresent(report::merge);
 
         pmdConfiguration.dumpXmlReport(report);
 
         return report;
     }
 
-    private Iterable<InputFile> javaFiles(Type fileType) {
+    private void writeDebugLine(Report r) {
+        LOGGER.debug("Report (violations, suppressedViolations, processingErrors, configurationErrors): {}, {}, {}, {}", r.getViolations().size(), r.getSuppressedViolations().size(), r.getProcessingErrors().size(), r.getConfigurationErrors().size());
+        if (!r.getViolations().isEmpty()) {
+            LOGGER.debug("Violations: {}", r.getViolations());
+        }
+        if (!r.getSuppressedViolations().isEmpty()) {
+            LOGGER.debug("SuppressedViolations: {}", r.getSuppressedViolations());
+        }
+        if (!r.getProcessingErrors().isEmpty()) {
+            LOGGER.debug("ProcessingErrors: {}", r.getProcessingErrors());
+        }
+        if (!r.getConfigurationErrors().isEmpty()) {
+            LOGGER.debug("ConfigurationErrors: {}", r.getConfigurationErrors());
+        }
+    }
+
+    private Iterable<InputFile> hasFiles(Type fileType, String languageKey) {
         final FilePredicates predicates = fs.predicates();
         return fs.inputFiles(
                 predicates.and(
-                        predicates.hasLanguage(PmdConstants.LANGUAGE_KEY),
+                        predicates.hasLanguage(languageKey),
                         predicates.hasType(fileType)
                 )
         );

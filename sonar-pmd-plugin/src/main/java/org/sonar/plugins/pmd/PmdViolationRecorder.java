@@ -29,9 +29,16 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
+import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
+
+import java.util.Optional;
 
 @ScannerSide
 public class PmdViolationRecorder {
+
+    private static final Logger LOGGER = Loggers.get(PmdKotlinRulesDefinition.class);
 
     private final FileSystem fs;
     private final ActiveRules activeRules;
@@ -42,13 +49,21 @@ public class PmdViolationRecorder {
     }
 
     public void saveViolation(RuleViolation pmdViolation, SensorContext context) {
+
+        LOGGER.debug("About to save RuleViolation: {}", pmdViolation);
+
         final InputFile inputFile = findResourceFor(pmdViolation);
+
+        LOGGER.trace("Found violation input file: {}", inputFile);
+
         if (inputFile == null) {
             // Save violations only for existing resources
             return;
         }
 
         final RuleKey ruleKey = findActiveRuleKeyFor(pmdViolation);
+
+        LOGGER.trace("Found violation rule key: {}", ruleKey);
 
         if (ruleKey == null) {
             // Save violations only for enabled rules
@@ -60,13 +75,19 @@ public class PmdViolationRecorder {
 
         final TextRange issueTextRange = TextRangeCalculator.calculate(pmdViolation, inputFile);
 
+        LOGGER.trace("New issue: {} Text range: {}", issue, issueTextRange);
+
         final NewIssueLocation issueLocation = issue.newLocation()
                 .on(inputFile)
                 .message(pmdViolation.getDescription())
                 .at(issueTextRange);
 
+        LOGGER.trace("Issue location to save: {}", issueLocation);
+
         issue.at(issueLocation)
                 .save();
+
+        LOGGER.debug("RuleViolation saved: {}", pmdViolation);
     }
 
     private InputFile findResourceFor(RuleViolation violation) {
@@ -79,15 +100,18 @@ public class PmdViolationRecorder {
 
     private RuleKey findActiveRuleKeyFor(RuleViolation violation) {
         final String internalRuleKey = violation.getRule().getName();
-        RuleKey ruleKey = RuleKey.of(PmdConstants.REPOSITORY_KEY, internalRuleKey);
 
+        return findRuleKey(internalRuleKey, PmdConstants.MAIN_JAVA_REPOSITORY_KEY)
+            .orElse(findRuleKey(internalRuleKey, PmdConstants.TEST_JAVA_REPOSITORY_KEY)
+                .orElse(findRuleKey(internalRuleKey, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY)
+                    .orElse(null)));
+    }
+
+    private Optional<RuleKey> findRuleKey(String internalRuleKey, String repositoryKey) {
+        RuleKey ruleKey = RuleKey.of(repositoryKey, internalRuleKey);
         if (activeRules.find(ruleKey) != null) {
-            return ruleKey;
+            return Optional.of(ruleKey);
         }
-
-        // Let's try the test repo.
-        ruleKey = RuleKey.of(PmdConstants.TEST_REPOSITORY_KEY, internalRuleKey);
-
-        return activeRules.find(ruleKey) != null ? ruleKey : null;
+        return Optional.empty();
     }
 }

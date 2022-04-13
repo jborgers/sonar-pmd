@@ -24,7 +24,8 @@
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UnnecessaryBooleanAssertion]]></configKey>
   </rule>
-  <rule key="UseAssertEqualsInsteadOfAssertTrue">
+  <!--NOTE: the following rules have been removed in pmd-7
+   rule key="UseAssertEqualsInsteadOfAssertTrue">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UseAssertEqualsInsteadOfAssertTrue]]></configKey>
   </rule>
@@ -43,7 +44,7 @@
   <rule key="UseAssertTrueInsteadOfAssertEquals">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UseAssertTrueInsteadOfAssertEquals]]></configKey>
-  </rule>
+  </rule-->
   <rule key="JUnitTestContainsTooManyAsserts">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts]]></configKey>

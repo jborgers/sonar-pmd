@@ -31,7 +31,7 @@ public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
         NewRepository repository = context
-                .createRepository(PmdConstants.TEST_REPOSITORY_KEY, PmdConstants.LANGUAGE_KEY)
+                .createRepository(PmdConstants.TEST_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY)
                 .setName(PmdConstants.TEST_REPOSITORY_NAME);
 
         PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd-unit-tests");

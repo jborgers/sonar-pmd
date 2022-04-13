@@ -29,15 +29,15 @@ class PmdConstantsTest {
     void checkDefinedKeys() {
         assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD");
         assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
-        assertThat(PmdConstants.REPOSITORY_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEqualTo("pmd");
         assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD");
-        assertThat(PmdConstants.TEST_REPOSITORY_KEY).isEqualTo("pmd-unit-tests");
+        assertThat(PmdConstants.TEST_JAVA_REPOSITORY_KEY).isEqualTo("pmd-unit-tests");
         assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD Unit Tests");
         assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.XPathRule");
         assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
         assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
         assertThat(PmdConstants.JAVA_SOURCE_VERSION).isEqualTo("sonar.java.source");
         assertThat(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE).isEqualTo("1.6");
-        assertThat(PmdConstants.LANGUAGE_KEY).isEqualTo("java");
+        assertThat(PmdConstants.LANGUAGE_JAVA_KEY).isEqualTo("java");
     }
 }

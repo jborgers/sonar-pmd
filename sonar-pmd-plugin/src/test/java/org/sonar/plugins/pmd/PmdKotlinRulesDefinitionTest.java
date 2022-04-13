@@ -23,51 +23,30 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
-import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
+import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PmdUnitTestsRulesDefinitionTest {
+class PmdKotlinRulesDefinitionTest {
 
     @Test
     void test() {
-
-        PmdUnitTestsRulesDefinition definition = new PmdUnitTestsRulesDefinition();
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.TEST_JAVA_REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
-        assertThat(repository)
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("name", PmdConstants.TEST_REPOSITORY_NAME)
-                .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_JAVA_KEY);
+        assertThat(repository).withFailMessage("repository is null, does key exist").isNotNull();
+        assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_KOTLIN_NAME);
+        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KOTLIN_KEY);
 
         List<Rule> rules = repository.rules();
-        //assertThat(rules).hasSize(17); NOTE: 5 rules have been removed in pmd-7
-        assertThat(rules).hasSize(12);
+        assertThat(rules).hasSize(1);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
-            assertThat(rule.key()).isIn(
-                    "JUnitStaticSuite",
-                    "JUnitSpelling",
-                    "JUnitAssertionsShouldIncludeMessage",
-                    "JUnitTestsShouldIncludeAssert",
-                    "TestClassWithoutTestCases",
-                    "UnnecessaryBooleanAssertion",
-                    //"UseAssertEqualsInsteadOfAssertTrue", // 5 rules have been removed in pmd-7
-                    //"UseAssertSameInsteadOfAssertTrue",
-                    //"UseAssertNullInsteadOfAssertTrue",
-                    //"SimplifyBooleanAssertion",
-                    //"UseAssertTrueInsteadOfAssertEquals",
-                    "JUnitTestContainsTooManyAsserts",
-                    "JUnit4SuitesShouldUseSuiteAnnotation",
-                    "JUnit4TestShouldUseAfterAnnotation",
-                    "JUnit4TestShouldUseBeforeAnnotation",
-                    "JUnit4TestShouldUseTestAnnotation",
-                    "JUnitUseExpected");
             assertThat(rule.internalKey()).isNotNull();
             assertThat(rule.name()).isNotNull();
             assertThat(rule.htmlDescription()).isNotNull();
@@ -79,6 +58,30 @@ class PmdUnitTestsRulesDefinitionTest {
                         .overridingErrorMessage("Description is not set for parameter '" + param.name() + "' of rule '" + rule.key())
                         .isNotNull();
             }
+        }
+    }
+
+    @Test
+    void should_exclude_java_rules() {
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
+        RulesDefinition.Context context = new RulesDefinition.Context();
+        definition.define(context);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+
+        for (Rule rule : repository.rules()) {
+            assertThat(rule.key()).doesNotContain("AbstractClassWithoutAbstractMethod");
+        }
+    }
+
+    @Test
+    void should_exclude_junit_rules() {
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
+        RulesDefinition.Context context = new RulesDefinition.Context();
+        definition.define(context);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+
+        for (Rule rule : repository.rules()) {
+            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
         }
     }
 }
