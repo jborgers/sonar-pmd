@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin Integration Test
+ * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
  * mailto:jens AT gerdes DOT digital
  *
@@ -92,12 +92,12 @@ public class PmdTestOrchestrator {
                         "sonar-java-plugin",
                         determineJavaPluginVersion()
                 ))
-                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
+                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd7-plugin/target"), "sonar-pmd7-plugin-*.jar"))
                 .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                 .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
+                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd7-all-rules.xml"))
                 .build();
 
         return new PmdTestOrchestrator(orchestrator);

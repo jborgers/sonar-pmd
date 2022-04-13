@@ -1,6 +1,6 @@
 # JUnitAssertionsShouldIncludeMessage
-**Category:** `pmd-unit-tests`<br/>
-**Rule Key:** `pmd-unit-tests:JUnitAssertionsShouldIncludeMessage`<br/>
+**Category:** `pmd7-unit-tests`<br/>
+**Rule Key:** `pmd7-unit-tests:JUnitAssertionsShouldIncludeMessage`<br/>
 > :warning: This rule is **deprecated** in favour of [S2698](https://rules.sonarsource.com/java/RSPEC-2698).
 
 -----

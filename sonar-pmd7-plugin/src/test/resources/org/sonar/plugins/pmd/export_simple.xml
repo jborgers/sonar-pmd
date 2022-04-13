@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="pmd7">
+  <description>Sonar Profile: pmd7</description>
+  <rule ref="category/java/design.xml/CouplingBetweenObjects">
+    <priority>2</priority>
+    <properties>
+      <property name="threshold" value="20" />
+    </properties>
+  </rule>
+  <rule ref="category/java/design.xml/ExcessiveImports">
+    <priority>3</priority>
+  </rule>
+  <rule ref="category/java/multithreading.xml/UseNotifyAllInsteadOfNotify">
+    <priority>4</priority>
+  </rule>
+</ruleset>
+

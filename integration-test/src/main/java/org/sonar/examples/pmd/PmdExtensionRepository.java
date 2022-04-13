@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin Integration Test
+ * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
  * mailto:jens AT gerdes DOT digital
  *
@@ -33,7 +33,7 @@ public class PmdExtensionRepository implements RulesDefinition {
     private static final Logger LOGGER = Loggers.get(PmdExtensionRepository.class);
 
     // Must be the same than the PMD plugin
-    private static final String REPOSITORY_KEY = "pmd";
+    private static final String REPOSITORY_KEY = "pmd7";
     private static final String LANGUAGE_KEY = "java";
 
     @Override

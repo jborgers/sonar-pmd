@@ -1,6 +1,6 @@
 # UseAssertSameInsteadOfAssertTrue
-**Category:** `pmd-unit-tests`<br/>
-**Rule Key:** `pmd-unit-tests:UseAssertSameInsteadOfAssertTrue`<br/>
+**Category:** `pmd7-unit-tests`<br/>
+**Rule Key:** `pmd7-unit-tests:UseAssertSameInsteadOfAssertTrue`<br/>
 
 
 -----
