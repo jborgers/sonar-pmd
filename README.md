@@ -32,6 +32,8 @@ Possible values:
 - 13
 - 14
 - 15
+- 16
+- 17
 
 ## Description / Features
 PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x

@@ -50,6 +50,12 @@ public class PmdTemplate {
         versions.put("1.9", "9");
         versions.put("1.10", "10");
         versions.put("1.11", "11");
+        versions.put("1.12", "12");
+        versions.put("1.13", "13");
+        versions.put("1.14", "14");
+        versions.put("1.15", "15");
+        versions.put("1.16", "16");
+        versions.put("1.17", "17");
 
         return versions;
     }
