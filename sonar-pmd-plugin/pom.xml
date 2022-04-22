@@ -14,13 +14,23 @@
   <name>SonarQube PMD Plugin</name>
   <description>Sonar-PMD is a plugin that provides coding rules from PMD.</description>
   <inceptionYear>2012</inceptionYear>
-  <url>https://github.com/jensgerdes/sonar-pmd</url>
+  <url>https://github.com/jborgers/sonar-pmd</url>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>
 
   <developers>
+    <developer>
+      <name>Jeroen Borgers</name>
+      <email>jborgers@jpinpoint.com</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <name>Peter Paul Bakker</name>
+      <email>peter.paul.bakker@stokpop.nl</email>
+      <timezone>+1</timezone>
+    </developer>
     <developer>
       <name>Jens Gerdes</name>
       <email>jens@gerdes.digital</email>
