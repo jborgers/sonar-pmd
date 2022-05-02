@@ -1,5 +1,7 @@
 # PMD Rules
 
+Note: this page is not up-to-date.   
+
 The purpose of this document is to support resolving [#110](https://github.com/jborgers/sonar-pmd/issues/110).
 For that purpose, we track the current rule status:
 * Is the description up to date?

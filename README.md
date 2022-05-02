@@ -1,5 +1,6 @@
 # SonarQube PMD Plugin [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin) [![Build Status](https://api.travis-ci.org/jborgers/sonar-pmd.svg?branch=master)](https://travis-ci.org/jborgers/sonar-pmd) [![SonarStatus](https://sonarcloud.io/api/project_badges/measure?project=org.sonarsource.pmd%3Asonar-pmd&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.sonarsource.pmd%3Asonar-pmd) [![SonarStatus](https://sonarcloud.io/api/project_badges/measure?project=org.sonarsource.pmd%3Asonar-pmd&metric=coverage)](https://sonarcloud.io/dashboard?id=org.sonarsource.pmd%3Asonar-pmd)
-Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.io/).
+Sonar-PMD is a plugin that provides coding rules from [PMD](https://pmd.github.io/) for use in SonarQube.
+Starting 2022, the project is sponsored by [Rabobank](https://www.rabobank.com/).
 
 For a list of all rules and their status, see: [RULES.md](https://github.com/jborgers/sonar-pmd/blob/master/docs/RULES.md)
 
@@ -15,32 +16,16 @@ Usage should be straight forward:
 
 ### Troubleshooting
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
-In case you are not using one of these build tools, PMD uses the default Java version - which is **1.6**.  
+In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-If that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
-
-Possible values: 
-- 1.4
-- 1.5 or 5 
-- 1.6 or 6 
-- 1.7 or 7 
-- 1.8 or 8
-- 9
-- 10
-- 11
-- 12
-- 13
-- 14
-- 15
-- 16
-- 17
+Possible values : 1.4 to 1.8/8 to 17
 
 ## Description / Features
-PMD Plugin|2.0|2.1|2.2|2.3|2.4.1|2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x|3.4.x (to release)
--------|---|---|---|---|---|---|---|---|---|---|---|---
-PMD|4.3|4.3|5.1.1|5.2.1|5.3.1|5.4.0|5.4.2|5.4.2|6.9.0|6.10.0|6.30.0|6.41.0
-Max. supported Java Version | |  |  |  |  | 1.7 | 1.8 | 1.8 | 11 | | 15|17
-Min. SonarQube Version |  |  |  |  |  | 4.5.4 | 4.5.4 | 6.6 | | | 6.7|7.x
+PMD Plugin|2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x|3.4.x (to release)
+-------|---|---|---|---|---|---|---
+PMD|5.4.0|5.4.2|5.4.2|6.9.0|6.10.0|6.30.0|6.41.0
+Max. supported Java Version | 1.7 | 1.8 | 1.8 | 11 | | 15|17
+Min. SonarQube Version | 4.5.4 | 4.5.4 | 6.6 | | | 6.7|7.x
 
 A majority of the PMD rules have been rewritten in the Java plugin. Rewritten rules are marked "Deprecated" in the PMD plugin, but a [concise summary of replaced rules](http://dist.sonarsource.com/reports/coverage/pmd.html) is available.
 
