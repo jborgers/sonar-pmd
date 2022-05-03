@@ -111,7 +111,7 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
-        <version>3.35.1.2719</version>
+        <version>3.37.0.87</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -234,7 +234,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.0</version>
         <configuration>
           <quiet>true</quiet>
           <source>8</source>
