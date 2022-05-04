@@ -80,7 +80,7 @@
     <assertj.version>3.22.0</assertj.version>
 
     <!-- Sonar settings -->
-    <version.sonar-packaging.plugin>1.20.0.405</version.sonar-packaging.plugin>
+    <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
     <sonar-plugin-api.version>9.4.0.54424</sonar-plugin-api.version>
 
     <!-- Technical settings -->
