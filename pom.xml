@@ -175,7 +175,7 @@
           <version>${version.sonar-packaging.plugin}</version>
           <configuration>
             <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-            <requirePlugins>java:5.14.0.18788</requirePlugins>
+            <!--requirePlugins>java:5.14.0.18788</requirePlugins-->
           </configuration>
         </plugin>
       </plugins>
