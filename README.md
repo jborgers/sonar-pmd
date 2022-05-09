@@ -16,18 +16,20 @@ Usage should be straight forward:
 1. Activate some PMD rules in your quality profile.
 2. Run an analysis.
 
-### Troubleshooting
+### Java version
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-Possible values : 1.4 to 1.8/8 to 17
+Possible values : 1.4 to 1.8/8 to 18
 
-## Description / Features
-PMD Plugin|2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x|3.4.x (to release)
--------|---|---|---|---|---|---|---
-PMD|5.4.0|5.4.2|5.4.2|6.9.0|6.10.0|6.30.0|6.45.0
-Max. supported Java Version | 1.7 | 1.8 | 1.8 | 11 | | 15|17
-Min. SonarQube Version | 4.5.4 | 4.5.4 | 6.6 | | | 6.7|6.7
+## Table of supported versions
+| PMD Plugin                  |2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x|3.4.x (to release)|
+|-----------------------------|---|---|---|---|---|---|---|
+| PMD                         |5.4.0|5.4.2|5.4.2|6.9.0|6.10.0|6.30.0|6.45.0|
+| Max. supported Java Version | 1.7 | 1.8 | 1.8 | 11 | | 15|18|
+|  Min. SonarQube Version     | 4.5.4 | 4.5.4 | 6.6 | | | 6.7|_8.9(*)_ / 9.3|
+
+(*) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.
 
 A majority of the PMD rules have been rewritten in the Java plugin. Rewritten rules are marked "Deprecated" in the PMD plugin, but a [concise summary of replaced rules](http://dist.sonarsource.com/reports/coverage/pmd.html) is available.
 
