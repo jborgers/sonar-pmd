@@ -8,7 +8,7 @@ defaults:
     shell: bash
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -34,3 +34,8 @@ jobs:
       - name: Build
         run: |
           ./mvnw clean verify
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v3
+        with:
+          path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
