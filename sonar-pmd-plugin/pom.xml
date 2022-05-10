@@ -173,7 +173,6 @@
       <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <version>1.21.0.505</version>
         <configuration>
           <pluginKey>pmd</pluginKey>
           <pluginName>PMD</pluginName>
