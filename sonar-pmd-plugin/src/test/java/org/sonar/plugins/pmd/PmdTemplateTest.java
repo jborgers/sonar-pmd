@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
- * mailto:jens AT gerdes DOT digital
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -34,7 +34,7 @@ class PmdTemplateTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "1.2", "5", "6", "7", "8", "9", "1.9", "10", "1.10", "11", "1.11", "12", "13", "14", "15"
+            "1.2", "5", "6", "7", "8", "9", "1.9", "10", "1.10", "11", "1.11", "12", "13", "14", "15", "16", "17", "18"
     })
     void verifyCanHandleJavaLanguageVersion(String javaVersion) {
         final LanguageVersionHandler languageVersionHandler = PmdTemplate

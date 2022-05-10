@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
- * mailto:jens AT gerdes DOT digital
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -50,6 +50,13 @@ public class PmdTemplate {
         versions.put("1.9", "9");
         versions.put("1.10", "10");
         versions.put("1.11", "11");
+        versions.put("1.12", "12");
+        versions.put("1.13", "13");
+        versions.put("1.14", "14");
+        versions.put("1.15", "15");
+        versions.put("1.16", "16");
+        versions.put("1.17", "17");
+        versions.put("1.18", "18");
 
         return versions;
     }
