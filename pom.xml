@@ -30,7 +30,7 @@
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.4.0-SNAPSHOT</version>
+  <version>3.4.0</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -38,7 +38,7 @@
     <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
     <developerConnection>scm:git:git@github.com:jborgers/sonar-pmd.git</developerConnection>
     <url>https://github.com/jborgers/sonar-pmd</url>
-    <tag>HEAD</tag>
+    <tag>3.4.0</tag>
   </scm>
   <url>https://github.com/jborgers/sonar-pmd</url>
   <issueManagement>
@@ -71,6 +71,17 @@
     </developer>
   </developers>
 
+  <distributionManagement>
+    <repository>
+      <id>sonatype-nexus</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>sonatype-nexus</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <properties>
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
@@ -92,6 +103,11 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
+
+  <modules>
+    <module>sonar-pmd-plugin</module>
+    <module>integration-test</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -213,12 +229,12 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.8</version>
+        <version>1.6.13</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>sonatype-nexus</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
         </configuration>
       </plugin>
       <plugin>
@@ -264,13 +280,7 @@
 
   <profiles>
     <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
+      <id>release</id>
       <build>
         <plugins>
           <plugin>
@@ -298,20 +308,4 @@
     </profile>
   </profiles>
 
-
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
-  <modules>
-    <module>sonar-pmd-plugin</module>
-    <module>integration-test</module>
-  </modules>
 </project>
