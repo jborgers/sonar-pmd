@@ -1,6 +1,10 @@
 name: Build
 
 on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch:
 
 defaults:
@@ -38,4 +42,5 @@ jobs:
       - name: Upload jar
         uses: actions/upload-artifact@v3
         with:
+          name: sonar-pmd-plugin-${{ env.TAG_NAME }}
           path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
