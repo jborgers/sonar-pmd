@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.4.0](https://github.com/jborgers/sonar-pmd/tree/master) (2022-05-11)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.3.1...master)
+
+**Contributors:**
+- [jensgerdes](https://github.com/jensgerdes) (Many thanks for his great maintenance and decision to transfer)
+
+**Implemented highlights:**
+- Updated PMD (6.45.0) #319
+- Support for Java 18 (including 17) #319
+- Updated Sonar Plugin API (9.4.0.54424) #309
+- Removed explicit dependency on Java plugin for new SonarQube Marketplace setup #303
+- Upgraded various dependencies
+- Transferred maintenance to [jborgers](https://github.com/jborgers) and [stokpop](https://github.com/stokpop)
+
 ## [3.3.2-SNAPSHOT](https://github.com/jensgerdes/sonar-pmd/tree/master) (2021-01-30)
 [Full Changelog](https://github.com/jensgerdes/sonar-pmd/compare/3.3.1...master)
 
