@@ -35,7 +35,6 @@
 
   <properties>
     <sonar.skip>true</sonar.skip>
-    <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
 
   <dependencies>
@@ -66,14 +65,6 @@
 
   <build>
     <plugins>
-      <!-- prevent deploy: https://stackoverflow.com/questions/25305850/how-to-disable-nexus-staging-maven-plugin-in-sub-modules -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
@@ -83,6 +74,16 @@
 
           <!-- This is important. It means that this plugin extends the PMD plugin -->
           <basePlugin>pmd</basePlugin>
+        </configuration>
+      </plugin>
+      <!-- prevent deploy: https://stackoverflow.com/questions/25305850/how-to-disable-nexus-staging-maven-plugin-in-sub-modules -->
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <configuration>
+          <!-- prevent deploy of integration test: 'true' does not work as all modules are
+           skipped when the last module is skipped, integration-test is last module -->
+          <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
         </configuration>
       </plugin>
     </plugins>
