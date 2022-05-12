@@ -27,6 +27,7 @@ In GitHub:
 - close milestone `x.y.z`
 - create new milestone `x.y.z+1`
 
-Other:
+To marketplace:
 
-- inform interested parties of new release
+- See [deploying-to-the-marketplace](https://community.sonarsource.com/t/deploying-to-the-marketplace/35236)
+- See our first forum post: [new-release-sonar-pmd-plugin-3-4-0](https://community.sonarsource.com/t/new-release-sonar-pmd-plugin-3-4-0/63091)
