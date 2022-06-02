@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
- * mailto:jens AT gerdes DOT digital
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

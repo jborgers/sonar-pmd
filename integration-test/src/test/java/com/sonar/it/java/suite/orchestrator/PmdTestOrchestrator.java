@@ -1,7 +1,7 @@
 /*
  * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
- * mailto:jens AT gerdes DOT digital
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -112,6 +112,6 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[7.9]");
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[9.4]");
     }
 }

@@ -1,7 +1,8 @@
 <!--
   ~ SonarQube PMD7 Plugin
   ~ Copyright (C) 2012-2018 SonarSource SA
-  ~ mailto:jens AT gerdes DOT digital
+  ~ mailto:jborgers AT jpinpoint DOT com
+  ~ mailto:peter.paul.bakker AT stokpop DOT nl
   ~
   ~ This program is free software; you can redistribute it and/or
   ~ modify it under the terms of the GNU Lesser General Public
@@ -24,29 +25,29 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>55</version>
+    <version>59.0.29</version>
   </parent>
 
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.3.2-SNAPSHOT</version>
+  <version>3.4.1-SNAPSHOT</version>
   <name>SonarQube PMD7 Project</name>
   <packaging>pom</packaging>
 
   <scm>
-    <connection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</connection>
-    <developerConnection>scm:git:git@github.com:jensgerdes/sonar-pmd.git</developerConnection>
-    <url>https://github.com/jensgerdes/sonar-pmd</url>
+    <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
+    <developerConnection>scm:git:git@github.com:jborgers/sonar-pmd.git</developerConnection>
+    <url>https://github.com/jborgers/sonar-pmd</url>
     <tag>HEAD</tag>
   </scm>
-  <url>https://github.com/jensgerdes/sonar-pmd</url>
+  <url>https://github.com/jborgers/sonar-pmd</url>
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/jensgerdes/sonar-pmd/issues</url>
+    <url>https://github.com/jborgers/sonar-pmd/issues</url>
   </issueManagement>
   <ciManagement>
     <system>Travis</system>
-    <url>https://travis-ci.org/jensgerdes/sonar-pmd</url>
+    <url>https://travis-ci.org/jborgers/sonar-pmd</url>
   </ciManagement>
 
   <licenses>
@@ -59,23 +60,39 @@
 
   <developers>
     <developer>
-      <name>Jens Gerdes</name>
-      <email>jens@gerdes.digital</email>
+      <name>Jeroen Borgers</name>
+      <email>jborgers@jpinpoint.com</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <name>Peter Paul Bakker</name>
+      <email>peter.paul.bakker@stokpop.nl</email>
       <timezone>+1</timezone>
     </developer>
   </developers>
 
+  <distributionManagement>
+    <repository>
+      <id>sonatype-nexus</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>sonatype-nexus</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <properties>
     <license.owner>SonarSource SA and others</license.owner>
-    <license.mailto>mailto:jens AT gerdes DOT digital</license.mailto>
+    <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
     <pmd.version>7.0.0-kotlin-SNAPSHOT</pmd.version>
     <junit.jupiter.version>5.7.1</junit.jupiter.version>
-    <mockito.version>3.8.0</mockito.version>
-    <assertj.version>3.19.0</assertj.version>
+    <mockito.version>4.5.1</mockito.version>
+    <assertj.version>3.22.0</assertj.version>
 
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.20.0.405</version.sonar-packaging.plugin>
-    <sonar-plugin-api.version>8.7.0.41497</sonar-plugin-api.version>
+    <sonar-plugin-api.version>9.4.0.54424</sonar-plugin-api.version>
 
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -84,8 +101,13 @@
 
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd7-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
+
+  <modules>
+    <module>sonar-pmd7-plugin</module>
+    <module>integration-test</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -105,7 +127,7 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
-        <version>3.34.0.2692</version>
+        <version>3.35.1.2719</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -169,7 +191,7 @@
           <version>${version.sonar-packaging.plugin}</version>
           <configuration>
             <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-            <requirePlugins>java:5.14.0.18788</requirePlugins>
+            <!--requirePlugins>java:5.14.0.18788</requirePlugins-->
           </configuration>
         </plugin>
       </plugins>
@@ -205,6 +227,17 @@
 
       <!-- Release relevant plugins -->
       <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>sonatype-nexus</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
@@ -228,7 +261,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.0</version>
         <configuration>
           <quiet>true</quiet>
           <source>8</source>
@@ -247,19 +280,13 @@
 
   <profiles>
     <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
+      <id>release</id>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
+            <version>3.0.1</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -269,26 +296,16 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
   </profiles>
 
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
-  <modules>
-    <module>sonar-pmd7-plugin</module>
-    <module>integration-test</module>
-  </modules>
 </project>

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.sonarsource.pmd</groupId>
     <artifactId>sonar-pmd</artifactId>
-    <version>3.3.2-SNAPSHOT</version>
+    <version>3.4.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>sonar-pmd7-plugin</artifactId>
@@ -14,13 +14,23 @@
   <name>SonarQube PMD7 Plugin</name>
   <description>Sonar-PMD7 is a plugin that provides coding rules from PMD7.</description>
   <inceptionYear>2012</inceptionYear>
-  <url>https://github.com/jensgerdes/sonar-pmd</url>
+  <url>https://github.com/jborgers/sonar-pmd</url>
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
   </properties>
 
   <developers>
+    <developer>
+      <name>Jeroen Borgers</name>
+      <email>jborgers@jpinpoint.com</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <name>Peter Paul Bakker</name>
+      <email>peter.paul.bakker@stokpop.nl</email>
+      <timezone>+1</timezone>
+    </developer>
     <developer>
       <name>Jens Gerdes</name>
       <email>jens@gerdes.digital</email>
@@ -55,7 +65,7 @@
     <dependency>
       <groupId>org.sonarsource.java</groupId>
       <artifactId>java-frontend</artifactId>
-      <version>7.1.0.26670</version>
+      <version>7.11.0.29148</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -71,7 +81,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>30.1-jre</version>
+      <version>31.1-jre</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sslr-squid-bridge</groupId>
@@ -125,12 +135,12 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>3.8.0.2131</version>
+          <version>3.9.0.2155</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.6</version>
+          <version>0.8.8</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -189,7 +199,6 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <!--maxsize>8500000</maxsize> For pmd-7 size is currently > 12000000 -->
                   <maxsize>16000000</maxsize>
                   <minsize>12000000</minsize>
                   <files>

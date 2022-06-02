@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Release version env variable
+        run: |
+          echo "TAG_NAME=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      # if no tag exists, this is expected to fail
+      - name: Switch to git tag for release
+        if: contains(env.TAG_NAME, 'SNAPSHOT') != true
+        run: |
+          git fetch --all --tags
+          git checkout tags/${{ env.TAG_NAME }} -b ${{ env.TAG_NAME }}-tmp-branch
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Build
+        run: |
+          ./mvnw clean verify
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: sonar-pmd-plugin-${{ env.TAG_NAME }}
+          path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
