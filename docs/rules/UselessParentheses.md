@@ -1,7 +1,7 @@
 # UselessParentheses
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UselessParentheses`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:UselessParenthesesCheck`.
+> :warning: This rule is **deprecated** in favour of `java:UselessParenthesesCheck`.
 
 -----
 

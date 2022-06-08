@@ -1,7 +1,7 @@
 # EmptyCatchBlock
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyCatchBlock`<br/>
-> :warning: This rule is **deprecated** in favour of [S00108](https://rules.sonarsource.com/java/RSPEC-108).
+> :warning: This rule is **deprecated** in favour of [S108](https://rules.sonarsource.com/java/RSPEC-108).
 
 -----
 

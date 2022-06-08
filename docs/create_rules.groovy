@@ -15,7 +15,7 @@ def createDeprecationWarning = {
             def parsedRules = rules.collect {
                 def ruleNumber = it.substring(1)
                 (ruleNumber.isInteger()) ?
-                        "[${it}](https://rules.sonarsource.com/java/RSPEC-${ruleNumber.toInteger()})" : "`squid:${it}`"
+                        "[${it}](https://rules.sonarsource.com/java/RSPEC-${ruleNumber.toInteger()})" : "`java:${it}`"
             }
 
             return "> :warning: This rule is **deprecated** in favour of ${parsedRules.join(', ')}."
@@ -35,7 +35,7 @@ def extractRulesFromContent = {
 
 def removeDeprecationMessage = {
     content ->
-        def regex = /(?ms)<p>(\s*)This rule is deprecated, use \{rule:squid:(\w+)\} (.*)instead.(\s*)<\/p>/
+        def regex = /(?ms)<p>(\s*)This rule is deprecated, use \{rule:java:(\w+)\} (.*)instead.(\s*)<\/p>/
 
         if (content =~ regex) {
             return content.replaceFirst(regex, "")

@@ -1,7 +1,7 @@
 # FinalizeDoesNotCallSuperFinalize
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:FinalizeDoesNotCallSuperFinalize`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:ObjectFinalizeOverridenCallsSuperFinalizeCheck`.
+> :warning: This rule is **deprecated** in favour of `java:ObjectFinalizeOverridenCallsSuperFinalizeCheck`.
 
 -----
 

@@ -1,7 +1,7 @@
 # IfElseStmtsMustUseBraces
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:IfElseStmtsMustUseBraces`<br/>
-> :warning: This rule is **deprecated** in favour of [S00121](https://rules.sonarsource.com/java/RSPEC-121).
+> :warning: This rule is **deprecated** in favour of [S121](https://rules.sonarsource.com/java/RSPEC-121).
 
 -----
 

@@ -1,7 +1,7 @@
 # LoosePackageCoupling
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:LoosePackageCoupling`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:ArchitecturalConstraint`.
+> :warning: This rule is **deprecated** in favour of `java:ArchitecturalConstraint`.
 
 -----
 

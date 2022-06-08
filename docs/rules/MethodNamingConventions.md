@@ -1,7 +1,7 @@
 # MethodNamingConventions
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:MethodNamingConventions`<br/>
-> :warning: This rule is **deprecated** in favour of [S00100](https://rules.sonarsource.com/java/RSPEC-100).
+> :warning: This rule is **deprecated** in favour of [S100](https://rules.sonarsource.com/java/RSPEC-100).
 
 -----
 

@@ -1,7 +1,7 @@
 # UnusedImportsWithTypeResolution
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedImportsWithTypeResolution`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:UselessImportCheck`.
+> :warning: This rule is **deprecated** in favour of `java:UselessImportCheck`.
 
 -----
 

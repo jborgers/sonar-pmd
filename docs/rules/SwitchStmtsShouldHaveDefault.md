@@ -1,7 +1,7 @@
 # SwitchStmtsShouldHaveDefault
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SwitchStmtsShouldHaveDefault`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:SwitchLastCaseIsDefaultCheck`.
+> :warning: This rule is **deprecated** in favour of `java:SwitchLastCaseIsDefaultCheck`.
 
 -----
 

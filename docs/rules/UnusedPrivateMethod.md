@@ -1,7 +1,7 @@
 # UnusedPrivateMethod
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedPrivateMethod`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:UnusedPrivateMethod`.
+> :warning: This rule is **deprecated** in favour of `java:UnusedPrivateMethod`.
 
 -----
 

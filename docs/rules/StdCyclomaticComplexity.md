@@ -1,7 +1,7 @@
 # StdCyclomaticComplexity
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:StdCyclomaticComplexity`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:MethodCyclomaticComplexity`, `squid:ClassCyclomaticComplexity`.
+> :warning: This rule is **deprecated** in favour of `java:MethodCyclomaticComplexity`, `java:ClassCyclomaticComplexity`.
 
 -----
 

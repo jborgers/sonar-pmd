@@ -1,7 +1,7 @@
 # OneDeclarationPerLine
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:OneDeclarationPerLine`<br/>
-> :warning: This rule is **deprecated** in favour of [S00122](https://rules.sonarsource.com/java/RSPEC-122).
+> :warning: This rule is **deprecated** in favour of [S122](https://rules.sonarsource.com/java/RSPEC-122).
 
 -----
 

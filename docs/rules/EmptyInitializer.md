@@ -1,7 +1,7 @@
 # EmptyInitializer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyInitializer`<br/>
-> :warning: This rule is **deprecated** in favour of [S00108](https://rules.sonarsource.com/java/RSPEC-108).
+> :warning: This rule is **deprecated** in favour of [S108](https://rules.sonarsource.com/java/RSPEC-108).
 
 -----
 
