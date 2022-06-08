@@ -84,23 +84,29 @@ public class PmdTestOrchestrator {
     }
 
     public static PmdTestOrchestrator init() {
-        final Orchestrator orchestrator = Orchestrator
-                .builderEnv()
-                .setSonarVersion(determineSonarqubeVersion())
-                .addPlugin(MavenLocation.create(
-                        "org.sonarsource.java",
-                        "sonar-java-plugin",
-                        determineJavaPluginVersion()
-                ))
-                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd7-plugin/target"), "sonar-pmd7-plugin-*.jar"))
-                .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd7-all-rules.xml"))
-                .build();
+        try {
+            final Orchestrator orchestrator = Orchestrator
+                    .builderEnv()
+                    .setSonarVersion(determineSonarqubeVersion())
+                    .addPlugin(MavenLocation.create(
+                            "org.sonarsource.java",
+                            "sonar-java-plugin",
+                            determineJavaPluginVersion()
+                    ))
+                    .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd7-plugin-*.jar"))
+                    .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
+                    .build();
 
-        return new PmdTestOrchestrator(orchestrator);
+            return new PmdTestOrchestrator(orchestrator);
+        }
+        catch(Exception e) {
+            System.out.println("ERROR: " + e);
+            throw new RuntimeException(e);
+        }
     }
 
     private static String deriveProjectKey(String projectName) {

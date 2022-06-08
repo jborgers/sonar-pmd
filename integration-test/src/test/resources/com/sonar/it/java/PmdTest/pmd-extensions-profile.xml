@@ -4,7 +4,7 @@
   <language>java</language>
   <rules>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>MaximumMethodsCountCheck</key>
       <priority>CRITICAL</priority>
       <parameters>
@@ -15,17 +15,17 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidIfWithoutBrace</key>
       <priority>MAJOR</priority>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>AvoidCatchingThrowable</key>
       <priority>MAJOR</priority>
     </rule>
     <rule>
-      <repositoryKey>pmd</repositoryKey>
+      <repositoryKey>pmd7</repositoryKey>
       <key>DoNotExtendIOException</key>
       <priority>MAJOR</priority>
     </rule>

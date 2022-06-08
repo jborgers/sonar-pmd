@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <profile>
-  <name>pmd7-all-rules</name>
+  <name>pmd-all-rules</name>
   <language>java</language>
   <rules>
     <rule>
@@ -977,12 +977,12 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
+    <!--rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>LawOfDemeter</key>
       <priority>MAJOR</priority>
       <parameters/>
-    </rule>
+    </rule-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>LocalHomeNamingConvention</key>
