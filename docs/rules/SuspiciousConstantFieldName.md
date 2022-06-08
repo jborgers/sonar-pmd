@@ -1,7 +1,7 @@
 # SuspiciousConstantFieldName
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SuspiciousConstantFieldName`<br/>
-> :warning: This rule is **deprecated** in favour of [S00116](https://rules.sonarsource.com/java/RSPEC-116).
+> :warning: This rule is **deprecated** in favour of [S116](https://rules.sonarsource.com/java/RSPEC-116).
 
 -----
 

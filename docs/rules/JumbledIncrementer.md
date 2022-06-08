@@ -1,7 +1,7 @@
 # JumbledIncrementer
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:JumbledIncrementer`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:ForLoopCounterChangedCheck`.
+> :warning: This rule is **deprecated** in favour of `java:ForLoopCounterChangedCheck`.
 
 -----
 

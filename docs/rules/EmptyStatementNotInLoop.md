@@ -1,7 +1,7 @@
 # EmptyStatementNotInLoop
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:EmptyStatementNotInLoop`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:EmptyStatementUsageCheck`.
+> :warning: This rule is **deprecated** in favour of `java:EmptyStatementUsageCheck`.
 
 -----
 

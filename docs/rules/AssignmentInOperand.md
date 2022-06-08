@@ -1,7 +1,7 @@
 # AssignmentInOperand
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AssignmentInOperand`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:AssignmentInSubExpressionCheck`.
+> :warning: This rule is **deprecated** in favour of `java:AssignmentInSubExpressionCheck`.
 
 -----
 

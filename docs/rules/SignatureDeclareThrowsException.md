@@ -1,7 +1,7 @@
 # SignatureDeclareThrowsException
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:SignatureDeclareThrowsException`<br/>
-> :warning: This rule is **deprecated** in favour of [S00112](https://rules.sonarsource.com/java/RSPEC-112).
+> :warning: This rule is **deprecated** in favour of [S112](https://rules.sonarsource.com/java/RSPEC-112).
 
 -----
 

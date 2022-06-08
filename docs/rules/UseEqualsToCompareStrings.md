@@ -1,7 +1,7 @@
 # UseEqualsToCompareStrings
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UseEqualsToCompareStrings`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:StringEqualityComparisonCheck`, [S1698](https://rules.sonarsource.com/java/RSPEC-1698).
+> :warning: This rule is **deprecated** in favour of `java:StringEqualityComparisonCheck`, [S1698](https://rules.sonarsource.com/java/RSPEC-1698).
 
 -----
 

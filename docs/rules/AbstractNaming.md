@@ -1,7 +1,7 @@
 # AbstractNaming
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AbstractNaming`<br/>
-> :warning: This rule is **deprecated** in favour of [S00118](https://rules.sonarsource.com/java/RSPEC-118).
+> :warning: This rule is **deprecated** in favour of [S118](https://rules.sonarsource.com/java/RSPEC-118).
 
 -----
 

@@ -2,11 +2,11 @@ The null check here is misplaced. if the variable is null you'll get a NullPoint
 Either the check is useless (the variable will never be null) or it's incorrect.
 <br>Example :
 <pre>
-if (object1!=null && object2.equals(object1)) { 
+if (object1!=null && object2.equals(object1)) {
   ...
-}      
+}
 </pre>
 
 <p>
-  This rule is deprecated, use {rule:squid:S1697} or {rule:squid:S2259} instead.
+  This rule is deprecated, use {rule:java:S1697} or {rule:java:S2259} instead.
 </p>

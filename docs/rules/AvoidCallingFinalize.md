@@ -1,7 +1,7 @@
 # AvoidCallingFinalize
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:AvoidCallingFinalize`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:ObjectFinalizeCheck`.
+> :warning: This rule is **deprecated** in favour of `java:ObjectFinalizeCheck`.
 
 -----
 

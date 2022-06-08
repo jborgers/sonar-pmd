@@ -1,7 +1,7 @@
 # UnusedImports
 **Category:** `pmd`<br/>
 **Rule Key:** `pmd:UnusedImports`<br/>
-> :warning: This rule is **deprecated** in favour of `squid:UselessImportCheck`.
+> :warning: This rule is **deprecated** in favour of `java:UselessImportCheck`.
 
 -----
 
