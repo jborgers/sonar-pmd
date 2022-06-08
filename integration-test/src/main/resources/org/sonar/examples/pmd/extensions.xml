@@ -47,7 +47,7 @@
     <param>
       <key>xpath</key>
       <description><![CDATA[XPath expressions.]]></description>
-      <defaultValue>//VariableDeclarator[../Type/ReferenceType/ClassOrInterfaceType[@Image='EmptyClass']]</defaultValue>
+      <defaultValue>//VariableDeclarator[../ClassOrInterfaceType[@SimpleName='EmptyClass']]</defaultValue>
     </param>
     <param>
       <key>message</key>

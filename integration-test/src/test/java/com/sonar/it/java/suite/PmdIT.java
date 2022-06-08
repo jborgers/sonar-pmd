@@ -59,7 +59,7 @@ class PmdIT {
                 .setProperty("maven.compiler.target", version.toString())
                 .setProperty("sonar.java.binaries", ".");
 
-        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
         // when
         final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
@@ -69,11 +69,9 @@ class PmdIT {
         assertThat(log)
                 .contains("Start MaximumMethodsCountCheck")
                 .contains("End MaximumMethodsCountCheck");
-        System.out.println("WARNING: part of integration test switched off!");
-/* TODO - FIXME - somehow this doesn't work yet
-  log shows rules with repo-key pmd7 are there, just no violations
 
         final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors"));
+
         assertThat(issues)
                 .hasSize(3);
 
@@ -88,7 +86,7 @@ class PmdIT {
                         "A catch statement should never catch throwable since it includes errors.",
                         "Avoid if without using brace"
                 );
-*/
+
         // Cleanup
         ORCHESTRATOR.resetData(projectName);
     }
@@ -163,7 +161,6 @@ class PmdIT {
     /**
      * SONARPLUGINS-3318
      */
-/* TODO FIXME
     @Test
     void pmdShouldHaveAccessToExternalLibrariesInItsClasspath() {
 
@@ -173,7 +170,7 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
         // when
         ORCHESTRATOR.executeBuild(build);
@@ -209,7 +206,7 @@ class PmdIT {
         // Cleanup
         ORCHESTRATOR.resetData(projectName);
     }
-*/
+
     private List<Issue> retrieveIssues(String componentKey) {
         final IssueQuery issueQuery = IssueQuery.create();
         issueQuery.urlParams().put("componentKeys", componentKey);
