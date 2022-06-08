@@ -71,7 +71,7 @@
         <extensions>true</extensions>
         <configuration>
           <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
-
+          <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
           <!-- This is important. It means that this plugin extends the PMD plugin -->
           <basePlugin>pmd</basePlugin>
         </configuration>
