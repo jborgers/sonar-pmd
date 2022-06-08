@@ -47,7 +47,7 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.EXCLUDE, names = {"JAVA_0_9", "JAVA_16", "JAVA_RECENT"})
+    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_16"})
     void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
 
         // given
@@ -59,7 +59,7 @@ class PmdIT {
                 .setProperty("maven.compiler.target", version.toString())
                 .setProperty("sonar.java.binaries", ".");
 
-        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
         // when
         final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
@@ -169,7 +169,7 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile(projectName, projectName);
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
         // when
         ORCHESTRATOR.executeBuild(build);
