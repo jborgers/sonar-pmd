@@ -106,11 +106,17 @@ public class PmdTemplate {
     }
 
     public Report process(Iterable<InputFile> files, RuleSet ruleset) {
-        return PMD.processFiles(
-                configuration,
-                Collections.singletonList(ruleset),
-                toDataSources(files),
-                Collections.emptyList()
-        );
+        try {
+            return PMD.processFiles(
+                    configuration,
+                    Collections.singletonList(ruleset),
+                    toDataSources(files),
+                    Collections.emptyList()
+            );
+        }
+        catch (Exception e) {
+            LOG.info("ERROR processing files: " + e.getClass().getSimpleName() + "-" + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }
