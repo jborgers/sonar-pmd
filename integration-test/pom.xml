@@ -86,6 +86,21 @@
           <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
         </configuration>
       </plugin>
+      <plugin>
+        <!-- delete the target dirs in the sub projects, not cleaned by default -->
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/projects</directory>
+              <includes>
+                <include>**/target/**</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
