@@ -71,6 +71,9 @@
         <extensions>true</extensions>
         <configuration>
           <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
+          <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
+          <!-- This is important. It means that this plugin extends the PMD7 plugin -->
+          <basePlugin>pmd7</basePlugin>
 
           <!-- This is important. It means that this plugin extends the PMD7 plugin -->
           <basePlugin>pmd7</basePlugin>
@@ -84,6 +87,21 @@
           <!-- prevent deploy of integration test: 'true' does not work as all modules are
            skipped when the last module is skipped, integration-test is last module -->
           <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!-- delete the target dirs in the sub projects, not cleaned by default -->
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/projects</directory>
+              <includes>
+                <include>**/target/**</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
         </configuration>
       </plugin>
     </plugins>
