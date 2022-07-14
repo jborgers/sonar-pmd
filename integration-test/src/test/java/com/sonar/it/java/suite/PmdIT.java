@@ -22,7 +22,9 @@ package com.sonar.it.java.suite;
 import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
+import com.sonar.orchestrator.http.HttpException;
 import org.apache.commons.lang3.JavaVersion;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -59,36 +61,45 @@ class PmdIT {
                 .setProperty("maven.compiler.target", version.toString())
                 .setProperty("sonar.java.binaries", ".");
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
+        try {
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
-        // when
-        final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
+            // when
+            final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
 
-        // then
-        final String log = buildResult.getLogs();
-        assertThat(log)
-                .contains("Start MaximumMethodsCountCheck")
-                .contains("End MaximumMethodsCountCheck");
+            // then
+            final String log = buildResult.getLogs();
+            assertThat(log)
+                    .contains("Start MaximumMethodsCountCheck")
+                    .contains("End MaximumMethodsCountCheck");
 
-        final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors"));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors"));
 
-        assertThat(issues)
-                .hasSize(3);
+            final List<String> messages = issues
+                    .stream()
+                    .map(Issue::message)
+                    .collect(Collectors.toList());
 
-        final List<String> messages = issues
-                .stream()
-                .map(Issue::message)
-                .collect(Collectors.toList());
+            System.out.println("messages: " + messages);
 
-        assertThat(messages)
-                .containsOnly(
-                        "Avoid too many methods",
-                        "A catch statement should never catch throwable since it includes errors.",
-                        "Avoid if without using brace"
-                );
+            assertThat(issues)
+                    .hasSize(3);
 
-        // Cleanup
-        ORCHESTRATOR.resetData(projectName);
+
+
+            assertThat(messages)
+                    .containsOnly(
+                            "Avoid too many methods",
+                            "A catch statement should never catch throwable since it includes errors.",
+                            "Avoid if without using brace"
+                    );
+        } catch (HttpException e) {
+            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            throw e;
+        } finally {
+            // Cleanup
+            ORCHESTRATOR.resetData(projectName);
+        }
     }
 
     /**
@@ -103,27 +114,33 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd7", projectName);
+        try {
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd7", projectName);
 
-        // when
-        ORCHESTRATOR.executeBuild(build);
+            // when
+            ORCHESTRATOR.executeBuild(build);
 
-        // then
-        final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
-                IssueQuery.create()
-                        .rules("pmd7:AvoidDuplicateLiterals")
-                        .components(keyFor(projectName, "", "AvoidDuplicateLiterals")
-                        )
-        );
+            // then
+            final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
+                    IssueQuery.create()
+                            .rules("pmd7:AvoidDuplicateLiterals")
+                            .components(keyFor(projectName, "", "AvoidDuplicateLiterals")
+                            )
+            );
 
-        assertThat(issues)
-                .hasSize(1);
+            assertThat(issues)
+                    .hasSize(1);
 
-        assertThat(issues.get(0).message())
-                .contains("appears 5 times in this file");
+            assertThat(issues.get(0).message())
+                    .contains("appears 5 times in this file");
 
-        // Cleanup
-        ORCHESTRATOR.resetData(projectName);
+        } catch (HttpException e) {
+            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            throw e;
+        } finally {
+            // Cleanup
+            ORCHESTRATOR.resetData(projectName);
+        }
     }
 
     /**
@@ -138,24 +155,30 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals();
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd-junit", projectName);
+        try {
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-junit", projectName);
 
-        // when
-        ORCHESTRATOR.executeBuild(build);
+            // when
+            ORCHESTRATOR.executeBuild(build);
 
-        // then
-        final List<Issue> testIssues = retrieveIssues(keyForTest());
-        assertThat(testIssues).hasSize(1);
-        assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
-        assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd7-unit-tests:TestClassWithoutTestCases");
+            // then
+            final List<Issue> testIssues = retrieveIssues(keyForTest());
+            assertThat(testIssues).hasSize(1);
+            assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
+            assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd7-unit-tests:TestClassWithoutTestCases");
 
-        final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
-        assertThat(prodIssues).hasSize(1);
-        assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
-        assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd7:UnusedPrivateField");
+            final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
+            assertThat(prodIssues).hasSize(1);
+            assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
+            assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd7:UnusedPrivateField");
 
-        // Cleanup
-        ORCHESTRATOR.resetData(projectName);
+        } catch (HttpException e) {
+            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            throw e;
+        } finally {
+            // Cleanup
+            ORCHESTRATOR.resetData(projectName);
+        }
     }
 
     /**
@@ -169,19 +192,24 @@ class PmdIT {
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
+        try {
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
+            // when
+            ORCHESTRATOR.executeBuild(build);
 
-        // when
-        ORCHESTRATOR.executeBuild(build);
+            // then
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
+            assertThat(issues)
+                    .hasSize(1);
 
-        // then
-        final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
-        assertThat(issues)
-                .hasSize(1);
-
-        // Cleanup
-        ORCHESTRATOR.resetData(projectName);
+        } catch (HttpException e) {
+            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            throw e;
+        } finally {
+            // Cleanup
+            ORCHESTRATOR.resetData(projectName);
+        }
     }
 
     @Test
@@ -192,19 +220,24 @@ class PmdIT {
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
+        try {
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules", projectName);
 
-        ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules", projectName);
+            // when
+            ORCHESTRATOR.executeBuild(build);
 
-        // when
-        ORCHESTRATOR.executeBuild(build);
+            // then
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
+            assertThat(issues)
+                    .isNotEmpty();
 
-        // then
-        final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
-        assertThat(issues)
-                .isNotEmpty();
-
-        // Cleanup
-        ORCHESTRATOR.resetData(projectName);
+        } catch (HttpException e) {
+            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            throw e;
+        } finally {
+            // Cleanup
+            ORCHESTRATOR.resetData(projectName);
+        }
     }
 
     private List<Issue> retrieveIssues(String componentKey) {
