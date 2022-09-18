@@ -58,7 +58,7 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
             addRuleProperties(rule, pmdRule);
             ruleset.addRule(pmdRule);
 
-            pmdRule.processXpath(rule.internalKey());
+            pmdRule.processXpath(rule.ruleKey().rule());
         }
         return ruleset;
     }
