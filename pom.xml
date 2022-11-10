@@ -91,7 +91,7 @@
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
     <sonar-plugin-api.version>9.4.0.54424</sonar-plugin-api.version>
-    <sonar-orchestrator.version>3.37.0.87</sonar-orchestrator.version>
+    <sonar-orchestrator.version>3.39.0.167</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
