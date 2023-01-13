@@ -9,8 +9,6 @@ For a list of all rules and their status, see: [RULES.md](https://github.com/jbo
 ## Installation
 The plugin should be available in the SonarQube marketplace and is preferably installed from within SonarQube (Administration -->  Marketplace --> Search _pmd_).
 
-Because of changed integration of the Java-plugin in SonarQube and our dependency on it, this plugin is temporarily not available from the Marketplace. 
-Hopefully this will be fixed quickly with the release of version 3.4.0.
 Alternatively, download the [latest JAR file](https://github.com/jborgers/sonar-pmd/releases/latest), put it into the plugin directory (`./extensions/plugins`) and restart SonarQube.
 
 ## Usage
