@@ -145,7 +145,7 @@ class PmdIT {
         // then
         final List<Issue> testIssues = retrieveIssues(keyForTest());
         assertThat(testIssues).hasSize(1);
-        assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
+        assertThat(testIssues.get(0).message()).matches("The class 'ProductionCodeTest' might be a test class, but it contains no test cases.");
         assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd-unit-tests:TestClassWithoutTestCases");
 
         final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));

@@ -61,6 +61,11 @@
       <version>3.12.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-clean-plugin</artifactId>
+      <version>3.2.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -89,6 +94,7 @@
       <plugin>
         <!-- delete the target dirs in the sub projects, not cleaned by default -->
         <artifactId>maven-clean-plugin</artifactId>
+        <version>3.2.0</version>
         <configuration>
           <filesets>
             <fileset>
