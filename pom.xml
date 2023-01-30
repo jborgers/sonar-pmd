@@ -80,7 +80,7 @@
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
     <pmd.version>6.53.0</pmd.version>
     <junit.jupiter.version>5.9.2</junit.jupiter.version>
-    <mockito.version>5.0.0</mockito.version>
+    <mockito.version>5.1.0</mockito.version>
     <assertj.version>3.24.2</assertj.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
