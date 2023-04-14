@@ -106,7 +106,7 @@
     <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
     <sonar.maven.plugin.version>3.9.1.2184</sonar.maven.plugin.version>
-    <jacoco.maven.plugin.version>0.8.8</jacoco.maven.plugin.version>
+    <jacoco.maven.plugin.version>0.8.9</jacoco.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
