@@ -78,16 +78,16 @@
   <properties>
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
-    <pmd.version>6.53.0</pmd.version>
+    <pmd.version>6.55.0</pmd.version>
     <junit.jupiter.version>5.9.2</junit.jupiter.version>
-    <mockito.version>5.0.0</mockito.version>
+    <mockito.version>5.2.0</mockito.version>
     <assertj.version>3.24.2</assertj.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
-    <java.frontend.version>7.16.0.30901</java.frontend.version>
+    <java.frontend.version>7.17.0.31219</java.frontend.version>
     <guava.version>31.1-jre</guava.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
-    <jdom.version>1.0</jdom.version>
+    <jdom.version>1.1</jdom.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
     <sonar-plugin-api.version>9.4.0.54424</sonar-plugin-api.version>

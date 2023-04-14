@@ -41,6 +41,7 @@
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator</artifactId>
+      <version>3.41.0.295</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
@@ -53,6 +54,7 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
+      <version>6.55.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
