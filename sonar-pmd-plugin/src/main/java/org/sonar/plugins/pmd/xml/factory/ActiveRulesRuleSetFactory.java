@@ -54,7 +54,7 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
         ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));
         for (ActiveRule rule : rules) {
             String configKey = rule.internalKey();
-            PmdRule pmdRule = new PmdRule(configKey, PmdLevelUtils.toLevel(RulePriority.valueOfString(rule.severity())));
+            PmdRule pmdRule = new PmdRule(configKey, PmdLevelUtils.toLevel(RulePriority.valueOf(rule.severity())));
             addRuleProperties(rule, pmdRule);
             ruleset.addRule(pmdRule);
 
