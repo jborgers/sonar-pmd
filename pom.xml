@@ -104,7 +104,7 @@
     <maven.release.plugin.version>3.0.0</maven.release.plugin.version>
     <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
-    <maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
+    <maven.gpg.plugin.version>3.1.0</maven.gpg.plugin.version>
     <sonar.maven.plugin.version>3.9.1.2184</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
     <!-- Code Coverage -->
