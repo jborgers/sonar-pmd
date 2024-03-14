@@ -44,12 +44,20 @@
       <version>4.7.1.1872</version>
     </dependency>
     <dependency>
+      <groupId>org.sonarsource.orchestrator</groupId>
+      <artifactId>sonar-orchestrator-junit4</artifactId>
+      <version>4.7.1.1872</version>
+    </dependency>
+    <dependency>
       <groupId>org.codehaus.sonar</groupId>
       <artifactId>sonar-ws-client</artifactId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.sonarsource.api.plugin/sonar-plugin-api -->
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
+      <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
+      <version>9.13.0.360</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -87,6 +95,7 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
         <configuration>
           <!-- prevent deploy of integration test: 'true' does not work as all modules are
            skipped when the last module is skipped, integration-test is last module -->

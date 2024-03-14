@@ -41,9 +41,6 @@ public class PmdTemplate {
 
     private static Map<String, String> prepareVersions() {
         final Map<String, String> versions = new HashMap<>();
-        versions.put("1.1", "1.3");
-        versions.put("1.2", "1.3");
-        versions.put("5", "1.5");
         versions.put("6", "1.6");
         versions.put("7", "1.7");
         versions.put("8", "1.8");
@@ -57,7 +54,10 @@ public class PmdTemplate {
         versions.put("1.16", "16");
         versions.put("1.17", "17");
         versions.put("1.18", "18");
-
+        versions.put("1.19", "19");
+        versions.put("1.19-preview", "19-preview");
+        versions.put("1.20", "20");
+        versions.put("1.20-preview", "20-preview");
         return versions;
     }
 
@@ -105,6 +105,7 @@ public class PmdTemplate {
         return dataSources;
     }
 
+    // TODO deprecated call, move to PMDAnalysis
     public Report process(Iterable<InputFile> files, RuleSet ruleset) {
         return PMD.processFiles(
                 configuration,

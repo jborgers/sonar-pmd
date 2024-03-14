@@ -19,9 +19,9 @@
  */
 package com.sonar.it.java.suite.orchestrator;
 
-import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
+import com.sonar.orchestrator.junit4.OrchestratorRule;
 import com.sonar.orchestrator.locator.MavenLocation;
 import org.sonar.wsclient.SonarClient;
 import org.sonar.wsclient.issue.Issue;
@@ -43,10 +43,19 @@ public class PmdTestOrchestrator {
     private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
     private static final String SONAR_VERSION_KEY = "test.sonar.version";
     private static final String LANGUAGE_KEY = "java";
+    private static final String CENTRAL_MAVEN = "https://repo1.maven.org/maven2";
 
-    private final Orchestrator delegate;
+    static {
+        // override jfrog as artifactory because it now doesn't have anonymous login anymore
+        // don't rely on configuration file, less dependencies
+        // issue see https://community.sonarsource.com/t/orchestrator-adding-support-for-downloading-artifacts-without-jfrog/108867
+        if (System.getProperty("orchestrator.artifactory.url") == null) {
+            System.setProperty("orchestrator.artifactory.url", CENTRAL_MAVEN);
+        }
+    }
+    private final OrchestratorRule delegate;
 
-    private PmdTestOrchestrator(Orchestrator delegate) {
+    private PmdTestOrchestrator(OrchestratorRule delegate) {
         this.delegate = delegate;
     }
 
@@ -84,8 +93,8 @@ public class PmdTestOrchestrator {
     }
 
     public static PmdTestOrchestrator init() {
-        final Orchestrator orchestrator = Orchestrator
-                .builderEnv()
+        final OrchestratorRule orchestrator = OrchestratorRule
+                .builderEnv().useDefaultAdminCredentialsForBuilds(true)
                 .setSonarVersion(determineSonarqubeVersion())
                 .addPlugin(MavenLocation.create(
                         "org.sonarsource.java",
@@ -108,10 +117,10 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "DEV");
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[7.13]");
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[9.4]");
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[9.8]");
     }
 }

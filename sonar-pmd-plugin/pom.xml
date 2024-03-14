@@ -48,14 +48,17 @@
   </developers>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.sonarsource.api.plugin/sonar-plugin-api -->
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
+      <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
+      <version>9.13.0.360</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
-      <version>9.9.0.65466</version>
+      <version>9.8.0.63668</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.staxmate</groupId>
@@ -196,8 +199,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>12000000</maxsize>
-                  <minsize>7000000</minsize>
+                  <maxsize>13000000</maxsize>
+                  <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>

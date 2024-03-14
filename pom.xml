@@ -90,7 +90,7 @@
     <jdom.version>1.1</jdom.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
-    <sonar-plugin-api.version>9.4.0.54424</sonar-plugin-api.version>
+    <sonar-plugin-api.version>9.13.0.360</sonar-plugin-api.version>
     <sonar-orchestrator.version>4.7.1.1872</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
@@ -99,7 +99,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <!-- Maven plugin versions -->
     <maven.enforcer.plugin.version>3.3.0</maven.enforcer.plugin.version>
-    <maven.surefire.plugin.version>3.0.0</maven.surefire.plugin.version>
+    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
     <maven.failsafe.plugin.version>3.1.2</maven.failsafe.plugin.version>
     <maven.release.plugin.version>3.0.0</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
@@ -121,13 +121,13 @@
     <dependencies>
       <!-- SonarQube API -->
       <dependency>
-        <groupId>org.sonarsource.sonarqube</groupId>
+        <groupId>org.sonarsource.api.plugin</groupId>
         <artifactId>sonar-plugin-api</artifactId>
         <scope>provided</scope>
         <version>${sonar-plugin-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.sonarsource.sonarqube</groupId>
+        <groupId>org.sonarsource.api.plugin</groupId>
         <artifactId>sonar-plugin-api-impl</artifactId>
         <scope>test</scope>
         <version>${sonar-plugin-api.version}</version>
@@ -137,6 +137,11 @@
         <artifactId>sonar-orchestrator</artifactId>
         <version>${sonar-orchestrator.version}</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.orchestrator</groupId>
+        <artifactId>sonar-orchestrator-junit4</artifactId>
+        <version>${sonar-orchestrator.version}</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.sonar</groupId>
