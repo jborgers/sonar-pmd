@@ -105,7 +105,7 @@
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.1.0</maven.gpg.plugin.version>
-    <sonar.maven.plugin.version>3.9.1.2184</sonar.maven.plugin.version>
+    <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.11</jacoco.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
