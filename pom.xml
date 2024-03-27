@@ -215,7 +215,8 @@
           <artifactId>sonar-packaging-maven-plugin</artifactId>
           <version>${version.sonar-packaging.plugin}</version>
           <configuration>
-            <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+            <sonarQubeMinVersion>9.8</sonarQubeMinVersion>
+            <!--pluginApiMinVersion>9.8</pluginApiMinVersion-->
             <!--requirePlugins>java:5.14.0.18788</requirePlugins-->
           </configuration>
         </plugin>
