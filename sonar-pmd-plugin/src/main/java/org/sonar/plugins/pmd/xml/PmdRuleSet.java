@@ -27,11 +27,11 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jdom.CDATA;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.CDATA;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class PmdRuleSet {
 

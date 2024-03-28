@@ -119,12 +119,12 @@
       <artifactId>pmd-java</artifactId>
         <version>6.55.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
     <dependency>
-      <groupId>jdom</groupId>
-      <artifactId>jdom</artifactId>
-      <version>${jdom.version}</version>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom2</artifactId>
+      <version>${jdom2.version}</version>
     </dependency>
-
 
   </dependencies>
 
