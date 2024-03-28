@@ -27,13 +27,14 @@ In case you are not using one of these build tools, or if that does not match th
 Possible values : 1.6 to 1.8/8 to 20-preview
 
 ## Table of supported versions
-| PMD Plugin                  |2.5|2.6|3.0.0|3.1.x|3.2.x|3.3.x|3.4.0| 3.5.0      |
-|-----------------------------|---|---|---|---|---|---|--------------|------------|
-| PMD                         |5.4.0|5.4.2|5.4.2|6.9.0|6.10.0|6.30.0|6.45.0| 6.55       |
-| Max. supported Java Version | 1.7 | 1.8 | 1.8 | 11 | | 15| 18  | 20-preview |
-|  Min. SonarQube Version     | 4.5.4 | 4.5.4 | 6.6 | | | 6.7| _8.9(*)_ / 9.3 | 9.8        |
+| PMD Plugin             | 3.1.x   | 3.3.x          | 3.4.0           | 3.5.0 (work in progress) | 4.0.0 (planned) |
+|------------------------|---------|----------------|-----------------|--------------------------|-----------------|
+| PMD                    | 6.9.0   | 6.30.0         | 6.45.0          | 6.55.0                   | 7.0.0           | 
+| Max. Java Version      | 11      | 15             | 18              | 20-preview *2            | 22              |
+| Min. SonarQube Version | 6.6     | 6.7            | _8.9(*1)_ / 9.3 | 9.8                      | 9.9             |
 
-(*) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.
+(*1) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.   
+(*2) Note: Tolerates Java 21, warns instead of breaks 
 
 A majority of the PMD rules have been rewritten in the Sonar Java plugin. Rewritten rules are marked "Deprecated" in the PMD plugin, but a [concise summary of replaced rules](http://dist.sonarsource.com/reports/coverage/pmd.html) is available.
 
