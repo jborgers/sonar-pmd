@@ -103,7 +103,6 @@ public class XmlRuleSetFactory implements RuleSetFactory {
         // prevent XXE attacks
         builder.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         builder.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-        builder.setProperty(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
         final Document dom;
         try {
             dom = builder.build(source);
