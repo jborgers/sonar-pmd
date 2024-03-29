@@ -58,7 +58,7 @@
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
-      <version>9.8.0.63668</version>
+      <version>10.4.1.88267</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.staxmate</groupId>
