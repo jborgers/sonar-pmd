@@ -89,13 +89,13 @@ public class PmdExecutor {
         final Optional<Report> mainReport = executeRules(pmdFactory, javaFiles(Type.MAIN), PmdConstants.REPOSITORY_KEY);
         final Optional<Report> testReport = executeRules(pmdFactory, javaFiles(Type.TEST), PmdConstants.TEST_REPOSITORY_KEY);
 
-        final Report report = mainReport
+        Report report = mainReport
                 .orElse(
                         testReport.orElse(new Report())
                 );
 
         if (mainReport.isPresent() && testReport.isPresent()) {
-            report.merge(testReport.get());
+            report = mainReport.get().union(testReport.get());
         }
 
         pmdConfiguration.dumpXmlReport(report);

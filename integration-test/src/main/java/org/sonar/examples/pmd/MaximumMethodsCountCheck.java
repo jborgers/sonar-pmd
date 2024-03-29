@@ -61,7 +61,7 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
     public Object visit(ASTClassOrInterfaceBody node, Object data) {
         List<ASTMethodDeclaration> methods = node.findDescendantsOfType(ASTMethodDeclaration.class);
         if (methods.size() > getProperty(propertyDescriptor)) {
-            addViolation(data, node);
+            asCtx(data).addViolation(node);
         }
         return super.visit(node, data);
     }

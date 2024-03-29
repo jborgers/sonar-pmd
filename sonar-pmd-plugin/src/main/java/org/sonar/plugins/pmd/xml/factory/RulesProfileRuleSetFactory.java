@@ -25,7 +25,7 @@ import java.util.List;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.ActiveRuleParam;
-import org.sonar.plugins.pmd.PmdLevelUtils;
+import org.sonar.plugins.pmd.PmdPriorities;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -55,7 +55,7 @@ public class RulesProfileRuleSetFactory implements RuleSetFactory {
         for (ActiveRule activeRule : activeRules) {
             if (activeRule.getRule().getRepositoryKey().equals(repositoryKey)) {
                 String configKey = activeRule.getRule().getConfigKey();
-                PmdRule rule = new PmdRule(configKey, PmdLevelUtils.toLevel(activeRule.getSeverity()));
+                PmdRule rule = new PmdRule(configKey, PmdPriorities.fromSonarPrio(activeRule.getSeverity()));
                 addRuleProperties(activeRule, rule);
                 ruleset.addRule(rule);
                 rule.processXpath(activeRule.getRuleKey());

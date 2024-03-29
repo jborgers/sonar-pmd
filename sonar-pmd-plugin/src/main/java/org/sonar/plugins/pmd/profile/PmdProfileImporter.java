@@ -29,7 +29,7 @@ import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.PmdConstants;
-import org.sonar.plugins.pmd.PmdLevelUtils;
+import org.sonar.plugins.pmd.PmdPriorities;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -72,7 +72,7 @@ public class PmdProfileImporter extends ProfileImporter {
                 } else {
                     Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.REPOSITORY_KEY).withConfigKey(ruleRef));
                     if (rule != null) {
-                        ActiveRule activeRule = profile.activateRule(rule, PmdLevelUtils.fromLevel(pmdRule.getPriority()));
+                        ActiveRule activeRule = profile.activateRule(rule, PmdPriorities.sonarPrioOf(pmdRule));
                         setParameters(activeRule, pmdRule, rule, messages);
                     } else {
                         messages.addWarningText("Unable to import unknown PMD rule '" + ruleRef + "'");

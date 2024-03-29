@@ -19,10 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.PMD;
-import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.Report;
-import net.sourceforge.pmd.RuleSet;
+import net.sourceforge.pmd.*;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
@@ -107,6 +104,10 @@ public class PmdTemplate {
 
     // TODO deprecated call, move to PMDAnalysis
     public Report process(Iterable<InputFile> files, RuleSet ruleset) {
+        /*try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
+            pmd.addRuleSet(ruleset);
+            pmd.files().
+        }*/
         return PMD.processFiles(
                 configuration,
                 Collections.singletonList(ruleset),

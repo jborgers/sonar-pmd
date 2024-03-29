@@ -19,15 +19,11 @@
  */
 package org.sonar.plugins.pmd.xml.factory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.rules.RulePriority;
-import org.sonar.plugins.pmd.PmdLevelUtils;
+import org.sonar.plugins.pmd.PmdPriorities;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -54,7 +50,7 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
         ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));
         for (ActiveRule rule : rules) {
             String configKey = rule.internalKey();
-            PmdRule pmdRule = new PmdRule(configKey, PmdLevelUtils.toLevel(RulePriority.valueOf(rule.severity())));
+            PmdRule pmdRule = new PmdRule(configKey, PmdPriorities.ofSonarRule(rule));
             addRuleProperties(rule, pmdRule);
             ruleset.addRule(pmdRule);
 

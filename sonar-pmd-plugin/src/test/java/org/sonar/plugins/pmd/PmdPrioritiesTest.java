@@ -28,24 +28,24 @@ import static org.sonar.api.rules.RulePriority.INFO;
 import static org.sonar.api.rules.RulePriority.MAJOR;
 import static org.sonar.api.rules.RulePriority.MINOR;
 
-class PmdLevelUtilsTest {
+class PmdPrioritiesTest {
     @Test
     void should_get_priority_from_level() {
-        assertThat(PmdLevelUtils.fromLevel(1)).isSameAs(BLOCKER);
-        assertThat(PmdLevelUtils.fromLevel(2)).isSameAs(CRITICAL);
-        assertThat(PmdLevelUtils.fromLevel(3)).isSameAs(MAJOR);
-        assertThat(PmdLevelUtils.fromLevel(4)).isSameAs(MINOR);
-        assertThat(PmdLevelUtils.fromLevel(5)).isSameAs(INFO);
-        assertThat(PmdLevelUtils.fromLevel(-1)).isNull();
-        assertThat(PmdLevelUtils.fromLevel(null)).isNull();
+        assertThat(PmdPriorities.toSonarPrio(1)).isSameAs(BLOCKER);
+        assertThat(PmdPriorities.toSonarPrio(2)).isSameAs(CRITICAL);
+        assertThat(PmdPriorities.toSonarPrio(3)).isSameAs(MAJOR);
+        assertThat(PmdPriorities.toSonarPrio(4)).isSameAs(MINOR);
+        assertThat(PmdPriorities.toSonarPrio(5)).isSameAs(INFO);
+        assertThat(PmdPriorities.toSonarPrio(-1)).isNull();
+        assertThat(PmdPriorities.toSonarPrio(null)).isNull();
     }
 
     @Test
     void should_get_level_from_priority() {
-        assertThat(PmdLevelUtils.toLevel(BLOCKER)).isEqualTo(1);
-        assertThat(PmdLevelUtils.toLevel(CRITICAL)).isEqualTo(2);
-        assertThat(PmdLevelUtils.toLevel(MAJOR)).isEqualTo(3);
-        assertThat(PmdLevelUtils.toLevel(MINOR)).isEqualTo(4);
-        assertThat(PmdLevelUtils.toLevel(INFO)).isEqualTo(5);
+        assertThat(PmdPriorities.fromSonarPrio(BLOCKER)).isEqualTo(1);
+        assertThat(PmdPriorities.fromSonarPrio(CRITICAL)).isEqualTo(2);
+        assertThat(PmdPriorities.fromSonarPrio(MAJOR)).isEqualTo(3);
+        assertThat(PmdPriorities.fromSonarPrio(MINOR)).isEqualTo(4);
+        assertThat(PmdPriorities.fromSonarPrio(INFO)).isEqualTo(5);
     }
 }
