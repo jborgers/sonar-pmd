@@ -84,19 +84,19 @@
     <assertj.version>3.25.3</assertj.version>
     <commons-lang3.version>3.13.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
-    <java.frontend.version>7.15.0.30507</java.frontend.version>
+    <java.frontend.version>7.30.0.34429</java.frontend.version>
     <guava.version>33.1.0-jre</guava.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
-    <sonar-plugin-api.version>9.13.0.360</sonar-plugin-api.version>
+    <sonar-plugin-api.version>9.17.0.587</sonar-plugin-api.version>
     <sonar-orchestrator.version>4.7.1.1872</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <!-- Maven plugin versions -->
     <maven.enforcer.plugin.version>3.3.0</maven.enforcer.plugin.version>
     <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
