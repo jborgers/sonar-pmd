@@ -24,11 +24,11 @@ import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.api.scanner.sensor.ProjectSensor;
 
-public class PmdSensor implements Sensor {
+public class PmdSensor implements ProjectSensor {
     private final ActiveRules profile;
     private final PmdExecutor executor;
     private final PmdViolationRecorder pmdViolationRecorder;

@@ -20,7 +20,7 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.*;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;

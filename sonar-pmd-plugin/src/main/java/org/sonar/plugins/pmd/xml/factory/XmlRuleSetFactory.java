@@ -100,8 +100,10 @@ public class XmlRuleSetFactory implements RuleSetFactory {
     @Override
     public PmdRuleSet create() {
         final SAXBuilder builder = new SAXBuilder();
+        // prevent XXE attacks
         builder.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         builder.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        builder.setProperty(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
         final Document dom;
         try {
             dom = builder.build(source);
