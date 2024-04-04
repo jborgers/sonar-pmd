@@ -23,12 +23,12 @@ import net.sourceforge.pmd.*;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
-import net.sourceforge.pmd.util.datasource.DataSource;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class PmdTemplate {
@@ -94,25 +94,13 @@ public class PmdTemplate {
         return configuration;
     }
 
-    private Collection<DataSource> toDataSources(Iterable<InputFile> files) {
-        final Collection<DataSource> dataSources = new ArrayList<>();
-
-        files.forEach(file -> dataSources.add(new ProjectDataSource(file)));
-
-        return dataSources;
-    }
-
-    // TODO deprecated call, move to PMDAnalysis
     public Report process(Iterable<InputFile> files, RuleSet ruleset) {
-        /*try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
+        try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
             pmd.addRuleSet(ruleset);
-            pmd.files().
-        }*/
-        return PMD.processFiles(
-                configuration,
-                Collections.singletonList(ruleset),
-                toDataSources(files),
-                Collections.emptyList()
-        );
+            for (InputFile file: files) {
+                pmd.files().addFile(Paths.get(file.uri()));
+            }
+            return pmd.performAnalysisAndCollectReport();
+        }
     }
 }

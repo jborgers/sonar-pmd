@@ -91,7 +91,7 @@ public class PmdExecutor {
 
         Report report = mainReport
                 .orElse(
-                        testReport.orElse(new Report())
+                        testReport.orElse(new Report()) // TODO solve deprecation, difficult now
                 );
 
         if (mainReport.isPresent() && testReport.isPresent()) {

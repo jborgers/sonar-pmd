@@ -37,7 +37,7 @@ class PmdConstantsTest {
         assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
         assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
         assertThat(PmdConstants.JAVA_SOURCE_VERSION).isEqualTo("sonar.java.source");
-        assertThat(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE).isEqualTo("1.6");
+        assertThat(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE).isEqualTo("11");
         assertThat(PmdConstants.LANGUAGE_KEY).isEqualTo("java");
     }
 }
