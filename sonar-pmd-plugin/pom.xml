@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.sonarsource.pmd</groupId>
     <artifactId>sonar-pmd</artifactId>
-    <version>3.4.1-SNAPSHOT</version>
+    <version>3.4.1</version>
   </parent>
 
   <artifactId>sonar-pmd-plugin</artifactId>
@@ -52,13 +52,15 @@
     <dependency>
       <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>9.13.0.360</version>
+      <version>9.8.0.203</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.sonarsource.sonarqube/sonar-plugin-api-impl -->
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
       <version>9.8.0.63668</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.staxmate</groupId>
@@ -200,7 +202,7 @@
               <rules>
                 <requireFilesSize>
                   <maxsize>13000000</maxsize>
-                  <minsize>12000000</minsize>
+                  <minsize>11000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>

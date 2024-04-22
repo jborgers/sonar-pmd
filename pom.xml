@@ -23,7 +23,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.4.1-SNAPSHOT</version>
+  <version>3.4.1</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -90,7 +90,7 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
-    <sonar-plugin-api.version>9.17.0.587</sonar-plugin-api.version>
+    <sonar-plugin-api.version>9.8.0.63668</sonar-plugin-api.version>
     <sonar-orchestrator.version>4.7.1.1872</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
