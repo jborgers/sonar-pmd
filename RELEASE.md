@@ -4,7 +4,7 @@ To release a build
 - change tag `HEAD` to `x.y.z` in scm tag in parent pom
 - finish and update `CHANGELOG.md`, update `..master` to `..x.y.z`
 - commit and push with comment "Release x.y.z"
-- `git tag x.y.z`
+- `git tag x.y.z` 
 - `git push --tags`
 - use github action `release` to deploy to maven central
 - release staging repo in Sonatype ui
@@ -15,8 +15,8 @@ To release a build
 
 When release fails before "release staging in Sonatype ui"
 - drop staging repo
-- `git tag -d x.y.z`
-- `git push origin :refs/tags/x.y.z`
+- `git tag -d x.y.z` or delete tag in IntelliJ
+- `git push origin :refs/tags/x.y.z` or delete tag in context menu, delete remotes
 - fix-commit-push and start release again with tagging steps above
 
 In GitHub:
