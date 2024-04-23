@@ -1,14 +1,15 @@
 # Changelog
 
-## [3.4.1](https://github.com/jborgers/sonar-pmd/tree/master) (2024-04-22)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.4.0...master)
+## [3.5.0](https://github.com/jborgers/sonar-pmd/tree/3.5.0) (2024-04-23)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.4.0...3.5.0)
 
 **Contributors:**
 - [jborgers](https://github.com/jborgers) 
 
 **Implemented highlights:**
-- Updated PMD (6.55.0) (last PMD-6) #issue
-- Support for Java 20-preview (close to 21) #issue
+- Updated PMD (6.55.0) (last PMD-6) #422
+- Support up to Java 20-preview (close to 21) #422
+- Java 21+ falls back to 20-preview with warning (no error) #422
 - Updated Sonar Plugin API+impl (9.8.0.63668) (SonarQube 9.8+) 
 - Upgraded various dependencies
 
