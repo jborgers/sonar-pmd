@@ -75,7 +75,7 @@ class PmdExecutorTest {
     void setUp() {
         pmdExecutor = Mockito.spy(realPmdExecutor);
         fileSystem.setEncoding(StandardCharsets.UTF_8);
-        settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
+        settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.8");
     }
 
     @Test

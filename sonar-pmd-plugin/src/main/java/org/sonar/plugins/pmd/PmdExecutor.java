@@ -174,8 +174,17 @@ public class PmdExecutor {
     }
 
     private String getSourceVersion() {
-        return settings.get(PmdConstants.JAVA_SOURCE_VERSION)
-                .orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
+        String reqJavaVersion = settings.get(PmdConstants.JAVA_SOURCE_VERSION).orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
+        String bareReqJavaVersion = reqJavaVersion;
+        if (reqJavaVersion.endsWith("-preview")) {
+            bareReqJavaVersion = reqJavaVersion.substring(0, reqJavaVersion.indexOf("-preview"));
+        }
+        String effectiveJavaVersion = bareReqJavaVersion;
+        if (Float.parseFloat(bareReqJavaVersion) >= Float.parseFloat(PmdConstants.JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE)) {
+            effectiveJavaVersion = PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE;
+            LOGGER.warn("Java version " + reqJavaVersion + " is not supported by PMD. Using maximum supported version: " + PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE + ".");
+        }
+        return effectiveJavaVersion;
     }
 
 }
