@@ -182,7 +182,7 @@ public class PmdExecutor {
         String effectiveJavaVersion = bareReqJavaVersion;
         if (Float.parseFloat(bareReqJavaVersion) >= Float.parseFloat(PmdConstants.JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE)) {
             effectiveJavaVersion = PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE;
-            LOGGER.warn("Java version " + reqJavaVersion + " is not supported by PMD. Using maximum supported version: " + PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE + ".");
+            LOGGER.warn("Requested Java version " + reqJavaVersion + " (" + PmdConstants.JAVA_SOURCE_VERSION + ") is not supported by PMD. Using maximum supported version: " + PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE + ".");
         }
         return effectiveJavaVersion;
     }
