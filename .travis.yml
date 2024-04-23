@@ -1,7 +1,7 @@
 os: linux
 dist: focal
 language: java
-jdk: openjdk11
+jdk: openjdk17
 install: true
 script: ./travis.sh
 

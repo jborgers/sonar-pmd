@@ -23,7 +23,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
-  <version>3.5.0</version>
+  <version>3.5.0-snapshot</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
 
@@ -31,7 +31,7 @@
     <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
     <developerConnection>scm:git:git@github.com:jborgers/sonar-pmd.git</developerConnection>
     <url>https://github.com/jborgers/sonar-pmd</url>
-    <tag>3.5.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <url>https://github.com/jborgers/sonar-pmd</url>
   <issueManagement>
@@ -95,8 +95,8 @@
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <!-- Maven plugin versions -->
     <maven.enforcer.plugin.version>3.3.0</maven.enforcer.plugin.version>
     <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
