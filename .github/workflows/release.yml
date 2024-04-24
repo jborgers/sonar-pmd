@@ -42,4 +42,4 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
-          ./mvnw --batch-mode -P release deploy
+          ./mvnw --batch-mode -P clean release deploy
