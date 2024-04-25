@@ -91,7 +91,8 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.21.0.505</version.sonar-packaging.plugin>
-    <sonar-plugin-api.version>9.8.0.63668</sonar-plugin-api.version>
+    <sonar-plugin-api-impl.version>9.8.0.63668</sonar-plugin-api-impl.version>
+    <sonar-plugin-api.version>9.8.0.203</sonar-plugin-api.version>
     <sonar-orchestrator.version>4.7.1.1872</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
@@ -106,6 +107,7 @@
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.1.0</maven.gpg.plugin.version>
+    <maven.cleanup.plugin.version>3.3.2</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
     <nexus-staging.plugin.version>1.6.13</nexus-staging.plugin.version>
@@ -125,20 +127,17 @@
       <dependency>
         <groupId>org.sonarsource.api.plugin</groupId>
         <artifactId>sonar-plugin-api</artifactId>
-        <scope>provided</scope>
         <version>${sonar-plugin-api.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.sonarsource.api.plugin</groupId>
+        <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api-impl</artifactId>
-        <scope>test</scope>
-        <version>${sonar-plugin-api.version}</version>
+        <version>${sonar-plugin-api-impl.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator</artifactId>
         <version>${sonar-orchestrator.version}</version>
-        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
@@ -149,7 +148,6 @@
         <groupId>org.codehaus.sonar</groupId>
         <artifactId>sonar-ws-client</artifactId>
         <version>${sonar-ws-client.version}</version>
-        <scope>test</scope>
       </dependency>
 
       <!-- PMD -->
@@ -200,8 +198,6 @@
       <version>${assertj.version}</version>
       <scope>test</scope>
     </dependency>
-
-
   </dependencies>
 
   <build>
@@ -227,6 +223,20 @@
           <artifactId>nexus-staging-maven-plugin</artifactId>
           <version>${nexus-staging.plugin.version}</version>
         </plugin>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven.cleanup.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven.enforcer.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven.surefire.plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -234,7 +244,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>${maven.enforcer.plugin.version}</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -269,7 +278,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven.surefire.plugin.version}</version>
         <configuration>
           <runOrder>random</runOrder>
         </configuration>
@@ -332,6 +340,7 @@
           <quiet>true</quiet>
           <source>8</source>
           <detectJavaApiLink>false</detectJavaApiLink>
+          <doclint>all,-missing</doclint>
         </configuration>
         <executions>
           <execution>

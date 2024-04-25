@@ -48,18 +48,14 @@
   </developers>
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.sonarsource.api.plugin/sonar-plugin-api -->
     <dependency>
       <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>9.8.0.203</version>
       <scope>provided</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.sonarsource.sonarqube/sonar-plugin-api-impl -->
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
-      <version>9.8.0.63668</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -119,9 +115,7 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
-        <version>6.55.0</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
     <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom2</artifactId>
@@ -171,7 +165,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven.surefire.plugin.version}</version>
         <configuration>
           <!-- Sets the VM argument line used when unit tests are run. -->
           <argLine>${surefireArgLine}</argLine>
@@ -190,7 +183,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>${maven.enforcer.plugin.version}</version>
         <executions>
           <execution>
             <id>enforce-plugin-size</id>
