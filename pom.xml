@@ -26,6 +26,7 @@
   <version>3.5.0</version>
   <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
+  <description>Sonar-PMD is a plugin that provides coding rules from PMD for use in SonarQube.</description>
 
   <scm>
     <connection>scm:git:git@github.com:jborgers/sonar-pmd.git</connection>
