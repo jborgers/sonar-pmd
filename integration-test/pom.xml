@@ -68,13 +68,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.13.0</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-clean-plugin</artifactId>
-      <version>3.3.2</version>
     </dependency>
   </dependencies>
 
@@ -95,7 +89,6 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.13</version>
         <configuration>
           <!-- prevent deploy of integration test: 'true' does not work as all modules are
            skipped when the last module is skipped, integration-test is last module -->
