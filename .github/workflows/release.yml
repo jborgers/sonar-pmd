@@ -1,6 +1,9 @@
 name: Release to Maven Central
 
 on:
+  push:
+    tags:
+      - '*'
   workflow_dispatch:
 
 defaults:
@@ -14,13 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: olegtarasov/get-tag@v2.1.2
+        id: tagName
+        with:
+          tagRegex: "(.*)"
+
       - name: Set Release version env variable
         run: |
-          echo "TAG_NAME=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          echo "TAG_NAME=${{ steps.tagName.outputs.tag }}" >> $GITHUB_ENV
 
       # if no tag exists, this is expected to fail
       - name: Switch to git tag for release
-        if: contains(env.TAG_NAME, 'SNAPSHOT') != true
         run: |
           git fetch --all --tags
           git checkout tags/${{ env.TAG_NAME }} -b ${{ env.TAG_NAME }}-tmp-branch
@@ -42,10 +49,10 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
-          ./mvnw --batch-mode -P release clean deploy
+          ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
 
       - name: Create GHA release
         uses: ncipollo/release-action@v1
-        if: contains(env.TAG_NAME, 'SNAPSHOT') != true
         with:
-          artifacts: "sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar"
+          artifacts: "sonar-pmd-plugin/target/*.jar"
+          bodyFile: RELEASE.md
