@@ -2,6 +2,8 @@ name: Build
 
 on:
   push:
+    paths-ignore:
+      - '.github/**'
     branches: [ master ]
   pull_request:
     branches: [ master ]
