@@ -49,7 +49,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
-          ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
+          ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean install
 
       - name: Create GHA release
         uses: ncipollo/release-action@v1
