@@ -4,6 +4,8 @@ on:
   push:
     paths-ignore:
       - '.github/**'
+    tags-ignore:
+      - '**'
     branches: [ master ]
   pull_request:
     branches: [ master ]
