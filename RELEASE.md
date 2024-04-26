@@ -14,7 +14,7 @@ Steps:
 
 The release workflow will be triggered, using the git tag for `-Drevision=<tag>`. 
 
-- manually release staging repo in Sonatype (https://central.sonatype.com/)
+- manually release staging repo in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
 - manually change Github actions release from draft to final here: [releases](https://github.com/jborgers/sonar-pmd/releases)
 
 Next prepare for next SNAPSHOT:
