@@ -54,5 +54,6 @@ jobs:
       - name: Create GHA release
         uses: ncipollo/release-action@v1
         with:
+          draft: true
           artifacts: "sonar-pmd-plugin/target/*.jar"
           bodyFile: CHANGELOG.md
