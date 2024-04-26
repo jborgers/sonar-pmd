@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/**'
+      - '**/*.md'
     tags-ignore:
       - '**'
     branches: [ master ]
