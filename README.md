@@ -28,11 +28,12 @@ In case you are not using one of these build tools, or if that does not match th
 Possible values : 1.6 to 1.8/8 to 20-preview
 
 ## Table of supported versions
-| PMD Plugin             | 3.1.x   | 3.3.x          | 3.4.0           | 3.5.0         | 4.0.0 (planned) |
-|------------------------|---------|----------------|-----------------|---------------|-----------------|
-| PMD                    | 6.9.0   | 6.30.0         | 6.45.0          | 6.55.0        | 7.0.0           | 
-| Max. Java Version      | 11      | 15             | 18              | 20-preview *2 | 22              |
-| Min. SonarQube Version | 6.6     | 6.7            | _8.9(*1)_ / 9.3 | 9.8           | 9.9             |
+| PMD Plugin             | 3.1.x | 3.3.x  | 3.4.0           | 3.5.0         | 3.5.1 (planned) | 4.0.0 (planned) |
+|------------------------|-------|--------|-----------------|---------------|-----------------|-----------------|
+| PMD                    | 6.9.0 | 6.30.0 | 6.45.0          | 6.55.0        | 6.55.0          | 7.0.1           |
+| Max. Java Version      | 11    | 15     | 18              | 20-preview *2 | 20-preview *2   | 22              |
+| Min. SonarQube Version | 6.6   | 6.7    | _8.9(*1)_ / 9.3 | 9.8           | 10.0            | 10.0            |
+| Max. SonarQube Version |       |        | 9.9             | 10.4          | 10.5+           | 10.5+           |
 
 (*1) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.   
 (*2) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks 
