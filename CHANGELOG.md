@@ -12,6 +12,7 @@
 - Java 21+ falls back to 20-preview with warning (no error) #422
 - Updated Sonar Plugin API+impl (9.8.0.63668) (SonarQube 9.8+) 
 - Upgraded various dependencies
+- Needs Java 17, the class file version is 61 
 
 ## [3.4.0](https://github.com/jborgers/sonar-pmd/tree/3.4.0) (2022-05-11)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.3.1...3.4.0)
