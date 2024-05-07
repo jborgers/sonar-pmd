@@ -309,7 +309,7 @@
         <configuration>
           <serverId>sonatype-nexus</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <skipStagingRepositoryClose>true</skipStagingRepositoryClose>
+          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
           <autoReleaseAfterClose>false</autoReleaseAfterClose>
         </configuration>
       </plugin>
