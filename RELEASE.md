@@ -7,15 +7,15 @@ Make sure that all commits have been pushed and build
 with `build.yml` workflow before setting and pushing the tag.
 
 Steps:
-- create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`
-- commit `CHANGELOG.md`
+- create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
+- commit both
 - `git tag x.y.z`
 - `git push --tags`
 
 The release workflow will be triggered, using the git tag for `-Drevision=<tag>`. 
 
 - manually release staging repo in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
-- manually change Github actions release from draft to final here: [releases](https://github.com/jborgers/sonar-pmd/releases)
+- manually change Github actions release from draft to final and limit the changelog here: [releases](https://github.com/jborgers/sonar-pmd/releases) 
 
 Next prepare for next SNAPSHOT:
 
