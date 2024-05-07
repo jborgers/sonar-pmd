@@ -31,7 +31,7 @@ jobs:
       - name: Switch to git tag for release
         if: contains(env.TAG_NAME, 'SNAPSHOT') != true
         run: |
-          git fetch --all --tags
+          git fetch --all --tags -f
           git checkout tags/${{ env.TAG_NAME }} -b ${{ env.TAG_NAME }}-tmp-branch
 
       - name: Set up JDK 11
