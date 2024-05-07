@@ -29,7 +29,7 @@ jobs:
       # if no tag exists, this is expected to fail
       - name: Switch to git tag for release
         run: |
-          git fetch --all --tags
+          git fetch --all --tags -f
           git checkout tags/${{ env.TAG_NAME }} -b ${{ env.TAG_NAME }}-tmp-branch
 
       - name: Set up JDK 11
