@@ -84,7 +84,7 @@
     <pmd.version>6.55.0</pmd.version>
     <junit.jupiter.version>5.11.0-M1</junit.jupiter.version>
     <mockito.version>5.11.0</mockito.version>
-    <assertj.version>3.25.3</assertj.version>
+    <assertj.version>3.26.0</assertj.version>
     <commons-lang3.version>3.14.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
     <java.frontend.version>7.30.0.34429</java.frontend.version>
