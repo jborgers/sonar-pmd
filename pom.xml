@@ -93,7 +93,7 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>9.9.4.87374</sonar-plugin-api-impl.version>
+    <sonar-plugin-api-impl.version>10.6.0.92116</sonar-plugin-api-impl.version>
     <sonar-plugin-api.version>9.14.0.375</sonar-plugin-api.version>
     <sonar-orchestrator.version>4.9.0.1920</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
