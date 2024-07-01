@@ -27,3 +27,5 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 .java-version
+
+.flattened-pom.xml
