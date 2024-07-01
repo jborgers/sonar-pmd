@@ -1,7 +1,14 @@
 # Changelog
 
+
+## [3.5.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/3.5.2-SNAPSHOT) (2024-xx-xx)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.1..master)
+
+**Implemented highlights:**
+
+
 ## [3.5.1](https://github.com/jborgers/sonar-pmd/tree/3.5.1) (2024-05-07)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.0...3.5.1)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.0..3.5.1)
 
 **Implemented highlights:**
 - Supports latest SonarQube [9.9.4 - 10.5+]
