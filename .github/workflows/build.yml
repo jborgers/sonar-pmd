@@ -11,6 +11,11 @@ on:
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+    inputs:
+      skipTests:
+        description: "Skip Tests?"
+        required: true
+        default: "no"
 
 defaults:
   run:
@@ -27,7 +32,7 @@ jobs:
         run: |
           echo "TAG_NAME=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      # if no tag exists, this is expected to fail
+      # only build SNAPSHOTS, use release for tagged releases
       - name: Check if tag contains SNAPSHOT
         if: contains(env.TAG_NAME, 'SNAPSHOT') != true
         run: |
@@ -39,11 +44,20 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 11
+          server-id: sonatype-nexus
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
 
-      # push SNAPSHOT to maven central for testing
-      - name: Build
+      - name: Deploy SNAPSHOT to maven central
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
+          SKIP_TESTS: ${{ github.event.inputs.skipTests }}
         run: |
-          ./mvnw clean deploy
+          ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean deploy
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
