@@ -23,7 +23,7 @@ import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import org.apache.commons.lang3.JavaVersion;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -39,10 +39,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
 
-    private static final PmdTestOrchestrator ORCHESTRATOR = PmdTestOrchestrator.init();
+    private PmdTestOrchestrator ORCHESTRATOR;
 
-    @BeforeAll
-    static void startSonar() {
+    @BeforeEach
+    void startSonar() {
+        ORCHESTRATOR = PmdTestOrchestrator.init();
         ORCHESTRATOR.start();
     }
 
