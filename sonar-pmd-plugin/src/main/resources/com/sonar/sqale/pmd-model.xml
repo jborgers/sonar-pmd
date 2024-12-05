@@ -1219,19 +1219,19 @@
           <txt>min</txt>
         </prop>
       </chc>
-      <chc>
-        <rule-repo>pmd7</rule-repo>
-        <rule-key>EmptyInitializer</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>20</val>
-          <txt>min</txt>
-        </prop>
-      </chc>
+<!--      <chc>-->
+<!--        <rule-repo>pmd7</rule-repo>-->
+<!--        <rule-key>EmptyInitializer</rule-key>-->
+<!--        <prop>-->
+<!--          <key>remediationFunction</key>-->
+<!--          <txt>CONSTANT_ISSUE</txt>-->
+<!--        </prop>-->
+<!--        <prop>-->
+<!--          <key>offset</key>-->
+<!--          <val>20</val>-->
+<!--          <txt>min</txt>-->
+<!--        </prop>-->
+<!--      </chc>-->
       <chc>
         <rule-repo>pmd7</rule-repo>
         <rule-key>AvoidUsingVolatile</rule-key>

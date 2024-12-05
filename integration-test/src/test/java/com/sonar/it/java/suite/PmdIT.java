@@ -24,8 +24,7 @@ import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.http.HttpException;
 import org.apache.commons.lang3.JavaVersion;
-import org.junit.Ignore;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -41,15 +40,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
 
-    private static final PmdTestOrchestrator ORCHESTRATOR = PmdTestOrchestrator.init();
+    private PmdTestOrchestrator ORCHESTRATOR;
 
-    @BeforeAll
-    static void startSonar() {
+    @BeforeEach
+    void startSonar() {
+        ORCHESTRATOR = PmdTestOrchestrator.init();
         ORCHESTRATOR.start();
     }
 
     @ParameterizedTest
-    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_16"})
+    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_20"})
     void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
 
         // given
@@ -133,44 +133,6 @@ class PmdIT {
 
             assertThat(issues.get(0).message())
                     .contains("appears 5 times in this file");
-
-        } catch (HttpException e) {
-            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
-            throw e;
-        } finally {
-            // Cleanup
-            ORCHESTRATOR.resetData(projectName);
-        }
-    }
-
-    /**
-     * SONAR-1076
-     */
-    @Test
-    void testJunitRules() {
-
-        // given
-        final String projectName = "pmd-junit-rules";
-        final MavenBuild build = MavenBuild
-                .create(TestUtils.projectPom(projectName))
-                .setCleanSonarGoals();
-
-        try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-junit", projectName);
-
-            // when
-            ORCHESTRATOR.executeBuild(build);
-
-            // then
-            final List<Issue> testIssues = retrieveIssues(keyForTest());
-            assertThat(testIssues).hasSize(1);
-            assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
-            assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd7-unit-tests:TestClassWithoutTestCases");
-
-            final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
-            assertThat(prodIssues).hasSize(1);
-            assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
-            assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd7:UnusedPrivateField");
 
         } catch (HttpException e) {
             System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());

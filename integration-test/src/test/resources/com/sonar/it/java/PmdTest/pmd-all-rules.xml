@@ -298,12 +298,6 @@
       <repositoryKey>pmd7</repositoryKey>
       <key>AvoidUsingHardCodedIP</key>
       <priority>MAJOR</priority>
-      <parameters>
-        <parameter>
-          <key>checkAddressTypes</key>
-          <value>IPv4|IPv6|IPv4 mapped IPv6</value>
-        </parameter>
-      </parameters>
     </rule>
     <rule>
       <repositoryKey>pmd7</repositoryKey>
@@ -335,12 +329,12 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>BeanMembersShouldSerialize</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>BeanMembersShouldSerialize</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>BigIntegerInstantiation</key>
@@ -430,12 +424,12 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>CloneMethodMustImplementCloneable</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>CloneMethodMustImplementCloneable</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>CloneMethodMustImplementCloneableWithTypeResolution</key>
@@ -586,7 +580,7 @@
     </rule>
     <rule>
       <repositoryKey>pmd7</repositoryKey>
-      <key>DefaultLabelNotLastInSwitchStmt</key>
+      <key>DefaultLabelNotLastInSwitch</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
@@ -685,72 +679,72 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyFinallyBlock</key>
-      <priority>CRITICAL</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyIfStmt</key>
-      <priority>CRITICAL</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyInitializer</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyFinallyBlock</key>-->
+<!--      <priority>CRITICAL</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyIfStmt</key>-->
+<!--      <priority>CRITICAL</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyInitializer</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>EmptyMethodInAbstractClassShouldBeAbstract</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyStatementBlock</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyStatementNotInLoop</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyStatementBlock</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyStatementNotInLoop</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>EmptyStaticInitializer</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptySwitchStatements</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptySynchronizedBlock</key>
-      <priority>CRITICAL</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyTryBlock</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>EmptyWhileStmt</key>
-      <priority>CRITICAL</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptySwitchStatements</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptySynchronizedBlock</key>-->
+<!--      <priority>CRITICAL</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyTryBlock</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>EmptyWhileStmt</key>-->
+<!--      <priority>CRITICAL</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>EqualsNull</key>
@@ -763,17 +757,17 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>ExcessiveClassLength</key>
-      <priority>MAJOR</priority>
-      <parameters>
-        <parameter>
-          <key>minimum</key>
-          <value>1000</value>
-        </parameter>
-      </parameters>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>ExcessiveClassLength</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters>-->
+<!--        <parameter>-->
+<!--          <key>minimum</key>-->
+<!--          <value>1000</value>-->
+<!--        </parameter>-->
+<!--      </parameters>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveImports</key>
@@ -785,17 +779,17 @@
         </parameter>
       </parameters>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>ExcessiveMethodLength</key>
-      <priority>MAJOR</priority>
-      <parameters>
-        <parameter>
-          <key>minimum</key>
-          <value>100</value>
-        </parameter>
-      </parameters>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>ExcessiveMethodLength</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters>-->
+<!--        <parameter>-->
+<!--          <key>minimum</key>-->
+<!--          <value>100</value>-->
+<!--        </parameter>-->
+<!--      </parameters>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>ExcessiveParameterList</key>
@@ -899,12 +893,12 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>GuardLogStatement</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>GuardLogStatement</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>GuardLogStatementJavaUtil</key>
@@ -1030,12 +1024,12 @@
         </parameter>
       </parameters>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>LooseCoupling</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>LooseCoupling</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>LooseCouplingWithTypeResolution</key>
@@ -1185,7 +1179,7 @@
     </rule>
     <rule>
       <repositoryKey>pmd7</repositoryKey>
-      <key>NonCaseLabelInSwitchStatement</key>
+      <key>NonCaseLabelInSwitch</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
@@ -1403,12 +1397,12 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
-    <rule>
-      <repositoryKey>pmd7</repositoryKey>
-      <key>SimplifyBooleanExpressions</key>
-      <priority>MAJOR</priority>
-      <parameters/>
-    </rule>
+<!--    <rule>-->
+<!--      <repositoryKey>pmd7</repositoryKey>-->
+<!--      <key>SimplifyBooleanExpressions</key>-->
+<!--      <priority>MAJOR</priority>-->
+<!--      <parameters/>-->
+<!--    </rule>-->
     <rule>
       <repositoryKey>pmd7</repositoryKey>
       <key>SimplifyBooleanReturns</key>
@@ -1525,7 +1519,7 @@
     </rule>
     <rule>
       <repositoryKey>pmd7</repositoryKey>
-      <key>SwitchStmtsShouldHaveDefault</key>
+      <key>NonExhaustiveSwitch</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
@@ -1537,7 +1531,7 @@
     </rule>
     <rule>
       <repositoryKey>pmd7</repositoryKey>
-      <key>TooFewBranchesForASwitchStatement</key>
+      <key>TooFewBranchesForSwitch</key>
       <priority>MINOR</priority>
       <parameters>
         <parameter>

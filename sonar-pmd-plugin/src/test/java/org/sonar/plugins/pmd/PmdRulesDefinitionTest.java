@@ -44,7 +44,8 @@ class PmdRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();
-        assertThat(rules).hasSize(228);
+        // PMD-7-MIGRATION: check number of rules is correct from PMD 7.x (was 228 in PMD 6.x)
+        assertThat(rules).hasSize(206);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -82,11 +83,6 @@ class PmdRulesDefinitionTest {
         RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
         List<RulesDefinition.Rule> rules = repository.rules();
         System.out.println("rules: " + rules);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
 

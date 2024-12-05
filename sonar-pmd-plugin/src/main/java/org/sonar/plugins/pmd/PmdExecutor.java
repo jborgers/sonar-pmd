@@ -19,7 +19,12 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.*;
+import net.sourceforge.pmd.PMDVersion;
+import net.sourceforge.pmd.lang.rule.RuleSet;
+import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
+import net.sourceforge.pmd.lang.rule.RuleSetLoader;
+import net.sourceforge.pmd.reporting.FileAnalysisListener;
+import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
@@ -44,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @ScannerSide
 public class PmdExecutor {
@@ -63,6 +69,10 @@ public class PmdExecutor {
         this.pmdConfiguration = pmdConfiguration;
         this.javaResourceLocator = javaResourceLocator;
         this.settings = settings;
+    }
+
+    private static void accept(FileAnalysisListener fal) {
+        LOGGER.debug("Got FileAnalysisListener: {}", fal);
     }
 
     public Report execute() {
@@ -96,14 +106,16 @@ public class PmdExecutor {
             kotlinReport.ifPresent(this::writeDebugLine);
         }
 
-        final Report report = new Report();
-        mainReport.ifPresent(report::merge);
-        testReport.ifPresent(report::merge);
-        kotlinReport.ifPresent(report::merge);
+        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = PmdExecutor::accept;
 
-        pmdConfiguration.dumpXmlReport(report);
+        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
+        unionReport = mainReport.map(unionReport::union).orElse(unionReport);
+        unionReport = testReport.map(unionReport::union).orElse(unionReport);
+        unionReport = kotlinReport.map(unionReport::union).orElse(unionReport);
 
-        return report;
+        pmdConfiguration.dumpXmlReport(unionReport);
+
+        return unionReport;
     }
 
     private void writeDebugLine(Report r) {
@@ -193,8 +205,17 @@ public class PmdExecutor {
     }
 
     private String getSourceVersion() {
-        return settings.get(PmdConstants.JAVA_SOURCE_VERSION)
-                .orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
+        String reqJavaVersion = settings.get(PmdConstants.JAVA_SOURCE_VERSION).orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
+        String bareReqJavaVersion = reqJavaVersion;
+        if (reqJavaVersion.endsWith("-preview")) {
+            bareReqJavaVersion = reqJavaVersion.substring(0, reqJavaVersion.indexOf("-preview"));
+        }
+        String effectiveJavaVersion = bareReqJavaVersion;
+        if (Float.parseFloat(bareReqJavaVersion) >= Float.parseFloat(PmdConstants.JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE)) {
+            effectiveJavaVersion = PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE;
+            LOGGER.warn("Requested Java version " + reqJavaVersion + " ('" + PmdConstants.JAVA_SOURCE_VERSION + "') is not supported by PMD. Using maximum supported version: " + PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE + ".");
+        }
+        return effectiveJavaVersion;
     }
 
 }

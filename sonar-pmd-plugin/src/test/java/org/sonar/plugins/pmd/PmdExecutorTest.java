@@ -19,10 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.ImmutableList;
-import net.sourceforge.pmd.Report;
-import net.sourceforge.pmd.RuleSet;
-import net.sourceforge.pmd.RuleSetLoadException;
+import net.sourceforge.pmd.lang.rule.RuleSet;
+import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
+import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -42,6 +41,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -84,7 +84,7 @@ class PmdExecutorTest {
     void setUp() {
         pmdExecutor = Mockito.spy(realPmdExecutor);
         fileSystem.setEncoding(StandardCharsets.UTF_8);
-        settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.7");
+        settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.8");
     }
 
     @Test
@@ -138,7 +138,7 @@ class PmdExecutorTest {
     @Test
     void should_build_project_classloader_from_javaresourcelocator() throws Exception {
         File file = new File("x");
-        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
+        when(javaResourceLocator.classpath()).thenReturn(List.of(file));
         pmdExecutor.execute();
         ArgumentCaptor<URLClassLoader> classLoaderArgument = ArgumentCaptor.forClass(URLClassLoader.class);
         verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
@@ -151,7 +151,7 @@ class PmdExecutorTest {
     void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
-        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
+        when(javaResourceLocator.classpath()).thenReturn(List.of(invalidFile));
 
         final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
 
@@ -185,8 +185,8 @@ class PmdExecutorTest {
         Report report = pmdExecutor.execute();
 
         assertThat(report).isNotNull();
-        assertThat(report.getViolations().size()).isEqualTo(1);
-        assertThat(report.getProcessingErrors().size()).isEqualTo(0);
+        assertThat(report.getViolations()).hasSize(1);
+        assertThat(report.getProcessingErrors()).isEmpty();
         verify(pmdConfiguration).dumpXmlReport(report);
 
     }

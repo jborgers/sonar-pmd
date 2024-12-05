@@ -19,11 +19,11 @@
  */
 package org.sonar.plugins.pmd.xml.factory;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -32,6 +32,7 @@ import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
 import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
@@ -52,7 +53,7 @@ public class XmlRuleSetFactory implements RuleSetFactory {
         this.messages = messages;
     }
 
-    @SuppressWarnings("unchecked")
+
     private List<Element> getChildren(Element parent, String childName, @Nullable Namespace namespace) {
         if (namespace == null) {
             return parent.getChildren(childName);
@@ -98,10 +99,13 @@ public class XmlRuleSetFactory implements RuleSetFactory {
      */
     @Override
     public PmdRuleSet create() {
-        final SAXBuilder parser = new SAXBuilder();
+        final SAXBuilder builder = new SAXBuilder();
+        // prevent XXE attacks
+        builder.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        builder.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
         final Document dom;
         try {
-            dom = parser.build(source);
+            dom = builder.build(source);
         } catch (JDOMException | IOException e) {
             if (messages != null) {
                 messages.addErrorText(INVALID_INPUT + " : " + e.getMessage());

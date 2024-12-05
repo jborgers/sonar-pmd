@@ -22,13 +22,14 @@ package org.sonar.examples.pmd;
 
 import java.util.List;
 
-import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceBody;
+
+import net.sourceforge.pmd.lang.java.ast.ASTClassBody;
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
+import net.sourceforge.pmd.properties.NumericConstraints;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertyFactory;
-import net.sourceforge.pmd.properties.constraints.NumericConstraints;
+import net.sourceforge.pmd.reporting.RuleContext;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -58,10 +59,10 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
     }
 
     @Override
-    public Object visit(ASTClassOrInterfaceBody node, Object data) {
-        List<ASTMethodDeclaration> methods = node.findDescendantsOfType(ASTMethodDeclaration.class);
+    public Object visit(ASTClassBody node, Object data) {
+        List<ASTMethodDeclaration> methods = node.descendants(ASTMethodDeclaration.class).toList();
         if (methods.size() > getProperty(propertyDescriptor)) {
-            addViolation(data, node);
+            asCtx(data).addViolation(node);
         }
         return super.visit(node, data);
     }
