@@ -107,17 +107,17 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <!-- Maven plugin versions -->
-    <maven.enforcer.plugin.version>3.4.1</maven.enforcer.plugin.version>
-    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
-    <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
-    <maven.release.plugin.version>3.0.1</maven.release.plugin.version>
+    <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
+    <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
+    <maven.failsafe.plugin.version>3.5.2</maven.failsafe.plugin.version>
+    <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
-    <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
-    <maven.gpg.plugin.version>3.2.4</maven.gpg.plugin.version>
-    <maven.cleanup.plugin.version>3.3.2</maven.cleanup.plugin.version>
+    <maven.javadoc.plugin.version>3.11.1</maven.javadoc.plugin.version>
+    <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+    <maven.cleanup.plugin.version>3.4.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.0.0.4389</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
-    <nexus-staging.plugin.version>1.6.13</nexus-staging.plugin.version>
+    <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
     <flatten.maven.plugin.version>1.6.0</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -275,7 +275,7 @@
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
           <execution>
-            <id>enforce-maven</id>
+            <id>enforce-maven-and-java</id>
             <goals>
               <goal>enforce</goal>
             </goals>
@@ -284,6 +284,9 @@
                 <requireMavenVersion>
                   <version>3.8</version>
                 </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[11,12)</version>
+                </requireJavaVersion>
               </rules>
             </configuration>
           </execution>

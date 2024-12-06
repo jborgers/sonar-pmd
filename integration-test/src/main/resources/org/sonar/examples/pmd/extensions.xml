@@ -42,7 +42,7 @@
     <priority>MAJOR</priority>
   <description>Prevent use of EmptyClass class</description>
     <name><![CDATA[Prevent use of EmptyClass]]></name>
-    <configKey><![CDATA[net.sourceforge.pmd.lang.rule.XPathRule]]></configKey>
+    <configKey><![CDATA[net.sourceforge.pmd.lang.rule.xpath.XPathRule]]></configKey>
     <priority>MINOR</priority>
     <param>
       <key>xpath</key>

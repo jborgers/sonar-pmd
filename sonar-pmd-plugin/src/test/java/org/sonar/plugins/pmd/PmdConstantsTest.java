@@ -33,7 +33,7 @@ class PmdConstantsTest {
         assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD7");
         assertThat(PmdConstants.TEST_JAVA_REPOSITORY_KEY).isEqualTo("pmd7-unit-tests");
         assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD7 Unit Tests");
-        assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.XPathRule");
+        assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.xpath.XPathRule");
         assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
         assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
         assertThat(PmdConstants.JAVA_SOURCE_VERSION).isEqualTo("sonar.java.source");

@@ -31,7 +31,7 @@ public final class PmdConstants {
     public static final String REPOSITORY_KOTLIN_NAME = "PMD Kotlin";
     public static final String TEST_JAVA_REPOSITORY_KEY = "pmd7-unit-tests";
     public static final String TEST_REPOSITORY_NAME = "PMD7 Unit Tests";
-    public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.XPathRule";
+    public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.xpath.XPathRule";
     public static final String XPATH_EXPRESSION_PARAM = "xpath";
     public static final String XPATH_MESSAGE_PARAM = "message";
 

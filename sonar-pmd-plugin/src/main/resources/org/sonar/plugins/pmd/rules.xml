@@ -1708,7 +1708,7 @@
 
   <rule key="XPathRule">
     <priority>MAJOR</priority>
-    <configKey>net.sourceforge.pmd.lang.rule.XPathRule</configKey>
+    <configKey>net.sourceforge.pmd.lang.rule.xpath.XPathRule</configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="xpath" type="TEXT">
       <defaultValue></defaultValue>
