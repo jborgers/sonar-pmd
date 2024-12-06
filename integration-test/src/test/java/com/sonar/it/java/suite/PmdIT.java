@@ -24,7 +24,7 @@ import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.http.HttpException;
 import org.apache.commons.lang3.JavaVersion;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -35,15 +35,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.sonar.it.java.suite.TestUtils.keyFor;
-import static com.sonar.it.java.suite.TestUtils.keyForTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
 
-    private PmdTestOrchestrator ORCHESTRATOR;
+    private static PmdTestOrchestrator ORCHESTRATOR;
 
-    @BeforeEach
-    void startSonar() {
+    @BeforeAll
+    static void startSonar() {
         ORCHESTRATOR = PmdTestOrchestrator.init();
         ORCHESTRATOR.start();
     }
@@ -161,6 +160,7 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
+            // PMD7-MIGRATION: added to force one violation in pmdShouldHaveAccessToExternalLibrariesInItsClasspath: is this testing the correct thing?
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
             assertThat(issues)
                     .hasSize(1);
