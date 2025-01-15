@@ -414,11 +414,11 @@
     <status>DEPRECATED</status>
   </rule>
 
-  <rule key="LooseCoupling">
-    <priority>MAJOR</priority>
-    <configKey>category/java/bestpractices.xml/LooseCoupling</configKey>
-    <status>DEPRECATED</status>
-  </rule>
+<!--  <rule key="LooseCoupling">-->
+<!--    <priority>MAJOR</priority>-->
+<!--    <configKey>category/java/bestpractices.xml/LooseCoupling</configKey>-->
+<!--    <status>DEPRECATED</status>-->
+<!--  </rule>-->
 
   <rule key="MethodArgumentCouldBeFinal">
     <priority>MINOR</priority>

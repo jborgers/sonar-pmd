@@ -45,7 +45,7 @@ class PmdRulesDefinitionTest {
 
         List<Rule> rules = repository.rules();
         // PMD-7-MIGRATION: check number of rules is correct from PMD 7.x (was 228 in PMD 6.x)
-        assertThat(rules).hasSize(206);
+        assertThat(rules).hasSize(205);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
