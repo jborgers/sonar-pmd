@@ -2480,19 +2480,20 @@
     <chc>
       <key>LOGIC_CHANGEABILITY</key>
       <name>Logic</name>
-      <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>DuplicatedBlocks</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>LINEAR</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1</val>
-          <txt>h</txt>
-        </prop>
-      </chc>
+<!-- NOTE: the following rule has been removed in pmd-7 -->
+<!--      <chc>-->
+<!--        <rule-repo>common-java</rule-repo>-->
+<!--        <rule-key>DuplicatedBlocks</rule-key>-->
+<!--        <prop>-->
+<!--          <key>remediationFunction</key>-->
+<!--          <txt>LINEAR</txt>-->
+<!--        </prop>-->
+<!--        <prop>-->
+<!--          <key>remediationFactor</key>-->
+<!--          <val>1</val>-->
+<!--          <txt>h</txt>-->
+<!--        </prop>-->
+<!--      </chc>-->
       <chc>
         <rule-repo>pmd</rule-repo>
         <rule-key>AvoidDuplicateLiterals</rule-key>
