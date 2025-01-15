@@ -1,5 +1,5 @@
 <!--
-  ~ SonarQube PMD7 Plugin
+  ~ SonarQube PMD Plugin
   ~ Copyright (C) 2012-2018 SonarSource SA
   ~ mailto:jborgers AT jpinpoint DOT com
   ~ mailto:peter.paul.bakker AT stokpop DOT nl
@@ -24,7 +24,7 @@
   <groupId>org.sonarsource.pmd</groupId>
   <artifactId>sonar-pmd</artifactId>
   <version>${revision}</version>
-  <name>SonarQube PMD7 Project</name>
+  <name>SonarQube PMD Project</name>
   <packaging>pom</packaging>
   <description>Sonar-PMD is a plugin that provides coding rules from PMD for use in SonarQube.</description>
 

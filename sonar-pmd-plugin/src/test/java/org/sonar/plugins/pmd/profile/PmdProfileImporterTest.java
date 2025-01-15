@@ -76,8 +76,8 @@ class PmdProfileImporterTest {
         RulesProfile profile = importer.importProfile(reader, messages);
 
         assertThat(profile.getActiveRules()).hasSize(3);
-        assertThat(profile.getActiveRuleByConfigKey("pmd7", "category/java/errorprone.xml/AvoidLiteralsInIfCondition")).isNotNull();
-        assertThat(profile.getActiveRuleByConfigKey("pmd7", "category/java/multithreading.xml/DoubleCheckedLocking")).isNotNull();
+        assertThat(profile.getActiveRuleByConfigKey("pmd", "category/java/errorprone.xml/AvoidLiteralsInIfCondition")).isNotNull();
+        assertThat(profile.getActiveRuleByConfigKey("pmd", "category/java/multithreading.xml/DoubleCheckedLocking")).isNotNull();
         assertThat(messages.hasErrors()).isFalse();
     }
 
@@ -96,7 +96,7 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd7", "category/java/bestpractices.xml/ForLoopVariableCount");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
 
         assertThat(activeRule.getParameter("maximumVariables")).isEqualTo("5");
     }
@@ -106,7 +106,7 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd7", "category/java/multithreading.xml/DoubleCheckedLocking");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/multithreading.xml/DoubleCheckedLocking");
 
         assertThat(activeRule.getSeverity()).isSameAs(RulePriority.BLOCKER);
     }
@@ -117,10 +117,10 @@ class PmdProfileImporterTest {
 
         RulesProfile profile = importer.importProfile(reader, messages);
 
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd7", "category/java/errorprone.xml/AvoidLiteralsInIfCondition");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/errorprone.xml/AvoidLiteralsInIfCondition");
         assertThat(activeRule.getSeverity()).isSameAs(RulePriority.CRITICAL);
 
-        activeRule = profile.getActiveRuleByConfigKey("pmd7", "category/java/bestpractices.xml/ForLoopVariableCount");
+        activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
         assertThat(activeRule.getSeverity()).isSameAs(RulePriority.MINOR);
     }
 
@@ -138,7 +138,7 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule check = profile.getActiveRuleByConfigKey("pmd7", "category/java/bestpractices.xml/ForLoopVariableCount");
+        ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
 
         // PMD7-MIGRATION what is meaning of this check? The list of parameters is empty (but expected maximumVariables?)
         // in the errors: The property 'maximumVariables' is not supported in the pmd rule: category/java/bestpractices.xml/ForLoopVariableCount

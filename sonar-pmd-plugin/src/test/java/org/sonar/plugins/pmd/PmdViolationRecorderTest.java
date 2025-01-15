@@ -123,9 +123,9 @@ class PmdViolationRecorderTest {
 
     private ActiveRule createRuleInActiveRules() {
         ActiveRule sonarRule = mock(ActiveRule.class);
-        RuleKey ruleKey = RuleKey.of("pmd7", "RULE");
+        RuleKey ruleKey = RuleKey.of("pmd", "RULE");
         when(mockActiveRules.find(ruleKey)).thenReturn(sonarRule);
-        when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd7", "RULE"));
+        when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd", "RULE"));
         return sonarRule;
     }
 

@@ -102,7 +102,7 @@ public class PmdTestOrchestrator {
                             "sonar-java-plugin",
                             determineJavaPluginVersion()
                     ))
-                    .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd7-plugin-*.jar"))
+                    .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
                     .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))

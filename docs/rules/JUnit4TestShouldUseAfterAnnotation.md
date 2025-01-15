@@ -1,6 +1,6 @@
 # JUnit4TestShouldUseAfterAnnotation
-**Category:** `pmd7-unit-tests`<br/>
-**Rule Key:** `pmd7-unit-tests:JUnit4TestShouldUseAfterAnnotation`<br/>
+**Category:** `pmd-unit-tests`<br/>
+**Rule Key:** `pmd-unit-tests:JUnit4TestShouldUseAfterAnnotation`<br/>
 
 
 -----

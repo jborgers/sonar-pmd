@@ -75,9 +75,9 @@ class PmdConfigurationTest {
     void should_dump_xml_rule_set() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
-        File rulesFile = configuration.dumpXmlRuleSet("pmd7", "<rules>");
+        File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
 
-        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd7.xml"));
+        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
         assertThat(Files.readAllLines(rulesFile.toPath(), StandardCharsets.UTF_8)).containsExactly("<rules>");
     }
 
@@ -85,7 +85,7 @@ class PmdConfigurationTest {
     void should_fail_to_dump_xml_rule_set() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
-        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd7", "<xml>"));
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd", "<xml>"));
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)

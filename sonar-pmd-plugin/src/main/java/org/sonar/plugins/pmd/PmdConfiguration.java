@@ -36,7 +36,7 @@ import java.nio.file.Path;
 
 @ScannerSide
 public class PmdConfiguration {
-    static final String PROPERTY_GENERATE_XML = "sonar.pmd7.generateXml";
+    static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
     private static final String PMD_RESULT_XML = "pmd-result.xml";
     private static final Logger LOG = Loggers.get(PmdConfiguration.class);
     private final FileSystem fileSystem;

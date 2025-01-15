@@ -114,7 +114,7 @@ class PmdIT {
                 .setCleanSonarGoals();
 
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd7", projectName);
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd", projectName);
 
             // when
             ORCHESTRATOR.executeBuild(build);
@@ -122,7 +122,7 @@ class PmdIT {
             // then
             final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
                     IssueQuery.create()
-                            .rules("pmd7:AvoidDuplicateLiterals")
+                            .rules("pmd:AvoidDuplicateLiterals")
                             .components(keyFor(projectName, "", "AvoidDuplicateLiterals")
                             )
             );

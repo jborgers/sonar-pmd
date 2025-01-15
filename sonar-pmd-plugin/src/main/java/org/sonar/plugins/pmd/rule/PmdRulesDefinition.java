@@ -71,7 +71,7 @@ public final class PmdRulesDefinition implements RulesDefinition {
 
         Properties properties = new Properties();
 
-        String file = "/org/sonar/l10n/pmd7.properties";
+        String file = "/org/sonar/l10n/pmd.properties";
         try (InputStream stream = PmdRulesDefinition.class.getResourceAsStream(file)) {
             properties.load(stream);
         } catch (IOException e) {

@@ -8,11 +8,11 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>sonar-pmd7-plugin</artifactId>
+  <artifactId>sonar-pmd-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
 
-  <name>SonarQube PMD7 Plugin</name>
-  <description>Sonar-PMD7 is a plugin that provides coding rules from PMD7.</description>
+  <name>SonarQube PMD Plugin</name>
+  <description>Sonar-PMD is a plugin that provides coding rules from PMD.</description>
   <inceptionYear>2012</inceptionYear>
   <url>https://github.com/jborgers/sonar-pmd</url>
 
@@ -175,10 +175,10 @@
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <configuration>
-          <pluginKey>pmd7</pluginKey>
-          <pluginName>PMD7</pluginName>
+          <pluginKey>pmd</pluginKey>
+          <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
-          <pluginDescription>Analyze Java code with PMD7.</pluginDescription>
+          <pluginDescription>Analyze Java code with PMD.</pluginDescription>
         </configuration>
       </plugin>
       <plugin>

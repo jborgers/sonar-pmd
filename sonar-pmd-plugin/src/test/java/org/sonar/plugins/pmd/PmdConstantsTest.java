@@ -27,12 +27,13 @@ class PmdConstantsTest {
 
     @Test
     void checkDefinedKeys() {
-        assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD7");
-        assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd7");
-        assertThat(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEqualTo("pmd7");
-        assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD7");
-        assertThat(PmdConstants.TEST_JAVA_REPOSITORY_KEY).isEqualTo("pmd7-unit-tests");
-        assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD7 Unit Tests");
+        assertThat(PmdConstants.PLUGIN_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEqualTo("pmd");
+        assertThat(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY).isEqualTo("pmd-kotlin");
+        assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.TEST_JAVA_REPOSITORY_KEY).isEqualTo("pmd-unit-tests");
+        assertThat(PmdConstants.TEST_REPOSITORY_NAME).isEqualTo("PMD Unit Tests");
         assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.xpath.XPathRule");
         assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
         assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");

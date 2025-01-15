@@ -1,6 +1,6 @@
 # TestClassWithoutTestCases
-**Category:** `pmd7-unit-tests`<br/>
-**Rule Key:** `pmd7-unit-tests:TestClassWithoutTestCases`<br/>
+**Category:** `pmd-unit-tests`<br/>
+**Rule Key:** `pmd-unit-tests:TestClassWithoutTestCases`<br/>
 
 
 -----

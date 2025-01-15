@@ -1,6 +1,6 @@
 # JUnit4SuitesShouldUseSuiteAnnotation
-**Category:** `pmd7-unit-tests`<br/>
-**Rule Key:** `pmd7-unit-tests:JUnit4SuitesShouldUseSuiteAnnotation`<br/>
+**Category:** `pmd-unit-tests`<br/>
+**Rule Key:** `pmd-unit-tests:JUnit4SuitesShouldUseSuiteAnnotation`<br/>
 
 
 -----

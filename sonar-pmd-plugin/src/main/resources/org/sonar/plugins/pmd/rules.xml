@@ -114,7 +114,7 @@
 <!--    <status>DEPRECATED</status>-->
 <!--  </rule>-->
 
-  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd7, key=TooFewBranchesForSwitch] is empty" -->
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=TooFewBranchesForSwitch] is empty" -->
 <!--  <rule key="TooFewBranchesForSwitch">-->
 <!--    <priority>MINOR</priority>-->
 <!--    <configKey>category/java/performance.xml/TooFewBranchesForSwitch</configKey>-->
@@ -169,14 +169,14 @@
     <status>DEPRECATED</status>
   </rule>
 
-  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd7, key=TooFewBranchesForSwitch] is empty" -->
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=TooFewBranchesForSwitch] is empty" -->
   <!--  <rule key="NonExhaustiveSwitch">-->
 <!--    <priority>MAJOR</priority>-->
 <!--    <configKey>category/java/bestpractices.xml/NonExhaustiveSwitch</configKey>-->
 <!--    <status>DEPRECATED</status>-->
 <!--  </rule>-->
 
-  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd7, key=DefaultLabelNotLastInSwitch] is empty" -->
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=DefaultLabelNotLastInSwitch] is empty" -->
 <!--  <rule key="DefaultLabelNotLastInSwitch">-->
 <!--    <priority>MAJOR</priority>-->
 <!--    <configKey>category/java/bestpractices.xml/DefaultLabelNotLastInSwitcht</configKey>-->
@@ -703,7 +703,7 @@
     <status>DEPRECATED</status>
   </rule>
 
-  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd7, key=NonCaseLabelInSwitch] is empty" -->
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=NonCaseLabelInSwitch] is empty" -->
   <!--  <rule key="NonCaseLabelInSwitch">-->
 <!--    <priority>MAJOR</priority>-->
 <!--    <configKey>category/java/errorprone.xml/NonCaseLabelInSwitch</configKey>-->
