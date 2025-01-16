@@ -23,15 +23,15 @@ package org.sonar.plugins.pmd;
  * Common configuration parameters for the Sonar-PMD plugin.
  */
 public final class PmdConstants {
-    public static final String PLUGIN_NAME = "PMD7";
-    public static final String PLUGIN_KEY = "pmd7";
+    public static final String PLUGIN_NAME = "PMD";
+    public static final String PLUGIN_KEY = "pmd";
     public static final String MAIN_JAVA_REPOSITORY_KEY = PLUGIN_KEY;
     public static final String MAIN_KOTLIN_REPOSITORY_KEY = "pmd-kotlin";
-    public static final String REPOSITORY_NAME = "PMD7";
+    public static final String REPOSITORY_NAME = "PMD";
     public static final String REPOSITORY_KOTLIN_NAME = "PMD Kotlin";
-    public static final String TEST_JAVA_REPOSITORY_KEY = "pmd7-unit-tests";
-    public static final String TEST_REPOSITORY_NAME = "PMD7 Unit Tests";
-    public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.XPathRule";
+    public static final String TEST_JAVA_REPOSITORY_KEY = "pmd-unit-tests";
+    public static final String TEST_REPOSITORY_NAME = "PMD Unit Tests";
+    public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.xpath.XPathRule";
     public static final String XPATH_EXPRESSION_PARAM = "xpath";
     public static final String XPATH_MESSAGE_PARAM = "message";
 
@@ -43,8 +43,17 @@ public final class PmdConstants {
     /**
      * Default value for property {@link #JAVA_SOURCE_VERSION}.
      */
-    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "1.6";
+    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "11";
 
+    /**
+     * Maximum supported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 6 this is 20-preview.
+     */
+    public static final String JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE = "20-preview";
+
+    /**
+     * Minimum UNsupported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 6 this is 21.
+     */
+    public static final String JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE = "21";
     /**
      * The Java Language key.
      */

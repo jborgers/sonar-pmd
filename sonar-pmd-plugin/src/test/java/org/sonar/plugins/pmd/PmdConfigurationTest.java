@@ -19,7 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.Report;
+import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 
 class PmdConfigurationTest {
 
-    private static final Pattern PMD_XML_PATTERN = Pattern.compile("^<\\?xml version=\"1\\.0\" encoding=\"UTF-8\"\\?><pmd xmlns=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0\" xmlns:xsi=\"http://www\\.w3\\.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0 http://pmd\\.sourceforge\\.net/report_2_0_0.xsd\" version=\"7\\.\\d+\\.\\d+-SNAPSHOT\".*></pmd>$");
+    private static final Pattern PMD_XML_PATTERN = Pattern.compile("^<\\?xml version=\"1\\.0\" encoding=\"UTF-8\"\\?><pmd xmlns=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0\" xmlns:xsi=\"http://www\\.w3\\.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0 https://pmd\\.github\\.io/schema/report_2_0_0.xsd\" version=\"7\\.\\d+\\.\\d+\".*></pmd>$");
     private static final File WORK_DIR = new File("test-work-dir");
 
     private final FileSystem fs = mock(FileSystem.class);
@@ -75,9 +75,9 @@ class PmdConfigurationTest {
     void should_dump_xml_rule_set() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
-        File rulesFile = configuration.dumpXmlRuleSet("pmd7", "<rules>");
+        File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
 
-        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd7.xml"));
+        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
         assertThat(Files.readAllLines(rulesFile.toPath(), StandardCharsets.UTF_8)).containsExactly("<rules>");
     }
 
@@ -85,7 +85,7 @@ class PmdConfigurationTest {
     void should_fail_to_dump_xml_rule_set() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
-        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd7", "<xml>"));
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd", "<xml>"));
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
@@ -97,7 +97,7 @@ class PmdConfigurationTest {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
-        Path reportFile = configuration.dumpXmlReport(new Report());
+        Path reportFile = configuration.dumpXmlReport(Report.buildReport(v -> {}));
 
         assertThat(reportFile.toFile()).isEqualTo(new File(WORK_DIR, "pmd-result.xml"));
         String pmdResultXML = String.join("", Files.readAllLines(reportFile, StandardCharsets.UTF_8));
@@ -112,7 +112,7 @@ class PmdConfigurationTest {
 
         settings.setProperty(PmdConfiguration.PROPERTY_GENERATE_XML, true);
 
-        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlReport(new Report()));
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlReport(Report.buildReport(v -> {})));
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
@@ -121,7 +121,7 @@ class PmdConfigurationTest {
 
     @Test
     void should_ignore_xml_report_when_property_is_not_set() {
-        Path reportFile = configuration.dumpXmlReport(new Report());
+        Path reportFile = configuration.dumpXmlReport(Report.buildReport(v -> {}));
 
         assertThat(reportFile).isNull();
         verifyNoMoreInteractions(fs);

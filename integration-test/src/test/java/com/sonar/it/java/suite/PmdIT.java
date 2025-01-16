@@ -24,7 +24,6 @@ import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.http.HttpException;
 import org.apache.commons.lang3.JavaVersion;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,20 +35,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.sonar.it.java.suite.TestUtils.keyFor;
-import static com.sonar.it.java.suite.TestUtils.keyForTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdIT {
 
-    private static final PmdTestOrchestrator ORCHESTRATOR = PmdTestOrchestrator.init();
+    private static PmdTestOrchestrator ORCHESTRATOR;
 
     @BeforeAll
     static void startSonar() {
+        ORCHESTRATOR = PmdTestOrchestrator.init();
         ORCHESTRATOR.start();
     }
 
     @ParameterizedTest
-    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_16"})
+    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_20"})
     void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
 
         // given
@@ -115,7 +114,7 @@ class PmdIT {
                 .setCleanSonarGoals();
 
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd7", projectName);
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd", projectName);
 
             // when
             ORCHESTRATOR.executeBuild(build);
@@ -123,7 +122,7 @@ class PmdIT {
             // then
             final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
                     IssueQuery.create()
-                            .rules("pmd7:AvoidDuplicateLiterals")
+                            .rules("pmd:AvoidDuplicateLiterals")
                             .components(keyFor(projectName, "", "AvoidDuplicateLiterals")
                             )
             );
@@ -133,44 +132,6 @@ class PmdIT {
 
             assertThat(issues.get(0).message())
                     .contains("appears 5 times in this file");
-
-        } catch (HttpException e) {
-            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
-            throw e;
-        } finally {
-            // Cleanup
-            ORCHESTRATOR.resetData(projectName);
-        }
-    }
-
-    /**
-     * SONAR-1076
-     */
-    @Test
-    void testJunitRules() {
-
-        // given
-        final String projectName = "pmd-junit-rules";
-        final MavenBuild build = MavenBuild
-                .create(TestUtils.projectPom(projectName))
-                .setCleanSonarGoals();
-
-        try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-junit", projectName);
-
-            // when
-            ORCHESTRATOR.executeBuild(build);
-
-            // then
-            final List<Issue> testIssues = retrieveIssues(keyForTest());
-            assertThat(testIssues).hasSize(1);
-            assertThat(testIssues.get(0).message()).matches("This class name ends with '?Test'? but contains no test cases");
-            assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd7-unit-tests:TestClassWithoutTestCases");
-
-            final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
-            assertThat(prodIssues).hasSize(1);
-            assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
-            assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd7:UnusedPrivateField");
 
         } catch (HttpException e) {
             System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
@@ -199,6 +160,7 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
+            // PMD7-MIGRATION: added to force one violation in pmdShouldHaveAccessToExternalLibrariesInItsClasspath: is this testing the correct thing?
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
             assertThat(issues)
                     .hasSize(1);

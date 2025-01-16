@@ -1,6 +1,6 @@
 # JUnitUseExpected
-**Category:** `pmd7-unit-tests`<br/>
-**Rule Key:** `pmd7-unit-tests:JUnitUseExpected`<br/>
+**Category:** `pmd-unit-tests`<br/>
+**Rule Key:** `pmd-unit-tests:JUnitUseExpected`<br/>
 
 
 -----

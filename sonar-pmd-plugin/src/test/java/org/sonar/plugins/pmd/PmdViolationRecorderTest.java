@@ -19,8 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.Rule;
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.lang.document.FileId;
+import net.sourceforge.pmd.lang.rule.Rule;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.TextRange;
@@ -122,9 +123,9 @@ class PmdViolationRecorderTest {
 
     private ActiveRule createRuleInActiveRules() {
         ActiveRule sonarRule = mock(ActiveRule.class);
-        RuleKey ruleKey = RuleKey.of("pmd7", "RULE");
+        RuleKey ruleKey = RuleKey.of("pmd", "RULE");
         when(mockActiveRules.find(ruleKey)).thenReturn(sonarRule);
-        when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd7", "RULE"));
+        when(sonarRule.ruleKey()).thenReturn(RuleKey.of("pmd", "RULE"));
         return sonarRule;
     }
 
@@ -133,7 +134,7 @@ class PmdViolationRecorderTest {
         final RuleViolation pmdViolation = mock(RuleViolation.class);
 
         when(rule.getName()).thenReturn(ruleName);
-        when(pmdViolation.getFilename()).thenReturn(file.getAbsolutePath());
+        when(pmdViolation.getFileId()).thenReturn(FileId.fromPath(file.toPath()));
         when(pmdViolation.getBeginLine()).thenReturn(2);
         when(pmdViolation.getDescription()).thenReturn("Description");
         when(pmdViolation.getRule()).thenReturn(rule);

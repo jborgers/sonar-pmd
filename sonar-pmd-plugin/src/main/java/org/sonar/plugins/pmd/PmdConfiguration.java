@@ -19,9 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
+import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
@@ -36,7 +36,7 @@ import java.nio.file.Path;
 
 @ScannerSide
 public class PmdConfiguration {
-    static final String PROPERTY_GENERATE_XML = "sonar.pmd7.generateXml";
+    static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
     private static final String PMD_RESULT_XML = "pmd-result.xml";
     private static final Logger LOG = Loggers.get(PmdConfiguration.class);
     private final FileSystem fileSystem;

@@ -170,8 +170,8 @@ class PmdProfileExporterTest {
         String importedXml = PmdTestUtils.getResourceContent("/org/sonar/plugins/pmd/export_rule_with_all_params_empty.xml");
 
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<ruleset name=\"pmd7\">\n" +
-                "  <description>Sonar Profile: pmd7</description>\n" +
+                "<ruleset name=\"pmd\">\n" +
+                "  <description>Sonar Profile: pmd</description>\n" +
                 "  <rule ref=\"category/java/codestyle.xml/CommentDefaultAccessModifier\">\n" +
                 "    <priority>2</priority>\n" +
                 "  </rule>\n" +
@@ -190,7 +190,7 @@ class PmdProfileExporterTest {
         exporter.exportProfile(RulesProfile.create(), writer);
 
         assertThat(writer.toString()).satisfies(equalsIgnoreEOL("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<ruleset name=\"pmd7\">  <description>Sonar Profile: pmd7</description></ruleset>"));
+                "<ruleset name=\"pmd\">  <description>Sonar Profile: pmd</description></ruleset>"));
     }
 
     @Test

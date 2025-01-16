@@ -1,14 +1,43 @@
 # Changelog
 
-## [3.4.1-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/master) (tbd)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.4.0...master)
 
-- nothing yet
+## [3.5.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/3.5.2-SNAPSHOT) (2024-xx-xx)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.1..master)
+
+**Implemented highlights:**
+
+
+## [3.5.1](https://github.com/jborgers/sonar-pmd/tree/3.5.1) (2024-05-07)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.0..3.5.1)
+
+**Implemented highlights:**
+- Supports latest SonarQube [9.9.4 - 10.5+]
+- Supports running on Java 11 on analysis side for SQ 9.9.4 - 10.2.x
+- Supports running on Java 17 for all supported versions
+- Updated Sonar Plugin API+impl for SonarQube 9.9.4+
+- Upgraded various dependencies
+
+- ## [3.5.0](https://github.com/jborgers/sonar-pmd/tree/3.5.0) (2024-04-23)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.4.0...3.5.0)
+
+**Contributors:**
+- [jborgers](https://github.com/jborgers) 
+- [renewolfert](https://github.com/renewolfert)
+
+**Implemented highlights:**
+- Updated PMD (6.55.0) (last PMD-6) #422
+- Support analyzing up to Java 20-preview (close to 21) #422
+- Java 21+ falls back to 20-preview with warning (no error) #422
+- Updated Sonar Plugin API+impl (9.8.0.63668) (SonarQube 9.8+) 
+- Upgraded various dependencies
+- Needs Java 17, the class file version is 61 
 
 ## [3.4.0](https://github.com/jborgers/sonar-pmd/tree/3.4.0) (2022-05-11)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.3.1...3.4.0)
 
 **Contributors:**
+- [jborgers](https://github.com/jborgers)
+- [stokpop](https://github.com/stokpop)
 - [jensgerdes](https://github.com/jensgerdes) (Many thanks for his great maintenance and decision to transfer)
 
 **Implemented highlights:**

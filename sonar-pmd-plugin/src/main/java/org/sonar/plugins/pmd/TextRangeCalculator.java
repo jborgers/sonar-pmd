@@ -19,13 +19,13 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.TextPointer;
 import org.sonar.api.batch.fs.TextRange;
 
 /**
- * Calculates a {@link org.sonar.api.batch.fs.TextRange} for a given {@link net.sourceforge.pmd.RuleViolation}.
+ * Calculates a {@link org.sonar.api.batch.fs.TextRange} for a given {@link net.sourceforge.pmd.reporting.RuleViolation}.
  */
 class TextRangeCalculator {
 

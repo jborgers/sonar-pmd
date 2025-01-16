@@ -19,8 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.Report;
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.reporting.FileAnalysisListener;
+import net.sourceforge.pmd.reporting.Report;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -31,7 +32,7 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -196,9 +197,14 @@ class PmdSensorTest {
     }
 
     private void mockExecutorResult(RuleViolation... violations) {
-        final Report report = new Report();
-        Arrays.stream(violations)
-                .forEach(report::addRuleViolation);
+
+        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = fal -> {
+            for (RuleViolation violation : violations) {
+                fal.onRuleViolation(violation);
+            }
+        };
+
+        final Report report = Report.buildReport(fileAnalysisListenerConsumer);
 
         when(executor.execute())
                 .thenReturn(report);

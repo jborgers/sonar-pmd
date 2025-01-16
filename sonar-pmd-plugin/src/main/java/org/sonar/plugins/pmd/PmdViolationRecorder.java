@@ -19,7 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -93,7 +93,7 @@ public class PmdViolationRecorder {
     private InputFile findResourceFor(RuleViolation violation) {
         return fs.inputFile(
                 fs.predicates().hasAbsolutePath(
-                        violation.getFilename()
+                        violation.getFileId().getAbsolutePath()
                 )
         );
     }

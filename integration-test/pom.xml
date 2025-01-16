@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ SonarQube PMD7 Plugin Integration Test
+  ~ SonarQube PMD Plugin Integration Test
   ~ Copyright (C) 2012-2018 SonarSource SA
   ~ mailto:jborgers AT jpinpoint DOT com
   ~ mailto:peter.paul.bakker AT stokpop DOT nl
@@ -25,11 +25,11 @@
   <parent>
     <groupId>org.sonarsource.pmd</groupId>
     <artifactId>sonar-pmd</artifactId>
-    <version>3.4.1-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>integration-test</artifactId>
-  <name>SonarQube PMD7 Plugin Integration Test</name>
+  <name>SonarQube PMD Plugin Integration Test</name>
   <packaging>sonar-plugin</packaging>
   <inceptionYear>2013</inceptionYear>
 
@@ -43,12 +43,18 @@
       <artifactId>sonar-orchestrator</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
-      <artifactId>sonar-ws-client</artifactId>
+      <groupId>org.sonarsource.orchestrator</groupId>
+      <artifactId>sonar-orchestrator-junit4</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-ws-client</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
@@ -58,7 +64,6 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.12.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -66,17 +71,22 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${sonar.maven.plugin.version}</version>
+      </plugin>
+      <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
           <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
           <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
-          <!-- This is important. It means that this plugin extends the PMD7 plugin -->
-          <basePlugin>pmd7</basePlugin>
+          <!-- This is important. It means that this plugin extends the PMD plugin -->
+          <basePlugin>pmd</basePlugin>
 
-          <!-- This is important. It means that this plugin extends the PMD7 plugin -->
-          <basePlugin>pmd7</basePlugin>
+          <!-- This is important. It means that this plugin extends the PMD plugin -->
+          <basePlugin>pmd</basePlugin>
         </configuration>
       </plugin>
       <!-- prevent deploy: https://stackoverflow.com/questions/25305850/how-to-disable-nexus-staging-maven-plugin-in-sub-modules -->
