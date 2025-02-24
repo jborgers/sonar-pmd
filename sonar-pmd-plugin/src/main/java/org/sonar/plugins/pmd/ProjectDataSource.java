@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,31 +19,53 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.util.datasource.DataSource;
+import net.sourceforge.pmd.lang.LanguageVersion;
+import net.sourceforge.pmd.lang.document.FileId;
+import net.sourceforge.pmd.lang.document.TextFile;
+import net.sourceforge.pmd.lang.document.TextFileContent;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.sonar.api.batch.fs.InputFile;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Paths;
 
-public class ProjectDataSource implements DataSource {
+public class ProjectDataSource implements TextFile {
 
-    private final InputFile inputFile;
+    private final TextFileContent textFileContent;
 
     public ProjectDataSource(InputFile inputFile) {
-        this.inputFile = inputFile;
+        try {
+            this.textFileContent =
+                    TextFileContent.fromInputStream(inputFile.inputStream(), inputFile.charset());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    @Override
+//    public InputStream getInputStream() throws IOException {
+//        return inputFile.inputStream();
+//    }
+//
+//    @Override
+//    public String getNiceFileName(boolean shortNames, String inputFileName) {
+//        return Paths.get(inputFile.uri())
+//                .toAbsolutePath()
+//                .toString();
+//    }
+
+    @Override
+    public @NonNull LanguageVersion getLanguageVersion() {
+        return null;
     }
 
     @Override
-    public InputStream getInputStream() throws IOException {
-        return inputFile.inputStream();
+    public FileId getFileId() {
+        return null;
     }
 
     @Override
-    public String getNiceFileName(boolean shortNames, String inputFileName) {
-        return Paths.get(inputFile.uri())
-                .toAbsolutePath()
-                .toString();
+    public TextFileContent readContents() throws IOException {
+        return textFileContent;
     }
 
     @Override

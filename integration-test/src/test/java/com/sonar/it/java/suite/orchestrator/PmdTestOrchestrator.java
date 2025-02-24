@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin Integration Test
+ * SonarQube PMD7 Plugin Integration Test
  * Copyright (C) 2013-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -93,23 +93,28 @@ public class PmdTestOrchestrator {
     }
 
     public static PmdTestOrchestrator init() {
-        final OrchestratorRule orchestrator = OrchestratorRule
-                .builderEnv().useDefaultAdminCredentialsForBuilds(true)
-                .setSonarVersion(determineSonarqubeVersion())
-                .addPlugin(MavenLocation.create(
-                        "org.sonarsource.java",
-                        "sonar-java-plugin",
-                        determineJavaPluginVersion()
-                ))
-                .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
-                .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-junit-rules.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
-                .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
-                .build();
+        try {
+            final OrchestratorRule orchestrator = OrchestratorRule
+                    .builderEnv().useDefaultAdminCredentialsForBuilds(true)
+                    .setSonarVersion(determineSonarqubeVersion())
+                    .addPlugin(MavenLocation.create(
+                            "org.sonarsource.java",
+                            "sonar-java-plugin",
+                            determineJavaPluginVersion()
+                    ))
+                    .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
+                    .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
+                    .build();
 
-        return new PmdTestOrchestrator(orchestrator);
+            return new PmdTestOrchestrator(orchestrator);
+        }
+        catch(Exception e) {
+            System.out.println("ERROR: " + e);
+            throw new RuntimeException(e);
+        }
     }
 
     private static String deriveProjectKey(String projectName) {
@@ -117,10 +122,10 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[7.13]");
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.9]");
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[9.8]");
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[10.7]");
     }
 }

@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,8 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.ImmutableList;
-import net.sourceforge.pmd.*;
+import net.sourceforge.pmd.lang.rule.RuleSet;
+import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
+import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,6 +41,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -67,7 +69,14 @@ class PmdExecutorTest {
     private static DefaultInputFile file(String path, Type type) {
         return TestInputFileBuilder.create("sonar-pmd-test", path)
                 .setType(type)
-                .setLanguage(PmdConstants.LANGUAGE_KEY)
+                .setLanguage(PmdConstants.LANGUAGE_JAVA_KEY)
+                .build();
+    }
+
+    private static DefaultInputFile fileKotlin(String path, Type type) {
+        return TestInputFileBuilder.create("", path)
+                .setType(type)
+                .setLanguage(PmdConstants.LANGUAGE_KOTLIN_KEY)
                 .build();
     }
 
@@ -96,8 +105,8 @@ class PmdExecutorTest {
     void should_execute_pmd_on_source_files_and_test_files() {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
-        setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
-        setupPmdRuleSet(PmdConstants.TEST_REPOSITORY_KEY, "junit.xml");
+        setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "simple.xml");
+        setupPmdRuleSet(PmdConstants.TEST_JAVA_REPOSITORY_KEY, "junit.xml");
         fileSystem.add(srcFile);
         fileSystem.add(tstFile);
 
@@ -118,7 +127,7 @@ class PmdExecutorTest {
     void should_ignore_empty_test_dir() {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
-        setupPmdRuleSet(PmdConstants.REPOSITORY_KEY, "simple.xml");
+        setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);
 
         pmdExecutor.execute();
@@ -129,7 +138,7 @@ class PmdExecutorTest {
     @Test
     void should_build_project_classloader_from_javaresourcelocator() throws Exception {
         File file = new File("x");
-        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(file));
+        when(javaResourceLocator.classpath()).thenReturn(List.of(file));
         pmdExecutor.execute();
         ArgumentCaptor<URLClassLoader> classLoaderArgument = ArgumentCaptor.forClass(URLClassLoader.class);
         verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
@@ -142,7 +151,7 @@ class PmdExecutorTest {
     void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
-        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(invalidFile));
+        when(javaResourceLocator.classpath()).thenReturn(List.of(invalidFile));
 
         final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
 
@@ -153,7 +162,7 @@ class PmdExecutorTest {
 
     @Test
     void unknown_pmd_ruleset() {
-        when(pmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
+        when(pmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.MAIN_JAVA_REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
 
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         fileSystem.add(srcFile);
@@ -163,6 +172,23 @@ class PmdExecutorTest {
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
                 .hasCauseInstanceOf(RuleSetLoadException.class);
+    }
+
+    @Test
+    void should_execute_pmd_on_kotlin_source_files() {
+
+        DefaultInputFile srcFile = fileKotlin("src/test/kotlin/TestKotlin.kt", Type.MAIN);
+
+        setupPmdRuleSet(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, "simple-kotlin.xml");
+        fileSystem.add(srcFile);
+
+        Report report = pmdExecutor.execute();
+
+        assertThat(report).isNotNull();
+        assertThat(report.getViolations()).hasSize(1);
+        assertThat(report.getProcessingErrors()).isEmpty();
+        verify(pmdConfiguration).dumpXmlReport(report);
+
     }
 
     private void setupPmdRuleSet(String repositoryKey, String profileFileName) {

@@ -1,0 +1,8 @@
+<rules>
+
+  <rule key="FunctionNameTooShort">
+    <priority>MAJOR</priority>
+    <configKey>category/kotlin/bestpractices.xml/FunctionNameTooShort</configKey>
+  </rule>
+
+</rules>

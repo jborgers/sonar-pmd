@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -28,6 +28,7 @@ import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.utils.Version;
 import org.sonar.plugins.pmd.profile.PmdProfileExporter;
 import org.sonar.plugins.pmd.profile.PmdProfileImporter;
+import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
@@ -53,13 +54,14 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(9)
+                .hasSize(10)
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
                         PmdExecutor.class,
                         PmdRulesDefinition.class,
                         PmdUnitTestsRulesDefinition.class,
+                        PmdKotlinRulesDefinition.class,
                         PmdProfileExporter.class,
                         PmdProfileImporter.class,
                         PmdViolationRecorder.class

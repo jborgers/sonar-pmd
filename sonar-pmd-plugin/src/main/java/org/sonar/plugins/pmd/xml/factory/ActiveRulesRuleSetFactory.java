@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *

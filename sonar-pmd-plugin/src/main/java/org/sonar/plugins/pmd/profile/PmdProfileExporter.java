@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,13 +19,13 @@
  */
 package org.sonar.plugins.pmd.profile;
 
-import java.io.Writer;
-
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
+
+import java.io.Writer;
 
 /**
  * ServerSide component that is able to export all currently active PMD rules as XML.
@@ -35,15 +35,15 @@ public class PmdProfileExporter extends ProfileExporter {
     private static final String CONTENT_TYPE_APPLICATION_XML = "application/xml";
 
     public PmdProfileExporter() {
-        super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
-        setSupportedLanguages(PmdConstants.LANGUAGE_KEY);
+        super(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
+        setSupportedLanguages(PmdConstants.LANGUAGE_JAVA_KEY);
         setMimeType(CONTENT_TYPE_APPLICATION_XML);
     }
 
     @Override
     public void exportProfile(RulesProfile profile, Writer writer) {
 
-        final PmdRuleSet tree = PmdRuleSets.from(profile, PmdConstants.REPOSITORY_KEY);
+        final PmdRuleSet tree = PmdRuleSets.from(profile, PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
 
         try {
             tree.writeTo(writer);

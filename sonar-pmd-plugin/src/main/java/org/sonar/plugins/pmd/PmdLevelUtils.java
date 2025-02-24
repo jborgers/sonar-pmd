@@ -17,25 +17,32 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugins.pmd.rule;
+package org.sonar.plugins.pmd;
 
-import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.plugins.pmd.PmdConstants;
+import java.util.Objects;
+import javax.annotation.Nullable;
 
-public final class PmdUnitTestsRulesDefinition implements RulesDefinition {
+import org.sonar.api.rules.RulePriority;
 
-    public PmdUnitTestsRulesDefinition() {
-        // Do nothing
+public final class PmdLevelUtils {
+
+    private static final int INDEX_LEVEL = RulePriority.values().length;
+    private PmdLevelUtils() {
+        // only static methods
     }
 
-    @Override
-    public void define(Context context) {
-        NewRepository repository = context
-                .createRepository(PmdConstants.TEST_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY)
-                .setName(PmdConstants.TEST_REPOSITORY_NAME);
+    public static RulePriority fromLevel(@Nullable Integer level) {
 
-        PmdRulesDefinition.extractRulesData(repository, "/org/sonar/plugins/pmd/rules-unit-tests.xml", "/org/sonar/l10n/pmd/rules/pmd-unit-tests");
+        if (Objects.isNull(level)) {
+            return null;
+        }
 
-        repository.done();
+        final int index = Math.abs(INDEX_LEVEL - level);
+
+        return (index < INDEX_LEVEL) ? RulePriority.valueOfInt(index) : null;
+    }
+
+    public static Integer toLevel(RulePriority priority) {
+        return Math.abs(priority.ordinal() - INDEX_LEVEL);
     }
 }

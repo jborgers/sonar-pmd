@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,13 +19,6 @@
  */
 package org.sonar.plugins.pmd.profile;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.base.CharMatcher;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
@@ -42,13 +35,18 @@ import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.plugins.pmd.PmdTestUtils;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PmdProfileExporterTest {
 
@@ -60,7 +58,7 @@ class PmdProfileExporterTest {
         PmdRulesDefinition definition = new PmdRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
         RuleFinder ruleFinder = createRuleFinder(repository.rules());
         PmdProfileImporter importer = new PmdProfileImporter(ruleFinder);
 
@@ -197,9 +195,9 @@ class PmdProfileExporterTest {
 
     @Test
     void should_export_xPath_rule() {
-        Rule rule = Rule.create(PmdConstants.REPOSITORY_KEY, "MyOwnRule", "This is my own xpath rule.")
+        Rule rule = Rule.create(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "MyOwnRule", "This is my own xpath rule.")
                 .setConfigKey(PmdConstants.XPATH_CLASS)
-                .setRepositoryKey(PmdConstants.REPOSITORY_KEY);
+                .setRepositoryKey(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
         rule.createParameter(PmdConstants.XPATH_EXPRESSION_PARAM);
         rule.createParameter(PmdConstants.XPATH_MESSAGE_PARAM);
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Sonar" >
+  <description>Sonar PMD kotlin rules</description>
+  <rule name="Sample1" ref="category/kotlin/bestpractices.xml/FunctionNameTooShort">
+    <priority>2</priority>
+  </rule>
+</ruleset>

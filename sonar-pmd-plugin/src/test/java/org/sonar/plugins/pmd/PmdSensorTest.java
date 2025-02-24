@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,11 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.File;
-import java.util.Arrays;
-
-import net.sourceforge.pmd.Report;
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.reporting.FileAnalysisListener;
+import net.sourceforge.pmd.reporting.Report;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -33,18 +31,13 @@ import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 
+import java.io.File;
+import java.util.function.Consumer;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 class PmdSensorTest {
 
@@ -107,8 +100,8 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
         addOneJavaFile(Type.TEST);
 
-        when(profile.findByRepository(PmdConstants.REPOSITORY_KEY).isEmpty()).thenReturn(true);
-        when(profile.findByRepository(PmdConstants.TEST_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.TEST_JAVA_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when
         pmdSensor.execute(sensorContext);
@@ -189,13 +182,13 @@ class PmdSensorTest {
 
         // given
         final SensorDescriptor mockDescriptor = mock(SensorDescriptor.class);
-        when(mockDescriptor.onlyOnLanguage(anyString())).thenReturn(mockDescriptor);
+        when(mockDescriptor.onlyOnLanguages(anyString(), anyString())).thenReturn(mockDescriptor);
 
         // when
         pmdSensor.describe(mockDescriptor);
 
         // then
-        verify(mockDescriptor).onlyOnLanguage(PmdConstants.LANGUAGE_KEY);
+        verify(mockDescriptor).onlyOnLanguages(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY);
         verify(mockDescriptor).name("PmdSensor");
     }
 
@@ -204,9 +197,14 @@ class PmdSensorTest {
     }
 
     private void mockExecutorResult(RuleViolation... violations) {
-        final Report report = new Report();
-        Arrays.stream(violations)
-                .forEach(report::addRuleViolation);
+
+        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = fal -> {
+            for (RuleViolation violation : violations) {
+                fal.onRuleViolation(violation);
+            }
+        };
+
+        final Report report = Report.buildReport(fileAnalysisListenerConsumer);
 
         when(executor.execute())
                 .thenReturn(report);

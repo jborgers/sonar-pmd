@@ -115,6 +115,12 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
+      <version>${pmd.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-kotlin</artifactId>
+      <version>${pmd.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jdom</groupId>
@@ -188,8 +194,8 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>13000000</maxsize>
-                  <minsize>8000000</minsize>
+                  <maxsize>19000000</maxsize>
+                  <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
                   </files>

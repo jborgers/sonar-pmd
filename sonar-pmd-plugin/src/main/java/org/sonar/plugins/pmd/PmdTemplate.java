@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -22,7 +22,9 @@ package org.sonar.plugins.pmd;
 import net.sourceforge.pmd.*;
 import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
+import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
+import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -68,7 +70,7 @@ public class PmdTemplate {
         PMDConfiguration configuration = new PMDConfiguration();
         configuration.setDefaultLanguageVersion(languageVersion(javaVersion));
         configuration.setClassLoader(classloader);
-        configuration.setSourceEncoding(charset.name());
+        configuration.setSourceEncoding(charset);
         configuration.setFailOnViolation(false);
         configuration.setIgnoreIncrementalAnalysis(true);
         configuration.setReportFormat(EmptyRenderer.NAME);

@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,13 +19,13 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
 import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,15 +37,16 @@ class PmdUnitTestsRulesDefinitionTest {
         PmdUnitTestsRulesDefinition definition = new PmdUnitTestsRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.TEST_REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.TEST_JAVA_REPOSITORY_KEY);
 
         assertThat(repository)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("name", PmdConstants.TEST_REPOSITORY_NAME)
-                .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_KEY);
+                .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();
-        assertThat(rules).hasSize(17);
+        //assertThat(rules).hasSize(17); NOTE: 5 rules have been removed in pmd-7
+        assertThat(rules).hasSize(12);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -56,11 +57,11 @@ class PmdUnitTestsRulesDefinitionTest {
                     "JUnitTestsShouldIncludeAssert",
                     "TestClassWithoutTestCases",
                     "UnnecessaryBooleanAssertion",
-                    "UseAssertEqualsInsteadOfAssertTrue",
-                    "UseAssertSameInsteadOfAssertTrue",
-                    "UseAssertNullInsteadOfAssertTrue",
-                    "SimplifyBooleanAssertion",
-                    "UseAssertTrueInsteadOfAssertEquals",
+                    //"UseAssertEqualsInsteadOfAssertTrue", // 5 rules have been removed in pmd-7
+                    //"UseAssertSameInsteadOfAssertTrue",
+                    //"UseAssertNullInsteadOfAssertTrue",
+                    //"SimplifyBooleanAssertion",
+                    //"UseAssertTrueInsteadOfAssertEquals",
                     "JUnitTestContainsTooManyAsserts",
                     "JUnit4SuitesShouldUseSuiteAnnotation",
                     "JUnit4TestShouldUseAfterAnnotation",

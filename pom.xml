@@ -61,6 +61,15 @@
     </developer>
   </developers>
 
+  <repositories>
+    <repository>
+      <id>central-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+  </repositories>
+
   <distributionManagement>
     <repository>
       <id>sonatype-nexus</id>
@@ -74,45 +83,50 @@
 
   <properties>
     <!-- use -Drevision=x.y.z to override in build -->
-    <revision>3.5.2-SNAPSHOT</revision>
+    <revision>4.0.0-SNAPSHOT</revision>
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
-    <pmd.version>6.55.0</pmd.version>
-    <junit.jupiter.version>5.11.0-M1</junit.jupiter.version>
-    <mockito.version>5.11.0</mockito.version>
-    <assertj.version>3.25.3</assertj.version>
-    <commons-lang3.version>3.14.0</commons-lang3.version>
+    <pmd.version>7.10.0</pmd.version>
+    <junit.jupiter.version>5.11.4</junit.jupiter.version>
+    <mockito.version>5.15.2</mockito.version>
+    <assertj.version>3.27.2</assertj.version>
+    <commons-lang3.version>3.17.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
-    <java.frontend.version>7.30.0.34429</java.frontend.version>
-    <guava.version>33.2.0-jre</guava.version>
+    <java.frontend.version>8.9.0.37768</java.frontend.version>
+    <guava.version>33.4.0-jre</guava.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>9.9.4.87374</sonar-plugin-api-impl.version>
-    <sonar-plugin-api.version>9.14.0.375</sonar-plugin-api.version>
-    <sonar-orchestrator.version>4.9.0.1920</sonar-orchestrator.version>
+    <sonar-plugin-api-impl.version>25.1.0.102122</sonar-plugin-api-impl.version>
+    <sonar-plugin-api.version>11.1.0.2693</sonar-plugin-api.version>
+    <sonar-orchestrator.version>5.1.0.2254</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.release>11</maven.compiler.release>
     <!-- Maven plugin versions -->
-    <maven.enforcer.plugin.version>3.4.1</maven.enforcer.plugin.version>
-    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
-    <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
-    <maven.release.plugin.version>3.0.1</maven.release.plugin.version>
+    <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
+    <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
+    <maven.failsafe.plugin.version>3.5.2</maven.failsafe.plugin.version>
+    <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
-    <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
-    <maven.gpg.plugin.version>3.2.4</maven.gpg.plugin.version>
-    <maven.cleanup.plugin.version>3.3.2</maven.cleanup.plugin.version>
+    <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
+    <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+    <maven.cleanup.plugin.version>3.4.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.0.0.4389</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
-    <nexus-staging.plugin.version>1.6.13</nexus-staging.plugin.version>
+    <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
     <flatten.maven.plugin.version>1.6.0</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <maven-deploy-plugin.version>3.1.3</maven-deploy-plugin.version>
+    <maven-install-plugin.version>3.1.3</maven-install-plugin.version>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
   </properties>
 
   <modules>
@@ -142,11 +156,20 @@
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator-junit4</artifactId>
         <version>${sonar-orchestrator.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <!-- pulls in version 1.7.2, incompatible with pmd-7 -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.codehaus.sonar</groupId>
         <artifactId>sonar-ws-client</artifactId>
         <version>${sonar-ws-client.version}</version>
+        <scope>provided</scope>
       </dependency>
 
       <!-- PMD -->
@@ -204,6 +227,26 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${maven-install-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>${maven.gpg.plugin.version}</version>
         </plugin>
@@ -249,16 +292,11 @@
 
     <plugins>
       <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>${sonar.maven.plugin.version}</version>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
           <execution>
-            <id>enforce-maven</id>
+            <id>enforce-maven-and-java</id>
             <goals>
               <goal>enforce</goal>
             </goals>
@@ -267,6 +305,9 @@
                 <requireMavenVersion>
                   <version>3.8</version>
                 </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[17,18)</version>
+                </requireJavaVersion>
               </rules>
             </configuration>
           </execution>
@@ -280,7 +321,9 @@
           <archive>
             <manifestEntries>
               <!-- ${buildNumber} is the svn revision generated by the buildnumber-maven-plugin -->
+              <!--suppress UnresolvedMavenProperty -->
               <Implementation-Build>${buildNumber}</Implementation-Build>
+              <!--suppress UnresolvedMavenProperty -->
               <Build-Time>${timestamp}</Build-Time>
               <Plugin-RequiredForLanguages>java</Plugin-RequiredForLanguages>
             </manifestEntries>

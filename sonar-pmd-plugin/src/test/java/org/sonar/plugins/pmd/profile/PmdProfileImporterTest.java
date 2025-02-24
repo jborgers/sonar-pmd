@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -55,8 +55,8 @@ class PmdProfileImporterTest {
             String configKey = query.getConfigKey();
             String key = configKey.substring(configKey.lastIndexOf('/') + 1);
             Rule rule = Rule.create(query.getRepositoryKey(), key, "").setConfigKey(configKey).setSeverity(RulePriority.BLOCKER);
-            if (rule.getConfigKey().equals("rulesets/java/coupling.xml/ExcessiveImports")) {
-                rule.createParameter("minimum");
+            if (rule.getConfigKey().equals("category/java/bestpractices.xml/ForLoopVariableCount")) {
+                rule.createParameter("maximumVariables");
             }
             return rule;
         });
@@ -76,8 +76,8 @@ class PmdProfileImporterTest {
         RulesProfile profile = importer.importProfile(reader, messages);
 
         assertThat(profile.getActiveRules()).hasSize(3);
-        assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports")).isNotNull();
-        assertThat(profile.getActiveRuleByConfigKey("pmd", "rulesets/java/design.xml/UseNotifyAllInsteadOfNotify")).isNotNull();
+        assertThat(profile.getActiveRuleByConfigKey("pmd", "category/java/errorprone.xml/AvoidLiteralsInIfCondition")).isNotNull();
+        assertThat(profile.getActiveRuleByConfigKey("pmd", "category/java/multithreading.xml/DoubleCheckedLocking")).isNotNull();
         assertThat(messages.hasErrors()).isFalse();
     }
 
@@ -96,9 +96,9 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
 
-        assertThat(activeRule.getParameter("minimum")).isEqualTo("30");
+        assertThat(activeRule.getParameter("maximumVariables")).isEqualTo("5");
     }
 
     @Test
@@ -106,7 +106,7 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/ExcessiveImports");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/multithreading.xml/DoubleCheckedLocking");
 
         assertThat(activeRule.getSeverity()).isSameAs(RulePriority.BLOCKER);
     }
@@ -117,11 +117,11 @@ class PmdProfileImporterTest {
 
         RulesProfile profile = importer.importProfile(reader, messages);
 
-        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/design.xml/UseNotifyAllInsteadOfNotify");
-        assertThat(activeRule.getSeverity()).isSameAs(RulePriority.MINOR);
-
-        activeRule = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/CouplingBetweenObjects");
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/errorprone.xml/AvoidLiteralsInIfCondition");
         assertThat(activeRule.getSeverity()).isSameAs(RulePriority.CRITICAL);
+
+        activeRule = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
+        assertThat(activeRule.getSeverity()).isSameAs(RulePriority.MINOR);
     }
 
     @Test
@@ -138,8 +138,10 @@ class PmdProfileImporterTest {
         Reader reader = read("/org/sonar/plugins/pmd/simple.xml");
 
         RulesProfile profile = importer.importProfile(reader, messages);
-        ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "rulesets/java/coupling.xml/CouplingBetweenObjects");
+        ActiveRule check = profile.getActiveRuleByConfigKey("pmd", "category/java/bestpractices.xml/ForLoopVariableCount");
 
+        // PMD7-MIGRATION what is meaning of this check? The list of parameters is empty (but expected maximumVariables?)
+        // in the errors: The property 'maximumVariables' is not supported in the pmd rule: category/java/bestpractices.xml/ForLoopVariableCount
         assertThat(check.getParameter("threshold")).isNull();
         assertThat(messages.getWarnings()).hasSize(2);
     }

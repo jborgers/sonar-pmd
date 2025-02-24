@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.pmd.profile;
 
-import java.io.Reader;
-
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -35,13 +33,15 @@ import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
+import java.io.Reader;
+
 public class PmdProfileImporter extends ProfileImporter {
 
     private final RuleFinder ruleFinder;
 
     public PmdProfileImporter(RuleFinder ruleFinder) {
-        super(PmdConstants.REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
-        setSupportedLanguages(PmdConstants.LANGUAGE_KEY);
+        super(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.PLUGIN_NAME);
+        setSupportedLanguages(PmdConstants.LANGUAGE_JAVA_KEY);
         this.ruleFinder = ruleFinder;
     }
 
@@ -70,7 +70,7 @@ public class PmdProfileImporter extends ProfileImporter {
                 if (ruleRef == null) {
                     messages.addWarningText("A PMD rule without 'ref' attribute can't be imported. see '" + ruleClassName + "'");
                 } else {
-                    Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.REPOSITORY_KEY).withConfigKey(ruleRef));
+                    Rule rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).withConfigKey(ruleRef));
                     if (rule != null) {
                         ActiveRule activeRule = profile.activateRule(rule, PmdPriorities.sonarPrioOf(pmdRule));
                         setParameters(activeRule, pmdRule, rule, messages);

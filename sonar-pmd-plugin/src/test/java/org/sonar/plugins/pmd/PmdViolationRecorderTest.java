@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,8 +19,9 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.Rule;
-import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.lang.document.FileId;
+import net.sourceforge.pmd.lang.rule.Rule;
+import net.sourceforge.pmd.reporting.RuleViolation;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.TextRange;
@@ -37,11 +38,7 @@ import org.sonar.api.rule.RuleKey;
 import java.io.File;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PmdViolationRecorderTest {
 
@@ -102,8 +99,8 @@ class PmdViolationRecorderTest {
         addToFileSystem(file1);
         final String ruleName = "UNKNOWN";
         final RuleViolation pmdViolation = createPmdViolation(file1, ruleName);
-        final RuleKey expectedRuleKey1 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
-        final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.REPOSITORY_KEY, ruleName);
+        final RuleKey expectedRuleKey1 = RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, ruleName);
+        final RuleKey expectedRuleKey2 = RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, ruleName);
 
         // when
         subject.saveViolation(pmdViolation, mockContext);
@@ -137,7 +134,7 @@ class PmdViolationRecorderTest {
         final RuleViolation pmdViolation = mock(RuleViolation.class);
 
         when(rule.getName()).thenReturn(ruleName);
-        when(pmdViolation.getFilename()).thenReturn(file.getAbsolutePath());
+        when(pmdViolation.getFileId()).thenReturn(FileId.fromPath(file.toPath()));
         when(pmdViolation.getBeginLine()).thenReturn(2);
         when(pmdViolation.getDescription()).thenReturn("Description");
         when(pmdViolation.getRule()).thenReturn(rule);

@@ -1,5 +1,5 @@
 /*
- * SonarQube PMD Plugin
+ * SonarQube PMD7 Plugin
  * Copyright (C) 2012-2021 SonarSource SA and others
  * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
  *
@@ -19,20 +19,20 @@
  */
 package org.sonar.plugins.pmd;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import net.sourceforge.pmd.Report;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
+import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @ScannerSide
 public class PmdConfiguration {
@@ -87,7 +87,7 @@ public class PmdConfiguration {
             final String reportAsString = reportToString(report);
             final Path reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
 
-            LOG.info("PMD output report: " + reportFile.toString());
+            LOG.info("PMD output report: {}" + reportFile);
 
             return reportFile;
         } catch (IOException e) {

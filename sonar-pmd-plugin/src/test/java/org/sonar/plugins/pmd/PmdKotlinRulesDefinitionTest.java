@@ -19,33 +19,31 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.Iterables;
 import org.junit.jupiter.api.Test;
-import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
-import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PmdRulesDefinitionTest {
+class PmdKotlinRulesDefinitionTest {
 
     @Test
     void test() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
-        assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_NAME);
-        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_JAVA_KEY);
+        assertThat(repository).withFailMessage("repository is null, does key exist").isNotNull();
+        assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_KOTLIN_NAME);
+        assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KOTLIN_KEY);
 
         List<Rule> rules = repository.rules();
-        // PMD-7-MIGRATION: check number of rules is correct from PMD 7.x (was 228 in PMD 6.x)
-        assertThat(rules).hasSize(205);
+        assertThat(rules).hasSize(1);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -64,28 +62,26 @@ class PmdRulesDefinitionTest {
     }
 
     @Test
-    void should_exclude_junit_rules() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
+    void should_exclude_java_rules() {
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         for (Rule rule : repository.rules()) {
-            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
+            assertThat(rule.key()).doesNotContain("AbstractClassWithoutAbstractMethod");
         }
     }
 
     @Test
-    void should_use_text_parameter_for_xpath_rule() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
+    void should_exclude_junit_rules() {
+        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        List<RulesDefinition.Rule> rules = repository.rules();
-        System.out.println("rules: " + rules);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
-        Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
-
-        assertThat(xpathRule.param("xpath").type().type()).isEqualTo(PropertyType.TEXT.name());
+        for (Rule rule : repository.rules()) {
+            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
+        }
     }
 }
