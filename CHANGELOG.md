@@ -1,11 +1,21 @@
 # Changelog
 
-
-## [3.5.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/3.5.2-SNAPSHOT) (2024-xx-xx)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.1..master)
+<!--
+## [4.0.1-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.1-SNAPSHOT) (2025-xx-xx)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.0..master)
 
 **Implemented highlights:**
+-->
 
+## [4.0.0](https://github.com/jborgers/sonar-pmd/tree/4.0.0) (2025-02-24)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.1..4.0.0)
+
+**Implemented highlights:**
+- Supports PMD 7 which is incompatible with PMD 6: the reason for a major release
+- Supports latest SonarQube [9.9.4 - 10.8+]
+- Supports running on Java 11 on analysis side for SQ 9.9.4 - 10.2.x 
+- Supports running on Java 17 for all supported versions
+- Needed for child plugins with custom rules written in PMD 7, such as [sonar-pmd-jpinpoint 2.0.0](https://github.com/jborgers/sonar-pmd-jpinpoint/releases/tag/2.0.0)
 
 ## [3.5.1](https://github.com/jborgers/sonar-pmd/tree/3.5.1) (2024-05-07)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.0..3.5.1)

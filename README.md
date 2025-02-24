@@ -19,6 +19,11 @@ Usage should be straight forward:
 1. Activate some PMD rules in your quality profile.
 2. Run an analysis.
 
+### PMD version
+Sonar PMD plugin version 4.0.0 supports PMD 7 which is incompatible with PMD 6: the reason for a major release. 
+Use version 4.0+ for child plugins with custom rules written in PMD 7, such as [sonar-pmd-jpinpoint 2.0.0](https://github.com/jborgers/sonar-pmd-jpinpoint/releases/tag/2.0.0).
+
+
 ### Java version
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
