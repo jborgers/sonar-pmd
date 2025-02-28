@@ -40,8 +40,6 @@ public class PmdTemplate {
 
     private static Map<String, String> prepareVersions() {
         final Map<String, String> versions = new HashMap<>();
-        versions.put("6", "1.6");
-        versions.put("7", "1.7");
         versions.put("8", "1.8");
         versions.put("1.9", "9");
         versions.put("1.10", "10");
