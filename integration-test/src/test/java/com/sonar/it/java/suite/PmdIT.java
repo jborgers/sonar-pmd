@@ -48,7 +48,7 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_20"})
+    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_21", "JAVA_22"})
     void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
 
         // given
