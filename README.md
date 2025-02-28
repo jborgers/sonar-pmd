@@ -28,7 +28,7 @@ Use version 4.0+ for child plugins with custom rules written in PMD 7, such as [
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-Possible values : 1.6 to 1.8/8 to 24-preview
+Possible values : 8 to 24 and 24-preview
 
 ## Table of supported versions
 | Sonar-PMD Plugin       |  3.4.0          | 3.5.0         | 3.5.1         | 4.0.0      |
