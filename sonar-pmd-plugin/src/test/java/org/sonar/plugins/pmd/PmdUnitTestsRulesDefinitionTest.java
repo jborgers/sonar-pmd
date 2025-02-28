@@ -45,29 +45,31 @@ class PmdUnitTestsRulesDefinitionTest {
                 .hasFieldOrPropertyWithValue("language", PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();
-        //assertThat(rules).hasSize(17); NOTE: 5 rules have been removed in pmd-7
-        assertThat(rules).hasSize(12);
+        //assertThat(rules).hasSize(17); NOTE: all junit rules have been removed in pmd-7
+        assertThat(rules).hasSize(0);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
+            // all junit rules have been removed in pmd-7
             assertThat(rule.key()).isIn(
-                    "JUnitStaticSuite",
-                    "JUnitSpelling",
-                    "JUnitAssertionsShouldIncludeMessage",
-                    "JUnitTestsShouldIncludeAssert",
-                    "TestClassWithoutTestCases",
-                    "UnnecessaryBooleanAssertion",
-                    //"UseAssertEqualsInsteadOfAssertTrue", // 5 rules have been removed in pmd-7
-                    //"UseAssertSameInsteadOfAssertTrue",
-                    //"UseAssertNullInsteadOfAssertTrue",
-                    //"SimplifyBooleanAssertion",
-                    //"UseAssertTrueInsteadOfAssertEquals",
-                    "JUnitTestContainsTooManyAsserts",
-                    "JUnit4SuitesShouldUseSuiteAnnotation",
-                    "JUnit4TestShouldUseAfterAnnotation",
-                    "JUnit4TestShouldUseBeforeAnnotation",
-                    "JUnit4TestShouldUseTestAnnotation",
-                    "JUnitUseExpected");
+//                    "JUnitStaticSuite",
+//                    "JUnitSpelling",
+//                    "JUnitAssertionsShouldIncludeMessage",
+//                    "JUnitTestsShouldIncludeAssert",
+//                    "TestClassWithoutTestCases",
+//                    "UnnecessaryBooleanAssertion",
+//                    "UseAssertEqualsInsteadOfAssertTrue",
+//                    "UseAssertSameInsteadOfAssertTrue",
+//                    "UseAssertNullInsteadOfAssertTrue",
+//                    "SimplifyBooleanAssertion",
+//                    "UseAssertTrueInsteadOfAssertEquals",
+//                    "JUnitTestContainsTooManyAsserts",
+//                    "JUnit4SuitesShouldUseSuiteAnnotation",
+//                    "JUnit4TestShouldUseAfterAnnotation",
+//                    "JUnit4TestShouldUseBeforeAnnotation",
+//                    "JUnit4TestShouldUseTestAnnotation",
+//                    "JUnitUseExpected"
+            );
             assertThat(rule.internalKey()).isNotNull();
             assertThat(rule.name()).isNotNull();
             assertThat(rule.htmlDescription()).isNotNull();

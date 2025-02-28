@@ -1,5 +1,6 @@
 <rules>
-  <rule key="JUnitStaticSuite">
+  <!--NOTE: the following rules have been removed in pmd-7
+   rule key="JUnitStaticSuite">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/JUnitStaticSuite]]></configKey>
   </rule>
@@ -24,8 +25,7 @@
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UnnecessaryBooleanAssertion]]></configKey>
   </rule>
-  <!--NOTE: the following rules have been removed in pmd-7
-   rule key="UseAssertEqualsInsteadOfAssertTrue">
+  <rule key="UseAssertEqualsInsteadOfAssertTrue">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UseAssertEqualsInsteadOfAssertTrue]]></configKey>
   </rule>
@@ -44,7 +44,7 @@
   <rule key="UseAssertTrueInsteadOfAssertEquals">
     <priority>MINOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/UseAssertTrueInsteadOfAssertEquals]]></configKey>
-  </rule-->
+  </rule>
   <rule key="JUnitTestContainsTooManyAsserts">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts]]></configKey>
@@ -72,5 +72,5 @@
   <rule key="JUnit4TestShouldUseTestAnnotation">
     <priority>MAJOR</priority>
     <configKey><![CDATA[rulesets/java/migrating.xml/JUnit4TestShouldUseTestAnnotation]]></configKey>
-  </rule>
+  </rule-->
 </rules>
