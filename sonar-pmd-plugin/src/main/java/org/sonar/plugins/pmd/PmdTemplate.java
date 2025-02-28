@@ -58,6 +58,7 @@ public class PmdTemplate {
         versions.put("1.21", "21");
         versions.put("1.22", "22");
         versions.put("1.23", "23");
+        versions.put("1.24", "24");
         versions.put("1.24-preview", "24-preview");
         return versions;
     }
