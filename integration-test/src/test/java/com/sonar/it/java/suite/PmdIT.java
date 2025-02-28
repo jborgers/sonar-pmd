@@ -23,7 +23,6 @@ import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.http.HttpException;
-import org.apache.commons.lang3.JavaVersion;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,8 +47,8 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @EnumSource(value = JavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_21", "JAVA_22"})
-    void testPmdExtensionsWithDifferentJavaVersions(JavaVersion version) {
+    @EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_20", "JAVA_21", "JAVA_22", "JAVA_23", "JAVA_24", "JAVA_24_PREVIEW"})
+    void testPmdExtensionsWithDifferentJavaVersions(DefinedJavaVersion version) {
 
         // given
         final String projectName = "pmd-extensions";
