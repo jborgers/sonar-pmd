@@ -1,11 +1,12 @@
 # Changelog
 
-<!--
+
 ## [4.0.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.2-SNAPSHOT) (2025-xx-xx)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.1..master)
 
 **Implemented highlights**
--->
+* [TODO]
+
 ## [4.0.1](https://github.com/jborgers/sonar-pmd/tree/4.0.1) (2025-03-03)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.0..4.0.1)
 
