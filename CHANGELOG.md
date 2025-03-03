@@ -1,11 +1,23 @@
 # Changelog
 
 <!--
-## [4.0.1-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.1-SNAPSHOT) (2025-xx-xx)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.0..master)
+## [4.0.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.2-SNAPSHOT) (2025-xx-xx)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.1..master)
 
-**Implemented highlights:**
+**Implemented highlights**
 -->
+## [4.0.1](https://github.com/jborgers/sonar-pmd/tree/4.0.1) (2025-03-03)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.0..4.0.1)
+
+**Implemented highlights**
+* Fix supported java versions from 21 up to 24-preview [#499](https://github.com/jborgers/sonar-pmd/pull/499)
+* Removed all junit tests, they have been moved or removed in PMD7 [#502](https://github.com/jborgers/sonar-pmd/pull/502)
+
+**Limitations**
+* Not all PMD 7 rules are made available in Sonar, yet, see [#495](https://github.com/jborgers/sonar-pmd/issues/495), [#498](https://github.com/jborgers/sonar-pmd/issues/498)
+
+**Contributors**
+* [Markus](https://github.com/meisenla)
 
 ## [4.0.0](https://github.com/jborgers/sonar-pmd/tree/4.0.0) (2025-02-24)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/3.5.1..4.0.0)
