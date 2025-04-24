@@ -1595,6 +1595,11 @@
     <configKey>category/java/bestpractices.xml/UseVarargs</configKey>
   </rule>
 
+  <rule key="UnusedAssignment">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnusedAssignment</configKey>
+  </rule>
+
 <!--  <rule key="EmptyStatementBlock">-->
 <!--    <priority>MAJOR</priority>-->
 <!--    <configKey>category/java/errorprone.xml/EmptyStatementBlock</configKey>-->

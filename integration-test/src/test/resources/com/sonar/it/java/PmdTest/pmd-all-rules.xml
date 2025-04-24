@@ -1796,6 +1796,12 @@
     </rule>
     <rule>
       <repositoryKey>pmd</repositoryKey>
+      <key>UnusedAssignment</key>
+      <priority>MAJOR</priority>
+      <parameters/>
+    </rule>
+    <rule>
+      <repositoryKey>pmd</repositoryKey>
       <key>UselessOperationOnImmutable</key>
       <priority>CRITICAL</priority>
       <parameters/>
