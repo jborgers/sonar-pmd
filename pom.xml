@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ SonarQube PMD Plugin
   ~ Copyright (C) 2012-2018 SonarSource SA
@@ -83,24 +84,25 @@
 
   <properties>
     <!-- use -Drevision=x.y.z to override in build -->
-    <revision>4.0.2-SNAPSHOT</revision>
+    <!-- use .mvn/maven.config to update to the current next release SNAPSHOT version -->
+    <!--    <revision>next-SNAPSHOT</revision>-->
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
-    <pmd.version>7.13.0</pmd.version>
-    <junit.jupiter.version>5.11.4</junit.jupiter.version>
-    <mockito.version>5.15.2</mockito.version>
+    <pmd.version>7.14.0</pmd.version>
+    <junit.jupiter.version>5.13.0</junit.jupiter.version>
+    <mockito.version>5.18.0</mockito.version>
     <assertj.version>3.27.2</assertj.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
-    <java.frontend.version>8.9.0.37768</java.frontend.version>
-    <guava.version>33.4.0-jre</guava.version>
+    <java.frontend.version>8.15.0.39343</java.frontend.version>
+    <guava.version>33.4.8-jre</guava.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>25.1.0.102122</sonar-plugin-api-impl.version>
+    <sonar-plugin-api-impl.version>25.6.0.109173</sonar-plugin-api-impl.version>
     <sonar-plugin-api.version>11.1.0.2693</sonar-plugin-api.version>
-    <sonar-orchestrator.version>5.6.0.2578</sonar-orchestrator.version>
+    <sonar-orchestrator.version>5.6.2.2625</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
     <!-- Technical settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -109,23 +111,23 @@
     <maven.compiler.release>11</maven.compiler.release>
     <!-- Maven plugin versions -->
     <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
-    <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
-    <maven.failsafe.plugin.version>3.5.2</maven.failsafe.plugin.version>
+    <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
+    <maven.failsafe.plugin.version>3.5.3</maven.failsafe.plugin.version>
     <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
-    <maven.cleanup.plugin.version>3.4.0</maven.cleanup.plugin.version>
-    <sonar.maven.plugin.version>5.0.0.4389</sonar.maven.plugin.version>
-    <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
+    <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
+    <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
+    <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
     <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
-    <flatten.maven.plugin.version>1.6.0</flatten.maven.plugin.version>
+    <flatten.maven.plugin.version> 1.7.0</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <maven-deploy-plugin.version>3.1.3</maven-deploy-plugin.version>
-    <maven-install-plugin.version>3.1.3</maven-install-plugin.version>
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+    <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
   </properties>
 
@@ -413,7 +415,9 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
         <configuration>
-          <flattenMode>oss</flattenMode>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          <updatePomFile>true</updatePomFile>
+          <flattenedPomFilename>target/flattened-pom.xml</flattenedPomFilename>
         </configuration>
         <executions>
           <!-- enable flattening -->
