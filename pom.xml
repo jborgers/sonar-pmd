@@ -412,18 +412,41 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>${maven-install-plugin.version}</version>
+        <configuration>
+          <pomFile>${project.build.directory}/flattened-pom.xml</pomFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven-deploy-plugin.version}</version>
+        <configuration>
+          <pomFile>${project.build.directory}/flattened-pom.xml</pomFile>
+        </configuration>
+      </plugin>
+
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
         <configuration>
-          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          <flattenMode>oss</flattenMode>
           <updatePomFile>true</updatePomFile>
           <flattenedPomFilename>target/flattened-pom.xml</flattenedPomFilename>
+          <pomElements>
+            <dependencies>resolve</dependencies>
+            <dependencyManagement>resolve</dependencyManagement>
+            <pluginManagement>resolve</pluginManagement>
+            <properties>interpolate</properties>
+          </pomElements>
         </configuration>
         <executions>
           <!-- enable flattening -->
           <execution>
             <id>flatten</id>
-            <phase>process-resources</phase>
+            <phase>prepare-package</phase>
             <goals>
               <goal>flatten</goal>
             </goals>
@@ -434,6 +457,13 @@
             <phase>clean</phase>
             <goals>
               <goal>clean</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>flatten</goal>
             </goals>
           </execution>
         </executions>
