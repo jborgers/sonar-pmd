@@ -1,9 +1,9 @@
 name: Release to Maven Central
+run-name: Build ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [ created ]
   workflow_dispatch:
 
 defaults:
@@ -17,14 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: olegtarasov/get-tag@v2.1.3
-        id: tagName
-        with:
-          tagRegex: "(.*)"
-
       - name: Set Release version env variable
         run: |
-          echo "TAG_NAME=${{ steps.tagName.outputs.tag }}" >> $GITHUB_ENV
+          echo "TAG_NAME=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
       # if no tag exists, this is expected to fail
       - name: Switch to git tag for release
@@ -57,3 +52,5 @@ jobs:
           draft: true
           artifacts: "sonar-pmd-plugin/target/*.jar"
           bodyFile: CHANGELOG.md
+          allowUpdates: true
+          makeLatest: true

@@ -1,11 +1,20 @@
 # Changelog
 
-
-## [4.0.2-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.2-SNAPSHOT) (2025-xx-xx)
+## [4.1.0-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.0.2-SNAPSHOT) (2025-xx-xx)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.1..master)
 
 **Implemented highlights**
 * [TODO]
+
+## [4.0.2](https://github.com/jborgers/sonar-pmd/tree/4.0.2) (2025-06-06)
+
+Bugfix release to work with latest SonarQube releases. See [#508](https://github.com/jborgers/sonar-pmd/issues/508) and [#509](https://github.com/jborgers/sonar-pmd/issues/509).
+
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.1..4.0.2)
+
+**Implemented highlights**
+* Remove the custom profile importer/exporter to support SonarQube Server 25.4 [#504](https://github.com/jborgers/sonar-pmd/issues/504)
+* Include PMD 7.13.0
 
 ## [4.0.1](https://github.com/jborgers/sonar-pmd/tree/4.0.1) (2025-03-03)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.0..4.0.1)
