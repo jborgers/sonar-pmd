@@ -14,6 +14,7 @@ Bugfix release to work with latest SonarQube releases. See [#508](https://github
 
 **Implemented highlights**
 * Remove the custom profile importer/exporter to support SonarQube Server 25.4 [#504](https://github.com/jborgers/sonar-pmd/issues/504)
+* Add unused assignment rule [#505](https://github.com/jborgers/sonar-pmd/pull/505)
 * Include PMD 7.13.0
 
 ## [4.0.1](https://github.com/jborgers/sonar-pmd/tree/4.0.1) (2025-03-03)
