@@ -122,10 +122,10 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.9]");
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.15]"); // use 8.9 to test with SQ 9.9
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]");
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]"); // use SQ 9.9 to test for older version
     }
 }

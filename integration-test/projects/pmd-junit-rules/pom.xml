@@ -6,6 +6,18 @@
   <artifactId>pmd-junit-rules</artifactId>
   <version>1.0-SNAPSHOT</version>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>5.1.0.4751</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -14,6 +26,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
