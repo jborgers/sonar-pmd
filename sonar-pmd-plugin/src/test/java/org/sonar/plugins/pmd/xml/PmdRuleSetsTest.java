@@ -25,7 +25,6 @@ import java.io.Reader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,18 +73,4 @@ class PmdRuleSetsTest {
                 .isNotNull();
     }
 
-    @Test
-    void whenRulesProfileGivenThenRuleSetIsReturned() {
-
-        // given
-        final RulesProfile mockedProfile = mock(RulesProfile.class);
-        final String anyRepoKey = "TEST";
-
-        // when
-        final PmdRuleSet result = PmdRuleSets.from(mockedProfile, anyRepoKey);
-
-        // then
-        assertThat(result)
-                .isNotNull();
-    }
 }

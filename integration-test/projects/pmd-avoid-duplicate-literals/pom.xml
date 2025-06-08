@@ -6,6 +6,18 @@
   <artifactId>pmd-avoid-duplicate-literals</artifactId>
   <version>1.0-SNAPSHOT</version>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>5.1.0.4751</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <profiles>
     <profile>
       <id>skipSonar</id>
