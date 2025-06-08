@@ -126,6 +126,6 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]"); // use SQ 9.9 to test for older version
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]"); // use SQ 9.9.4 to test with old version
     }
 }

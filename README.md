@@ -35,7 +35,7 @@ Possible values : 8 to 24 and 24-preview
 |------------------------|-----------------|-----------------|-----------------|---------|------------|-----
 | PMD                    | 6.45.0          | 6.55.0          | 6.55.0          | 7.10.0  | 7.10.0     |7.14.0
 | Max. Java Version      | 18              | 20-preview (*2) | 20-preview (*2) | 20 (*3) | 24-preview |24-preview
-| Min. SonarQube Version | _8.9(*1)_ / 9.3 | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      |?
+| Min. SonarQube Version | _8.9(*1)_ / 9.3 | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      |9.9.4
 | Max. SonarQube Version | 9.9             | 10.4            | 10.5+           | 10.8+   | 10.8+      |25.6+
 
 (*1) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.   
