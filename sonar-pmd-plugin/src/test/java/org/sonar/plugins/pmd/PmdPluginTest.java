@@ -28,7 +28,6 @@ import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.utils.Version;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
-import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
 import java.util.List;
 
@@ -58,7 +57,6 @@ class PmdPluginTest {
                         PmdConfiguration.class,
                         PmdExecutor.class,
                         PmdRulesDefinition.class,
-                        PmdUnitTestsRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,
                         PmdViolationRecorder.class
                 );
