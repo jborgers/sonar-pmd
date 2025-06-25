@@ -1834,7 +1834,7 @@
   </rule>
   <rule key="UnitTestShouldUseTestAnnotation">
     <priority>MAJOR</priority>
-    <configKey>category/java/errorprone.xml/UnitTestShouldUseTestAnnotation</configKey>
+    <configKey>category/java/bestpractices.xml/UnitTestShouldUseTestAnnotation</configKey>
   </rule>
 
 </rules>
