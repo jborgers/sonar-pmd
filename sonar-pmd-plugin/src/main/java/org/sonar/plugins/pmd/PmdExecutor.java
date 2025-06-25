@@ -97,12 +97,10 @@ public class PmdExecutor {
 
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
         final Optional<Report> mainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> testReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.TEST_JAVA_REPOSITORY_KEY);
         final Optional<Report> kotlinReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         if (LOGGER.isDebugEnabled()) {
             mainReport.ifPresent(this::writeDebugLine);
-            testReport.ifPresent(this::writeDebugLine);
             kotlinReport.ifPresent(this::writeDebugLine);
         }
 
@@ -110,7 +108,6 @@ public class PmdExecutor {
 
         Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
         unionReport = mainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = testReport.map(unionReport::union).orElse(unionReport);
         unionReport = kotlinReport.map(unionReport::union).orElse(unionReport);
 
         pmdConfiguration.dumpXmlReport(unionReport);

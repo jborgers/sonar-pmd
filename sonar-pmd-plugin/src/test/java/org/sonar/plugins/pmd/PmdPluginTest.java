@@ -28,7 +28,6 @@ import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.utils.Version;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
-import org.sonar.plugins.pmd.rule.PmdUnitTestsRulesDefinition;
 
 import java.util.List;
 
@@ -52,13 +51,12 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(8)
+                .hasSize(7)
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
                         PmdExecutor.class,
                         PmdRulesDefinition.class,
-                        PmdUnitTestsRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,
                         PmdViolationRecorder.class
                 );
