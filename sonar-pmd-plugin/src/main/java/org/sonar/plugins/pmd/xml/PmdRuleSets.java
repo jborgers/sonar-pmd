@@ -20,13 +20,11 @@
 package org.sonar.plugins.pmd.xml;
 
 import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.xml.factory.ActiveRulesRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
-import org.sonar.plugins.pmd.xml.factory.RulesProfileRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.XmlRuleSetFactory;
 
 import java.io.IOException;
@@ -58,15 +56,6 @@ public class PmdRuleSets {
      */
     public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey) {
         return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey));
-    }
-
-    /**
-     * @param rulesProfile  The current rulesprofile.
-     * @param repositoryKey The key identifier of the rule repository.
-     * @return An instance of PmdRuleSet. The output may be empty but never null.
-     */
-    public static PmdRuleSet from(RulesProfile rulesProfile, String repositoryKey) {
-        return create(new RulesProfileRuleSetFactory(rulesProfile, repositoryKey));
     }
 
     private static PmdRuleSet create(RuleSetFactory factory) {
