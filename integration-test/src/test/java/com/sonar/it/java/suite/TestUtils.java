@@ -48,8 +48,4 @@ class TestUtils {
         return keyFor(projectKey, "src/main/java/", pkgDir, cls + ".java");
     }
 
-    static String keyForTest() {
-        return keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
-    }
-
 }
