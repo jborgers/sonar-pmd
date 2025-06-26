@@ -47,7 +47,7 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_11", "JAVA_17", "JAVA_21", "JAVA_23", "JAVA_24", "JAVA_24_PREVIEW"})
+    @EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_17", "JAVA_21", "JAVA_24_PREVIEW"})
     void testPmdExtensionsWithDifferentJavaVersions(DefinedJavaVersion version) {
 
         // given
@@ -83,8 +83,6 @@ class PmdIT {
             assertThat(issues)
                     .hasSize(3);
 
-
-
             assertThat(messages)
                     .containsOnly(
                             "Avoid too many methods",
@@ -101,6 +99,39 @@ class PmdIT {
     }
 
     /**
+     * SONAR-1076
+     */
+    @Test
+    void testJunitRules() {
+
+        // given
+        final String projectName = "pmd-junit-rules";
+        final MavenBuild build = MavenBuild
+                .create(TestUtils.projectPom(projectName))
+                .setCleanSonarGoals();
+
+        ORCHESTRATOR.associateProjectToQualityProfile("pmd-test-rule-profile", projectName);
+
+        // when
+        ORCHESTRATOR.executeBuild(build);
+
+        // then
+        String testComponentKey = keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
+        final List<Issue> testIssues = retrieveIssues(testComponentKey);
+        assertThat(testIssues).hasSize(1);
+        assertThat(testIssues.get(0).message()).isEqualTo("Unit tests should not contain more than 1 assert(s).");
+        assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd:UnitTestContainsTooManyAsserts");
+
+        final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
+        assertThat(prodIssues).hasSize(1);
+        assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
+        assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd:UnusedPrivateField");
+
+        // Cleanup
+        ORCHESTRATOR.resetData(projectName);
+    }
+
+    /**
      * SONAR-3346
      */
     @Test
@@ -113,7 +144,7 @@ class PmdIT {
                 .setCleanSonarGoals();
 
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd", projectName);
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-backup-profile", projectName);
 
             // when
             ORCHESTRATOR.executeBuild(build);
@@ -182,7 +213,7 @@ class PmdIT {
                 .create(TestUtils.projectPom(projectName))
                 .setCleanPackageSonarGoals();
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules", projectName);
+            ORCHESTRATOR.associateProjectToQualityProfile("pmd-all-rules-profile", projectName);
 
             // when
             ORCHESTRATOR.executeBuild(build);

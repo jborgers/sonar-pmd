@@ -107,6 +107,7 @@ public class PmdTestOrchestrator {
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-test-rule.xml"))
                     .build();
 
             return new PmdTestOrchestrator(orchestrator);

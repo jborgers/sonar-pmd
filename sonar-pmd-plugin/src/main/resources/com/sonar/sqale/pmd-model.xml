@@ -3601,7 +3601,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnit4TestShouldUseBeforeAnnotation</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3614,7 +3614,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnit4TestShouldUseAfterAnnotation</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3627,7 +3627,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitUseExpected</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3640,7 +3640,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitTestContainsTooManyAsserts</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3653,7 +3653,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnit4TestShouldUseTestAnnotation</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3666,7 +3666,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitTestsShouldIncludeAssert</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3679,7 +3679,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>TestClassWithoutTestCases</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3692,7 +3692,7 @@
         </prop>
       </chc>
       <!--chc NOTE: the following rule has been removed in pmd-7>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>UseAssertTrueInsteadOfAssertEquals</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3705,7 +3705,7 @@
         </prop>
       </chc-->
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnit4SuitesShouldUseSuiteAnnotation</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3821,7 +3821,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitStaticSuite</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3834,7 +3834,7 @@
         </prop>
       </chc>
       <!--chc NOTE: the following rules have been removed in pmd-7 >
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>SimplifyBooleanAssertion</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3847,7 +3847,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>UseAssertNullInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3860,7 +3860,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>UseAssertSameInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3873,7 +3873,7 @@
         </prop>
       </chc-->
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitSpelling</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3886,7 +3886,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>JUnitAssertionsShouldIncludeMessage</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3899,7 +3899,7 @@
         </prop>
       </chc>
       <chc>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>UnnecessaryBooleanAssertion</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -3912,7 +3912,7 @@
         </prop>
       </chc>
       <!--chc NOTE: the following rule has been removed in pmd-7>
-        <rule-repo>pmd-unit-tests</rule-repo>
+        <rule-repo>pmd</rule-repo>
         <rule-key>UseAssertEqualsInsteadOfAssertTrue</rule-key>
         <prop>
           <key>remediationFunction</key>

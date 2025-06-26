@@ -45,7 +45,7 @@ class PmdRulesDefinitionTest {
 
         List<Rule> rules = repository.rules();
         // PMD-7-MIGRATION: check number of rules is correct from PMD 7.x (was 228 in PMD 6.x)
-        assertThat(rules).hasSize(206);
+        assertThat(rules).hasSize(219);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -60,18 +60,6 @@ class PmdRulesDefinitionTest {
                         .overridingErrorMessage("Description is not set for parameter '" + param.name() + "' of rule '" + rule.key())
                         .isNotNull();
             }
-        }
-    }
-
-    @Test
-    void should_exclude_junit_rules() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
-        RulesDefinition.Context context = new RulesDefinition.Context();
-        definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-
-        for (Rule rule : repository.rules()) {
-            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
         }
     }
 

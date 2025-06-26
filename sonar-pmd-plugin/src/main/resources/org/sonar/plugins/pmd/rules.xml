@@ -1780,4 +1780,61 @@
     <configKey>category/java/codestyle.xml/UselessQualifiedThis</configKey>
   </rule>
 
+  <!-- Unit Test rules (here since PMD 7) -->
+  <rule key="JUnitStaticSuite">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/JUnitStaticSuite</configKey>
+  </rule>
+  <rule key="JUnitSpelling">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/JUnitSpelling</configKey>
+  </rule>
+  <rule key="UnitTestAssertionsShouldIncludeMessage">
+    <priority>MINOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestAssertionsShouldIncludeMessage</configKey>
+  </rule>
+  <rule key="UnitTestShouldIncludeAssert">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestShouldIncludeAssert</configKey>
+  </rule>
+  <rule key="TestClassWithoutTestCases">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/TestClassWithoutTestCases</configKey>
+  </rule>
+  <rule key="UnnecessaryBooleanAssertion">
+    <priority>MINOR</priority>
+    <configKey>category/java/errorprone.xml/UnnecessaryBooleanAssertion</configKey>
+  </rule>
+  <rule key="SimplifiableTestAssertion">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/SimplifiableTestAssertion</configKey>
+  </rule>
+  <rule key="UnitTestContainsTooManyAsserts">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestContainsTooManyAsserts</configKey>
+    <param key="maximumAsserts" type="INTEGER">
+      <defaultValue>1</defaultValue>
+    </param>
+  </rule>
+  <rule key="JUnitUseExpected">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/JUnitUseExpected</configKey>
+  </rule>
+  <rule key="JUnit4SuitesShouldUseSuiteAnnotation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/JUnit4SuitesShouldUseSuiteAnnotation</configKey>
+  </rule>
+  <rule key="UnitTestShouldUseAfterAnnotation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestShouldUseAfterAnnotation</configKey>
+  </rule>
+  <rule key="UnitTestShouldUseBeforeAnnotation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestShouldUseBeforeAnnotation</configKey>
+  </rule>
+  <rule key="UnitTestShouldUseTestAnnotation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnitTestShouldUseTestAnnotation</configKey>
+  </rule>
+
 </rules>
