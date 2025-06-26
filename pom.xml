@@ -119,7 +119,7 @@
     <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
     <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
-    <flatten.maven.plugin.version> 1.7.0</flatten.maven.plugin.version>
+    <flatten.maven.plugin.version>1.7.1</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
