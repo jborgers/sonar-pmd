@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Sonar-junit">
-  <description>Sonar PMD Unit Tests rules</description>
-  <!--rule ref="rulesets/java/junit.xml/SimplifyBooleanAssertion" NOTE: rule has been removed in pmd-7-->
-    <rule ref="category/java/errorprone.xml/JUnitSpelling" deprecated="true" />
-
-    <!--priority>2</priority>
-  </rule-->
-</ruleset>

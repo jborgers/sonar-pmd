@@ -51,7 +51,7 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(8)
+                .hasSize(7)
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,

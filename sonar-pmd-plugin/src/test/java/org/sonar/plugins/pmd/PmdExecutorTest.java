@@ -106,7 +106,6 @@ class PmdExecutorTest {
         DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
         DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "simple.xml");
-        setupPmdRuleSet(PmdConstants.TEST_JAVA_REPOSITORY_KEY, "junit.xml");
         fileSystem.add(srcFile);
         fileSystem.add(tstFile);
 

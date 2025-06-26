@@ -89,9 +89,9 @@
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
     <pmd.version>7.14.0</pmd.version>
-    <junit.jupiter.version>5.13.0</junit.jupiter.version>
+    <junit.jupiter.version>5.13.2</junit.jupiter.version>
     <mockito.version>5.18.0</mockito.version>
-    <assertj.version>3.27.2</assertj.version>
+    <assertj.version>3.27.3</assertj.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
     <java.frontend.version>8.15.0.39343</java.frontend.version>
@@ -119,7 +119,7 @@
     <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
     <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
-    <flatten.maven.plugin.version> 1.7.0</flatten.maven.plugin.version>
+    <flatten.maven.plugin.version>1.7.1</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>

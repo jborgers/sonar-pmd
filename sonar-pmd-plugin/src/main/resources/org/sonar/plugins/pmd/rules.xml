@@ -79,7 +79,7 @@
     <status>DEPRECATED</status>
   </rule>
 
-   <rule key="DoNotThrowExceptionInFinally">
+  <rule key="DoNotThrowExceptionInFinally">
     <priority>MAJOR</priority>
     <tag>error-handling</tag>
     <configKey>category/java/errorprone.xml/DoNotThrowExceptionInFinally</configKey>

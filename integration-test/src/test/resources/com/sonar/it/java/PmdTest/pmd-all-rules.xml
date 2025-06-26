@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <profile>
-  <name>pmd-all-rules</name>
+  <name>pmd-all-rules-profile</name>
   <language>java</language>
   <rules>
     <rule>
@@ -1848,50 +1848,50 @@
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitSuitesShouldUseSuiteAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnit4TestShouldUseAfterAnnotation</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitTestShouldUseAfterAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnit4TestShouldUseBeforeAnnotation</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitTestShouldUseBeforeAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnit4TestShouldUseTestAnnotation</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitTestShouldUseTestAnnotation</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnitAssertionsShouldIncludeMessage</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitAssertionsShouldIncludeMessage</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>JUnitSpelling</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>JUnitStaticSuite</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnitTestContainsTooManyAsserts</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitTestContainsTooManyAsserts</key>
       <priority>MAJOR</priority>
       <parameters>
         <parameter>
@@ -1901,56 +1901,38 @@
       </parameters>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>JUnitTestsShouldIncludeAssert</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>UnitTestsShouldIncludeAssert</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>JUnitUseExpected</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>SimplifyBooleanAssertion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>TestClassWithoutTestCases</key>
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
+      <repositoryKey>pmd</repositoryKey>
       <key>UnnecessaryBooleanAssertion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>
     <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>UseAssertEqualsInsteadOfAssertTrue</key>
-      <priority>MINOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>UseAssertNullInsteadOfAssertTrue</key>
-      <priority>MINOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>UseAssertSameInsteadOfAssertTrue</key>
-      <priority>MINOR</priority>
-      <parameters/>
-    </rule>
-    <rule>
-      <repositoryKey>pmd-unit-tests</repositoryKey>
-      <key>UseAssertTrueInsteadOfAssertEquals</key>
+      <repositoryKey>pmd</repositoryKey>
+      <key>SimplifiableTestAssertion</key>
       <priority>MINOR</priority>
       <parameters/>
     </rule>

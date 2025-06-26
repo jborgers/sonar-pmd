@@ -71,4 +71,3 @@ ${htmlContent}
 }
 
 createMarkdownPagesForCategory('pmd')
-createMarkdownPagesForCategory('pmd-unit-tests')

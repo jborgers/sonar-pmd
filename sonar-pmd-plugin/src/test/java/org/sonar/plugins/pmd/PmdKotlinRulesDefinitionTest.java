@@ -73,15 +73,4 @@ class PmdKotlinRulesDefinitionTest {
         }
     }
 
-    @Test
-    void should_exclude_junit_rules() {
-        PmdKotlinRulesDefinition definition = new PmdKotlinRulesDefinition();
-        RulesDefinition.Context context = new RulesDefinition.Context();
-        definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-
-        for (Rule rule : repository.rules()) {
-            assertThat(rule.key()).doesNotContain("JUnitStaticSuite");
-        }
-    }
 }
