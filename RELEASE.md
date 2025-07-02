@@ -9,11 +9,11 @@ with `build.yml` workflow before setting and pushing the tag.
 ## Preparation
 
 ### Update PMD rules (if needed)
-If the PMD version has been updated or rules have changed, regenerate the rules.xml file:
+If the PMD version has been updated or rules have changed, regenerate the rules-java.xml file:
 ```
 ./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
 ```
-This will run the Groovy script that extracts rules from PMD and generates the rules.xml file in the correct location.
+This will run the Groovy script that extracts rules from PMD and generates the rules-java.xml file in the correct location.
 
 ## Release Steps
 - create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`

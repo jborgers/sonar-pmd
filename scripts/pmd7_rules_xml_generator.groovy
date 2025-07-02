@@ -1,4 +1,5 @@
 @Grab('net.sourceforge.pmd:pmd-java:7.15.0')
+@Grab('net.sourceforge.pmd:pmd-kotlin:7.15.0')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
 import java.util.zip.ZipFile
@@ -7,20 +8,25 @@ import java.util.regex.Matcher
 
 // Configuration
 def pmdVersion = "7.15.0"
-def pmdJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
-def categoriesPropertiesPath = "category/java/categories.properties"
+def pmdJavaJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
+def pmdKotlinJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
+def javaCategoriesPropertiesPath = "category/java/categories.properties"
+def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 
 // Get output directory from binding variable (set by Maven) or use a default directory
 // The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
 def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
     "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd" : "."
 def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
-def outputFileName = "rules.xml"
-def outputFilePath = new File(outputDirPath, outputFileName)
+def javaOutputFileName = "rules-java.xml"
+def kotlinOutputFileName = "rules-kotlin.xml"
+def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
+def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
 
 println "PMD ${pmdVersion} Rules XML Generator"
 println "=" * 50
-println "Output file: ${outputFilePath}"
+println "Java output file: ${javaOutputFilePath}"
+println "Kotlin output file: ${kotlinOutputFilePath}"
 
 /**
  * Groovy translation of MdToHtmlConverter
@@ -276,109 +282,121 @@ def camelCaseToReadable = { ruleName ->
 
 // We no longer need to check for replacement placeholders since we're using camelCase for all rules
 
-// Read PMD JAR and extract rule categories
-def jarFile = new File(pmdJarPath)
-if (!jarFile.exists()) {
-    println "ERROR: PMD JAR not found at: ${pmdJarPath}"
-    return
-}
-
-def allRules = []
-def categoryFiles = []
-
-try {
-    def zipFile = new ZipFile(jarFile)
-
-    // First, read the categories.properties to get the list of rule files
-    def categoriesEntry = zipFile.getEntry(categoriesPropertiesPath)
-    if (categoriesEntry) {
-        def categoriesProps = new Properties()
-        categoriesProps.load(zipFile.getInputStream(categoriesEntry))
-
-        def rulesetFilenames = categoriesProps.getProperty("rulesets.filenames", "")
-        categoryFiles = rulesetFilenames.split(",").collect { it.trim() }
-
-        println "Found ${categoryFiles.size()} category files in PMD JAR"
-    } else {
-        println "WARNING: categories.properties not found in PMD JAR"
+// Function to read rules from a PMD JAR
+def readRulesFromJar = { jarPath, categoriesPath ->
+    def jarFile = new File(jarPath)
+    if (!jarFile.exists()) {
+        println "ERROR: PMD JAR not found at: ${jarPath}"
+        return []
     }
 
-    // Parse each category XML file to extract detailed rule information
-    categoryFiles.each { categoryFile ->
-        def entry = zipFile.getEntry(categoryFile)
-        if (entry) {
-            try {
-                def categoryXml = new XmlSlurper().parse(zipFile.getInputStream(entry))
-                def categoryName = categoryFile.tokenize('/').last().replace('.xml', '')
+    def rules = []
+    def categoryFiles = []
 
-                categoryXml.rule.each { ruleElement ->
-                    def ruleName = ruleElement.@name.toString()
-                    def ruleClass = ruleElement.@class.toString()
-                    def deprecated = ruleElement.@deprecated.toString() == "true"
-                    def ref = ruleElement.@ref.toString()
-                    def since = ruleElement.@since.toString()
-                    def externalInfoUrl = ruleElement.@externalInfoUrl.toString()
-                    def message = ruleElement.@message.toString()
+    try {
+        def zipFile = new ZipFile(jarFile)
 
-                    // Extract description
-                    def description = ruleElement.description.text()
+        // First, read the categories.properties to get the list of rule files
+        def categoriesEntry = zipFile.getEntry(categoriesPath)
+        if (categoriesEntry) {
+            def categoriesProps = new Properties()
+            categoriesProps.load(zipFile.getInputStream(categoriesEntry))
 
-                    // Extract priority
-                    def priority = ruleElement.priority.text() ?: "3"
+            def rulesetFilenames = categoriesProps.getProperty("rulesets.filenames", "")
+            categoryFiles = rulesetFilenames.split(",").collect { it.trim() }
 
-                    // Extract examples
-                    def examples = []
-                    ruleElement.example.each { example ->
-                        examples << example.text()
-                    }
-
-                    // Extract properties
-                    def properties = []
-                    ruleElement.properties.property.each { prop ->
-                        properties << [
-                            name: prop.@name.toString(),
-                            description: prop.@description.toString(),
-                            type: prop.@type.toString(),
-                            value: prop.@value.toString(),
-                            min: prop.@min.toString(),
-                            max: prop.@max.toString()
-                        ]
-                    }
-
-                    if (ruleName) {
-                        allRules << [
-                            name: ruleName,
-                            category: categoryName,
-                            categoryFile: categoryFile,
-                            class: ruleClass,
-                            deprecated: deprecated,
-                            ref: ref,
-                            since: since,
-                            externalInfoUrl: externalInfoUrl,
-                            message: message ?: ruleName, // Use rule name as fallback for message
-                            description: description,
-                            priority: priority,
-                            examples: examples,
-                            properties: properties
-                        ]
-                    }
-                }
-                println "  - Processed ${categoryFile}: found ${categoryXml.rule.size()} rules"
-            } catch (Exception e) {
-                println "  - ERROR processing ${categoryFile}: ${e.message}"
-            }
+            println "Found ${categoryFiles.size()} category files in PMD JAR: ${jarPath}"
         } else {
-            println "  - WARNING: Category file not found: ${categoryFile}"
+            println "WARNING: ${categoriesPath} not found in PMD JAR: ${jarPath}"
         }
-    }
 
-    zipFile.close()
-} catch (Exception e) {
-    println "ERROR reading PMD JAR: ${e.message}"
-    return
+        // Parse each category XML file to extract detailed rule information
+        categoryFiles.each { categoryFile ->
+            def entry = zipFile.getEntry(categoryFile)
+            if (entry) {
+                try {
+                    def categoryXml = new XmlSlurper().parse(zipFile.getInputStream(entry))
+                    def categoryName = categoryFile.tokenize('/').last().replace('.xml', '')
+
+                    categoryXml.rule.each { ruleElement ->
+                        def ruleName = ruleElement.@name.toString()
+                        def ruleClass = ruleElement.@class.toString()
+                        def deprecated = ruleElement.@deprecated.toString() == "true"
+                        def ref = ruleElement.@ref.toString()
+                        def since = ruleElement.@since.toString()
+                        def externalInfoUrl = ruleElement.@externalInfoUrl.toString()
+                        def message = ruleElement.@message.toString()
+
+                        // Extract description
+                        def description = ruleElement.description.text()
+
+                        // Extract priority
+                        def priority = ruleElement.priority.text() ?: "3"
+
+                        // Extract examples
+                        def examples = []
+                        ruleElement.example.each { example ->
+                            examples << example.text()
+                        }
+
+                        // Extract properties
+                        def properties = []
+                        ruleElement.properties.property.each { prop ->
+                            properties << [
+                                name: prop.@name.toString(),
+                                description: prop.@description.toString(),
+                                type: prop.@type.toString(),
+                                value: prop.@value.toString(),
+                                min: prop.@min.toString(),
+                                max: prop.@max.toString()
+                            ]
+                        }
+
+                        if (ruleName) {
+                            rules << [
+                                name: ruleName,
+                                category: categoryName,
+                                categoryFile: categoryFile,
+                                class: ruleClass,
+                                deprecated: deprecated,
+                                ref: ref,
+                                since: since,
+                                externalInfoUrl: externalInfoUrl,
+                                message: message ?: ruleName, // Use rule name as fallback for message
+                                description: description,
+                                priority: priority,
+                                examples: examples,
+                                properties: properties
+                            ]
+                        }
+                    }
+                    println "  - Processed ${categoryFile}: found ${categoryXml.rule.size()} rules"
+                } catch (Exception e) {
+                    println "  - ERROR processing ${categoryFile}: ${e.message}"
+                }
+            } else {
+                println "  - WARNING: Category file not found: ${categoryFile}"
+            }
+        }
+
+        zipFile.close()
+        return rules
+    } catch (Exception e) {
+        println "ERROR reading PMD JAR: ${e.message}"
+        return []
+    }
 }
 
-println "Found ${allRules.size()} total rules"
+// Read Java rules
+println "Reading Java rules from ${pmdJavaJarPath}"
+def javaRules = readRulesFromJar(pmdJavaJarPath, javaCategoriesPropertiesPath)
+println "Found ${javaRules.size()} total Java rules"
+println ""
+
+// Read Kotlin rules
+println "Reading Kotlin rules from ${pmdKotlinJarPath}"
+def kotlinRules = readRulesFromJar(pmdKotlinJarPath, kotlinCategoriesPropertiesPath)
+println "Found ${kotlinRules.size()} total Kotlin rules"
 println ""
 
 // Helper function to convert priority to severity
@@ -464,62 +482,63 @@ def formatDescription = { ruleData ->
     return MdToHtmlConverter.convertToHtml(markdownContent.toString())
 }
 
-// Generate the XML file
-try {
-    def outputFile = outputFilePath
+// Function to generate XML file
+def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
 
-    outputFile.withWriter('UTF-8') { writer ->
-        def xml = new MarkupBuilder(writer)
-        xml.setDoubleQuotes(true)
+    try {
+        outputFile.withWriter('UTF-8') { writer ->
+            def xml = new MarkupBuilder(writer)
+            xml.setDoubleQuotes(true)
 
-        // Write XML declaration manually since MarkupBuilder doesn't handle it well
-        writer.println('<?xml version="1.0" encoding="UTF-8"?>')
+            // Write XML declaration manually since MarkupBuilder doesn't handle it well
+            writer.println('<?xml version="1.0" encoding="UTF-8"?>')
 
-        xml.rules {
-            allRules.sort { it.name }.each { ruleData ->
-                rule {
-                    key(ruleData.name)
+            xml.rules {
+                rules.sort { it.name }.each { ruleData ->
+                    rule {
+                        key(ruleData.name)
 
-                    // Always use camelCase transformation for rule names
-                    def readableName = camelCaseToReadable(ruleData.name)
-                    name(readableName)
+                        // Always use camelCase transformation for rule names
+                        def readableName = camelCaseToReadable(ruleData.name)
+                        name(readableName)
 
-                    internalKey("${ruleData.categoryFile}/${ruleData.name}")
-                    severity(priorityToSeverity(ruleData.priority))
+                        internalKey("${ruleData.categoryFile}/${ruleData.name}")
+                        severity(priorityToSeverity(ruleData.priority))
 
-                    // Add description with CDATA - ensure it's never empty
-                    description {
-                        def descContent = formatDescription(ruleData)
-                        if (!descContent || descContent.trim().isEmpty()) {
-                            descContent = MdToHtmlConverter.convertToHtml(generateFallbackDescription(ruleData.name, ruleData.category))
-                            rulesWithoutDescription++
+                        // Add description with CDATA - ensure it's never empty
+                        description {
+                            def descContent = formatDescription(ruleData)
+                            if (!descContent || descContent.trim().isEmpty()) {
+                                descContent = MdToHtmlConverter.convertToHtml(generateFallbackDescription(ruleData.name, ruleData.category))
+                                rulesWithoutDescription++
+                            }
+                            mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
                         }
-                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
-                    }
 
-                    // Add status if deprecated
-                    if (ruleData.deprecated) {
-                        status("DEPRECATED")
-                    }
+                        // Add status if deprecated
+                        if (ruleData.deprecated) {
+                            status("DEPRECATED")
+                        }
 
-                    // Add tags - always include "pmd" tag first, then category tag
-                    tag("pmd")
-                    tag(ruleData.category)
+                        // Add tags - always include "pmd" tag first, then category tag
+                        tag("pmd")
+                        tag(ruleData.category)
 
-                    // Add parameters from properties
-                    ruleData.properties.each { prop ->
-                        if (prop.name && prop.description && !prop.name.startsWith("violation")) {
-                            param {
-                                key(prop.name)
-                                description {
-                                    mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
-                                }
-                                if (prop.value) {
-                                    defaultValue(prop.value)
-                                }
-                                if (prop.type) {
-                                    type(prop.type.toUpperCase())
+                        // Add parameters from properties
+                        ruleData.properties.each { prop ->
+                            if (prop.name && prop.description && !prop.name.startsWith("violation")) {
+                                param {
+                                    key(prop.name)
+                                    description {
+                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
+                                    }
+                                    if (prop.value) {
+                                        defaultValue(prop.value)
+                                    }
+                                    if (prop.type) {
+                                        type(prop.type.toUpperCase())
+                                    }
                                 }
                             }
                         }
@@ -527,60 +546,74 @@ try {
                 }
             }
         }
-    }
 
-    println "Successfully generated ${outputFileName}"
-    println "Total rules: ${allRules.size()}"
-    println "Active rules: ${allRules.count { !it.deprecated }}"
-    println "Deprecated rules: ${allRules.count { it.deprecated }}"
-    if (rulesWithoutDescription > 0) {
-        println "Rules with generated fallback descriptions: ${rulesWithoutDescription}"
-    }
-    println "Using camelCase transformation for all rule names"
-
-    // Show category breakdown
-    def categoryStats = allRules.groupBy { it.category }
-    println ""
-    println "Rules by category:"
-    categoryStats.sort { it.key }.each { category, rules ->
-        def activeCount = rules.count { !it.deprecated }
-        def deprecatedCount = rules.count { it.deprecated }
-        println "  - ${category}: ${rules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)"
-    }
-
-    // Show tag distribution
-    println ""
-    println "Tags that will be applied:"
-    println "  - pmd: ${allRules.size()} rules"
-    categoryStats.sort { it.key }.each { category, rules ->
-        println "  - ${category}: ${rules.size()} rules"
-    }
-
-    // We're now using camelCase transformation for all rule names
-
-    // We're not using properties for names anymore, so no need to display missing entries
-
-    // Check for any rules that might still have empty descriptions (shouldn't happen now)
-    def outputXml = new XmlSlurper().parse(outputFile)
-    def emptyDescriptions = outputXml.rule.findAll { 
-        !it.description.text() || it.description.text().trim().isEmpty() 
-    }
-
-    if (emptyDescriptions.size() > 0) {
-        println ""
-        println "WARNING: Found ${emptyDescriptions.size()} rules with empty descriptions:"
-        emptyDescriptions.each { rule ->
-            println "  - ${rule.key.text()}"
+        println "Successfully generated ${outputFile.name}"
+        println "Total ${language} rules: ${rules.size()}"
+        println "Active ${language} rules: ${rules.count { !it.deprecated }}"
+        println "Deprecated ${language} rules: ${rules.count { it.deprecated }}"
+        if (rulesWithoutDescription > 0) {
+            println "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}"
         }
-    } else {
-        println ""
-        println "✓ All rules have descriptions"
-    }
+        println "Using camelCase transformation for all rule names"
 
-} catch (Exception e) {
-    println "ERROR generating XML file: ${e.message}"
-    e.printStackTrace()
+        // Show category breakdown
+        def categoryStats = rules.groupBy { it.category }
+        println ""
+        println "${language} rules by category:"
+        categoryStats.sort { it.key }.each { category, categoryRules ->
+            def activeCount = categoryRules.count { !it.deprecated }
+            def deprecatedCount = categoryRules.count { it.deprecated }
+            println "  - ${category}: ${categoryRules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)"
+        }
+
+        // Show tag distribution
+        println ""
+        println "Tags that will be applied for ${language} rules:"
+        println "  - pmd: ${rules.size()} rules"
+        categoryStats.sort { it.key }.each { category, categoryRules ->
+            println "  - ${category}: ${categoryRules.size()} rules"
+        }
+
+        // Check for any rules that might still have empty descriptions (shouldn't happen now)
+        def outputXml = new XmlSlurper().parse(outputFile)
+        def emptyDescriptions = outputXml.rule.findAll { 
+            !it.description.text() || it.description.text().trim().isEmpty() 
+        }
+
+        if (emptyDescriptions.size() > 0) {
+            println ""
+            println "WARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
+            emptyDescriptions.each { rule ->
+                println "  - ${rule.key.text()}"
+            }
+        } else {
+            println ""
+            println "✓ All ${language} rules have descriptions"
+        }
+
+        return true
+    } catch (Exception e) {
+        println "ERROR generating ${language} XML file: ${e.message}"
+        e.printStackTrace()
+        return false
+    }
 }
 
+// Generate Java rules XML file
 println ""
-println "XML generation completed!"
+println "Generating Java rules XML file..."
+println "=" * 30
+def javaSuccess = generateXmlFile(javaOutputFilePath, javaRules, "Java")
+
+// Generate Kotlin rules XML file
+println ""
+println "Generating Kotlin rules XML file..."
+println "=" * 30
+def kotlinSuccess = generateXmlFile(kotlinOutputFilePath, kotlinRules, "Kotlin")
+
+println ""
+if (javaSuccess && kotlinSuccess) {
+    println "XML generation completed successfully for both Java and Kotlin rules!"
+} else {
+    println "XML generation completed with errors. Please check the logs above."
+}
