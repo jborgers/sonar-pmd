@@ -52,6 +52,12 @@ class PmdRulesDefinitionTest {
             assertThat(rule.htmlDescription()).isNotNull();
             assertThat(rule.severity()).isNotNull();
 
+            // Verify code blocks don't contain paragraph tags
+            String description = rule.htmlDescription();
+            if (description.contains("<pre><code")) {
+                assertThat(description).doesNotContain("</p><p>");
+            }
+
             for (Param param : rule.params()) {
                 assertThat(param.name()).isNotNull();
                 assertThat(param.description())

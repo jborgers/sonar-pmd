@@ -34,8 +34,9 @@ println "Kotlin output file: ${kotlinOutputFilePath}"
  */
 class MdToHtmlConverter {
     // Regex patterns (simplified Groovy version)
+    // Simple paragraph splitter - we use extractPreBlocks and restorePreBlocks to handle <pre> tags
     static final Pattern PARAGRAPH_SPLITTER_PATTERN = ~/\n\s*\n/
-    static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*1\..*/
+    static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*1\...*/
     static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*\*.*/
     static final Pattern SECTION_PARAGRAPH_PATTERN = ~/(?s)\s*[A-Za-z]+:\s*.*/
     static final Pattern LIST_ITEM_PATTERN = ~/(\d+)\.(\s+)(.*)/
@@ -78,9 +79,20 @@ class MdToHtmlConverter {
         // Handle sections with special patterns
         result = handleSections(result)
 
-        // Split into paragraphs and process each
+        // First extract and preserve all <pre> blocks
+        List<String> preBlocks = new ArrayList<>()
+        result = extractPreBlocks(result, preBlocks)
+
+        // Now split into paragraphs
         String[] paragraphs = PARAGRAPH_SPLITTER_PATTERN.split(result)
         List<String> htmlParagraphs = []
+
+        // Restore <pre> blocks by their placeholders
+        for (int i = 0; i < paragraphs.length; i++) {
+            paragraphs[i] = restorePreBlocks(paragraphs[i], preBlocks)
+        }
+
+        println "PARAGRAPHS: $paragraphs"
 
         paragraphs.each { paragraph ->
             paragraph = paragraph.trim()
@@ -101,7 +113,10 @@ class MdToHtmlConverter {
             }
         }
 
-        return htmlParagraphs.join("")
+        // Join paragraphs with newlines instead of directly concatenating them
+        // This helps prevent </p><p> issues in code examples
+        String html = htmlParagraphs.join("\n")
+        return html
     }
 
     private static String convertHeader(String headerText) {
@@ -155,9 +170,20 @@ class MdToHtmlConverter {
     private static String handleMultiLineCodeBlocks(String markdownText, Pattern pattern) {
         return pattern.matcher(markdownText).replaceAll { match ->
             String language = match.group(1) ?: ""
-            String code = match.group(2)?.trim() ?: ""
+            // Don't trim the code to preserve leading spaces
+            String code = match.group(2) ?: ""
+
+            // Add a space at the beginning of each line (including the first line)
+            // This ensures proper spacing in the HTML output for all code examples
+            code = " " + code.replaceAll(/\n/, "\n ")
+
+            // Only trim trailing whitespace
+            code = code.replaceAll(/\s+$/, "")
             String langClass = language ? " class=\"language-${language}\"" : ""
+
+            // Directly escape HTML without introducing paragraphs
             String replacement = "<pre><code${langClass}>${escapeHtml(code)}</code></pre>".toString()
+
             return escapeReplacement(replacement)
         }
     }
@@ -270,6 +296,39 @@ class MdToHtmlConverter {
             .replace('>', '&gt;')
             .replace('"', '&quot;')
             .replace("'", '&#39;')
+    }
+
+    // Extract <pre> blocks and replace them with placeholders
+    private static String extractPreBlocks(String text, List<String> preBlocks) {
+        Pattern prePattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
+        Matcher matcher = prePattern.matcher(text)
+        StringBuffer sb = new StringBuffer()
+
+        while (matcher.find()) {
+            String preBlock = matcher.group(0)
+            preBlocks.add(preBlock)
+            // Replace with a placeholder that won't be split by paragraph splitter
+            matcher.appendReplacement(sb, "PRE_BLOCK_" + (preBlocks.size() - 1) + "_PLACEHOLDER")
+        }
+        matcher.appendTail(sb)
+        return sb.toString()
+    }
+
+    // Restore <pre> blocks from placeholders
+    private static String restorePreBlocks(String text, List<String> preBlocks) {
+        Pattern placeholderPattern = Pattern.compile("PRE_BLOCK_(\\d+)_PLACEHOLDER")
+        Matcher matcher = placeholderPattern.matcher(text)
+        StringBuffer sb = new StringBuffer()
+
+        while (matcher.find()) {
+            int blockIndex = Integer.parseInt(matcher.group(1))
+            if (blockIndex < preBlocks.size()) {
+                String replacement = Matcher.quoteReplacement(preBlocks.get(blockIndex))
+                matcher.appendReplacement(sb, replacement)
+            }
+        }
+        matcher.appendTail(sb)
+        return sb.toString()
     }
 }
 
@@ -461,11 +520,13 @@ def formatDescription = { ruleData ->
 
     // Add examples section if available
     if (examples && !examples.isEmpty()) {
-        markdownContent.append("\n\n## Example\n\n")
+        markdownContent.append(examples.size() > 1 ? "\n\n## Examples\n\n" : "\n\n## Example\n\n")
         examples.eachWithIndex { example, index ->
             if (examples.size() > 1) {
                 markdownContent.append("### Example ${index + 1}\n\n")
             }
+            // Ensure the code example is properly formatted with proper line breaks
+            // and no paragraph tags inside code blocks
             markdownContent.append("```java\n")
             markdownContent.append(example)
             markdownContent.append("\n```\n\n")
@@ -580,6 +641,20 @@ def generateXmlFile = { outputFile, rules, language ->
             !it.description.text() || it.description.text().trim().isEmpty() 
         }
 
+        // Check for rules with paragraph tags inside code blocks
+        def rulesWithParagraphsInCodeBlocks = outputXml.rule.findAll { rule ->
+            def desc = rule.description.text()
+            desc.contains("<pre>") && (
+                desc.contains("</p><pre>") || 
+                desc.contains("</pre><p>") || 
+                desc.contains("<p><pre>") || 
+                desc.contains("</code></p>") || 
+                desc.contains("<p><code>") ||
+                desc.contains("<pre><p>") ||
+                desc.contains("</p></pre>")
+            )
+        }
+
         if (emptyDescriptions.size() > 0) {
             println ""
             println "WARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
@@ -589,6 +664,16 @@ def generateXmlFile = { outputFile, rules, language ->
         } else {
             println ""
             println "✓ All ${language} rules have descriptions"
+        }
+
+        if (rulesWithParagraphsInCodeBlocks.size() > 0) {
+            println ""
+            println "WARNING: Found ${rulesWithParagraphsInCodeBlocks.size()} ${language} rules with paragraph tags inside code blocks:"
+            rulesWithParagraphsInCodeBlocks.each { rule ->
+                println "  - ${rule.key.text()}"
+            }
+        } else {
+            println "✓ No ${language} rules with paragraph tags inside code blocks"
         }
 
         return true
