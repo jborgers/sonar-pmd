@@ -9,10 +9,18 @@ import java.util.regex.Matcher
 def pmdVersion = "7.15.0"
 def pmdJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
 def categoriesPropertiesPath = "category/java/categories.properties"
-def outputFileName = "pmd-7-rules.xml"
+
+// Get output directory from binding variable (set by Maven) or use a default directory
+// The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
+def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
+    "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd" : "."
+def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
+def outputFileName = "rules.xml"
+def outputFilePath = new File(outputDirPath, outputFileName)
 
 println "PMD ${pmdVersion} Rules XML Generator"
 println "=" * 50
+println "Output file: ${outputFilePath}"
 
 /**
  * Groovy translation of MdToHtmlConverter
@@ -34,7 +42,7 @@ class MdToHtmlConverter {
     static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = ~/(?s)```(\w*)\s*([\s\S]*?)```/
     static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = ~/(?s)````(\w*)\s*([\s\S]*?)````/
     static final Pattern HEADER_PATTERN = ~/^(#{1,6})\s+(.+)$/
-    
+
     // New patterns for additional formatting
     static final Pattern ITALIC_NOTE_PATTERN = ~/_Note:_/
     static final Pattern MARKDOWN_LINK_PATTERN = ~/\[([^\]]+)\]\(([^)]+)\)/
@@ -93,7 +101,7 @@ class MdToHtmlConverter {
     private static String convertHeader(String headerText) {
         String[] lines = headerText.split('\n')
         StringBuilder result = new StringBuilder()
-        
+
         lines.each { line ->
             def matcher = HEADER_PATTERN.matcher(line.trim())
             if (matcher.matches()) {
@@ -108,16 +116,16 @@ class MdToHtmlConverter {
                 }
             }
         }
-        
+
         return result.toString()
     }
 
     private static String handleSpecialPatterns(String text) {
         String result = text
-        
+
         // Handle _Note:_ pattern
         result = ITALIC_NOTE_PATTERN.matcher(result).replaceAll(escapeReplacement('<b>Note:</b>'))
-        
+
         // Handle PMD rule links first (more specific)
         result = PMD_RULE_LINK_PATTERN.matcher(result).replaceAll { match ->
             String linkText = match.group(1)
@@ -126,7 +134,7 @@ class MdToHtmlConverter {
             String replacement = "<a href=\"${fullUrl}\">${linkText}</a>".toString()
             return escapeReplacement(replacement)
         }
-        
+
         // Handle general markdown links
         result = MARKDOWN_LINK_PATTERN.matcher(result).replaceAll { match ->
             String linkText = match.group(1)
@@ -134,7 +142,7 @@ class MdToHtmlConverter {
             String replacement = "<a href=\"${href}\">${linkText}</a>".toString()
             return escapeReplacement(replacement)
         }
-        
+
         return result
     }
 
@@ -229,20 +237,20 @@ class MdToHtmlConverter {
         if (!text) return ""
 
         String result = text
-        
+
         // Format inline code blocks
         result = CODE_BLOCK_PATTERN.matcher(result).replaceAll(escapeReplacement('<code>') + '$1' + escapeReplacement('</code>'))
-        
+
         // Format rule references
         result = RULE_REFERENCE_PATTERN.matcher(result).replaceAll(escapeReplacement('<code>') + '$1' + escapeReplacement('</code>'))
-        
+
         // Format inline titles (like "Problem:" in the middle of text)
         result = INLINE_TITLE_PATTERN.matcher(result).replaceAll(escapeReplacement('<b>') + '$1' + escapeReplacement(':</b>') + '$2')
-        
+
         // Basic markdown formatting
         result = result.replaceAll(/\*\*([^*]+)\*\*/, escapeReplacement('<b>') + '$1' + escapeReplacement('</b>'))  // Bold
         result = result.replaceAll(/\*([^*]+)\*/, escapeReplacement('<i>') + '$1' + escapeReplacement('</i>'))      // Italic
-        
+
         // DON'T convert all newlines to <br/> - only paragraph breaks are handled by the paragraph splitter
 
         return result
@@ -280,21 +288,21 @@ def categoryFiles = []
 
 try {
     def zipFile = new ZipFile(jarFile)
-    
+
     // First, read the categories.properties to get the list of rule files
     def categoriesEntry = zipFile.getEntry(categoriesPropertiesPath)
     if (categoriesEntry) {
         def categoriesProps = new Properties()
         categoriesProps.load(zipFile.getInputStream(categoriesEntry))
-        
+
         def rulesetFilenames = categoriesProps.getProperty("rulesets.filenames", "")
         categoryFiles = rulesetFilenames.split(",").collect { it.trim() }
-        
+
         println "Found ${categoryFiles.size()} category files in PMD JAR"
     } else {
         println "WARNING: categories.properties not found in PMD JAR"
     }
-    
+
     // Parse each category XML file to extract detailed rule information
     categoryFiles.each { categoryFile ->
         def entry = zipFile.getEntry(categoryFile)
@@ -302,7 +310,7 @@ try {
             try {
                 def categoryXml = new XmlSlurper().parse(zipFile.getInputStream(entry))
                 def categoryName = categoryFile.tokenize('/').last().replace('.xml', '')
-                
+
                 categoryXml.rule.each { ruleElement ->
                     def ruleName = ruleElement.@name.toString()
                     def ruleClass = ruleElement.@class.toString()
@@ -311,19 +319,19 @@ try {
                     def since = ruleElement.@since.toString()
                     def externalInfoUrl = ruleElement.@externalInfoUrl.toString()
                     def message = ruleElement.@message.toString()
-                    
+
                     // Extract description
                     def description = ruleElement.description.text()
-                    
+
                     // Extract priority
                     def priority = ruleElement.priority.text() ?: "3"
-                    
+
                     // Extract examples
                     def examples = []
                     ruleElement.example.each { example ->
                         examples << example.text()
                     }
-                    
+
                     // Extract properties
                     def properties = []
                     ruleElement.properties.property.each { prop ->
@@ -336,7 +344,7 @@ try {
                             max: prop.@max.toString()
                         ]
                     }
-                    
+
                     if (ruleName) {
                         allRules << [
                             name: ruleName,
@@ -363,7 +371,7 @@ try {
             println "  - WARNING: Category file not found: ${categoryFile}"
         }
     }
-    
+
     zipFile.close()
 } catch (Exception e) {
     println "ERROR reading PMD JAR: ${e.message}"
@@ -403,12 +411,12 @@ def generateFallbackDescription = { ruleName, category ->
         'performance': 'performance optimization',
         'security': 'security vulnerabilities'
     ]
-    
+
     def categoryDesc = categoryDescriptions[category] ?: 'code quality'
-    
+
     // Convert camelCase rule name to readable format
     def readableName = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-    
+
     return """Problem: This rule identifies issues related to ${categoryDesc}.
 
 Solution: Review the flagged code and apply the recommended practices to improve code quality.
@@ -421,18 +429,18 @@ def formatDescription = { ruleData ->
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
-    
+
     // If no description exists, generate a fallback
     if (!description || description.trim().isEmpty()) {
         description = generateFallbackDescription(ruleData.name, ruleData.category)
     }
-    
+
     // Build markdown content
     def markdownContent = new StringBuilder()
-    
+
     // Add the main description
     markdownContent.append(description)
-    
+
     // Add examples section if available
     if (examples && !examples.isEmpty()) {
         markdownContent.append("\n\n## Example\n\n")
@@ -445,41 +453,41 @@ def formatDescription = { ruleData ->
             markdownContent.append("\n```\n\n")
         }
     }
-    
+
     // Add external info URL if available
     if (externalInfoUrl) {
         def linkText = externalInfoUrl.tokenize('/').last()
         markdownContent.append("\n\n**More information:** [${linkText}](${externalInfoUrl})")
     }
-    
+
     // Convert markdown to HTML using our Groovy MdToHtmlConverter
     return MdToHtmlConverter.convertToHtml(markdownContent.toString())
 }
 
 // Generate the XML file
 try {
-    def outputFile = new File(outputFileName)
+    def outputFile = outputFilePath
     def rulesWithoutDescription = 0
-    
+
     outputFile.withWriter('UTF-8') { writer ->
         def xml = new MarkupBuilder(writer)
         xml.setDoubleQuotes(true)
-        
+
         // Write XML declaration manually since MarkupBuilder doesn't handle it well
         writer.println('<?xml version="1.0" encoding="UTF-8"?>')
-        
+
         xml.rules {
             allRules.sort { it.name }.each { ruleData ->
                 rule {
                     key(ruleData.name)
-                    
+
                     // Always use camelCase transformation for rule names
                     def readableName = camelCaseToReadable(ruleData.name)
                     name(readableName)
-                    
+
                     internalKey("${ruleData.categoryFile}/${ruleData.name}")
                     severity(priorityToSeverity(ruleData.priority))
-                    
+
                     // Add description with CDATA - ensure it's never empty
                     description {
                         def descContent = formatDescription(ruleData)
@@ -489,16 +497,16 @@ try {
                         }
                         mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
                     }
-                    
+
                     // Add status if deprecated
                     if (ruleData.deprecated) {
                         status("DEPRECATED")
                     }
-                    
+
                     // Add tags - always include "pmd" tag first, then category tag
                     tag("pmd")
                     tag(ruleData.category)
-                    
+
                     // Add parameters from properties
                     ruleData.properties.each { prop ->
                         if (prop.name && prop.description && !prop.name.startsWith("violation")) {
@@ -520,7 +528,7 @@ try {
             }
         }
     }
-    
+
     println "Successfully generated ${outputFileName}"
     println "Total rules: ${allRules.size()}"
     println "Active rules: ${allRules.count { !it.deprecated }}"
@@ -529,7 +537,7 @@ try {
         println "Rules with generated fallback descriptions: ${rulesWithoutDescription}"
     }
     println "Using camelCase transformation for all rule names"
-    
+
     // Show category breakdown
     def categoryStats = allRules.groupBy { it.category }
     println ""
@@ -539,7 +547,7 @@ try {
         def deprecatedCount = rules.count { it.deprecated }
         println "  - ${category}: ${rules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)"
     }
-    
+
     // Show tag distribution
     println ""
     println "Tags that will be applied:"
@@ -547,17 +555,17 @@ try {
     categoryStats.sort { it.key }.each { category, rules ->
         println "  - ${category}: ${rules.size()} rules"
     }
-    
+
     // We're now using camelCase transformation for all rule names
-    
+
     // We're not using properties for names anymore, so no need to display missing entries
-    
+
     // Check for any rules that might still have empty descriptions (shouldn't happen now)
     def outputXml = new XmlSlurper().parse(outputFile)
     def emptyDescriptions = outputXml.rule.findAll { 
         !it.description.text() || it.description.text().trim().isEmpty() 
     }
-    
+
     if (emptyDescriptions.size() > 0) {
         println ""
         println "WARNING: Found ${emptyDescriptions.size()} rules with empty descriptions:"
@@ -568,7 +576,7 @@ try {
         println ""
         println "✓ All rules have descriptions"
     }
-    
+
 } catch (Exception e) {
     println "ERROR generating XML file: ${e.message}"
     e.printStackTrace()

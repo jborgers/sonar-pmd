@@ -6,7 +6,16 @@ The Github Actions `release.yml` will build and release to Github actions and Ma
 Make sure that all commits have been pushed and build 
 with `build.yml` workflow before setting and pushing the tag.
 
-Steps:
+## Preparation
+
+### Update PMD rules (if needed)
+If the PMD version has been updated or rules have changed, regenerate the rules.xml file:
+```
+./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
+```
+This will run the Groovy script that extracts rules from PMD and generates the rules.xml file in the correct location.
+
+## Release Steps
 - create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
 - commit both
 - `git tag x.y.z`
