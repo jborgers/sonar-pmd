@@ -25,6 +25,7 @@ package org.sonar.plugins.pmd.rule;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -40,12 +41,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RulesDefinitionXmlLoaderTest {
 
+    public static final Charset ENCODING = StandardCharsets.UTF_8;
+    public static final String ENCODING_NAME = ENCODING.name();
     RulesDefinitionXmlLoader underTest = new RulesDefinitionXmlLoader();
 
     @Test
     public void parse_xml() {
         InputStream input = getClass().getResourceAsStream("RulesDefinitionXmlLoaderTest/rules.xml");
-        RulesDefinition.Repository repository = load(input, StandardCharsets.UTF_8.name());
+        RulesDefinition.Repository repository = load(input, ENCODING_NAME);
         assertThat(repository.rules()).hasSize(2);
 
         RulesDefinition.Rule rule = repository.rule("complete");
@@ -77,21 +80,21 @@ public class RulesDefinitionXmlLoaderTest {
 
     @Test
     public void fail_if_missing_rule_key() {
-        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><name>Foo</name></rule></rules>"), StandardCharsets.UTF_8.name()))
+        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><name>Foo</name></rule></rules>", ENCODING), ENCODING_NAME))
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     public void fail_if_missing_property_key() {
-        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><key>foo</key><name>Foo</name><param></param></rule></rules>"),
-                StandardCharsets.UTF_8.name()))
+        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><key>foo</key><name>Foo</name><param></param></rule></rules>", ENCODING),
+                ENCODING_NAME))
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     public void fail_on_invalid_rule_parameter_type() {
-        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><key>foo</key><name>Foo</name><param><key>key</key><type>INVALID</type></param></rule></rules>"),
-                StandardCharsets.UTF_8.name()))
+        assertThatThrownBy(() -> load(IOUtils.toInputStream("<rules><rule><key>foo</key><name>Foo</name><param><key>key</key><type>INVALID</type></param></rule></rules>", ENCODING_NAME),
+                ENCODING_NAME))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -99,7 +102,7 @@ public class RulesDefinitionXmlLoaderTest {
     public void fail_if_invalid_xml() {
         InputStream input = getClass().getResourceAsStream("RulesDefinitionXmlLoaderTest/invalid.xml");
 
-        assertThatThrownBy(() -> load(input, StandardCharsets.UTF_8.name()))
+        assertThatThrownBy(() -> load(input, ENCODING_NAME))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("XML is not valid");
     }
@@ -107,7 +110,7 @@ public class RulesDefinitionXmlLoaderTest {
     @Test
     public void test_utf8_encoding() {
         InputStream input = getClass().getResourceAsStream("RulesDefinitionXmlLoaderTest/utf8.xml");
-        RulesDefinition.Repository repository = load(input, StandardCharsets.UTF_8.name());
+        RulesDefinition.Repository repository = load(input, ENCODING_NAME);
 
         assertThat(repository.rules()).hasSize(1);
         RulesDefinition.Rule rule = repository.rules().get(0);
@@ -121,7 +124,7 @@ public class RulesDefinitionXmlLoaderTest {
     @Test
     public void test_utf8_encoding_with_bom() {
         InputStream input = getClass().getResourceAsStream("RulesDefinitionXmlLoaderTest/utf8-with-bom.xml");
-        RulesDefinition.Repository repository = load(input, StandardCharsets.UTF_8.name());
+        RulesDefinition.Repository repository = load(input, ENCODING_NAME);
 
         assertThat(repository.rules()).hasSize(1);
         RulesDefinition.Rule rule = repository.rules().get(0);
@@ -136,7 +139,7 @@ public class RulesDefinitionXmlLoaderTest {
     public void support_deprecated_format() {
         // the deprecated format uses some attributes instead of nodes
         InputStream input = getClass().getResourceAsStream("RulesDefinitionXmlLoaderTest/deprecated.xml");
-        RulesDefinition.Repository repository = load(input, StandardCharsets.UTF_8.name());
+        RulesDefinition.Repository repository = load(input, ENCODING_NAME);
 
         assertThat(repository.rules()).hasSize(1);
         RulesDefinition.Rule rule = repository.rules().get(0);
@@ -264,7 +267,7 @@ public class RulesDefinitionXmlLoaderTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Fail to load the rule with key [squid:1]")
                 .hasCauseInstanceOf(IllegalArgumentException.class)
-                .hasRootCauseMessage("No enum constant org.sonar.api.server.rule.RulesDefinitionXmlLoader.DescriptionFormat.UNKNOWN");
+                .hasRootCauseMessage("No enum constant org.sonar.plugins.pmd.rule.RulesDefinitionXmlLoader.DescriptionFormat.UNKNOWN");
     }
 
     @Test

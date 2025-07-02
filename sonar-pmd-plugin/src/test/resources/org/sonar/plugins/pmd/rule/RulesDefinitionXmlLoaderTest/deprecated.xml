@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <rule key="org.sonar.it.checkstyle.MethodsCountCheck" priority="CRITICAL">
+    <configKey>Checker/TreeWalker/org.sonar.it.checkstyle.MethodsCountCheck</configKey>
+    <name>Count methods</name>
+    <description>Count methods</description>
+    <param key="minMethodsCount" description="Minimum number of methods">
+      <defaultValue>2</defaultValue>
+    </param>
+  </rule>
+</rules>
