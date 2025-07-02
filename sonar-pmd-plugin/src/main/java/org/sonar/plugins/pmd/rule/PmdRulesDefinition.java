@@ -22,14 +22,12 @@ package org.sonar.plugins.pmd.rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
 public final class PmdRulesDefinition implements RulesDefinition {
 
@@ -51,7 +49,6 @@ public final class PmdRulesDefinition implements RulesDefinition {
             LOGGER.error("Failed to load PMD RuleSet.", e);
         }
 
-        loadNames(repository);
         SqaleXmlLoader.load(repository, "/com/sonar/sqale/pmd-model.xml");
     }
 
@@ -66,31 +63,4 @@ public final class PmdRulesDefinition implements RulesDefinition {
         repository.done();
     }
 
-    private static void loadNames(NewRepository repository) {
-
-        Properties properties = new Properties();
-
-        String file = "/org/sonar/l10n/pmd.properties";
-        try (InputStream stream = PmdRulesDefinition.class.getResourceAsStream(file)) {
-            properties.load(stream);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not read names from properties", e);
-        }
-
-        for (NewRule rule : repository.rules()) {
-            String baseKey = "rule." + repository.key() + "." + rule.key();
-            String nameKey = baseKey + ".name";
-            String ruleName = properties.getProperty(nameKey);
-            if (ruleName != null) {
-                rule.setName(ruleName);
-            }
-            for (NewParam param : rule.params()) {
-                String paramDescriptionKey = baseKey + ".param." + param.key();
-                String paramDescription = properties.getProperty(paramDescriptionKey);
-                if (paramDescription != null) {
-                    param.setDescription(paramDescription);
-                }
-            }
-        }
-    }
 }

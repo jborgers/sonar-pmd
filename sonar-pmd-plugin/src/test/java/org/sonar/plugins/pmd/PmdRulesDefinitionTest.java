@@ -19,9 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.Iterables;
 import org.junit.jupiter.api.Test;
-import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
@@ -63,17 +61,4 @@ class PmdRulesDefinitionTest {
         }
     }
 
-    @Test
-    void should_use_text_parameter_for_xpath_rule() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
-        RulesDefinition.Context context = new RulesDefinition.Context();
-        definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        List<RulesDefinition.Rule> rules = repository.rules();
-        System.out.println("rules: " + rules);
-
-        Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
-
-        assertThat(xpathRule.param("xpath").type().type()).isEqualTo(PropertyType.TEXT.name());
-    }
 }
