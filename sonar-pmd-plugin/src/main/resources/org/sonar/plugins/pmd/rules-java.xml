@@ -2126,7 +2126,7 @@ in a single method makes its behaviour hard to read and change.</p>
 <p>Cyclomatic complexity assesses the complexity of a method by counting the number of decision points in a method,
 plus one for the method entry. Decision points are places where the control flow jumps to another place in the
 program. As such, they include all control flow statements, such as <code>if</code>, <code>while</code>, <code>for</code>, and <code>case</code>. For more
-details on the calculation, see the documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#CYCLO"><code>CYCLO</code></a>.</p>
+details on the calculation, see the documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#CYCLO"><code>CYCLO</code></a>.</p>
 <p>Generally, numbers ranging from 1-4 denote low complexity, 5-7 denote moderate complexity, 8-10 denote
 high complexity, and 11+ is very high complexity. By default, this rule reports methods with a complexity >= 10.
 Additionally, classes with many methods of moderate complexity get reported as well once the total of their
@@ -2178,7 +2178,7 @@ design.</p>
 most cases, that means moving the operations defined on the data back into the class.
 In some other cases it may make sense to remove entirely the class and move the data
 into the former client classes.</p>
-<p><ul><li>WMC: a class complexity measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>WOC: a 'non-triviality' measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#WEIGHT_OF_CLASS"><code>WEIGHT_OF_CLASS</code></a></li><li>NOPA: number of public attributes, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#NUMBER_OF_PUBLIC_FIELDS"><code>NUMBER_OF_PUBLIC_FIELDS</code></a></li><li>NOAM: number of public accessor methods, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#NUMBER_OF_ACCESSORS"><code>NUMBER_OF_ACCESSORS</code></a></li><li>High NOPA + NOAM</li><li>Low WOC</li><li>Low WMC</li></ul></p>
+<p><ul><li>WMC: a class complexity measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>WOC: a 'non-triviality' measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHT_OF_CLASS"><code>WEIGHT_OF_CLASS</code></a></li><li>NOPA: number of public attributes, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_PUBLIC_FIELDS"><code>NUMBER_OF_PUBLIC_FIELDS</code></a></li><li>NOAM: number of public accessor methods, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_ACCESSORS"><code>NUMBER_OF_ACCESSORS</code></a></li><li>High NOPA + NOAM</li><li>Low WOC</li><li>Low WMC</li></ul></p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class DataClass {
  
@@ -3062,7 +3062,7 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
 are very big and overly complex. They should be split apart to be more object-oriented.
 The rule uses the detection strategy described in "Object-Oriented Metrics in Practice".
 The violations are reported against the entire class.</p>
-<p><ul><li>WMC: a class complexity measure, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>ATFD: a measure of how much data external data the class uses, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#ACCESS_TO_FOREIGN_DATA"><code>ACCESS_TO_FOREIGN_DATA</code></a></li><li>TCC: a measure of how tightly related the methods are, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#TIGHT_CLASS_COHESION"><code>TIGHT_CLASS_COHESION</code></a></li><li>High WMC</li><li>High ATFD</li><li>Low TCC</li></ul></p>
+<p><ul><li>WMC: a class complexity measure, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>ATFD: a measure of how much data external data the class uses, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#ACCESS_TO_FOREIGN_DATA"><code>ACCESS_TO_FOREIGN_DATA</code></a></li><li>TCC: a measure of how tightly related the methods are, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#TIGHT_CLASS_COHESION"><code>TIGHT_CLASS_COHESION</code></a></li><li>High WMC</li><li>High ATFD</li><li>Low TCC</li></ul></p>
 <p>See also the reference:</p>
 <p>Michele Lanza and Radu Marinescu. <i>Object-Oriented Metrics in Practice:
 Using Software Metrics to Characterize, Evaluate, and Improve the Design
@@ -4204,7 +4204,7 @@ rule {% rule java/errorprone/AssignmentToNonFinalStatic %}.</p>
 While cyclomatic complexity counts the number of decision points in a method, NPath counts the number of
 full paths from the beginning to the end of the block of the method. That metric grows exponentially, as
 it multiplies the complexity of statements in the same block. For more details on the calculation, see the
-documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#NPATH"><code>NPATH</code></a>.</p>
+documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NPATH"><code>NPATH</code></a>.</p>
 <p>A threshold of 200 is generally considered the point where measures should be taken to reduce
 complexity and increase readability.</p>
 <h2>Example</h2>
@@ -4254,7 +4254,7 @@ complexity and increase readability.</p>
     <description><![CDATA[<p>This rule uses the NCSS (Non-Commenting Source Statements) metric to determine the number of lines
 of code in a class, method or constructor. NCSS ignores comments, blank lines, and only counts actual
 statements. For more details on the calculation, see the documentation
-<a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/lang/java/metrics/JavaMetrics.html#NCSS"><code>NCSS</code></a>.</p>
+<a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NCSS"><code>NCSS</code></a>.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> import java.util.Collections;       // +0
  import java.io.IOException;         // +0

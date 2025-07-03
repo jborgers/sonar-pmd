@@ -65,7 +65,7 @@ class MdToHtmlConverter {
     // {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
     static final Pattern JDOC_REFERENCE_PATTERN = ~/\{\%\s*jdoc\s+([\w-]+)::([\w.#]+)\s*\%\}/
     // example: https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT
-    static final String jdocLink = "https://docs.pmd-code.org/apidocs/pmd-java/${PMD_VERSION}/net/sourceforge/"
+    static final String jdocLink = "https://docs.pmd-code.org/apidocs/pmd-java/${PMD_VERSION}/net/sourceforge/pmd/"
 
     /**
      * Escapes special regex replacement characters
