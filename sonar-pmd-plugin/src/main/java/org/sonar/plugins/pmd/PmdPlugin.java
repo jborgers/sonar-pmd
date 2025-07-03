@@ -21,6 +21,7 @@ package org.sonar.plugins.pmd;
 
 import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.plugins.pmd.rule.PmdApexRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
@@ -43,6 +44,7 @@ public class PmdPlugin implements Plugin {
                 PmdExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,
+                PmdApexRulesDefinition.class,
                 PmdViolationRecorder.class
         );
     }

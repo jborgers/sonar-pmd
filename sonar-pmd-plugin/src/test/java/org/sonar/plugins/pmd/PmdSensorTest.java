@@ -181,13 +181,13 @@ class PmdSensorTest {
 
         // given
         final SensorDescriptor mockDescriptor = mock(SensorDescriptor.class);
-        when(mockDescriptor.onlyOnLanguages(anyString(), anyString())).thenReturn(mockDescriptor);
+        when(mockDescriptor.onlyOnLanguages(anyString(), anyString(), anyString())).thenReturn(mockDescriptor);
 
         // when
         pmdSensor.describe(mockDescriptor);
 
         // then
-        verify(mockDescriptor).onlyOnLanguages(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY);
+        verify(mockDescriptor).onlyOnLanguages(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY, PmdConstants.LANGUAGE_APEX_KEY);
         verify(mockDescriptor).name("PmdSensor");
     }
 

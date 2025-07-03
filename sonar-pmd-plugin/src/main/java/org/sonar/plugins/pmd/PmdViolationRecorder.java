@@ -103,7 +103,8 @@ public class PmdViolationRecorder {
 
         return findRuleKey(internalRuleKey, PmdConstants.MAIN_JAVA_REPOSITORY_KEY)
                 .orElse(findRuleKey(internalRuleKey, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY)
-                    .orElse(null));
+                    .orElse(findRuleKey(internalRuleKey, PmdConstants.MAIN_APEX_REPOSITORY_KEY)
+                        .orElse(null)));
     }
 
     private Optional<RuleKey> findRuleKey(String internalRuleKey, String repositoryKey) {

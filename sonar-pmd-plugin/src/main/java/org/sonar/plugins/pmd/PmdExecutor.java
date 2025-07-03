@@ -100,12 +100,16 @@ public class PmdExecutor {
         final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
         final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
         final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
+        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
 
         if (LOGGER.isDebugEnabled()) {
             javaMainReport.ifPresent(this::writeDebugLine);
             javaTestReport.ifPresent(this::writeDebugLine);
             kotlinMainReport.ifPresent(this::writeDebugLine);
             kotlinTestReport.ifPresent(this::writeDebugLine);
+            apexMainReport.ifPresent(this::writeDebugLine);
+            apexTestReport.ifPresent(this::writeDebugLine);
         }
 
         Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = PmdExecutor::accept;
@@ -115,6 +119,8 @@ public class PmdExecutor {
         unionReport = javaTestReport.map(unionReport::union).orElse(unionReport);
         unionReport = kotlinMainReport.map(unionReport::union).orElse(unionReport);
         unionReport = kotlinTestReport.map(unionReport::union).orElse(unionReport);
+        unionReport = apexMainReport.map(unionReport::union).orElse(unionReport);
+        unionReport = apexTestReport.map(unionReport::union).orElse(unionReport);
 
         pmdConfiguration.dumpXmlReport(unionReport);
 
