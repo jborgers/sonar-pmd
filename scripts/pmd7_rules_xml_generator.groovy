@@ -63,6 +63,7 @@ class MdToHtmlConverter {
     static final Pattern ITALIC_NOTE_PATTERN = ~/_Note:_/
     static final Pattern MARKDOWN_LINK_PATTERN = ~/\[([^\]]+)\]\(([^)]+)\)/
     static final Pattern PMD_RULE_LINK_PATTERN = ~/\[([^\]]+)\]\((pmd_rules_[^.]+\.html[^)]*)\)/
+    static final Pattern URL_TAG_PATTERN = ~/<(https?:\/\/[^>]+)>/
     // {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
     static final Pattern JDOC_REFERENCE_PATTERN = ~/\{\%\s*jdoc\s+([\w-]+)::([\w.#]+)\s*\%\}/
     // example: https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT
@@ -175,6 +176,13 @@ class MdToHtmlConverter {
             String linkText = match.group(1)
             String href = match.group(2)
             String replacement = "<a href=\"${href}\">${linkText}</a>".toString()
+            return escapeReplacement(replacement)
+        }
+
+        // Handle URL tags like <http://example.com>
+        result = URL_TAG_PATTERN.matcher(result).replaceAll { match ->
+            String url = match.group(1)
+            String replacement = "<a href=\"${url}\">${url}</a>".toString()
             return escapeReplacement(replacement)
         }
 

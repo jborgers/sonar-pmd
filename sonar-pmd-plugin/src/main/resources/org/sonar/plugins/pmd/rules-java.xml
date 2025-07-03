@@ -1639,7 +1639,7 @@ just remove "AutoCloseable" from the types.</p>
             complexity. Nested control flows can make a method more difficult to understand, with each additional nesting of the
             control flow leading to an increase in cognitive complexity.</p>
 <p>Information about Cognitive complexity can be found in the original paper here:
-            <https://www.sonarsource.com/docs/CognitiveComplexity.pdf></p>
+            <a href="https://www.sonarsource.com/docs/CognitiveComplexity.pdf">https://www.sonarsource.com/docs/CognitiveComplexity.pdf</a></p>
 <p>By default, this rule reports methods with a complexity of 15 or more. Reported methods should be broken down into less
             complex components.</p>
 <h2>Example</h2>
@@ -2502,8 +2502,8 @@ performance need (space or time).</p>
 An optimizing JRE may assign a reference to the baz variable before it calls the constructor of the object the
 reference points to.</p>
 <p><p><b><b>Note:</b></b> With Java 5, you can make Double checked locking work, if you declare the variable to be <code>volatile</code>.</p>
-<p>For more details refer to: <http://www.javaworld.com/javaworld/jw-02-2001/jw-0209-double.html>
-or <http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html></p>
+<p>For more details refer to: <a href="http://www.javaworld.com/javaworld/jw-02-2001/jw-0209-double.html">http://www.javaworld.com/javaworld/jw-02-2001/jw-0209-double.html</a>
+or <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html</a></p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      /*volatile */ Object baz = null; // fix for Java5 and later: volatile
@@ -3657,7 +3657,7 @@ same degree as their container), the builder pattern, and getters that do not ap
 to break a boundary of abstraction.</p>
 <p>Be aware that this rule is prone to many false-positives and low-priority warnings.You can increase the <code>trustRadius</code> property to reduce them drastically. The default<code>trustRadius</code> of 1 corresponds to the original law of Demeter (you're only allowedone getter call on untrusted values). Given some <code>trustRadius</code> value:<ul><li>expressions of degree lower or equal to <code>trustRadius</code> are not reported</li><li>expressions of degree exactly <code>trustRadius + 1</code> are reported, unless they are only returned</li> from the current method, or passed as argument to another method. Without this exception it would not be possible to extract any information from e.g. method parameters.<li>values of degree strictly greater than <code>trustRadius + 1</code> are not reported. The</li> intuition is that to obtain a value of degree <code>n > 1</code> then you must use an expression of degree <code>n - 1</code>, so if you have <code>n > trustRadius + 1</code>, there you're using some value of degree <code>trustRadius + 1</code> that will be reported.</ul>
 <p>See also the references:</p>
-<ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><http://www.ccs.neu.edu/home/lieber/LoD.html></li><li><http://en.wikipedia.org/wiki/Law_of_Demeter></li></ul>
+<ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><a href="http://www.ccs.neu.edu/home/lieber/LoD.html">http://www.ccs.neu.edu/home/lieber/LoD.html</a></li><li><a href="http://en.wikipedia.org/wiki/Law_of_Demeter">http://en.wikipedia.org/wiki/Law_of_Demeter</a></li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {/**<ul><li>This example will result in one violation.</li> */ public void example(Bar b) { // b has degree 1 // <code>b.getC()</code> has degree 2, it&#39;s breaking a boundary of abstraction and so is reported. b.getC().doIt(); // To respect the law of Demeter, Bar should encapsulate its // C member more properly, eg by exposing a method like this: b.callDoItOnC(); // a constructor call, not a method call. D d = new D(); // this method call is ok, because we have create the new // instance of D locally. d.doSomethingElse(); } }</code></pre></ul>
 <p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#lawofdemeter">PMD rule documentation</a></p>]]></description>
