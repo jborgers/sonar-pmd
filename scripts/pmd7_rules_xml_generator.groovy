@@ -447,62 +447,6 @@ class MdToHtmlConverter {
         return result.toString()
     }
 
-    private static String convertUnorderedList(String listText) {
-        String[] lines = listText.split('\n')
-        StringBuilder result = new StringBuilder()
-        boolean inList = false
-        boolean inListItem = false
-        StringBuilder currentListItem = new StringBuilder()
-
-        lines.each { line ->
-            // Don't trim the line to preserve indentation
-            if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
-                // If we were in a list item, close it before starting a new one
-                if (inListItem) {
-                    result.append("<li>${currentListItem.toString()}</li>")
-                    currentListItem = new StringBuilder()
-                }
-
-                if (!inList) {
-                    result.append("<ul>")
-                    inList = true
-                }
-
-                def matcher = UNORDERED_LIST_ITEM_PATTERN.matcher(line)
-                if (matcher.find()) {
-                    currentListItem.append(formatInlineElements(matcher.group(2)))
-                    inListItem = true
-                }
-            } else if (line.trim() && inList) {
-                // Check if this is a continuation line (indented but not starting with * or -)
-                def continuationMatcher = LIST_ITEM_CONTINUATION_PATTERN.matcher(line)
-                if (continuationMatcher.matches()) {
-                    // This is an indented continuation line
-                    if (inListItem) {
-                        // Just add a space and the continuation text
-                        currentListItem.append(" ")
-                        currentListItem.append(formatInlineElements(continuationMatcher.group(1)))
-                    }
-                } else if (inListItem) {
-                    // Regular continuation line
-                    currentListItem.append(" ")
-                    currentListItem.append(formatInlineElements(line.trim()))
-                }
-            }
-        }
-
-        // Close the last list item if we're still in one
-        if (inListItem) {
-            result.append("<li>${currentListItem.toString()}</li>")
-        }
-
-        if (inList) {
-            result.append("</ul>")
-        }
-
-        return result.toString()
-    }
-
     private static String convertSection(String sectionText) {
         def matcher = TITLE_PATTERN.matcher(sectionText)
         if (matcher.find()) {
@@ -517,61 +461,95 @@ class MdToHtmlConverter {
         if (!text) return ""
 
         // Skip formatting for content inside <pre> tags
-        // We'll handle this by using a non-recursive approach to avoid infinite recursion
         if (text.contains("<pre>")) {
-            // Use a regex to split the text into parts inside and outside <pre> tags
-            // This regex captures everything between <pre> and </pre> tags (including the tags)
-            Pattern prePattern = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL)
-            Matcher matcher = prePattern.matcher(text)
-            StringBuffer sb = new StringBuffer()
-
-            while (matcher.find()) {
-                // Get the <pre> block (including tags)
-                String preBlock = matcher.group(1)
-
-                // Replace the <pre> block with a placeholder
-                matcher.appendReplacement(sb, Matcher.quoteReplacement("PRE_BLOCK_PLACEHOLDER"))
-
-                // Store the <pre> block
-                sb.append("PRE_BLOCK_START")
-                sb.append(preBlock)
-                sb.append("PRE_BLOCK_END")
-            }
-            matcher.appendTail(sb)
-
-            // Now format the text outside <pre> tags
-            String processedText = sb.toString()
-            String[] parts = processedText.split("PRE_BLOCK_PLACEHOLDER")
-
-            // Format each part outside <pre> tags
-            for (int i = 0; i < parts.length; i++) {
-                if (!parts[i].contains("PRE_BLOCK_START")) {
-                    // This part doesn't contain a <pre> block, so format it
-                    parts[i] = formatTextWithoutPre(parts[i])
-                }
-            }
-
-            // Join the parts back together
-            processedText = String.join("", parts)
-
-            // Now extract the <pre> blocks and restore them
-            Pattern blockPattern = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL)
-            Matcher blockMatcher = blockPattern.matcher(processedText)
-            StringBuffer result = new StringBuffer()
-
-            while (blockMatcher.find()) {
-                // Get the <pre> block
-                String preBlock = blockMatcher.group(1)
-
-                // Replace the placeholder with the <pre> block
-                blockMatcher.appendReplacement(result, Matcher.quoteReplacement(preBlock))
-            }
-            blockMatcher.appendTail(result)
-
-            return result.toString()
+            return processTextWithPreBlocks(text)
         }
 
         return formatTextWithoutPre(text)
+    }
+
+    /**
+     * Process text that contains <pre> blocks by extracting them,
+     * formatting the parts outside the blocks, and then restoring the blocks.
+     */
+    private static String processTextWithPreBlocks(String text) {
+        // Extract pre blocks and replace with placeholders
+        PreProcessingResult result = extractPreBlocksWithPlaceholders(text)
+
+        // Format text between pre blocks
+        String processedText = formatTextBetweenPreBlocks(result.processedText)
+
+        // Restore pre blocks
+        return restorePreBlocks(processedText)
+    }
+
+    /**
+     * Extracts <pre> blocks from text and replaces them with placeholders.
+     */
+    private static PreProcessingResult extractPreBlocksWithPlaceholders(String text) {
+        Pattern prePattern = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL)
+        Matcher matcher = prePattern.matcher(text)
+        StringBuffer sb = new StringBuffer()
+
+        while (matcher.find()) {
+            // Get the <pre> block (including tags)
+            String preBlock = matcher.group(1)
+
+            // Replace the <pre> block with a placeholder
+            matcher.appendReplacement(sb, Matcher.quoteReplacement("PRE_BLOCK_PLACEHOLDER"))
+
+            // Store the <pre> block
+            sb.append("PRE_BLOCK_START")
+            sb.append(preBlock)
+            sb.append("PRE_BLOCK_END")
+        }
+        matcher.appendTail(sb)
+
+        return new PreProcessingResult(sb.toString())
+    }
+
+    /**
+     * Formats text between <pre> blocks, ignoring the content inside <pre> blocks.
+     */
+    private static String formatTextBetweenPreBlocks(String processedText) {
+        String[] parts = processedText.split("PRE_BLOCK_PLACEHOLDER")
+
+        // Format each part outside <pre> tags
+        for (int i = 0; i < parts.length; i++) {
+            if (!parts[i].contains("PRE_BLOCK_START")) {
+                parts[i] = formatTextWithoutPre(parts[i])
+            }
+        }
+
+        return String.join("", parts)
+    }
+
+    /**
+     * Restores <pre> blocks from placeholder markers.
+     */
+    private static String restorePreBlocks(String processedText) {
+        Pattern blockPattern = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL)
+        Matcher blockMatcher = blockPattern.matcher(processedText)
+        StringBuffer result = new StringBuffer()
+
+        while (blockMatcher.find()) {
+            String preBlock = blockMatcher.group(1)
+            blockMatcher.appendReplacement(result, Matcher.quoteReplacement(preBlock))
+        }
+        blockMatcher.appendTail(result)
+
+        return result.toString()
+    }
+
+    /**
+     * Simple class to hold the result of pre-processing text with <pre> blocks.
+     */
+    private static class PreProcessingResult {
+        final String processedText
+
+        PreProcessingResult(String processedText) {
+            this.processedText = processedText
+        }
     }
 
     private static String formatTextWithoutPre(String text) {
