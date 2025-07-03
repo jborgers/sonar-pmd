@@ -1149,7 +1149,14 @@ def generateXmlFile = { outputFile, rules, language ->
                                     mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
                                 }
                                 if (prop.value) defaultValue(prop.value)
-                                if (prop.type) type(prop.type.toUpperCase())
+                                if (prop.type) {
+                                    // Map LIST[STRING] and REGEX to STRING
+                                    if (prop.type.toUpperCase() == "LIST[STRING]" || prop.type.toUpperCase() == "REGEX") {
+                                        type("STRING")
+                                    } else {
+                                        type(prop.type.toUpperCase())
+                                    }
+                                }
                             }
                         }
                     }

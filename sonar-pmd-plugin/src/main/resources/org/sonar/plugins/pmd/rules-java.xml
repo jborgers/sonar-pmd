@@ -1824,7 +1824,7 @@ in the <code>typesThatCompareByReference</code> property.</p>
     <param>
       <key>typesThatCompareByReference</key>
       <description><![CDATA[List of canonical type names for which reference comparison is allowed.]]></description>
-      <type>LIST[STRING]</type>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2574,7 +2574,7 @@ or reported.</p>
       <key>allowExceptionNameRegex</key>
       <description><![CDATA[Empty blocks catching exceptions with names matching this regular expression will be skipped]]></description>
       <defaultValue>^(ignored|expected)$</defaultValue>
-      <type>REGEX</type>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -4166,7 +4166,7 @@ See the property <code>annotations</code>.</p>
       <key>annotations</key>
       <description><![CDATA[If a constructor is annotated with one of these annotations, then the class is ignored.]]></description>
       <defaultValue>org.springframework.beans.factory.annotation.Autowired,javax.inject.Inject,com.google.inject.Inject,lombok.Builder</defaultValue>
-      <type>LIST[STRING]</type>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -5786,7 +5786,7 @@ as long as you are following this convention to name the methods.</p>
       <key>testClassPattern</key>
       <description><![CDATA[The regex pattern used to identify test classes]]></description>
       <defaultValue>Test</defaultValue>
-      <type>REGEX</type>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
