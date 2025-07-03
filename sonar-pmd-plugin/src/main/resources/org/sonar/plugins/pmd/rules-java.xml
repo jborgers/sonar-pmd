@@ -1761,7 +1761,11 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Denotes whether javadoc (formal) comments are required (or unwanted) for specific language elements.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /****<ul><li>@author Jon Doe */</code></pre></li></ul>
+<p><pre><code class="language-java"> /**
+ *
+ *
+ * @author Jon Doe
+ */</code></pre></p>
 <p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#commentrequired">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
@@ -1773,7 +1777,22 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Determines whether the dimensions of non-header comments found are within the specified limits.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /***<ul><li>too many lines! * * * * * * * * * * * * */</code></pre></li></ul>
+<p><pre><code class="language-java"> /**
+ *
+ *   too many lines!
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */</code></pre></p>
 <p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#commentsize">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
@@ -1839,9 +1858,9 @@ in the <code>typesThatCompareByReference</code> property.</p>
             <pre><code class="language-java"> void varargs(Object... parm);</code></pre>
             and call it like so:
             <pre><code class="language-java"> varargs(new String[]{&quot;a&quot;});</code></pre>
-            it is not clear whether you intended the method to receive the value `new Object[]{ new String[] {"a"} }` or
-            just `new String[] {"a"}` (the latter happens). This confusion occurs because `String[]` is both a subtype
-            of `Object[]` and of `Object`. To clarify your intent in this case, use a cast or pass individual elements like so:
+            it is not clear whether you intended the method to receive the value <code>new Object[]{ new String[] {"a"} }</code> or
+            just <code>new String[] {"a"}</code> (the latter happens). This confusion occurs because <code>String[]</code> is both a subtype
+            of <code>Object[]</code> and of <code>Object</code>. To clarify your intent in this case, use a cast or pass individual elements like so:
             <pre><code class="language-java"> // varargs call
              // parm will be `new Object[] { &quot;a&quot; }`
              varargs(&quot;a&quot;);
@@ -3656,7 +3675,24 @@ to break a boundary of abstraction.</p>
 <p>See also the references:</p>
 <p><ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><a href="http://www.ccs.neu.edu/home/lieber/LoD.html">http://www.ccs.neu.edu/home/lieber/LoD.html</a></li><li><a href="http://en.wikipedia.org/wiki/Law_of_Demeter">http://en.wikipedia.org/wiki/Law_of_Demeter</a></li></ul></p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {/**<ul><li>This example will result in one violation.  */ public void example(Bar b) { // b has degree 1 // <code>b.getC()</code> has degree 2, it&#39;s breaking a boundary of abstraction and so is reported. b.getC().doIt(); // To respect the law of Demeter, Bar should encapsulate its // C member more properly, eg by exposing a method like this: b.callDoItOnC(); // a constructor call, not a method call. D d = new D(); // this method call is ok, because we have create the new // instance of D locally. d.doSomethingElse();  } }</code></pre></li></ul>
+<p><pre><code class="language-java"> public class Foo {
+     /**
+      * This example will result in one violation.
+      */
+     public void example(Bar b) { // b has degree 1
+         // `b.getC()` has degree 2, it&#39;s breaking a boundary of abstraction and so is reported.
+         b.getC().doIt();
+         // To respect the law of Demeter, Bar should encapsulate its
+         // C member more properly, eg by exposing a method like this:
+         b.callDoItOnC();
+ 
+         // a constructor call, not a method call.
+         D d = new D();
+         // this method call is ok, because we have create the new
+         // instance of D locally.
+         d.doSomethingElse();
+     }
+ }</code></pre></p>
 <p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#lawofdemeter">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
@@ -5852,11 +5888,11 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <description><![CDATA[<p>Detects casts which could be removed as the operand of the cast is already suitable
 for the context type. For instance, in the following:
 <pre><code> Object context = (Comparable) &quot;o&quot;;</code></pre>
-The cast is unnecessary. This is because `String` already is a subtype of both
-`Comparable` and `Object`.</p>
+The cast is unnecessary. This is because <code>String</code> already is a subtype of both
+<code>Comparable</code> and <code>Object</code>.</p>
 <p>This will also flag casts that can be avoided because of the autoboxing feature of Java 5.
 <pre><code> Integer integer = (Integer) 1;</code></pre>
-The literal would be autoboxed to `Integer` anyway.</p>
+The literal would be autoboxed to <code>Integer</code> anyway.</p>
 <h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> import java.util.function.Function;
@@ -5888,7 +5924,17 @@ The literal would be autoboxed to `Integer` anyway.</p>
     }
  }</code></pre></p>
 <h3>Example 2</h3>
-<p><ul><li>were not generic. This rule may hence be useful when converting from using a raw</li><li>type like <code>List</code> to a parameterized type like <code>List&lt;String&gt;</code>.  */ List&lt;String&gt; stringList = Arrays.asList(&quot;a&quot;, &quot;b&quot;); String element = (String) stringList.get(0); // this cast is unnecessary  } }</code></pre></li></ul></p>
+<p><pre><code class="language-java"> import java.util.*;
+ class SomeClass {
+    static {
+        /* Casts involving access to collections were common before Java 5, because collections
+         * were not generic. This rule may hence be useful when converting from using a raw
+         * type like `List` to a parameterized type like `List&lt;String&gt;`.
+         */
+        List&lt;String&gt; stringList = Arrays.asList(&quot;a&quot;, &quot;b&quot;);
+        String element = (String) stringList.get(0); // this cast is unnecessary
+    }
+ }</code></pre></p>
 <p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessarycast">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
@@ -6979,7 +7025,8 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
             rules. Parentheses whose removal would not change the relative nesting of operators
             are unnecessary, because they don't change the semantics of the enclosing expression.</p>
 <p>Some parentheses that strictly speaking are unnecessary, may still be considered usefulfor readability. This rule allows to ignore violations on two kinds of unnecessary parentheses:<ul><li>"Clarifying" parentheses, which separate operators of difference precedence. While unnecessary, they make precedence rules explicit, which may be useful for rarely used operators. For example: <pre><code class="language-java"> (a + b) &amp; c // is equivalent to `a + b &amp; c`, but probably clearer</code></pre> Unset the property <code>ignoreClarifying</code> to report them.</li></ul>
-<ul><li>"Balancing" parentheses, which are unnecessary but visually balance out another pair of parentheses around an equality operator. For example, those two expressions are equivalent: <pre><code class="language-java"> (a == null) != (b == null) a == null != (b == null)</code></pre> The parentheses on the right are required, and the parentheses on the left are just more visually pleasing. Unset the property <code>ignoreBalancing</code> to report them.</li></ul>
+<ul><li>"Balancing" parentheses, which are unnecessary but visually balance out another pair of parentheses around an equality operator. For example, those two expressions are equivalent: <pre><code class="language-java"> (a == null) != (b == null)
+                 a == null != (b == null)</code></pre> The parentheses on the right are required, and the parentheses on the left are just more visually pleasing. Unset the property <code>ignoreBalancing</code> to report them.</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      {

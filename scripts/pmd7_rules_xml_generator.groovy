@@ -94,18 +94,18 @@ class MdToHtmlConverter {
         // Handle sections with special patterns
         result = handleSections(result)
 
-        // First extract and preserve all <pre> blocks
+        // Extract and preserve all <pre> blocks before any processing
+        // We'll restore them at the very end
         List<String> preBlocks = new ArrayList<>()
         result = extractPreBlocks(result, preBlocks)
+
+        // Replace any remaining <pre> tags with special markers that won't be processed
+        result = result.replace("<pre>", "PRE_TAG_START")
+        result = result.replace("</pre>", "PRE_TAG_END")
 
         // Now split into paragraphs
         String[] paragraphs = PARAGRAPH_SPLITTER_PATTERN.split(result)
         List<String> htmlParagraphs = []
-
-        // Restore <pre> blocks by their placeholders
-        for (int i = 0; i < paragraphs.length; i++) {
-            paragraphs[i] = restorePreBlocks(paragraphs[i], preBlocks)
-        }
 
         // First pass: identify consecutive list items and convert them directly
         List<String> processedParagraphs = new ArrayList<>()
@@ -208,21 +208,28 @@ class MdToHtmlConverter {
         // Second pass: process the paragraphs normally
         processedParagraphs.each { paragraph ->
             if (!paragraph.isEmpty()) {
-                // Check for headers first
-                String[] lines = paragraph.split('\n')
-                if (lines.length > 0 && HEADER_PATTERN.matcher(lines[0]).matches()) {
-                    htmlParagraphs.add(convertHeader(paragraph))
-                } else if (ORDERED_LIST_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
-                    htmlParagraphs.add(convertParagraphWithOrderedList(paragraph))
-                } else if (containsUnorderedListItems(lines)) {
-                    // If the paragraph contains unordered list items but doesn't match the unordered list pattern
-                    // (e.g., it starts with a regular paragraph and then has list items)
-                    // Split it into a paragraph and a list
-                    htmlParagraphs.add(convertParagraphWithUnorderedList(paragraph))
-                } else if (SECTION_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
-                    htmlParagraphs.add(convertSection(paragraph))
+                // Check if this paragraph contains a <pre> block
+                if (paragraph.contains("<pre>")) {
+                    // Process the paragraph specially to preserve <pre> blocks
+                    htmlParagraphs.add(processPreBlockParagraph(paragraph))
                 } else {
-                    htmlParagraphs.add("<p>${formatInlineElements(paragraph)}</p>")
+                    // Check for headers first
+                    String[] lines = paragraph.split('\n')
+                    if (lines.length > 0 && HEADER_PATTERN.matcher(lines[0]).matches()) {
+                        htmlParagraphs.add(convertHeader(paragraph))
+                    } else if (ORDERED_LIST_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
+                        htmlParagraphs.add(convertParagraphWithOrderedList(paragraph))
+                    } else if (containsUnorderedListItems(lines)) {
+                        // If the paragraph contains unordered list items but doesn't match the unordered list pattern
+                        // (e.g., it starts with a regular paragraph and then has list items)
+                        // Split it into a paragraph and a list
+                        // Note: this is only reached in two rules in pmd java...
+                        htmlParagraphs.add(convertParagraphWithUnorderedList(paragraph))
+                    } else if (SECTION_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
+                        htmlParagraphs.add(convertSection(paragraph))
+                    } else {
+                        htmlParagraphs.add("<p>${formatInlineElements(paragraph)}</p>")
+                    }
                 }
             }
         }
@@ -230,6 +237,16 @@ class MdToHtmlConverter {
         // Join paragraphs with newlines instead of directly concatenating them
         // This helps prevent </p><p> issues in code examples
         String html = htmlParagraphs.join("\n")
+
+        // Now restore the <pre> blocks
+        for (int i = 0; i < preBlocks.size(); i++) {
+            html = html.replace("PRE_BLOCK_" + i + "_PLACEHOLDER", preBlocks.get(i))
+        }
+
+        // Restore any remaining <pre> tags
+        html = html.replace("PRE_TAG_START", "<pre>")
+        html = html.replace("PRE_TAG_END", "</pre>")
+
         return html
     }
 
@@ -635,12 +652,59 @@ class MdToHtmlConverter {
 
         while (matcher.find()) {
             String preBlock = matcher.group(0)
+            // Store the original pre block
             preBlocks.add(preBlock)
             // Replace with a placeholder that won't be split by paragraph splitter
             matcher.appendReplacement(sb, "PRE_BLOCK_" + (preBlocks.size() - 1) + "_PLACEHOLDER")
         }
         matcher.appendTail(sb)
         return sb.toString()
+    }
+
+    // Process a paragraph that contains <pre> blocks
+    private static String processPreBlockParagraph(String paragraph) {
+        // Extract all <pre> blocks from the paragraph
+        List<String> preBlocks = new ArrayList<>()
+        Pattern prePattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
+        Matcher matcher = prePattern.matcher(paragraph)
+        StringBuffer sb = new StringBuffer()
+
+        // Replace <pre> blocks with placeholders
+        int index = 0
+        while (matcher.find()) {
+            String preBlock = matcher.group(0)
+            preBlocks.add(preBlock)
+            matcher.appendReplacement(sb, "PRE_BLOCK_" + index + "_PLACEHOLDER")
+            index++
+        }
+        matcher.appendTail(sb)
+
+        // Process the text outside <pre> blocks
+        String textWithoutPre = sb.toString()
+
+        // Check if the paragraph starts with a header
+        String[] lines = textWithoutPre.split('\n')
+        if (lines.length > 0 && HEADER_PATTERN.matcher(lines[0].trim()).matches()) {
+            // Process as a header
+            String processedText = convertHeader(textWithoutPre)
+
+            // Restore <pre> blocks
+            for (int i = 0; i < preBlocks.size(); i++) {
+                processedText = processedText.replace("PRE_BLOCK_" + i + "_PLACEHOLDER", preBlocks.get(i))
+            }
+
+            return processedText
+        } else {
+            // Process as a regular paragraph
+            String processedText = "<p>" + formatInlineElements(textWithoutPre) + "</p>"
+
+            // Restore <pre> blocks
+            for (int i = 0; i < preBlocks.size(); i++) {
+                processedText = processedText.replace("PRE_BLOCK_" + i + "_PLACEHOLDER", preBlocks.get(i))
+            }
+
+            return processedText
+        }
     }
 
     // Restore <pre> blocks from placeholders
