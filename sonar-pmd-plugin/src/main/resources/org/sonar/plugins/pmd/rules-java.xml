@@ -59,7 +59,7 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
    private Inner(){}
   }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#accessorclassgeneration">pmd_rules_java_bestpractices.html#accessorclassgeneration</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -77,7 +77,7 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class OuterClass {
      private int counter;
-     /<i> package </i>/ int id;
+     /* package */ int id;
  
      public class InnerClass {
          InnerClass() {
@@ -89,7 +89,7 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
          }
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#accessormethodgeneration">pmd_rules_java_bestpractices.html#accessormethodgeneration</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -253,7 +253,7 @@ suppression methods (e.g. by using <code>@SuppressWarnings</code> annotation).</
 or <code>System.arraycopy</code> method instead.</p>
 <p>To copy only part of the array, use <code>Arrays.copyOfRange</code> or <code>System.arraycopy</code>.</p>
 <p>If you want to copy/move elements inside the _same_ array (e.g. shift the elements), use <code>System.arraycopy</code>.</p>
-<h2>Example</h2>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> class Scratch {
      void copy_a_to_b() {
@@ -324,7 +324,7 @@ Ensure that the usage is not a bug, or consider using another approach.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> // unusual use of branching statement in a loop
  for (int i = 0; i &lt; 10; i++) {
-     if (i<i>i &lt;= 25) {
+     if (i*i &lt;= 25) {
          continue;
      }
      break;
@@ -332,7 +332,7 @@ Ensure that the usage is not a bug, or consider using another approach.</p>
  
  // this makes more sense...
  for (int i = 0; i &lt; 10; i++) {
-     if (i</i>i &gt; 25) {
+     if (i*i &gt; 25) {
          break;
      }
  }</code></pre></p>
@@ -370,7 +370,7 @@ calendar calculations are needed.</p></p>
          return System.currentTimeMillis();
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#avoidcalendardatecreation">pmd_rules_java_performance.html#avoidcalendardatecreation</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -1588,7 +1588,7 @@ of the clone method doesn't need to cast the returned clone to the correct type.
      public Foo clone() { //Ok
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#clonemethodreturntypemustmatchclassname">pmd_rules_java_errorprone.html#clonemethodreturntypemustmatchclassname</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1627,11 +1627,11 @@ just remove "AutoCloseable" from the types.</p>
          } catch (IOException e) {
              // handle exception
          } finally {
-             // <b><b>TODO:</b></b> close file
+             // TODO: close file
          }
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#closeresource">pmd_rules_java_errorprone.html#closeresource</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1751,12 +1751,12 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
  
  // should be
  public class Foo {
-     /<i> default </i>/ final String stringValue = &quot;some string&quot;;
-     /<i> default </i>/ String getString() {
+     /* default */ final String stringValue = &quot;some string&quot;;
+     /* default */ String getString() {
         return stringValue;
      }
  
-     /<i> default </i>/ class NestedFoo {
+     /* default */ class NestedFoo {
      }
  }</code></pre></p>
 ]]></description>
@@ -1770,11 +1770,7 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Denotes whether javadoc (formal) comments are required (or unwanted) for specific language elements.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /*<i>
- </i>
- <i>
- </i> @author Jon Doe
- */</code></pre></p>
+<p><pre><code class="language-java"> /****<ul><li>@author Jon Doe</li> */</code></pre></ul>
 ]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
@@ -1786,22 +1782,7 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Determines whether the dimensions of non-header comments found are within the specified limits.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /*<i>
- </i>
- <i>   too many lines!
- </i>
- <i>
- </i>
- <i>
- </i>
- <i>
- </i>
- <i>
- </i>
- <i>
- </i>
- <i>
- </i>/</code></pre></p>
+<p><pre><code class="language-java"> /***<ul><li>too many lines!</li> * * * * * * * * * * * * */</code></pre></ul>
 ]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
@@ -1867,19 +1848,19 @@ in the <code>typesThatCompareByReference</code> property.</p>
             <pre><code class="language-java"> void varargs(Object... parm);</code></pre>
             and call it like so:
             <pre><code class="language-java"> varargs(new String[]{&quot;a&quot;});</code></pre>
-            it is not clear whether you intended the method to receive the value <code>new Object[]{ new String[] {"a"} }</code> or
-            just <code>new String[] {"a"}</code> (the latter happens). This confusion occurs because <code>String[]</code> is both a subtype
-            of <code>Object[]</code> and of <code>Object</code>. To clarify your intent in this case, use a cast or pass individual elements like so:
+            it is not clear whether you intended the method to receive the value `new Object[]{ new String[] {"a"} }` or
+            just `new String[] {"a"}` (the latter happens). This confusion occurs because `String[]` is both a subtype
+            of `Object[]` and of `Object`. To clarify your intent in this case, use a cast or pass individual elements like so:
             <pre><code class="language-java"> // varargs call
-             // parm will be <code>new Object[] { &quot;a&quot; }</code>
+             // parm will be `new Object[] { &quot;a&quot; }`
              varargs(&quot;a&quot;);
  
              // non-varargs call
-             // parm will be <code>new String[] { &quot;a&quot; }</code>
+             // parm will be `new String[] { &quot;a&quot; }`
              varargs((Object[]) new String[]{&quot;a&quot;});
  
              // varargs call
-             // parm will be <code>new Object[] { new String[] { &quot;a&quot; } }</code>
+             // parm will be `new Object[] { new String[] { &quot;a&quot; } }`
              varargs((Object) new String[]{&quot;a&quot;});</code></pre></p>
 <p>Another confusing case is when you pass <code>null</code> as the varargs argument. Here it is not clear whether you intended
             to pass an array with a single null element, or a null array (the latter happens). This can similarly be clarified
@@ -2135,7 +2116,7 @@ in a single method makes its behaviour hard to read and change.</p>
 <p>Cyclomatic complexity assesses the complexity of a method by counting the number of decision points in a method,
 plus one for the method entry. Decision points are places where the control flow jumps to another place in the
 program. As such, they include all control flow statements, such as <code>if</code>, <code>while</code>, <code>for</code>, and <code>case</code>. For more
-details on the calculation, see the documentation {% jdoc java::lang.java.metrics.JavaMetrics#CYCLO %}.</p>
+details on the calculation, see the documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#CYCLO"><code>CYCLO</code></a>.</p>
 <p>Generally, numbers ranging from 1-4 denote low complexity, 5-7 denote moderate complexity, 8-10 denote
 high complexity, and 11+ is very high complexity. By default, this rule reports methods with a complexity >= 10.
 Additionally, classes with many methods of moderate complexity get reported as well once the total of their
@@ -2187,16 +2168,8 @@ design.</p>
 most cases, that means moving the operations defined on the data back into the class.
 In some other cases it may make sense to remove entirely the class and move the data
 into the former client classes.</p>
-<p>The rule uses metrics to implement its detection strategy. The violation message
-gives information about the values of these metrics:
-<i> <b>WMC:</b> a class complexity measure for a class, see {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
-</i> <b>WOC:</b> a 'non-triviality' measure for a class, see {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHT_OF_CLASS %}
-<i> <b>NOPA:</b> number of public attributes, see {% jdoc java::lang.java.metrics.JavaMetrics#NUMBER_OF_PUBLIC_FIELDS %}
-</i> <b>NOAM:</b> number of public accessor methods, see {% jdoc java::lang.java.metrics.JavaMetrics#NUMBER_OF_ACCESSORS %}</p>
-<p>The rule identifies a god class by looking for classes which have all of the following properties:
-<i> High NOPA + NOAM
-</i> Low WOC
-* Low WMC</p>
+<p>The rule uses metrics to implement its detection strategy. The violation messagegives information about the values of these metrics:<ul><li><b>WMC:</b> a class complexity measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li><b>WOC:</b> a 'non-triviality' measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#WEIGHT_OF_CLASS"><code>WEIGHT_OF_CLASS</code></a></li><li><b>NOPA:</b> number of public attributes, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#NUMBER_OF_PUBLIC_FIELDS"><code>NUMBER_OF_PUBLIC_FIELDS</code></a></li><li><b>NOAM:</b> number of public accessor methods, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#NUMBER_OF_ACCESSORS"><code>NUMBER_OF_ACCESSORS</code></a></li></ul>
+<p>The rule identifies a god class by looking for classes which have all of the following properties:<ul><li>High NOPA + NOAM</li><li>Low WOC</li><li>Low WMC</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class DataClass {
  
@@ -2236,7 +2209,7 @@ gives information about the values of these metrics:
     }
    }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#defaultlabelnotlastinswitch">pmd_rules_java_bestpractices.html#defaultlabelnotlastinswitch</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -2397,7 +2370,7 @@ or code defects.
          }
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#donotthrowexceptioninfinally">pmd_rules_java_errorprone.html#donotthrowexceptioninfinally</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -2541,7 +2514,7 @@ reference points to.</p>
 or <http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html></p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
-     /<i>volatile </i>/ Object baz = null; // fix for Java5 and later: volatile
+     /*volatile */ Object baz = null; // fix for Java5 and later: volatile
      Object bar() {
          if (baz == null) { // baz may be non-null yet not fully created
              synchronized(this) {
@@ -2553,7 +2526,7 @@ or <http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html></p>
          return baz;
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#doublecheckedlocking">pmd_rules_java_multithreading.html#doublecheckedlocking</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
   </rule>
@@ -2794,7 +2767,7 @@ rather than at runtime (if at all).</p>
          };
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#exhaustiveswitchhasdefault">pmd_rules_java_bestpractices.html#exhaustiveswitchhasdefault</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -2851,7 +2824,7 @@ rather than at runtime (if at all).</p>
                                    // but you may allow it, or even require the &quot;my_&quot; prefix
  
                  final int FinalField = 1; // you may configure a different convention for final fields,
-                                           // e.g. here <b>PascalCase:</b> [A-Z][a-zA-Z0-9]*
+                                           // e.g. here PascalCase: [A-Z][a-zA-Z0-9]*
  
                  interface Interface {
                      double PI = 3.14; // interface &quot;fields&quot; use the constantPattern property
@@ -3088,15 +3061,8 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
 are very big and overly complex. They should be split apart to be more object-oriented.
 The rule uses the detection strategy described in "Object-Oriented Metrics in Practice".
 The violations are reported against the entire class.</p>
-<p>The rule uses metrics to implement its detection strategy. The violation message
-gives information about the values of these metrics:
-<i> <b>WMC:</b> a class complexity measure, see {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
-</i> <b>ATFD:</b> a measure of how much data external data the class uses, see {% jdoc java::lang.java.metrics.JavaMetrics#ACCESS_TO_FOREIGN_DATA %}
-* <b>TCC:</b> a measure of how tightly related the methods are, see {% jdoc java::lang.java.metrics.JavaMetrics#TIGHT_CLASS_COHESION %}</p>
-<p>The rule identifies a god class by looking for classes which have all of the following properties:
-<i> High WMC
-</i> High ATFD
-* Low TCC</p>
+<p>The rule uses metrics to implement its detection strategy. The violation messagegives information about the values of these metrics:<ul><li><b>WMC:</b> a class complexity measure, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li><b>ATFD:</b> a measure of how much data external data the class uses, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#ACCESS_TO_FOREIGN_DATA"><code>ACCESS_TO_FOREIGN_DATA</code></a></li><li><b>TCC:</b> a measure of how tightly related the methods are, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#TIGHT_CLASS_COHESION"><code>TIGHT_CLASS_COHESION</code></a></li></ul>
+<p>The rule identifies a god class by looking for classes which have all of the following properties:<ul><li>High WMC</li><li>High ATFD</li><li>Low TCC</li></ul>
 <p>See also the reference:</p>
 <p>Michele Lanza and Radu Marinescu. <i>Object-Oriented Metrics in <b>Practice:</b>
 Using Software Metrics to Characterize, Evaluate, and Improve the Design
@@ -3271,18 +3237,18 @@ which is reached by fallthrough, or with <code>@SuppressWarnings("fallthrough")<
 <h2>Example</h2>
 <p><pre><code class="language-java"> public void bar(int status) {
      switch(status) {
-       case <b>CANCELLED:</b>
+       case CANCELLED:
          doCancelled();
          // break; hm, should this be commented out?
-       case <b>NEW:</b>
+       case NEW:
          doNew();
          // is this really a fall-through?
          // what happens if you add another case after this one?
-       case <b>REMOVED:</b>
+       case REMOVED:
          doRemoved();
          // fallthrough - this comment just clarifies that you want a fallthrough
-       case <b>OTHER:</b> // empty case - this is interpreted as an intentional fall-through
-       case <b>ERROR:</b>
+       case OTHER: // empty case - this is interpreted as an intentional fall-through
+       case ERROR:
          doErrorHandling();
          break;
      }
@@ -3574,7 +3540,7 @@ is a good practice to limit their visibility.</p>
     <internalKey>category/java/errorprone.xml/JUnitStaticSuite</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>The suite() method in a JUnit test needs to be both public and static.</p>
-<h2>Example</h2>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> import junit.framework.*;
  
@@ -3667,11 +3633,11 @@ is a good practice to limit their visibility.</p>
     <internalKey>category/java/codestyle.xml/LambdaCanBeMethodReference</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>This rule reports lambda expressions that can be written more succinctly as a method reference. This is the case if the lambda is an expression lambda that only calls one method, passing the entire lambda parameter list in order to the method. For instance:
-            <pre><code class="language-java"> x -&gt; Foo.call(x) // can be <b>Foo:</b>:call
+            <pre><code class="language-java"> x -&gt; Foo.call(x) // can be Foo::call
                  x -&gt; call(x)     // can be this::call, if call is an instance method
                  (x, y, z) -&gt; call(x, y, z) // can be this::call
                  () -&gt; foo.get() // can be foo::get
-                 x -&gt; x.foo()    // can be <b>XType:</b>:foo (where XType is the type of x)</code></pre></p>
+                 x -&gt; x.foo()    // can be XType::foo (where XType is the type of x)</code></pre></p>
 <p>In some cases rewriting a lambda to a method reference can change the semantics of the code. For instance in <code>(x) -> someVar.call(x)</code>, the invocation of the lambda may produce a NullPointerException (NPE) if <code>someVar</code> is null. The method reference <code>someVar::call</code> will also NPE if <code>someVar</code> is null, but it will do so at the point the method reference is created, while the lambda is created without error and its NPE is only thrown if the lambda is invoked (which may be never). Code should probably not rely on this subtle semantic difference, therefore these potentially problematic lambdas are also reported by default. This behavior can be disabled by setting the property <code>ignoreIfMayNPE</code> to <code>true</code>.</p>
 <p>The property <code>ignoreIfMayNPE</code> is true by default. By default, calls whose receiver is itself a method call are ignored, because they could cause side effects. This may be changed by setting the property <code>ignoreIfReceiverIsMethod</code> to <code>false</code>.</p>
 <p>Scope limitations:
@@ -3683,8 +3649,8 @@ is a good practice to limit their visibility.</p>
              public class LambdaCanBeMethodReference {
                  static {
                      Stream.of(&quot;abc&quot;, &quot;d&quot;)
-                             .mapToInt(s -&gt; s.length()) // could be <b>String:</b>:length
-                             .reduce((x, y) -&gt; Integer.sum(x, y)) // could be <b>Integer:</b>:sum
+                             .mapToInt(s -&gt; s.length()) // could be String::length
+                             .reduce((x, y) -&gt; Integer.sum(x, y)) // could be Integer::sum
                              .getAsInt();
                  }
              }</code></pre></p>
@@ -3732,24 +3698,7 @@ of degree <code>trustRadius + 1</code> that will be reported.</p>
 <p>See also the references:</p>
 <ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><http://www.ccs.neu.edu/home/lieber/LoD.html></li><li><http://en.wikipedia.org/wiki/Law_of_Demeter></li></ul>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
-     /*<i>
-      </i> This example will result in one violation.
-      */
-     public void example(Bar b) { // b has degree 1
-         // <code>b.getC()</code> has degree 2, it&#39;s breaking a boundary of abstraction and so is reported.
-         b.getC().doIt();
-         // To respect the law of Demeter, Bar should encapsulate its
-         // C member more properly, eg by exposing a method like this:
-         b.callDoItOnC();
- 
-         // a constructor call, not a method call.
-         D d = new D();
-         // this method call is ok, because we have create the new
-         // instance of D locally.
-         d.doSomethingElse();
-     }
- }</code></pre></p>
+<p><pre><code class="language-java"> public class Foo {/**<ul><li>This example will result in one violation.</li> */ public void example(Bar b) { // b has degree 1 // <code>b.getC()</code> has degree 2, it&#39;s breaking a boundary of abstraction and so is reported. b.getC().doIt(); // To respect the law of Demeter, Bar should encapsulate its // C member more properly, eg by exposing a method like this: b.callDoItOnC(); // a constructor call, not a method call. D d = new D(); // this method call is ok, because we have create the new // instance of D locally. d.doSomethingElse(); } }</code></pre></ul>
 ]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
@@ -4128,7 +4077,7 @@ This would be confusing as it would look like a constructor.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>The null check here is misplaced. If the variable is null a <code>NullPointerException</code> will be thrown.
 Either the check is useless (the variable will never be <code>null</code>) or it is incorrect.</p>
-<h2>Example</h2>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> public class Foo {
      void bar() {
@@ -4261,19 +4210,19 @@ rule {% rule java/errorprone/AssignmentToNonFinalStatic %}.</p>
 While cyclomatic complexity counts the number of decision points in a method, NPath counts the number of
 full paths from the beginning to the end of the block of the method. That metric grows exponentially, as
 it multiplies the complexity of statements in the same block. For more details on the calculation, see the
-documentation {% jdoc java::lang.java.metrics.JavaMetrics#NPATH %}.</p>
+documentation <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#NPATH"><code>NPATH</code></a>.</p>
 <p>A threshold of 200 is generally considered the point where measures should be taken to reduce
 complexity and increase readability.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
    public static void bar() { // Ncss = 252: reported!
      boolean a, b = true;
-     try { // 2 <i> 2 + 2 = 6
+     try { // 2 * 2 + 2 = 6
        if (true) { // 2
          List buz = new ArrayList();
        }
  
-       for(int i = 0; i &lt; 19; i++) { // </i> 2
+       for(int i = 0; i &lt; 19; i++) { // * 2
          List buz = new ArrayList();
        }
      } catch(Exception e) {
@@ -4282,11 +4231,11 @@ complexity and increase readability.</p>
        }
      }
  
-     while (j++ &lt; 20) { //  <i> 2
+     while (j++ &lt; 20) { //  * 2
        List buz = new ArrayList();
      }
  
-     switch(j) { // </i> 7
+     switch(j) { // * 7
        case 1:
        case 2: break;
        case 3: j = 5; break;
@@ -4311,7 +4260,7 @@ complexity and increase readability.</p>
     <description><![CDATA[<p>This rule uses the NCSS (Non-Commenting Source Statements) metric to determine the number of lines
 of code in a class, method or constructor. NCSS ignores comments, blank lines, and only counts actual
 statements. For more details on the calculation, see the documentation
-{% jdoc java::lang.java.metrics.JavaMetrics#NCSS %}.</p>
+<a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/lang/java/metrics/JavaMetrics.html#NCSS"><code>NCSS</code></a>.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> import java.util.Collections;       // +0
  import java.io.IOException;         // +0
@@ -4377,7 +4326,7 @@ This is legal, but confusing. It is easy to mix up the case labels and the non-c
      }
    }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#noncaselabelinswitch">pmd_rules_java_errorprone.html#noncaselabelinswitch</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -4447,7 +4396,7 @@ serializable regardless of the name.</p>
            return this.someFoo;
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#nonserializableclass">pmd_rules_java_errorprone.html#nonserializableclass</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -4585,7 +4534,7 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
  
  // inefficient, the array needs to be zeroed out by the jvm before it is handed over to the toArray method
  Foo[] fooArray = foos.toArray(new Foo[foos.size()]);</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#optimizabletoarraycall">pmd_rules_java_performance.html#optimizabletoarraycall</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -4649,7 +4598,7 @@ most method and constructor invocations to be impure. See the second example.</p
 <p>Note that this rule is meant to improve code readability but is not an optimization.
 A smart JIT will not care whether the variable is declared prematurely or not, as it
 can reorder code.</p>
-<h2>Example</h2>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> public int getLength(String[] strings) {
  
@@ -4718,7 +4667,7 @@ whose name starts with <code>ignored</code>.</p>
          try{
              Integer.parseInt(&quot;a&quot;);
          } catch (Exception e) {
-             // <b>Violation:</b> this only preserves the message and not the stack trace
+             // Violation: this only preserves the message and not the stack trace
              throw new Exception(e.getMessage());
          }
      }
@@ -4841,13 +4790,13 @@ is redundant and results in a larger class file (approximately three additional 
     <severity>MINOR</severity>
     <description><![CDATA[<p>Remote Interface of a Session EJB should not have a suffix.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /<i> Poor Session suffix </i>/
+<p><pre><code class="language-java"> /* Poor Session suffix */
  public interface BadSuffixSession extends javax.ejb.EJBObject {}
  
- /<i> Poor EJB suffix </i>/
+ /* Poor EJB suffix */
  public interface BadSuffixEJB extends javax.ejb.EJBObject {}
  
- /<i> Poor Bean suffix </i>/
+ /* Poor Bean suffix */
  public interface BadSuffixBean extends javax.ejb.EJBObject {}</code></pre></p>
 ]]></description>
     <tag>pmd</tag>
@@ -5110,11 +5059,7 @@ formatting is used.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Reports ternary expression with the form <code>condition ? literalBoolean : foo</code>
 or <code>condition ? foo : literalBoolean</code>.</p>
-<p>These expressions can be simplified as follows:
-<i> <code>condition ? true : expr</code> simplifies to <code>condition || expr</code>
-</i> <code>condition ? false : expr</code> simplifies to <code>!condition && expr</code>
-<i> <code>condition ? expr : true</code> simplifies to <code>!condition || expr</code>
-</i> <code>condition ? expr : false</code> simplifies to <code>condition && expr</code></p>
+<p>These expressions can be simplified as follows:<ul><li><code>condition ? true : expr</code> simplifies to <code>condition || expr</code></li><li><code>condition ? false : expr</code> simplifies to <code>!condition && expr</code></li><li><code>condition ? expr : true</code> simplifies to <code>!condition || expr</code></li><li><code>condition ? expr : false</code> simplifies to <code>condition && expr</code></li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      public boolean test() {
@@ -5258,7 +5203,7 @@ for each call and new objects will be created for every invocation.</p>
 in every method where the field is used, it is assigned before it is first read.
 Hence, the value that the field had before the method call may not be observed,
 so it might as well not be stored in the enclosing object.</p>
-<p><b>Limitations:</b> * We can only check private fields for now.</p>
+<p><b>Limitations:</b><ul><li>We can only check private fields for now.</li><li>The rule is not aware of threading, so it may cause false positives in concurrent code.</li> Such FPs are best handled by suppression (see also the <code>ignoredAnnotations</code> property).</ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      private int x; // this will be reported
@@ -5535,7 +5480,7 @@ if-else statement to increase code readability.</p>
          }
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#toofewbranchesforswitch">pmd_rules_java_performance.html#toofewbranchesforswitch</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
     <param>
@@ -5694,7 +5639,7 @@ empty methods.</p>
          // instead
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestassertionsshouldincludemessage">pmd_rules_java_bestpractices.html#unittestassertionsshouldincludemessage</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -5725,7 +5670,7 @@ empty methods.</p>
          assertEquals(&quot;should equals false&quot;, false, myVar);
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestcontainstoomanyasserts">pmd_rules_java_bestpractices.html#unittestcontainstoomanyasserts</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -5748,7 +5693,7 @@ empty methods.</p>
        b.work();
     }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestshouldincludeassert">pmd_rules_java_bestpractices.html#unittestshouldincludeassert</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -5774,7 +5719,7 @@ as long as you are following this convention to name the methods.</p>
          good();
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestshoulduseafterannotation">pmd_rules_java_bestpractices.html#unittestshoulduseafterannotation</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -5800,7 +5745,7 @@ as long as you are following this convention to name the methods.</p>
          good();
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestshouldusebeforeannotation">pmd_rules_java_bestpractices.html#unittestshouldusebeforeannotation</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -5825,7 +5770,7 @@ as long as you are following this convention to name the methods.</p>
          doSomething();
      }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestshouldusetestannotation">pmd_rules_java_bestpractices.html#unittestshouldusetestannotation</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <param>
@@ -5949,12 +5894,12 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <description><![CDATA[<p>Detects casts which could be removed as the operand of the cast is already suitable
 for the context type. For instance, in the following:
 <pre><code> Object context = (Comparable) &quot;o&quot;;</code></pre>
-The cast is unnecessary. This is because <code>String</code> already is a subtype of both
-<code>Comparable</code> and <code>Object</code>.</p>
+The cast is unnecessary. This is because `String` already is a subtype of both
+`Comparable` and `Object`.</p>
 <p>This will also flag casts that can be avoided because of the autoboxing feature of Java 5.
 <pre><code> Integer integer = (Integer) 1;</code></pre>
-The literal would be autoboxed to <code>Integer</code> anyway.</p>
-<h2>Example</h2>
+The literal would be autoboxed to `Integer` anyway.</p>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> import java.util.function.Function;
  class SomeClass {
@@ -5981,21 +5926,11 @@ The literal would be autoboxed to <code>Integer</code> anyway.</p>
  
        // casts that give a target type to a lambda/ method ref are necessary
  
-       o = (Function&lt;Integer, String&gt;) <b>Integer:</b>:toString; // necessary (no target type)
+       o = (Function&lt;Integer, String&gt;) Integer::toString; // necessary (no target type)
     }
  }</code></pre></p>
 <h3>Example 2</h3>
-<p><pre><code class="language-java"> import java.util.<i>;
- class SomeClass {
-    static {
-        /</i> Casts involving access to collections were common before Java 5, because collections
-         <i> were not generic. This rule may hence be useful when converting from using a raw
-         </i> type like <code>List</code> to a parameterized type like <code>List&lt;String&gt;</code>.
-         */
-        List&lt;String&gt; stringList = Arrays.asList(&quot;a&quot;, &quot;b&quot;);
-        String element = (String) stringList.get(0); // this cast is unnecessary
-    }
- }</code></pre></p>
+<p><pre><code class="language-java"> import java.util.*;class SomeClass {static {/* Casts involving access to collections were common before Java 5, because collections<ul><li>were not generic. This rule may hence be useful when converting from using a raw</li><li>type like <code>List</code> to a parameterized type like <code>List&lt;String&gt;</code>.</li> */ List&lt;String&gt; stringList = Arrays.asList(&quot;a&quot;, &quot;b&quot;); String element = (String) stringList.get(0); // this cast is unnecessary } }</code></pre></ul>
 ]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
@@ -6267,9 +6202,9 @@ synchronized on block level.</p>
             out by default, in case you already have enabled those rules, but may be enabled with the property
             <code>reportUnusedVariables</code>. Variables whose name starts with <code>ignored</code> or <code>unused</code> are filtered out, as
             is standard practice for exceptions.</p>
-<p><b>Limitations:</b> * The rule currently cannot know which method calls throw exceptions, or which exceptions they throw.</p>
+<p><b>Limitations:</b><ul><li>The rule currently cannot know which method calls throw exceptions, or which exceptions they throw.</li> In the body of a try block, every method or constructor call is assumed to throw.  This may cause false-negatives. The only other language construct that is assumed to throw is the <code>throw</code> statement, in particular, things like <code>assert</code> statements, or NullPointerExceptions on dereference are ignored.<li>The rule cannot resolve assignments across constructors, when they're called with the special</li> <code>this(...)</code> syntax. This may cause false-negatives.</ul>
 <p>Both of those limitations may be partly relaxed in PMD 7.</p>
-<h2>Example</h2>
+<h2>Examples</h2>
 <h3>Example 1</h3>
 <p><pre><code class="language-java"> class A {
                  // this field initializer is redundant,
@@ -6285,7 +6220,7 @@ synchronized on block level.</p>
  
      int method(int i, int j) {
          // this initializer is redundant,
-         // it is overwritten in all branches of the <code>if</code>
+         // it is overwritten in all branches of the `if`
          int k = 0;
  
          // Both the assignments to k are unused, because k is
@@ -6312,8 +6247,8 @@ synchronized on block level.</p>
          checkSomething(++i);
  
          // That last increment is not reported unless
-         // the property <code>checkUnusedPrefixIncrement</code> is
-         // set to <code>true</code>
+         // the property `checkUnusedPrefixIncrement` is
+         // set to `true`
          // Technically it could be written (i+1), but it
          // is not very important
      }
@@ -6323,13 +6258,13 @@ synchronized on block level.</p>
 <p><pre><code class="language-java"> class C {
  
      // variables that are truly unused (at most assigned to, but never accessed)
-     // are only reported if property <code>reportUnusedVariables</code> is true
+     // are only reported if property `reportUnusedVariables` is true
  
      void method(int param) { } // for example this method parameter
  
      // even then, you can suppress the violation with an annotation:
  
-     void method(@SuppressWarning(&quot;unused&quot;) int param) { } // no violation, even if <code>reportUnusedVariables</code> is true
+     void method(@SuppressWarning(&quot;unused&quot;) int param) { } // no violation, even if `reportUnusedVariables` is true
  
      // For catch parameters, or for resources which don&#39;t need to be used explicitly,
      // you can give a name that starts with &quot;ignored&quot; to ignore such warnings
@@ -6339,7 +6274,7 @@ synchronized on block level.</p>
              // even if ignored is unused, it won&#39;t be flagged
              // its purpose might be to side-effect in the create/close routines
  
-         } catch (Exception e) { // this is unused and will cause a warning if <code>reportUnusedVariables</code> is true
+         } catch (Exception e) { // this is unused and will cause a warning if `reportUnusedVariables` is true
              // you should choose a name that starts with &quot;ignored&quot;
              return;
          }
@@ -6724,7 +6659,7 @@ and buffering.</p>
          return fileItem.getInputStream();
     }
  }</code></pre></p>
-<p><b>More information:</b> <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#useiostreamswithapachecommonsfileitem">pmd_rules_java_performance.html#useiostreamswithapachecommonsfileitem</a></p></p>]]></description>
+]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -7098,21 +7033,21 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
             - "Clarifying" parentheses, which separate operators of difference precedence. While
             unnecessary, they make precedence rules explicit, which may be useful for rarely used
             operators. For example:
-            <pre><code class="language-java"> (a + b) &amp; c // is equivalent to <code>a + b &amp; c</code>, but probably clearer</code></pre>
-            Unset the property <code>ignoreClarifying</code> to report them.</p>
+            <pre><code class="language-java"> (a + b) &amp; c // is equivalent to `a + b &amp; c`, but probably clearer</code></pre>
+            Unset the property `ignoreClarifying` to report them.</p>
 <p>- "Balancing" parentheses, which are unnecessary but visually balance out another pair
             of parentheses around an equality operator. For example, those two expressions are equivalent:
             <pre><code class="language-java"> (a == null) != (b == null)
                  a == null != (b == null)</code></pre>
             The parentheses on the right are required, and the parentheses on the left are
-            just more visually pleasing. Unset the property <code>ignoreBalancing</code> to report them.</p>
+            just more visually pleasing. Unset the property `ignoreBalancing` to report them.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      {
          int n = 0;
          n = (n);         // here
-         n = (n <i> 2) </i> 3; // and here
-         n = n <i> (2 </i> 3); // and here
+         n = (n * 2) * 3; // and here
+         n = n * (2 * 3); // and here
      }
  }</code></pre></p>
 ]]></description>

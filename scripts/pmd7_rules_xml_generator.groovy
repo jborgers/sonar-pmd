@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 import java.util.regex.Matcher
 
 // Configuration
-def pmdVersion = "7.15.0"
+def pmdVersion = MdToHtmlConverter.PMD_VERSION
 def pmdJavaJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
 def pmdKotlinJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
@@ -33,14 +33,16 @@ println "Kotlin output file: ${kotlinOutputFilePath}"
  * Converts Markdown text to HTML format supporting PMD rule documentation patterns
  */
 class MdToHtmlConverter {
+    static final PMD_VERSION = "7.15.0"
+
     // Regex patterns (simplified Groovy version)
     // Simple paragraph splitter - we use extractPreBlocks and restorePreBlocks to handle <pre> tags
     static final Pattern PARAGRAPH_SPLITTER_PATTERN = ~/\n\s*\n/
     static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*1\...*/
-    static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*\*.*/
+    static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)[\s\t]*\*.*/
     static final Pattern SECTION_PARAGRAPH_PATTERN = ~/(?s)\s*[A-Za-z]+:\s*.*/
     static final Pattern LIST_ITEM_PATTERN = ~/(\d+)\.(\s+)(.*)/
-    static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/\*(\s+)(.*)/
+    static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/[\s\t]*\*(\s+)(.*)/
     static final Pattern TITLE_PATTERN = ~/([A-Z][A-Za-z]+):(\s*)(.*)/
     static final Pattern INLINE_TITLE_PATTERN = ~/\b([A-Z][A-Za-z]+):(\s*)/
     static final Pattern CODE_BLOCK_PATTERN = ~/`([^`]+)`/
@@ -54,6 +56,9 @@ class MdToHtmlConverter {
     static final Pattern ITALIC_NOTE_PATTERN = ~/_Note:_/
     static final Pattern MARKDOWN_LINK_PATTERN = ~/\[([^\]]+)\]\(([^)]+)\)/
     static final Pattern PMD_RULE_LINK_PATTERN = ~/\[([^\]]+)\]\((pmd_rules_[^.]+\.html[^)]*)\)/
+    // {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
+    static final Pattern JDOC_REFERENCE_PATTERN = ~/\{\%\s*jdoc\s+([\w-]+)::([\w.#]+)\s*\%\}/
+    static final String jdocLink = "https://docs.pmd-code.org/apidocs/pmd-java/${PMD_VERSION}/"
 
     /**
      * Escapes special regex replacement characters
@@ -103,8 +108,11 @@ class MdToHtmlConverter {
                     htmlParagraphs.add(convertHeader(paragraph))
                 } else if (ORDERED_LIST_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
                     htmlParagraphs.add(convertParagraphWithOrderedList(paragraph))
-                } else if (UNORDERED_LIST_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
-                    htmlParagraphs.add(convertUnorderedList(paragraph))
+                } else if (containsUnorderedListItems(lines)) {
+                    // If the paragraph contains unordered list items but doesn't match the unordered list pattern
+                    // (e.g., it starts with a regular paragraph and then has list items)
+                    // Split it into a paragraph and a list
+                    htmlParagraphs.add(convertParagraphWithUnorderedList(paragraph))
                 } else if (SECTION_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
                     htmlParagraphs.add(convertSection(paragraph))
                 } else {
@@ -226,13 +234,70 @@ class MdToHtmlConverter {
         return result.toString()
     }
 
+    private static boolean containsUnorderedListItems(String[] lines) {
+        for (String line : lines) {
+            if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private static String convertParagraphWithUnorderedList(String paragraphText) {
+        String[] lines = paragraphText.split('\n')
+        StringBuilder result = new StringBuilder()
+        boolean inList = false
+        boolean paragraphStarted = false
+
+        for (String line : lines) {
+            if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
+                // If we were in a paragraph, close it before starting the list
+                if (paragraphStarted && !inList) {
+                    paragraphStarted = false
+                }
+
+                // Start the list if not already in one
+                if (!inList) {
+                    result.append("<ul>")
+                    inList = true
+                }
+
+                // Add the list item
+                def matcher = UNORDERED_LIST_ITEM_PATTERN.matcher(line)
+                if (matcher.find()) {
+                    result.append("<li>${formatInlineElements(matcher.group(2))}</li>")
+                }
+            } else if (line.trim() && inList) {
+                // Continuation of previous list item - add space but no line break
+                result.append(" ${formatInlineElements(line.trim())}")
+            } else if (line.trim()) {
+                // Regular paragraph text
+                if (!paragraphStarted) {
+                    result.append("<p>")
+                    paragraphStarted = true
+                }
+                result.append(formatInlineElements(line.trim()))
+            }
+        }
+
+        // Close any open tags
+        if (inList) {
+            result.append("</ul>")
+        }
+        if (paragraphStarted) {
+            result.append("</p>")
+        }
+
+        return result.toString()
+    }
+
     private static String convertUnorderedList(String listText) {
         String[] lines = listText.split('\n')
         StringBuilder result = new StringBuilder()
         boolean inList = false
 
         lines.each { line ->
-            line = line.trim()
+            // Don't trim the line to preserve indentation
             if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
                 if (!inList) {
                     result.append("<ul>")
@@ -242,9 +307,9 @@ class MdToHtmlConverter {
                 if (matcher.find()) {
                     result.append("<li>${formatInlineElements(matcher.group(2))}</li>")
                 }
-            } else if (line && inList) {
+            } else if (line.trim() && inList) {
                 // Continuation of previous list item - add space but no line break
-                result.append(" ${formatInlineElements(line)}")
+                result.append(" ${formatInlineElements(line.trim())}")
             }
         }
 
@@ -268,6 +333,67 @@ class MdToHtmlConverter {
     private static String formatInlineElements(String text) {
         if (!text) return ""
 
+        // Skip formatting for content inside <pre> tags
+        // We'll handle this by using a non-recursive approach to avoid infinite recursion
+        if (text.contains("<pre>")) {
+            // Use a regex to split the text into parts inside and outside <pre> tags
+            // This regex captures everything between <pre> and </pre> tags (including the tags)
+            Pattern prePattern = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL)
+            Matcher matcher = prePattern.matcher(text)
+            StringBuffer sb = new StringBuffer()
+
+            while (matcher.find()) {
+                // Get the <pre> block (including tags)
+                String preBlock = matcher.group(1)
+
+                // Replace the <pre> block with a placeholder
+                matcher.appendReplacement(sb, Matcher.quoteReplacement("PRE_BLOCK_PLACEHOLDER"))
+
+                // Store the <pre> block
+                sb.append("PRE_BLOCK_START")
+                sb.append(preBlock)
+                sb.append("PRE_BLOCK_END")
+            }
+            matcher.appendTail(sb)
+
+            // Now format the text outside <pre> tags
+            String processedText = sb.toString()
+            String[] parts = processedText.split("PRE_BLOCK_PLACEHOLDER")
+
+            // Format each part outside <pre> tags
+            for (int i = 0; i < parts.length; i++) {
+                if (!parts[i].contains("PRE_BLOCK_START")) {
+                    // This part doesn't contain a <pre> block, so format it
+                    parts[i] = formatTextWithoutPre(parts[i])
+                }
+            }
+
+            // Join the parts back together
+            processedText = String.join("", parts)
+
+            // Now extract the <pre> blocks and restore them
+            Pattern blockPattern = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL)
+            Matcher blockMatcher = blockPattern.matcher(processedText)
+            StringBuffer result = new StringBuffer()
+
+            while (blockMatcher.find()) {
+                // Get the <pre> block
+                String preBlock = blockMatcher.group(1)
+
+                // Replace the placeholder with the <pre> block
+                blockMatcher.appendReplacement(result, Matcher.quoteReplacement(preBlock))
+            }
+            blockMatcher.appendTail(result)
+
+            return result.toString()
+        }
+
+        return formatTextWithoutPre(text)
+    }
+
+    private static String formatTextWithoutPre(String text) {
+        if (!text) return ""
+
         String result = text
 
         // Format inline code blocks
@@ -275,6 +401,12 @@ class MdToHtmlConverter {
 
         // Format rule references
         result = RULE_REFERENCE_PATTERN.matcher(result).replaceAll(escapeReplacement('<code>') + '$1' + escapeReplacement('</code>'))
+
+        // Format jdoc references
+        // <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a>
+        result = JDOC_REFERENCE_PATTERN.matcher(result).replaceAll { match ->
+            return createJdocReference(match)
+        }
 
         // Format inline titles (like "Problem:" in the middle of text)
         result = INLINE_TITLE_PATTERN.matcher(result).replaceAll(escapeReplacement('<b>') + '$1' + escapeReplacement(':</b>') + '$2')
@@ -286,6 +418,37 @@ class MdToHtmlConverter {
         // DON'T convert all newlines to <br/> - only paragraph breaks are handled by the paragraph splitter
 
         return result
+    }
+
+    private static String createJdocReference(Matcher match) {
+        String language = match.group(1)
+        String fullyQualifiedName = match.group(2)
+
+        // Extract the class name and field/method reference
+        String className = fullyQualifiedName
+        String memberName = ""
+
+        // Check if there's a hash symbol indicating a member reference
+        int hashIndex = fullyQualifiedName.indexOf('#')
+        if (hashIndex > 0) {
+            className = fullyQualifiedName.substring(0, hashIndex)
+            memberName = fullyQualifiedName.substring(hashIndex + 1)
+        }
+
+        // Convert dots to slashes for URL path
+        String urlPath = className.replace('.', '/')
+
+        // Build the full URL
+        String url = "${jdocLink}${urlPath}.html"
+        if (!memberName.isEmpty()) {
+            url += "#${memberName}"
+        }
+
+        // Use just the member name or the last part of the class name for display
+        String displayText = !memberName.isEmpty() ? memberName : className.substring(className.lastIndexOf('.') + 1)
+
+        String replacement = "<a href=\"${url}\"><code>${displayText}</code></a>"
+        return escapeReplacement(replacement)
     }
 
     private static String escapeHtml(String text) {
