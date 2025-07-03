@@ -50,6 +50,7 @@ class MdToHtmlConverter {
     static final Pattern SECTION_PARAGRAPH_PATTERN = ~/(?s)\s*[A-Za-z]+:\s*.*/
     static final Pattern LIST_ITEM_PATTERN = ~/(\d+)\.(\s+)(.*)/
     static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/[\s\t]*[\*\-](\s+)(.*)/
+    static final Pattern LIST_ITEM_CONTINUATION_PATTERN = ~/^[\s\t]{2,}([^\*\-].+)$/
     static final Pattern TITLE_PATTERN = ~/([A-Z][A-Za-z]+):(\s*)(.*)/
     static final Pattern INLINE_TITLE_PATTERN = ~/\b([A-Z][A-Za-z]+):(\s*)/
     static final Pattern CODE_BLOCK_PATTERN = ~/`([^`]+)`/
@@ -106,8 +107,106 @@ class MdToHtmlConverter {
             paragraphs[i] = restorePreBlocks(paragraphs[i], preBlocks)
         }
 
-        paragraphs.each { paragraph ->
-            paragraph = paragraph.trim()
+        // First pass: identify consecutive list items and convert them directly
+        List<String> processedParagraphs = new ArrayList<>()
+        List<String> currentListItems = new ArrayList<>()
+        boolean inList = false
+
+        for (int i = 0; i < paragraphs.length; i++) {
+            String paragraph = paragraphs[i].trim()
+            if (!paragraph.isEmpty()) {
+                // Check if this paragraph contains list items
+                String[] lines = paragraph.split('\n')
+
+                // Count how many lines are list items
+                int listItemCount = 0
+                for (String line : lines) {
+                    if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
+                        listItemCount++
+                    }
+                }
+
+                // If all lines are list items, or if there are multiple list items,
+                // treat this paragraph as a list
+                if (listItemCount > 0 && (listItemCount == lines.length || listItemCount >= 2)) {
+                    // This paragraph contains list items
+                    if (!inList) {
+                        // Start a new list
+                        currentListItems = new ArrayList<>()
+                        inList = true
+                    }
+
+                    // Extract the content of each list item
+                    StringBuilder currentItem = null
+                    for (String line : lines) {
+                        def matcher = UNORDERED_LIST_ITEM_PATTERN.matcher(line)
+                        if (matcher.matches()) {
+                            // If we have a current item, add it to the list
+                            if (currentItem != null) {
+                                currentListItems.add(currentItem.toString())
+                            }
+                            // Start a new item
+                            currentItem = new StringBuilder(formatInlineElements(matcher.group(2)))
+                        } else if (line.trim() && currentItem != null) {
+                            // Check if this is a continuation line
+                            def continuationMatcher = LIST_ITEM_CONTINUATION_PATTERN.matcher(line)
+                            if (continuationMatcher.matches()) {
+                                // This is an indented continuation line
+                                currentItem.append(" ")
+                                currentItem.append(formatInlineElements(continuationMatcher.group(1)))
+                            } else {
+                                // Regular continuation line
+                                currentItem.append(" ")
+                                currentItem.append(formatInlineElements(line.trim()))
+                            }
+                        }
+                    }
+                    // Add the last item if we have one
+                    if (currentItem != null) {
+                        currentListItems.add(currentItem.toString())
+                    }
+                } else {
+                    // Not a single-line list item
+                    if (inList) {
+                        // End the current list and add it to processed paragraphs as HTML
+                        StringBuilder listHtml = new StringBuilder("<ul>")
+                        currentListItems.each { item ->
+                            listHtml.append("<li>").append(item).append("</li>")
+                        }
+                        listHtml.append("</ul>")
+                        processedParagraphs.add(listHtml.toString())
+                        inList = false
+                    }
+                    // Add this paragraph as is
+                    processedParagraphs.add(paragraph)
+                }
+            } else {
+                // Empty paragraph
+                if (inList) {
+                    // End the current list and add it to processed paragraphs as HTML
+                    StringBuilder listHtml = new StringBuilder("<ul>")
+                    currentListItems.each { item ->
+                        listHtml.append("<li>").append(item).append("</li>")
+                    }
+                    listHtml.append("</ul>")
+                    processedParagraphs.add(listHtml.toString())
+                    inList = false
+                }
+            }
+        }
+
+        // If we're still in a list at the end, add it
+        if (inList) {
+            StringBuilder listHtml = new StringBuilder("<ul>")
+            currentListItems.each { item ->
+                listHtml.append("<li>").append(item).append("</li>")
+            }
+            listHtml.append("</ul>")
+            processedParagraphs.add(listHtml.toString())
+        }
+
+        // Second pass: process the paragraphs normally
+        processedParagraphs.each { paragraph ->
             if (!paragraph.isEmpty()) {
                 // Check for headers first
                 String[] lines = paragraph.split('\n')
@@ -262,6 +361,8 @@ class MdToHtmlConverter {
         StringBuilder result = new StringBuilder()
         boolean inList = false
         boolean paragraphStarted = false
+        boolean inListItem = false
+        StringBuilder currentListItem = new StringBuilder()
 
         for (String line : lines) {
             if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
@@ -270,20 +371,39 @@ class MdToHtmlConverter {
                     paragraphStarted = false
                 }
 
+                // If we were in a list item, close it before starting a new one
+                if (inListItem) {
+                    result.append("<li>${currentListItem.toString()}</li>")
+                    currentListItem = new StringBuilder()
+                }
+
                 // Start the list if not already in one
                 if (!inList) {
                     result.append("<ul>")
                     inList = true
                 }
 
-                // Add the list item
+                // Start a new list item
                 def matcher = UNORDERED_LIST_ITEM_PATTERN.matcher(line)
                 if (matcher.find()) {
-                    result.append("<li>${formatInlineElements(matcher.group(2))}</li>")
+                    currentListItem.append(formatInlineElements(matcher.group(2)))
+                    inListItem = true
                 }
             } else if (line.trim() && inList) {
-                // Continuation of previous list item - add space but no line break
-                result.append(" ${formatInlineElements(line.trim())}")
+                // Check if this is a continuation line (indented but not starting with * or -)
+                def continuationMatcher = LIST_ITEM_CONTINUATION_PATTERN.matcher(line)
+                if (continuationMatcher.matches()) {
+                    // This is an indented continuation line
+                    if (inListItem) {
+                        // Just add a space and the continuation text
+                        currentListItem.append(" ")
+                        currentListItem.append(formatInlineElements(continuationMatcher.group(1)))
+                    }
+                } else if (inListItem) {
+                    // Regular continuation line
+                    currentListItem.append(" ")
+                    currentListItem.append(formatInlineElements(line.trim()))
+                }
             } else if (line.trim()) {
                 // Regular paragraph text
                 if (!paragraphStarted) {
@@ -292,6 +412,11 @@ class MdToHtmlConverter {
                 }
                 result.append(formatInlineElements(line.trim()))
             }
+        }
+
+        // Close the last list item if we're still in one
+        if (inListItem) {
+            result.append("<li>${currentListItem.toString()}</li>")
         }
 
         // Close any open tags
@@ -309,22 +434,49 @@ class MdToHtmlConverter {
         String[] lines = listText.split('\n')
         StringBuilder result = new StringBuilder()
         boolean inList = false
+        boolean inListItem = false
+        StringBuilder currentListItem = new StringBuilder()
 
         lines.each { line ->
             // Don't trim the line to preserve indentation
             if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
+                // If we were in a list item, close it before starting a new one
+                if (inListItem) {
+                    result.append("<li>${currentListItem.toString()}</li>")
+                    currentListItem = new StringBuilder()
+                }
+
                 if (!inList) {
                     result.append("<ul>")
                     inList = true
                 }
+
                 def matcher = UNORDERED_LIST_ITEM_PATTERN.matcher(line)
                 if (matcher.find()) {
-                    result.append("<li>${formatInlineElements(matcher.group(2))}</li>")
+                    currentListItem.append(formatInlineElements(matcher.group(2)))
+                    inListItem = true
                 }
             } else if (line.trim() && inList) {
-                // Continuation of previous list item - add space but no line break
-                result.append(" ${formatInlineElements(line.trim())}")
+                // Check if this is a continuation line (indented but not starting with * or -)
+                def continuationMatcher = LIST_ITEM_CONTINUATION_PATTERN.matcher(line)
+                if (continuationMatcher.matches()) {
+                    // This is an indented continuation line
+                    if (inListItem) {
+                        // Just add a space and the continuation text
+                        currentListItem.append(" ")
+                        currentListItem.append(formatInlineElements(continuationMatcher.group(1)))
+                    }
+                } else if (inListItem) {
+                    // Regular continuation line
+                    currentListItem.append(" ")
+                    currentListItem.append(formatInlineElements(line.trim()))
+                }
             }
+        }
+
+        // Close the last list item if we're still in one
+        if (inListItem) {
+            result.append("<li>${currentListItem.toString()}</li>")
         }
 
         if (inList) {
