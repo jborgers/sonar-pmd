@@ -8,8 +8,8 @@ import java.util.regex.Matcher
 
 // Configuration
 def pmdVersion = MdToHtmlConverter.PMD_VERSION
-def pmdJavaJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
-def pmdKotlinJarPath = System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
+def pmdJavaJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
+def pmdKotlinJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 
@@ -46,13 +46,10 @@ class MdToHtmlConverter {
     // Simple paragraph splitter - we use extractPreBlocks and restorePreBlocks to handle <pre> tags
     static final Pattern PARAGRAPH_SPLITTER_PATTERN = ~/\n\s*\n/
     static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*1\...*/
-    static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)[\s\t]*[\*\-].*/
-    static final Pattern SECTION_PARAGRAPH_PATTERN = ~/(?s)\s*[A-Za-z]+:\s*.*/
     static final Pattern LIST_ITEM_PATTERN = ~/(\d+)\.(\s+)(.*)/
     static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/[\s\t]*[\*\-](\s+)(.*)/
     static final Pattern LIST_ITEM_CONTINUATION_PATTERN = ~/^[\s\t]{2,}([^\*\-].+)$/
     static final Pattern TITLE_PATTERN = ~/([A-Z][A-Za-z]+):(\s*)(.*)/
-    static final Pattern INLINE_TITLE_PATTERN = ~/\b([A-Z][A-Za-z]+):(\s*)/
     static final Pattern CODE_BLOCK_PATTERN = ~/`([^`]+)`/
     static final Pattern RULE_REFERENCE_PATTERN = ~/\{\%\s*rule\s*"([^"]+)"\s*\%\}/
     static final Pattern SECTION_PATTERN = ~/(?s)(Problem|Solution|Note|Notes|Exceptions):(.*?)(?=\s+(Problem|Solution|Note|Notes|Exceptions):|$)/
@@ -225,8 +222,6 @@ class MdToHtmlConverter {
                         // Split it into a paragraph and a list
                         // Note: this is only reached in two rules in pmd java...
                         htmlParagraphs.add(convertParagraphWithUnorderedList(paragraph))
-                    } else if (SECTION_PARAGRAPH_PATTERN.matcher(paragraph).matches()) {
-                        htmlParagraphs.add(convertSection(paragraph))
                     } else {
                         htmlParagraphs.add("<p>${formatInlineElements(paragraph)}</p>")
                     }
@@ -275,64 +270,106 @@ class MdToHtmlConverter {
     private static String handleSpecialPatterns(String text) {
         String result = text
 
-        // Handle _Note:_ pattern
-        result = ITALIC_NOTE_PATTERN.matcher(result).replaceAll(escapeReplacement('<b>Note:</b>'))
+        result = handleNoteItalicsPattern(result)
 
-        // Handle PMD rule links first (more specific)
-        result = PMD_RULE_LINK_PATTERN.matcher(result).replaceAll { match ->
-            String linkText = match.group(1)
-            String href = match.group(2)
-            String fullUrl = "https://pmd.github.io/pmd/${href}".toString()
-            String replacement = "<a href=\"${fullUrl}\">${linkText}</a>".toString()
-            return escapeReplacement(replacement)
-        }
+        result = handlePmdRuleLinkPattern(result)
 
-        // Handle general markdown links
-        result = MARKDOWN_LINK_PATTERN.matcher(result).replaceAll { match ->
-            String linkText = match.group(1)
-            String href = match.group(2)
-            String replacement = "<a href=\"${href}\">${linkText}</a>".toString()
-            return escapeReplacement(replacement)
-        }
+        result = handleMarkdownLinkPattern(result)
 
-        // Handle URL tags like <http://example.com>
-        result = URL_TAG_PATTERN.matcher(result).replaceAll { match ->
-            String url = match.group(1)
-            String replacement = "<a href=\"${url}\">${url}</a>".toString()
-            return escapeReplacement(replacement)
-        }
+        result = handleUrlTagPattern(result)
 
         return result
     }
 
-    private static String handleMultiLineCodeBlocks(String markdownText, Pattern pattern) {
-        return pattern.matcher(markdownText).replaceAll { match ->
-            String language = match.group(1) ?: ""
-            // Don't trim the code to preserve leading spaces
-            String code = match.group(2) ?: ""
-
-            // Add a space at the beginning of each line (including the first line)
-            // This ensures proper spacing in the HTML output for all code examples
-            code = " " + code.replaceAll(/\n/, "\n ")
-
-            // Only trim trailing whitespace
-            code = code.replaceAll(/\s+$/, "")
-            String langClass = language ? " class=\"language-${language}\"" : ""
-
-            // Directly escape HTML without introducing paragraphs
-            String replacement = "<pre><code${langClass}>${escapeHtml(code)}</code></pre>".toString()
-
-            return escapeReplacement(replacement)
+    private static String handleUrlTagPattern(String result) {
+        // Handle URL tags like <http://example.com>
+        def urlTagMatcher = URL_TAG_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (urlTagMatcher.find()) {
+            String url = urlTagMatcher.group(1)
+            String replacement = "<a href=\"${url}\">${url}</a>"
+            urlTagMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
         }
+        urlTagMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleMarkdownLinkPattern(String result) {
+        // Handle general markdown links
+        def markdownLinkMatcher = MARKDOWN_LINK_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (markdownLinkMatcher.find()) {
+            String replacement = "<a href=\"${markdownLinkMatcher.group(2)}\">${markdownLinkMatcher.group(1)}</a>"
+            markdownLinkMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        markdownLinkMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handlePmdRuleLinkPattern(String result) {
+        // Handle PMD rule links first (more specific)
+        def ruleLinkMatcher = PMD_RULE_LINK_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (ruleLinkMatcher.find()) {
+            String linkText = ruleLinkMatcher.group(1)
+            String href = ruleLinkMatcher.group(2)
+            String replacement = "<a href=\"https://pmd.github.io/pmd/${href}\">${linkText}</a>"
+            ruleLinkMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        ruleLinkMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleNoteItalicsPattern(String result) {
+        // Handle _Note:_ pattern
+        def noteMatcher = ITALIC_NOTE_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (noteMatcher.find()) {
+            noteMatcher.appendReplacement(sb, Matcher.quoteReplacement('<b>Note:</b>'))
+        }
+        noteMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleMultiLineCodeBlocks(String markdownText, Pattern pattern) {
+        def matcher = pattern.matcher(markdownText)
+        StringBuffer sb = new StringBuffer()
+
+        while (matcher.find()) {
+            String language = matcher.group(1) ?: ""
+            String code = matcher.group(2) ?: ""
+
+            // Format code with proper spacing and trim trailing whitespace
+            code = " " + code.replaceAll(/\n/, "\n ").replaceAll(/\s+$/, "")
+
+            // Create HTML code block with optional language class
+            String langClass = language ? " class=\"language-${language}\"" : ""
+            String html = "<pre><code${langClass}>${escapeHtml(code)}</code></pre>"
+
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(html))
+        }
+
+        matcher.appendTail(sb)
+        return sb.toString()
     }
 
     private static String handleSections(String text) {
-        return SECTION_PATTERN.matcher(text).replaceAll { match ->
-            String sectionType = match.group(1)
-            String content = match.group(2)?.trim() ?: ""
-            String replacement = "<p><b>${sectionType}:</b> ${formatInlineElements(content)}</p>".toString()
-            return escapeReplacement(replacement)
+        def matcher = SECTION_PATTERN.matcher(text)
+        StringBuffer sb = new StringBuffer()
+
+        while (matcher.find()) {
+            String sectionType = matcher.group(1)
+            String content = matcher.group(2)?.trim() ?: ""
+            String replacement = "<p><b>${sectionType}:</b> ${formatInlineElements(content)}</p>"
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
         }
+
+        matcher.appendTail(sb)
+        return sb.toString()
     }
 
     private static String convertParagraphWithOrderedList(String paragraph) {
@@ -447,16 +484,6 @@ class MdToHtmlConverter {
         return result.toString()
     }
 
-    private static String convertSection(String sectionText) {
-        def matcher = TITLE_PATTERN.matcher(sectionText)
-        if (matcher.find()) {
-            String title = matcher.group(1)
-            String content = matcher.group(3)?.trim() ?: ""
-            return "<p><b>${title}:</b> ${formatInlineElements(content)}</p>".toString()
-        }
-        return "<p>${formatInlineElements(sectionText)}</p>".toString()
-    }
-
     private static String formatInlineElements(String text) {
         if (!text) return ""
 
@@ -557,65 +584,103 @@ class MdToHtmlConverter {
 
         String result = text
 
-        // Format inline code blocks
-        result = CODE_BLOCK_PATTERN.matcher(result).replaceAll(escapeReplacement('<code>') + '$1' + escapeReplacement('</code>'))
+        result = handleCodeBlockPattern(result)
 
-        // Format rule references
-        result = RULE_REFERENCE_PATTERN.matcher(result).replaceAll(escapeReplacement('<code>') + '$1' + escapeReplacement('</code>'))
+        result = handleRuleReferencePattern(result)
 
-        // Format jdoc references
-        // <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a>
-        result = JDOC_REFERENCE_PATTERN.matcher(result).replaceAll { match ->
-            return createJdocReference(match)
-        }
+        result = handleJdocPattern(result)
 
-        // Format inline titles (like "Problem:" in the middle of text)
-        result = INLINE_TITLE_PATTERN.matcher(result).replaceAll(escapeReplacement('<b>') + '$1' + escapeReplacement(':</b>') + '$2')
+        result = handleMarkdownBoltPattern(result)
 
-        // Basic markdown formatting
-        result = result.replaceAll(/\*\*([^*]+)\*\*/, escapeReplacement('<b>') + '$1' + escapeReplacement('</b>'))  // Bold
-        result = result.replaceAll(/\*([^*]+)\*/, escapeReplacement('<i>') + '$1' + escapeReplacement('</i>'))      // Italic
-
-        // DON'T convert all newlines to <br/> - only paragraph breaks are handled by the paragraph splitter
+        result = handleMarkdownItalicsPattern(result)
 
         return result
     }
 
+    private static String handleMarkdownItalicsPattern(String result) {
+        // Basic markdown formatting - Italic
+        def italicMatcher = Pattern.compile(/\*([^*]+)\*/).matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (italicMatcher.find()) {
+            String replacement = "<i>" + escapeHtml(italicMatcher.group(1)) + "</i>"
+            italicMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        italicMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleMarkdownBoltPattern(String result) {
+        // Basic markdown formatting - Bold
+        def boldMatcher = Pattern.compile(/\*\*([^*]+)\*\*/).matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (boldMatcher.find()) {
+            String replacement = "<b>" + escapeHtml(boldMatcher.group(1)) + "</b>"
+            boldMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        boldMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleJdocPattern(String result) {
+        // Format jdoc references
+        def jdocMatcher = JDOC_REFERENCE_PATTERN.matcher(result)
+        StringBuffer sbJdoc = new StringBuffer()
+        while (jdocMatcher.find()) {
+            String replacement = createJdocReference(jdocMatcher)
+            jdocMatcher.appendReplacement(sbJdoc, Matcher.quoteReplacement(replacement))
+        }
+        jdocMatcher.appendTail(sbJdoc)
+        result = sbJdoc.toString()
+        result
+    }
+
+    private static String handleRuleReferencePattern(String result) {
+        def ruleRefMatcher = RULE_REFERENCE_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (ruleRefMatcher.find()) {
+            String replacement = "<code>" + escapeHtml(ruleRefMatcher.group(1)) + "</code>"
+            ruleRefMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        ruleRefMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
+    private static String handleCodeBlockPattern(String result) {
+        // Format inline code and rule references
+        // Use a different approach to handle the replacements
+        def codeBlockMatcher = CODE_BLOCK_PATTERN.matcher(result)
+        StringBuffer sb = new StringBuffer()
+        while (codeBlockMatcher.find()) {
+            String replacement = "<code>" + escapeHtml(codeBlockMatcher.group(1)) + "</code>"
+            codeBlockMatcher.appendReplacement(sb, Matcher.quoteReplacement(replacement))
+        }
+        codeBlockMatcher.appendTail(sb)
+        result = sb.toString()
+        result
+    }
+
     private static String createJdocReference(Matcher match) {
-        String language = match.group(1)
         String fullyQualifiedName = match.group(2)
 
-        // Extract the class name and field/method reference
-        String className = fullyQualifiedName
-        String memberName = ""
-
-        // Check if there's a hash symbol indicating a member reference
+        // Extract class name and member name if present
         int hashIndex = fullyQualifiedName.indexOf('#')
-        if (hashIndex > 0) {
-            className = fullyQualifiedName.substring(0, hashIndex)
-            memberName = fullyQualifiedName.substring(hashIndex + 1)
-        }
+        String className = hashIndex > 0 ? fullyQualifiedName.substring(0, hashIndex) : fullyQualifiedName
+        String memberName = hashIndex > 0 ? fullyQualifiedName.substring(hashIndex + 1) : ""
 
-        // Convert dots to slashes for URL path
+        // Build URL and determine display text
         String urlPath = className.replace('.', '/')
+        String url = "${jdocLink}${urlPath}.html${memberName ? "#${memberName}" : ""}"
+        String displayText = memberName ?: className.substring(className.lastIndexOf('.') + 1)
 
-        // Build the full URL
-        String url = "${jdocLink}${urlPath}.html"
-        if (!memberName.isEmpty()) {
-            url += "#${memberName}"
-        }
-
-        // Use just the member name or the last part of the class name for display
-        String displayText = !memberName.isEmpty() ? memberName : className.substring(className.lastIndexOf('.') + 1)
-
-        String replacement = "<a href=\"${url}\"><code>${displayText}</code></a>"
-        return escapeReplacement(replacement)
+        return escapeReplacement("<a href=\"${url}\"><code>${displayText}</code></a>")
     }
 
     private static String escapeHtml(String text) {
         if (!text) return ""
-        return text
-            .replace('&', '&amp;')
+        return text.replace('&', '&amp;')
             .replace('<', '&lt;')
             .replace('>', '&gt;')
             .replace('"', '&quot;')
@@ -624,90 +689,72 @@ class MdToHtmlConverter {
 
     // Extract <pre> blocks and replace them with placeholders
     private static String extractPreBlocks(String text, List<String> preBlocks) {
-        Pattern prePattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
-        Matcher matcher = prePattern.matcher(text)
-        StringBuffer sb = new StringBuffer()
+        def pattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
+        def matcher = pattern.matcher(text)
+        def sb = new StringBuffer()
 
         while (matcher.find()) {
-            String preBlock = matcher.group(0)
-            // Store the original pre block
-            preBlocks.add(preBlock)
-            // Replace with a placeholder that won't be split by paragraph splitter
-            matcher.appendReplacement(sb, "PRE_BLOCK_" + (preBlocks.size() - 1) + "_PLACEHOLDER")
+            preBlocks.add(matcher.group(0))
+            matcher.appendReplacement(sb, "PRE_BLOCK_${preBlocks.size() - 1}_PLACEHOLDER")
         }
         matcher.appendTail(sb)
-        return sb.toString()
+        sb.toString()
     }
 
     // Process a paragraph that contains <pre> blocks
     private static String processPreBlockParagraph(String paragraph) {
         // Extract all <pre> blocks from the paragraph
-        List<String> preBlocks = new ArrayList<>()
-        Pattern prePattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
-        Matcher matcher = prePattern.matcher(paragraph)
-        StringBuffer sb = new StringBuffer()
+        def preBlocks = []
+        def pattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL)
+        def matcher = pattern.matcher(paragraph)
+        def sb = new StringBuffer()
 
         // Replace <pre> blocks with placeholders
-        int index = 0
+        def index = 0
         while (matcher.find()) {
-            String preBlock = matcher.group(0)
-            preBlocks.add(preBlock)
-            matcher.appendReplacement(sb, "PRE_BLOCK_" + index + "_PLACEHOLDER")
-            index++
+            preBlocks.add(matcher.group(0))
+            matcher.appendReplacement(sb, "PRE_BLOCK_${index++}_PLACEHOLDER")
         }
         matcher.appendTail(sb)
 
         // Process the text outside <pre> blocks
-        String textWithoutPre = sb.toString()
+        def textWithoutPre = sb.toString()
+        def lines = textWithoutPre.split('\n')
 
-        // Check if the paragraph starts with a header
-        String[] lines = textWithoutPre.split('\n')
-        if (lines.length > 0 && HEADER_PATTERN.matcher(lines[0].trim()).matches()) {
-            // Process as a header
-            String processedText = convertHeader(textWithoutPre)
+        // Process as header or regular paragraph
+        def processedText = lines.length > 0 && HEADER_PATTERN.matcher(lines[0].trim()).matches() 
+            ? convertHeader(textWithoutPre)
+            : "<p>${formatInlineElements(textWithoutPre)}</p>"
 
-            // Restore <pre> blocks
-            for (int i = 0; i < preBlocks.size(); i++) {
-                processedText = processedText.replace("PRE_BLOCK_" + i + "_PLACEHOLDER", preBlocks.get(i))
-            }
-
-            return processedText
-        } else {
-            // Process as a regular paragraph
-            String processedText = "<p>" + formatInlineElements(textWithoutPre) + "</p>"
-
-            // Restore <pre> blocks
-            for (int i = 0; i < preBlocks.size(); i++) {
-                processedText = processedText.replace("PRE_BLOCK_" + i + "_PLACEHOLDER", preBlocks.get(i))
-            }
-
-            return processedText
+        // Restore <pre> blocks
+        preBlocks.eachWithIndex { block, i -> 
+            processedText = processedText.replace("PRE_BLOCK_${i}_PLACEHOLDER", block)
         }
+
+        processedText
     }
 
     // Restore <pre> blocks from placeholders
     private static String restorePreBlocks(String text, List<String> preBlocks) {
-        Pattern placeholderPattern = Pattern.compile("PRE_BLOCK_(\\d+)_PLACEHOLDER")
-        Matcher matcher = placeholderPattern.matcher(text)
-        StringBuffer sb = new StringBuffer()
+        def pattern = Pattern.compile("PRE_BLOCK_(\\d+)_PLACEHOLDER")
+        def matcher = pattern.matcher(text)
+        def sb = new StringBuffer()
 
         while (matcher.find()) {
-            int blockIndex = Integer.parseInt(matcher.group(1))
+            def blockIndex = Integer.parseInt(matcher.group(1))
             if (blockIndex < preBlocks.size()) {
-                String replacement = Matcher.quoteReplacement(preBlocks.get(blockIndex))
-                matcher.appendReplacement(sb, replacement)
+                matcher.appendReplacement(sb, Matcher.quoteReplacement(preBlocks[blockIndex]))
             }
         }
         matcher.appendTail(sb)
-        return sb.toString()
+        sb.toString()
     }
 }
 
-// Helper function to convert camelCase rule name to readable format with only first letter uppercase
+// Convert camelCase rule name to readable format with only first letter uppercase
 def camelCaseToReadable = { ruleName ->
-    def result = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-    // Capitalize only the first letter and make the rest lowercase
-    return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase()
+    def words = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
+    words[0].toUpperCase() + words[1..-1].toLowerCase()
 }
 
 // We no longer need to check for replacement placeholders since we're using camelCase for all rules
@@ -726,86 +773,60 @@ def readRulesFromJar = { jarPath, categoriesPath ->
     try {
         def zipFile = new ZipFile(jarFile)
 
-        // First, read the categories.properties to get the list of rule files
+        // Read categories.properties to get rule files
         def categoriesEntry = zipFile.getEntry(categoriesPath)
         if (categoriesEntry) {
             def categoriesProps = new Properties()
             categoriesProps.load(zipFile.getInputStream(categoriesEntry))
-
-            def rulesetFilenames = categoriesProps.getProperty("rulesets.filenames", "")
-            categoryFiles = rulesetFilenames.split(",").collect { it.trim() }
-
+            categoryFiles = categoriesProps.getProperty("rulesets.filenames", "").split(",").collect { it.trim() }
             println "Found ${categoryFiles.size()} category files in PMD JAR: ${jarPath}"
         } else {
             println "WARNING: ${categoriesPath} not found in PMD JAR: ${jarPath}"
         }
 
-        // Parse each category XML file to extract detailed rule information
+        // Process each category file
         categoryFiles.each { categoryFile ->
             def entry = zipFile.getEntry(categoryFile)
-            if (entry) {
-                try {
-                    def categoryXml = new XmlSlurper().parse(zipFile.getInputStream(entry))
-                    def categoryName = categoryFile.tokenize('/').last().replace('.xml', '')
-
-                    categoryXml.rule.each { ruleElement ->
-                        def ruleName = ruleElement.@name.toString()
-                        def ruleClass = ruleElement.@class.toString()
-                        def deprecated = ruleElement.@deprecated.toString() == "true"
-                        def ref = ruleElement.@ref.toString()
-                        def since = ruleElement.@since.toString()
-                        def externalInfoUrl = ruleElement.@externalInfoUrl.toString()
-                        def message = ruleElement.@message.toString()
-
-                        // Extract description
-                        def description = ruleElement.description.text()
-
-                        // Extract priority
-                        def priority = ruleElement.priority.text() ?: "3"
-
-                        // Extract examples
-                        def examples = []
-                        ruleElement.example.each { example ->
-                            examples << example.text()
-                        }
-
-                        // Extract properties
-                        def properties = []
-                        ruleElement.properties.property.each { prop ->
-                            properties << [
-                                name: prop.@name.toString(),
-                                description: prop.@description.toString(),
-                                type: prop.@type.toString(),
-                                value: prop.@value.toString(),
-                                min: prop.@min.toString(),
-                                max: prop.@max.toString()
-                            ]
-                        }
-
-                        if (ruleName) {
-                            rules << [
-                                name: ruleName,
-                                category: categoryName,
-                                categoryFile: categoryFile,
-                                class: ruleClass,
-                                deprecated: deprecated,
-                                ref: ref,
-                                since: since,
-                                externalInfoUrl: externalInfoUrl,
-                                message: message ?: ruleName, // Use rule name as fallback for message
-                                description: description,
-                                priority: priority,
-                                examples: examples,
-                                properties: properties
-                            ]
-                        }
-                    }
-                    println "  - Processed ${categoryFile}: found ${categoryXml.rule.size()} rules"
-                } catch (Exception e) {
-                    println "  - ERROR processing ${categoryFile}: ${e.message}"
-                }
-            } else {
+            if (!entry) {
                 println "  - WARNING: Category file not found: ${categoryFile}"
+                return
+            }
+
+            try {
+                def categoryXml = new XmlSlurper().parse(zipFile.getInputStream(entry))
+                def categoryName = categoryFile.tokenize('/').last() - '.xml'
+
+                // Process each rule in the category
+                categoryXml.rule.each { rule ->
+                    def ruleName = rule.@name.toString()
+                    if (!ruleName) return
+
+                    rules << [
+                        name: ruleName,
+                        category: categoryName,
+                        categoryFile: categoryFile,
+                        class: rule.@class.toString(),
+                        deprecated: rule.@deprecated.toString() == "true",
+                        ref: rule.@ref.toString(),
+                        since: rule.@since.toString(),
+                        externalInfoUrl: rule.@externalInfoUrl.toString(),
+                        message: rule.@message.toString() ?: ruleName,
+                        description: rule.description.text(),
+                        priority: rule.priority.text() ?: "3",
+                        examples: rule.example.collect { it.text() },
+                        properties: rule.properties.property.collect { prop -> [
+                            name: prop.@name.toString(),
+                            description: prop.@description.toString(),
+                            type: prop.@type.toString(),
+                            value: prop.@value.toString(),
+                            min: prop.@min.toString(),
+                            max: prop.@max.toString()
+                        ]}
+                    ]
+                }
+                println "  - Processed ${categoryFile}: found ${categoryXml.rule.size()} rules"
+            } catch (Exception e) {
+                println "  - ERROR processing ${categoryFile}: ${e.message}"
             }
         }
 
@@ -911,7 +932,7 @@ def formatDescription = { ruleData ->
     if (externalInfoUrl) {
         // Extract a more readable link text from the URL
         def linkText = "PMD rule documentation"
-        htmlContent += "\n<p>More information: <a href=\"${externalInfoUrl}\">${linkText}</a></p>"
+        htmlContent += "\n<p>Full documentation: <a href=\"${externalInfoUrl}\">${linkText}</a></p>"
     }
 
     return htmlContent
@@ -922,26 +943,23 @@ def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
 
     try {
+        // Generate XML file
         outputFile.withWriter('UTF-8') { writer ->
             def xml = new MarkupBuilder(writer)
             xml.setDoubleQuotes(true)
 
-            // Write XML declaration manually since MarkupBuilder doesn't handle it well
+            // Write XML declaration manually
             writer.println('<?xml version="1.0" encoding="UTF-8"?>')
 
             xml.rules {
                 rules.sort { it.name }.each { ruleData ->
                     rule {
                         key(ruleData.name)
-
-                        // Always use camelCase transformation for rule names
-                        def readableName = camelCaseToReadable(ruleData.name)
-                        name(readableName)
-
+                        name(camelCaseToReadable(ruleData.name))
                         internalKey("${ruleData.categoryFile}/${ruleData.name}")
                         severity(priorityToSeverity(ruleData.priority))
 
-                        // Add description with CDATA - ensure it's never empty
+                        // Add description with CDATA
                         description {
                             def descContent = formatDescription(ruleData)
                             if (!descContent || descContent.trim().isEmpty()) {
@@ -956,25 +974,21 @@ def generateXmlFile = { outputFile, rules, language ->
                             status("DEPRECATED")
                         }
 
-                        // Add tags - always include "pmd" tag first, then category tag
+                        // Add tags
                         tag("pmd")
                         tag(ruleData.category)
 
-                        // Add parameters from properties
-                        ruleData.properties.each { prop ->
-                            if (prop.name && prop.description && !prop.name.startsWith("violation")) {
-                                param {
-                                    key(prop.name)
-                                    description {
-                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
-                                    }
-                                    if (prop.value) {
-                                        defaultValue(prop.value)
-                                    }
-                                    if (prop.type) {
-                                        type(prop.type.toUpperCase())
-                                    }
+                        // Add parameters
+                        ruleData.properties.findAll { prop -> 
+                            prop.name && prop.description && !prop.name.startsWith("violation") 
+                        }.each { prop ->
+                            param {
+                                key(prop.name)
+                                description {
+                                    mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
                                 }
+                                if (prop.value) defaultValue(prop.value)
+                                if (prop.type) type(prop.type.toUpperCase())
                             }
                         }
                     }
@@ -982,48 +996,46 @@ def generateXmlFile = { outputFile, rules, language ->
             }
         }
 
-        println "Successfully generated ${outputFile.name}"
-        println "Total ${language} rules: ${rules.size()}"
-        println "Active ${language} rules: ${rules.count { !it.deprecated }}"
-        println "Deprecated ${language} rules: ${rules.count { it.deprecated }}"
-        if (rulesWithoutDescription > 0) {
-            println "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}"
-        }
-        println "Using camelCase transformation for all rule names"
-
-        // Show category breakdown
+        // Print summary information
+        def activeRules = rules.count { !it.deprecated }
+        def deprecatedRules = rules.count { it.deprecated }
         def categoryStats = rules.groupBy { it.category }
-        println ""
-        println "${language} rules by category:"
+
+        println """
+Successfully generated ${outputFile.name}
+Total ${language} rules: ${rules.size()}
+Active ${language} rules: ${activeRules}
+Deprecated ${language} rules: ${deprecatedRules}
+${rulesWithoutDescription > 0 ? "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}" : ""}
+Using camelCase transformation for all rule names
+
+${language} rules by category:"""
+
         categoryStats.sort { it.key }.each { category, categoryRules ->
             def activeCount = categoryRules.count { !it.deprecated }
             def deprecatedCount = categoryRules.count { it.deprecated }
             println "  - ${category}: ${categoryRules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)"
         }
 
-        // Show tag distribution
-        println ""
-        println "Tags that will be applied for ${language} rules:"
+        println "\nTags that will be applied for ${language} rules:"
         println "  - pmd: ${rules.size()} rules"
         categoryStats.sort { it.key }.each { category, categoryRules ->
             println "  - ${category}: ${categoryRules.size()} rules"
         }
 
-        // Check for any rules that might still have empty descriptions (shouldn't happen now)
+        // Verify no empty descriptions
         def outputXml = new XmlSlurper().parse(outputFile)
         def emptyDescriptions = outputXml.rule.findAll { 
             !it.description.text() || it.description.text().trim().isEmpty() 
         }
 
-        if (emptyDescriptions.size() > 0) {
-            println ""
-            println "WARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
+        if (emptyDescriptions) {
+            println "\nWARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
             emptyDescriptions.each { rule ->
                 println "  - ${rule.key.text()}"
             }
         } else {
-            println ""
-            println "✓ All ${language} rules have descriptions"
+            println "\n✓ All ${language} rules have descriptions"
         }
 
         return true
