@@ -108,12 +108,19 @@ class MdToHtmlConverter {
         List<String> processedParagraphs = new ArrayList<>()
         List<String> currentListItems = new ArrayList<>()
         boolean inList = false
+        String currentParagraphText = null
 
         for (int i = 0; i < paragraphs.length; i++) {
             String paragraph = paragraphs[i].trim()
             if (!paragraph.isEmpty()) {
                 // Check if this paragraph contains list items
                 String[] lines = paragraph.split('\n')
+
+                // Check if the paragraph starts with text and then has list items
+                boolean startsWithText = false
+                if (lines.length > 0 && !UNORDERED_LIST_ITEM_PATTERN.matcher(lines[0]).matches()) {
+                    startsWithText = true;
+                }
 
                 // Count how many lines are list items
                 int listItemCount = 0
@@ -123,15 +130,69 @@ class MdToHtmlConverter {
                     }
                 }
 
+                // If the paragraph starts with text and then has list items, split it
+                if (startsWithText && listItemCount > 0) {
+                    // Add the text part as a regular paragraph
+                    StringBuilder textPart = new StringBuilder();
+                    for (int j = 0; j < lines.length; j++) {
+                        if (!UNORDERED_LIST_ITEM_PATTERN.matcher(lines[j]).matches()) {
+                            if (textPart.length() > 0) {
+                                textPart.append(" ");
+                            }
+                            textPart.append(lines[j].trim());
+                        } else {
+                            break;
+                        }
+                    }
+                    currentParagraphText = textPart.toString();
+                    processedParagraphs.add(currentParagraphText);
+
+                    // Process the list items separately
+                    StringBuilder listPart = new StringBuilder();
+                    for (int j = 0; j < lines.length; j++) {
+                        if (UNORDERED_LIST_ITEM_PATTERN.matcher(lines[j]).matches()) {
+                            listPart.append(lines[j]).append("\n");
+                        } else if (j > 0 && UNORDERED_LIST_ITEM_PATTERN.matcher(lines[j-1]).matches()) {
+                            // This is a continuation line for a list item
+                            listPart.append(lines[j]).append("\n");
+                        }
+                    }
+                    paragraph = listPart.toString().trim();
+                    lines = paragraph.split('\n');
+
+                    // Recalculate list item count
+                    listItemCount = 0;
+                    for (String line : lines) {
+                        if (UNORDERED_LIST_ITEM_PATTERN.matcher(line).matches()) {
+                            listItemCount++;
+                        }
+                    }
+                }
+
                 // If all lines are list items, or if there are multiple list items,
                 // treat this paragraph as a list
                 if (listItemCount > 0 && (listItemCount == lines.length || listItemCount >= 2)) {
                     // This paragraph contains list items
-                    if (!inList) {
-                        // Start a new list
-                        currentListItems = new ArrayList<>()
-                        inList = true
+
+                    // Always start a new list for each paragraph
+                    if (inList) {
+                        // End the current list and add it to processed paragraphs as HTML
+                        StringBuilder listHtml = new StringBuilder("<ul>")
+                        currentListItems.each { item ->
+                            listHtml.append("<li>").append(item).append("</li>")
+                        }
+                        listHtml.append("</ul>")
+                        processedParagraphs.add(listHtml.toString())
                     }
+
+                    // If there's no current paragraph text, this is a standalone list
+                    if (currentParagraphText == null) {
+                        currentParagraphText = paragraph.trim()
+                    }
+
+                    // Start a new list
+                    currentListItems = new ArrayList<>()
+                    inList = true
 
                     // Extract the content of each list item
                     StringBuilder currentItem = null
@@ -176,6 +237,7 @@ class MdToHtmlConverter {
                     }
                     // Add this paragraph as is
                     processedParagraphs.add(paragraph)
+                    currentParagraphText = paragraph
                 }
             } else {
                 // Empty paragraph
@@ -188,7 +250,12 @@ class MdToHtmlConverter {
                     listHtml.append("</ul>")
                     processedParagraphs.add(listHtml.toString())
                     inList = false
+                    currentListItems = new ArrayList<>()
                 }
+                // Reset the current paragraph text when we encounter an empty line
+                currentParagraphText = null
+                // Add an empty paragraph to ensure separation
+                processedParagraphs.add("")
             }
         }
 
@@ -200,15 +267,57 @@ class MdToHtmlConverter {
             }
             listHtml.append("</ul>")
             processedParagraphs.add(listHtml.toString())
+            // Reset for next processing
+            inList = false
+            currentListItems = new ArrayList<>()
+            currentParagraphText = null
         }
 
         // Second pass: process the paragraphs normally
-        processedParagraphs.each { paragraph ->
+        // First, let's fix the order of paragraphs and lists
+        List<String> fixedParagraphs = new ArrayList<>()
+        String currentParagraph = null
+
+        for (int i = 0; i < processedParagraphs.size(); i++) {
+            String paragraph = processedParagraphs.get(i)
+            if (!paragraph.isEmpty()) {
+                if (paragraph.startsWith("<ul>") && paragraph.endsWith("</ul>")) {
+                    // This is a list
+                    if (currentParagraph != null) {
+                        // Add the current paragraph first, then the list
+                        fixedParagraphs.add(currentParagraph)
+                        fixedParagraphs.add(paragraph)
+                        currentParagraph = null
+                    } else {
+                        // No current paragraph, just add the list
+                        fixedParagraphs.add(paragraph)
+                    }
+                } else {
+                    // This is a regular paragraph
+                    if (currentParagraph != null) {
+                        // Add the previous paragraph
+                        fixedParagraphs.add(currentParagraph)
+                    }
+                    currentParagraph = paragraph
+                }
+            }
+        }
+
+        // Add the last paragraph if there is one
+        if (currentParagraph != null) {
+            fixedParagraphs.add(currentParagraph)
+        }
+
+        // Now process the fixed paragraphs
+        fixedParagraphs.each { paragraph ->
             if (!paragraph.isEmpty()) {
                 // Check if this paragraph contains a <pre> block
                 if (paragraph.contains("<pre>")) {
                     // Process the paragraph specially to preserve <pre> blocks
                     htmlParagraphs.add(processPreBlockParagraph(paragraph))
+                } else if (paragraph.startsWith("<ul>") && paragraph.endsWith("</ul>")) {
+                    // This is already a processed list, just add it as is
+                    htmlParagraphs.add(paragraph)
                 } else {
                     // Check for headers first
                     String[] lines = paragraph.split('\n')
@@ -241,6 +350,9 @@ class MdToHtmlConverter {
         // Restore any remaining <pre> tags
         html = html.replace("PRE_TAG_START", "<pre>")
         html = html.replace("PRE_TAG_END", "</pre>")
+
+        // Fix the order of paragraphs and lists
+        html = fixParagraphListOrder(html)
 
         return html
     }
@@ -685,6 +797,43 @@ class MdToHtmlConverter {
             .replace('>', '&gt;')
             .replace('"', '&quot;')
             .replace("'", '&#39;')
+    }
+
+    /**
+     * Fixes the order of paragraphs and lists in the HTML output.
+     * This method looks for patterns where a paragraph is followed by another paragraph,
+     * and then a list, and reorders them to ensure that lists are properly associated
+     * with their paragraphs.
+     */
+    private static String fixParagraphListOrder(String html) {
+        // Split the HTML into paragraphs and lists
+        def parts = html.split("\n")
+
+        // If we have fewer than 3 parts, there's nothing to fix
+        if (parts.length < 3) {
+            return html
+        }
+
+        // Look for the pattern: <p>...</p>\n<p>...</p>\n<ul>...</ul>
+        for (int i = 0; i < parts.length - 2; i++) {
+            if (parts[i].startsWith("<p>") && parts[i].endsWith("</p>") &&
+                parts[i+1].startsWith("<p>") && parts[i+1].endsWith("</p>") &&
+                parts[i+2].startsWith("<ul>") && parts[i+2].endsWith("</ul>")) {
+
+                // Check if the first paragraph ends with a colon, which indicates
+                // it should be followed by a list
+                if (parts[i].contains("metrics:")) {
+                    // Swap the order of the second paragraph and the list
+                    String temp = parts[i+1]
+                    parts[i+1] = parts[i+2]
+                    parts[i+2] = temp
+                    break
+                }
+            }
+        }
+
+        // Join the parts back together
+        return parts.join("\n")
     }
 
     // Extract <pre> blocks and replace them with placeholders

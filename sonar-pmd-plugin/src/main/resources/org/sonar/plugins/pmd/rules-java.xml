@@ -599,7 +599,7 @@ collection pauses.
 See <a href="https://bugs.openjdk.org/browse/JDK-8080225">JDK-8080225</a> for details.</p>
 <p>The FileReader and FileWriter constructors instantiate FileInputStream and FileOutputStream,
 again causing garbage collection issues while finalizer methods are called.</p>
-<p><ul><li>Use <code>Files.newInputStream(Paths.get(fileName))</code> instead of <code>new FileInputStream(fileName)</code>.</li><li>Use <code>Files.newOutputStream(Paths.get(fileName))</code> instead of <code>new FileOutputStream(fileName)</code>.</li><li>Use <code>Files.newBufferedReader(Paths.get(fileName))</code> instead of <code>new FileReader(fileName)</code>.</li><li>Use <code>Files.newBufferedWriter(Paths.get(fileName))</code> instead of <code>new FileWriter(fileName)</code>.</li></ul></p>
+<ul><li>Use <code>Files.newInputStream(Paths.get(fileName))</code> instead of <code>new FileInputStream(fileName)</code>.</li><li>Use <code>Files.newOutputStream(Paths.get(fileName))</code> instead of <code>new FileOutputStream(fileName)</code>.</li><li>Use <code>Files.newBufferedReader(Paths.get(fileName))</code> instead of <code>new FileReader(fileName)</code>.</li><li>Use <code>Files.newBufferedWriter(Paths.get(fileName))</code> instead of <code>new FileWriter(fileName)</code>.</li></ul>
 <p>Please note, that the <code>java.nio</code> API does not throw a <code>FileNotFoundException</code> anymore, instead
 it throws a <code>NoSuchFileException</code>. If your code dealt explicitly with a <code>FileNotFoundException</code>,
 then this needs to be adjusted. Both exceptions are subclasses of <code>IOException</code>, so catching
@@ -892,7 +892,10 @@ is always the one thrown in a try block.</p>
     <internalKey>category/java/bestpractices.xml/AvoidReassigningLoopVariables</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Reassigning loop variables can lead to hard-to-find bugs. Prevent or limit how these variables can be changed.</p>
-<p><ul><li><code>deny</code>: Report any reassignment of the loop variable in the loop body. _This is the default._</li><li><code>allow</code>: Don't check the loop variable.</li><li><code>firstOnly</code>: Report any reassignments of the loop variable, except as the first statement in the loop body. _This is useful if some kind of normalization or clean-up of the value before using is permitted, but any other change of the variable is not._</li><li><code>deny</code>: Report any reassignment of the control variable in the loop body. _This is the default._</li><li><code>allow</code>: Don't check the control variable.</li><li><code>skip</code>: Report any reassignments of the control variable, except conditional increments/decrements (<code>++</code>, <code>--</code>, <code>+=</code>, <code>-=</code>). _This prevents accidental reassignments or unconditional increments of the control variable._</li></ul></p>
+<p>In foreach-loops, configured by the <code>foreachReassign</code> property:</p>
+<p>In for-loops, configured by the <code>forReassign</code> property:</p>
+<ul><li><code>deny</code>: Report any reassignment of the loop variable in the loop body. _This is the default._</li><li><code>allow</code>: Don't check the loop variable.</li><li><code>firstOnly</code>: Report any reassignments of the loop variable, except as the first statement in the loop body. _This is useful if some kind of normalization or clean-up of the value before using is permitted, but any other change of the variable is not._</li></ul>
+<ul><li><code>deny</code>: Report any reassignment of the control variable in the loop body. _This is the default._</li><li><code>allow</code>: Don't check the control variable.</li><li><code>skip</code>: Report any reassignments of the control variable, except conditional increments/decrements (<code>++</code>, <code>--</code>, <code>+=</code>, <code>-=</code>). _This prevents accidental reassignments or unconditional increments of the control variable._</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
    private void foo() {
@@ -2178,7 +2181,10 @@ design.</p>
 most cases, that means moving the operations defined on the data back into the class.
 In some other cases it may make sense to remove entirely the class and move the data
 into the former client classes.</p>
-<p><ul><li>WMC: a class complexity measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>WOC: a 'non-triviality' measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHT_OF_CLASS"><code>WEIGHT_OF_CLASS</code></a></li><li>NOPA: number of public attributes, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_PUBLIC_FIELDS"><code>NUMBER_OF_PUBLIC_FIELDS</code></a></li><li>NOAM: number of public accessor methods, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_ACCESSORS"><code>NUMBER_OF_ACCESSORS</code></a></li><li>High NOPA + NOAM</li><li>Low WOC</li><li>Low WMC</li></ul></p>
+<p>The rule uses metrics to implement its detection strategy. The violation message gives information about the values of these metrics:</p>
+<ul><li>WMC: a class complexity measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>WOC: a 'non-triviality' measure for a class, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHT_OF_CLASS"><code>WEIGHT_OF_CLASS</code></a></li><li>NOPA: number of public attributes, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_PUBLIC_FIELDS"><code>NUMBER_OF_PUBLIC_FIELDS</code></a></li><li>NOAM: number of public accessor methods, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#NUMBER_OF_ACCESSORS"><code>NUMBER_OF_ACCESSORS</code></a></li></ul>
+<p>The rule identifies a god class by looking for classes which have all of the following properties:</p>
+<ul><li>High NOPA + NOAM</li><li>Low WOC</li><li>Low WMC</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class DataClass {
  
@@ -2577,7 +2583,8 @@ or reported.</p>
     <internalKey>category/java/codestyle.xml/EmptyControlStatement</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Reports control statements whose body is empty, as well as empty initializers.</p>
-<p><ul><li>bodies of <code>try</code> statements</li><li><code>finally</code> clauses of <code>try</code> statements</li><li><code>switch</code> statements</li><li><code>synchronized</code> statements</li><li><code>if</code> statements</li><li>loop statements: <code>while</code>, <code>for</code>, <code>do .. while</code></li><li>initializers</li><li>blocks used as statements (for scoping)</li></ul></p>
+<p>The checked code constructs are the following:</p>
+<ul><li>bodies of <code>try</code> statements</li><li><code>finally</code> clauses of <code>try</code> statements</li><li><code>switch</code> statements</li><li><code>synchronized</code> statements</li><li><code>if</code> statements</li><li>loop statements: <code>while</code>, <code>for</code>, <code>do .. while</code></li><li>initializers</li><li>blocks used as statements (for scoping)</li></ul>
 <p>This rule replaces the rules EmptyFinallyBlock, 
             EmptyIfStmt, EmptyInitializer, EmptyStatementBlock, 
             EmptySwitchStatements, EmptySynchronizedBlock, EmptyTryBlock, and EmptyWhileStmt.</p>
@@ -3062,7 +3069,10 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
 are very big and overly complex. They should be split apart to be more object-oriented.
 The rule uses the detection strategy described in "Object-Oriented Metrics in Practice".
 The violations are reported against the entire class.</p>
-<p><ul><li>WMC: a class complexity measure, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>ATFD: a measure of how much data external data the class uses, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#ACCESS_TO_FOREIGN_DATA"><code>ACCESS_TO_FOREIGN_DATA</code></a></li><li>TCC: a measure of how tightly related the methods are, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#TIGHT_CLASS_COHESION"><code>TIGHT_CLASS_COHESION</code></a></li><li>High WMC</li><li>High ATFD</li><li>Low TCC</li></ul></p>
+<p>The rule uses metrics to implement its detection strategy. The violation message gives information about the values of these metrics:</p>
+<ul><li>WMC: a class complexity measure, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT"><code>WEIGHED_METHOD_COUNT</code></a></li><li>ATFD: a measure of how much data external data the class uses, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#ACCESS_TO_FOREIGN_DATA"><code>ACCESS_TO_FOREIGN_DATA</code></a></li><li>TCC: a measure of how tightly related the methods are, see <a href="https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#TIGHT_CLASS_COHESION"><code>TIGHT_CLASS_COHESION</code></a></li></ul>
+<p>The rule identifies a god class by looking for classes which have all of the following properties:</p>
+<ul><li>High WMC</li><li>High ATFD</li><li>Low TCC</li></ul>
 <p>See also the reference:</p>
 <p>Michele Lanza and Radu Marinescu. <i>Object-Oriented Metrics in Practice:
 Using Software Metrics to Characterize, Evaluate, and Improve the Design
@@ -3640,7 +3650,8 @@ is a good practice to limit their visibility.</p>
                  x -&gt; x.foo()    // can be XType::foo (where XType is the type of x)</code></pre></p>
 <p>In some cases rewriting a lambda to a method reference can change the semantics of the code. For instance in <code>(x) -&gt; someVar.call(x)</code>, the invocation of the lambda may produce a NullPointerException (NPE) if <code>someVar</code> is null. The method reference <code>someVar::call</code> will also NPE if <code>someVar</code> is null, but it will do so at the point the method reference is created, while the lambda is created without error and its NPE is only thrown if the lambda is invoked (which may be never). Code should probably not rely on this subtle semantic difference, therefore these potentially problematic lambdas are also reported by default. This behavior can be disabled by setting the property <code>ignoreIfMayNPE</code> to <code>true</code>.</p>
 <p>The property <code>ignoreIfMayNPE</code> is true by default. By default, calls whose receiver is itself a method call are ignored, because they could cause side effects. This may be changed by setting the property <code>ignoreIfReceiverIsMethod</code> to <code>false</code>.</p>
-<p><ul><li>This rule will not report lambdas of the form <code>x -&gt; new CtorCall().something(x)</code>, because the semantics of the method reference would be to create a single new object, while the lambda creates one object per invocation.</li><li>The rule cannot know if the qualifier of a method call performs side effects. This means <code>(x) -&gt; sideEffectingMethod().foo(x)</code> will be reported. Suppress the warning in this case.</li></ul></p>
+<p>Scope limitations:</p>
+<ul><li>This rule will not report lambdas of the form <code>x -&gt; new CtorCall().something(x)</code>, because the semantics of the method reference would be to create a single new object, while the lambda creates one object per invocation.</li><li>The rule cannot know if the qualifier of a method call performs side effects. This means <code>(x) -&gt; sideEffectingMethod().foo(x)</code> will be reported. Suppress the warning in this case.</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> import java.util.stream.Stream;
  
@@ -3664,16 +3675,18 @@ is a good practice to limit their visibility.</p>
     <description><![CDATA[<p>The law of Demeter is a simple rule that says "only talk to friends". It forbids
 fetching data from "too far away", for some definition of distance, in order to
 reduce coupling between classes or objects of different levels of abstraction.</p>
-<p><ul><li>The degree of <code>this</code> is 0</li><li>The degree of a method parameter is 1</li><li>The degree of a new object created in a method is 1</li><li>The degree of a static variable is 1</li><li>The degree of a field access expression like <code>expr.field</code> is the degree of <code>expr</code> plus 1</li><li>The degree of a "getter expression" like <code>expr.getFoo()</code> is the degree of <code>expr</code> plus 1</li><li>The degree of a "transformation expression" like <code>expr.withFoo(&quot;&quot;)</code> is the degree of <code>expr</code></li><li>The degree of a variable is the maximum degree of all the assignments that reach it</li></ul></p>
+<p>The rule uses a notion of "degree", that quantifies how "far" an object is. Expressions with too high degree can only be used in certain ways. The degree of an expression is defined inductively:</p>
+<ul><li>The degree of <code>this</code> is 0</li><li>The degree of a method parameter is 1</li><li>The degree of a new object created in a method is 1</li><li>The degree of a static variable is 1</li><li>The degree of a field access expression like <code>expr.field</code> is the degree of <code>expr</code> plus 1</li><li>The degree of a "getter expression" like <code>expr.getFoo()</code> is the degree of <code>expr</code> plus 1</li><li>The degree of a "transformation expression" like <code>expr.withFoo(&quot;&quot;)</code> is the degree of <code>expr</code></li><li>The degree of a variable is the maximum degree of all the assignments that reach it</li></ul>
 <p>Intuitively, the more you call getters, the more the degree increases. Eventually
 the degree reaches the report threshold (property <code>trustRadius</code>) and the expression
 is reported. The details of the calculation are more involved and make room for common
 patterns, like usage of collections (objects that are in a list or array have the
 same degree as their container), the builder pattern, and getters that do not appear
 to break a boundary of abstraction.</p>
-<p><ul><li>expressions of degree lower or equal to <code>trustRadius</code> are not reported</li><li>expressions of degree exactly <code>trustRadius + 1</code> are reported, unless they are only returned from the current method, or passed as argument to another method. Without this exception it would not be possible to extract any information from e.g. method parameters.</li><li>values of degree strictly greater than <code>trustRadius + 1</code> are not reported. The intuition is that to obtain a value of degree <code>n &gt; 1</code> then you must use an expression of degree <code>n - 1</code>, so if you have <code>n &gt; trustRadius + 1</code>, there you're using some value of degree <code>trustRadius + 1</code> that will be reported.</li></ul></p>
+<p>Be aware that this rule is prone to many false-positives and low-priority warnings. You can increase the <code>trustRadius</code> property to reduce them drastically. The default <code>trustRadius</code> of 1 corresponds to the original law of Demeter (you're only allowed one getter call on untrusted values). Given some <code>trustRadius</code> value:</p>
+<ul><li>expressions of degree lower or equal to <code>trustRadius</code> are not reported</li><li>expressions of degree exactly <code>trustRadius + 1</code> are reported, unless they are only returned from the current method, or passed as argument to another method. Without this exception it</li><li>values of degree strictly greater than <code>trustRadius + 1</code> are not reported. The intuition is that to obtain a value of degree <code>n &gt; 1</code> then you must use an expression</li></ul>
 <p>See also the references:</p>
-<p><ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><a href="http://www.ccs.neu.edu/home/lieber/LoD.html">http://www.ccs.neu.edu/home/lieber/LoD.html</a></li><li><a href="http://en.wikipedia.org/wiki/Law_of_Demeter">http://en.wikipedia.org/wiki/Law_of_Demeter</a></li></ul></p>
+<ul><li>Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.;</li><li>K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.;</li><li><a href="http://www.ccs.neu.edu/home/lieber/LoD.html">http://www.ccs.neu.edu/home/lieber/LoD.html</a></li><li><a href="http://en.wikipedia.org/wiki/Law_of_Demeter">http://en.wikipedia.org/wiki/Law_of_Demeter</a></li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      /**
@@ -5053,7 +5066,8 @@ formatting is used.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Reports ternary expression with the form <code>condition ? literalBoolean : foo</code>
 or <code>condition ? foo : literalBoolean</code>.</p>
-<p><ul><li><code>condition ? true : expr</code> simplifies to <code>condition || expr</code></li><li><code>condition ? false : expr</code> simplifies to <code>!condition &amp;&amp; expr</code></li><li><code>condition ? expr : true</code> simplifies to <code>!condition || expr</code></li><li><code>condition ? expr : false</code> simplifies to <code>condition &amp;&amp; expr</code></li></ul></p>
+<p>These expressions can be simplified as follows:</p>
+<ul><li><code>condition ? true : expr</code> simplifies to <code>condition || expr</code></li><li><code>condition ? false : expr</code> simplifies to <code>!condition &amp;&amp; expr</code></li><li><code>condition ? expr : true</code> simplifies to <code>!condition || expr</code></li><li><code>condition ? expr : false</code> simplifies to <code>condition &amp;&amp; expr</code></li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      public boolean test() {
@@ -5197,7 +5211,8 @@ for each call and new objects will be created for every invocation.</p>
 in every method where the field is used, it is assigned before it is first read.
 Hence, the value that the field had before the method call may not be observed,
 so it might as well not be stored in the enclosing object.</p>
-<p><ul><li>We can only check private fields for now.</li><li>The rule is not aware of threading, so it may cause false positives in concurrent code. Such FPs are best handled by suppression (see also the <code>ignoredAnnotations</code> property).</li></ul></p>
+<p>Limitations:</p>
+<ul><li>We can only check private fields for now.</li><li>The rule is not aware of threading, so it may cause false positives in concurrent code. Such FPs are best handled by suppression (see also the <code>ignoredAnnotations</code> property).</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
      private int x; // this will be reported
@@ -5700,7 +5715,7 @@ empty methods.</p>
 This is primarily intended to assist in upgrading from JUnit 3, where tear down methods were required to be called <code>tearDown()</code>.
 To a lesser extent, this may help detect omissions even under newer JUnit versions or under TestNG,
 as long as you are following this convention to name the methods.</p>
-<p><ul><li>JUnit 4 will only execute methods annotated with <code>@After</code> after running each test.</li><li>JUnit 5 introduced <code>@AfterEach</code> and <code>@AfterAll</code> annotations to execute methods after each test or after all tests in the class, respectively.</li><li>TestNG provides the annotations <code>@AfterMethod</code> and <code>@AfterClass</code> to execute methods after each test or after tests in the class, respectively.</li></ul></p>
+<ul><li>JUnit 4 will only execute methods annotated with <code>@After</code> after running each test.</li><li>JUnit 5 introduced <code>@AfterEach</code> and <code>@AfterAll</code> annotations to execute methods after each test or after all tests in the class, respectively.</li><li>TestNG provides the annotations <code>@AfterMethod</code> and <code>@AfterClass</code> to execute methods after each test or after tests in the class, respectively.</li></ul>
 <p><p><b>Note:</b> This rule was named JUnit4TestShouldUseAfterAnnotation before PMD 7.7.0.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class MyTest {
@@ -5726,7 +5741,7 @@ as long as you are following this convention to name the methods.</p>
 This is primarily intended to assist in upgrading from JUnit 3, where setup methods were required to be called <code>setUp()</code>.
 To a lesser extent, this may help detect omissions even under newer JUnit versions or under TestNG,
 as long as you are following this convention to name the methods.</p>
-<p><ul><li>JUnit 4 will only execute methods annotated with <code>@Before</code> before all tests.</li><li>JUnit 5 introduced <code>@BeforeEach</code> and <code>@BeforeAll</code> annotations to execute methods before each test or before all tests in the class, respectively.</li><li>TestNG provides the annotations <code>@BeforeMethod</code> and <code>@BeforeClass</code> to execute methods before each test or before tests in the class, respectively.</li></ul></p>
+<ul><li>JUnit 4 will only execute methods annotated with <code>@Before</code> before all tests.</li><li>JUnit 5 introduced <code>@BeforeEach</code> and <code>@BeforeAll</code> annotations to execute methods before each test or before all tests in the class, respectively.</li><li>TestNG provides the annotations <code>@BeforeMethod</code> and <code>@BeforeClass</code> to execute methods before each test or before tests in the class, respectively.</li></ul>
 <p><p><b>Note:</b> This rule was named JUnit4TestShouldUseBeforeAnnotation before PMD 7.7.0.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class MyTest {
@@ -6145,7 +6160,8 @@ instructions follow anyway.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>This rule reports suppression comments and annotations that did not suppress any PMD violation.
             Note that violations of this rule cannot be suppressed.</p>
-<p><ul><li>The rule will report those suppressions comments/annotations that did not suppress a violation _during the current run_. That means you cannot run this rule separately from other rules, it must always be run with all the rules that could produce a warning. This is most likely not a problem, as you can just include this rule in your regular ruleset.</li><li>The rule for now only reports annotations specific to PMD, like <code>@SuppressWarnings(&quot;PMD&quot;)</code>. For instance <code>@SuppressWarnings(&quot;all&quot;)</code> is never reported as we cannot know if another tool is producing a warning there that must be suppressed. In the future we might be able to check for other common ones like <code>@SuppressWarnings(&quot;unchecked&quot;)</code> or <code>&quot;fallthrough&quot;</code>.</li></ul></p>
+<p>Please note:</p>
+<ul><li>The rule will report those suppressions comments/annotations that did not suppress a violation _during the current run_. That means you cannot run this rule separately from other rules, it must</li><li>The rule for now only reports annotations specific to PMD, like <code>@SuppressWarnings(&quot;PMD&quot;)</code>. For instance <code>@SuppressWarnings(&quot;all&quot;)</code> is never reported as we cannot know if another tool is producing a</li></ul>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Something {
                  // Unless some rule triggered on the following line, this rule will report the comment:
@@ -6198,7 +6214,8 @@ synchronized on block level.</p>
             out by default, in case you already have enabled those rules, but may be enabled with the property
             <code>reportUnusedVariables</code>. Variables whose name starts with <code>ignored</code> or <code>unused</code> are filtered out, as
             is standard practice for exceptions.</p>
-<p><ul><li>The rule currently cannot know which method calls throw exceptions, or which exceptions they throw. In the body of a try block, every method or constructor call is assumed to throw.  This may cause false-negatives. The only other language construct that is assumed to throw is the <code>throw</code> statement, in particular, things like <code>assert</code> statements, or NullPointerExceptions on dereference are ignored.</li><li>The rule cannot resolve assignments across constructors, when they're called with the special <code>this(...)</code> syntax. This may cause false-negatives.</li></ul></p>
+<p>Limitations:</p>
+<ul><li>The rule currently cannot know which method calls throw exceptions, or which exceptions they throw. In the body of a try block, every method or constructor call is assumed to throw.  This may cause false-negatives.</li><li>The rule cannot resolve assignments across constructors, when they're called with the special <code>this(...)</code> syntax. This may cause false-negatives.</li></ul>
 <p>Both of those limitations may be partly relaxed in PMD 7.</p>
 <h2>Examples</h2>
 <h3>Example 1</h3>
@@ -7024,7 +7041,8 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <description><![CDATA[<p>Parenthesized expressions are used to override the default operator precedence
             rules. Parentheses whose removal would not change the relative nesting of operators
             are unnecessary, because they don't change the semantics of the enclosing expression.</p>
-<p>Some parentheses that strictly speaking are unnecessary, may still be considered usefulfor readability. This rule allows to ignore violations on two kinds of unnecessary parentheses:<ul><li>"Clarifying" parentheses, which separate operators of difference precedence. While unnecessary, they make precedence rules explicit, which may be useful for rarely used operators. For example: <pre><code class="language-java"> (a + b) &amp; c // is equivalent to `a + b &amp; c`, but probably clearer</code></pre> Unset the property <code>ignoreClarifying</code> to report them.</li></ul>
+<p>Some parentheses that strictly speaking are unnecessary, may still be considered useful for readability. This rule allows to ignore violations on two kinds of unnecessary parentheses:</p>
+<ul><li>"Clarifying" parentheses, which separate operators of difference precedence. While unnecessary, they make precedence rules explicit, which may be useful for rarely used</li></ul>
 <ul><li>"Balancing" parentheses, which are unnecessary but visually balance out another pair of parentheses around an equality operator. For example, those two expressions are equivalent: <pre><code class="language-java"> (a == null) != (b == null)
                  a == null != (b == null)</code></pre> The parentheses on the right are required, and the parentheses on the left are just more visually pleasing. Unset the property <code>ignoreBalancing</code> to report them.</li></ul>
 <h2>Example</h2>
