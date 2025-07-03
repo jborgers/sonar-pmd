@@ -10,7 +10,7 @@
 <p><pre><code class="language-java"> fun cl() {} // violation, no unavailable attribute added to the function declaration
  
  fun calculateLayout() // no violation</code></pre></p>
-]]></description>
+<p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_bestpractices.html#functionnametooshort">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -41,7 +41,7 @@
        // return some hash value
      }
  }</code></pre></p>
-]]></description>
+<p>More information: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_errorprone.html#overridebothequalsandhashcode">PMD rule documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>

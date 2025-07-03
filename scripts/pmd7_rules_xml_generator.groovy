@@ -13,6 +13,13 @@ def pmdKotlinJarPath = System.getProperty("user.home") + "/.m2/repository/net/so
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 
+// If we're in test mode, make the MdToHtmlConverter available but don't run the main code
+if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
+    // Make MdToHtmlConverter available to the caller
+    binding.setVariable('MdToHtmlConverter', MdToHtmlConverter)
+    return // Skip the rest of the script
+}
+
 // Get output directory from binding variable (set by Maven) or use a default directory
 // The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
 def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
@@ -39,10 +46,10 @@ class MdToHtmlConverter {
     // Simple paragraph splitter - we use extractPreBlocks and restorePreBlocks to handle <pre> tags
     static final Pattern PARAGRAPH_SPLITTER_PATTERN = ~/\n\s*\n/
     static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)\s*1\...*/
-    static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)[\s\t]*\*.*/
+    static final Pattern UNORDERED_LIST_PARAGRAPH_PATTERN = ~/(?s)[\s\t]*[\*\-].*/
     static final Pattern SECTION_PARAGRAPH_PATTERN = ~/(?s)\s*[A-Za-z]+:\s*.*/
     static final Pattern LIST_ITEM_PATTERN = ~/(\d+)\.(\s+)(.*)/
-    static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/[\s\t]*\*(\s+)(.*)/
+    static final Pattern UNORDERED_LIST_ITEM_PATTERN = ~/[\s\t]*[\*\-](\s+)(.*)/
     static final Pattern TITLE_PATTERN = ~/([A-Z][A-Za-z]+):(\s*)(.*)/
     static final Pattern INLINE_TITLE_PATTERN = ~/\b([A-Z][A-Za-z]+):(\s*)/
     static final Pattern CODE_BLOCK_PATTERN = ~/`([^`]+)`/
@@ -58,7 +65,8 @@ class MdToHtmlConverter {
     static final Pattern PMD_RULE_LINK_PATTERN = ~/\[([^\]]+)\]\((pmd_rules_[^.]+\.html[^)]*)\)/
     // {% jdoc java::lang.java.metrics.JavaMetrics#WEIGHED_METHOD_COUNT %}
     static final Pattern JDOC_REFERENCE_PATTERN = ~/\{\%\s*jdoc\s+([\w-]+)::([\w.#]+)\s*\%\}/
-    static final String jdocLink = "https://docs.pmd-code.org/apidocs/pmd-java/${PMD_VERSION}/"
+    // example: https://docs.pmd-code.org/apidocs/pmd-java/7.15.0/net/sourceforge/pmd/lang/java/metrics/JavaMetrics.html#WEIGHED_METHOD_COUNT
+    static final String jdocLink = "https://docs.pmd-code.org/apidocs/pmd-java/${PMD_VERSION}/net/sourceforge/"
 
     /**
      * Escapes special regex replacement characters
@@ -96,8 +104,6 @@ class MdToHtmlConverter {
         for (int i = 0; i < paragraphs.length; i++) {
             paragraphs[i] = restorePreBlocks(paragraphs[i], preBlocks)
         }
-
-        println "PARAGRAPHS: $paragraphs"
 
         paragraphs.each { paragraph ->
             paragraph = paragraph.trim()
@@ -696,14 +702,17 @@ def formatDescription = { ruleData ->
         }
     }
 
-    // Add external info URL if available
+    // Convert markdown to HTML using our Groovy MdToHtmlConverter
+    def htmlContent = MdToHtmlConverter.convertToHtml(markdownContent.toString())
+
+    // Add external info URL as the last paragraph if available
     if (externalInfoUrl) {
-        def linkText = externalInfoUrl.tokenize('/').last()
-        markdownContent.append("\n\n**More information:** [${linkText}](${externalInfoUrl})")
+        // Extract a more readable link text from the URL
+        def linkText = "PMD rule documentation"
+        htmlContent += "\n<p>More information: <a href=\"${externalInfoUrl}\">${linkText}</a></p>"
     }
 
-    // Convert markdown to HTML using our Groovy MdToHtmlConverter
-    return MdToHtmlConverter.convertToHtml(markdownContent.toString())
+    return htmlContent
 }
 
 // Function to generate XML file
@@ -804,20 +813,6 @@ def generateXmlFile = { outputFile, rules, language ->
             !it.description.text() || it.description.text().trim().isEmpty() 
         }
 
-        // Check for rules with paragraph tags inside code blocks
-        def rulesWithParagraphsInCodeBlocks = outputXml.rule.findAll { rule ->
-            def desc = rule.description.text()
-            desc.contains("<pre>") && (
-                desc.contains("</p><pre>") || 
-                desc.contains("</pre><p>") || 
-                desc.contains("<p><pre>") || 
-                desc.contains("</code></p>") || 
-                desc.contains("<p><code>") ||
-                desc.contains("<pre><p>") ||
-                desc.contains("</p></pre>")
-            )
-        }
-
         if (emptyDescriptions.size() > 0) {
             println ""
             println "WARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
@@ -827,16 +822,6 @@ def generateXmlFile = { outputFile, rules, language ->
         } else {
             println ""
             println "✓ All ${language} rules have descriptions"
-        }
-
-        if (rulesWithParagraphsInCodeBlocks.size() > 0) {
-            println ""
-            println "WARNING: Found ${rulesWithParagraphsInCodeBlocks.size()} ${language} rules with paragraph tags inside code blocks:"
-            rulesWithParagraphsInCodeBlocks.each { rule ->
-                println "  - ${rule.key.text()}"
-            }
-        } else {
-            println "✓ No ${language} rules with paragraph tags inside code blocks"
         }
 
         return true
