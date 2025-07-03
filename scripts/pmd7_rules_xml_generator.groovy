@@ -1178,7 +1178,7 @@ ${language} rules by category:"""
             !it.description.text() || it.description.text().trim().isEmpty() 
         }
 
-        if (emptyDescriptions) {
+        if (emptyDescriptions.size() > 0) {
             println "\nWARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
             emptyDescriptions.each { rule ->
                 println "  - ${rule.key.text()}"
