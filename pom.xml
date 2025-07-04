@@ -98,7 +98,6 @@
     <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
-    <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
     <flatten.maven.plugin.version>1.7.1</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -239,11 +238,6 @@
           <configuration>
             <pluginApiMinVersion>9.9</pluginApiMinVersion>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>${nexus-staging.plugin.version}</version>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

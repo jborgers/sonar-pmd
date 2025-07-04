@@ -110,14 +110,12 @@
           <basePlugin>pmd</basePlugin>
         </configuration>
       </plugin>
-      <!-- prevent deploy: https://stackoverflow.com/questions/25305850/how-to-disable-nexus-staging-maven-plugin-in-sub-modules -->
+      <!-- prevent integration-test jar from being deployed -->
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
-          <!-- prevent deploy of integration test: 'true' does not work as all modules are
-           skipped when the last module is skipped, integration-test is last module -->
-          <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+          <skip>true</skip>
         </configuration>
       </plugin>
       <plugin>
