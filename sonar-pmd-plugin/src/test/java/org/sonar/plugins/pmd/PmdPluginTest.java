@@ -26,6 +26,8 @@ import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.utils.Version;
+import org.sonar.plugins.pmd.languages.ApexLanguage;
+import org.sonar.plugins.pmd.profile.PmdApexSonarWayProfile;
 import org.sonar.plugins.pmd.rule.PmdApexRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
@@ -52,15 +54,17 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(8)
+                .hasSize(11) // 8 original extensions + ApexLanguage + 1 property definition + PmdApexSonarWayProfile
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
-                        PmdExecutor.class,
+                        PmdExecutorFactory.class,
                         PmdRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,
                         PmdApexRulesDefinition.class,
-                        PmdViolationRecorder.class
+                        PmdViolationRecorder.class,
+                        ApexLanguage.class,
+                        PmdApexSonarWayProfile.class
                 );
     }
 

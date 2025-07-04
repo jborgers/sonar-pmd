@@ -27,16 +27,18 @@ import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.plugins.pmd.PmdExecutor;
+import org.sonar.plugins.pmd.PmdExecutorFactory;
 
 public class PmdSensor implements Sensor {
     private final ActiveRules profile;
-    private final PmdExecutor executor;
+    private final PmdExecutorFactory executorFactory;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
 
-    public PmdSensor(ActiveRules profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+    public PmdSensor(ActiveRules profile, PmdExecutorFactory executorFactory, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
-        this.executor = executor;
+        this.executorFactory = executorFactory;
         this.pmdViolationRecorder = pmdViolationRecorder;
         this.fs = fs;
     }
@@ -73,6 +75,7 @@ public class PmdSensor implements Sensor {
     @Override
     public void execute(SensorContext context) {
         if (shouldExecuteOnProject()) {
+            PmdExecutor executor = executorFactory.create();
             for (RuleViolation violation : executor.execute().getViolations()) {
                 pmdViolationRecorder.saveViolation(violation, context);
             }

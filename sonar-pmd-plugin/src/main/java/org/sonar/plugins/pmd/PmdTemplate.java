@@ -20,8 +20,12 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.*;
+import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
+import net.sourceforge.pmd.lang.apex.ApexLanguageModule;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
+import net.sourceforge.pmd.lang.kotlin.KotlinLanguageModule;
 import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
 import net.sourceforge.pmd.reporting.Report;
@@ -69,7 +73,12 @@ public class PmdTemplate {
 
     public static PmdTemplate create(String javaVersion, ClassLoader classloader, Charset charset) {
         PMDConfiguration configuration = new PMDConfiguration();
-        configuration.setDefaultLanguageVersion(languageVersion(javaVersion));
+
+        // Set Java as the default language version
+        LanguageVersion javaLanguageVersion = languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, javaVersion);
+        configuration.setDefaultLanguageVersion(javaLanguageVersion);
+        LOG.info("Set default language version to Java: " + javaLanguageVersion.getName());
+
         configuration.setClassLoader(classloader);
         configuration.setSourceEncoding(charset);
         configuration.setFailOnViolation(false);
@@ -79,14 +88,27 @@ public class PmdTemplate {
         return new PmdTemplate(configuration);
     }
 
-    static LanguageVersion languageVersion(String javaVersion) {
-        String version = normalize(javaVersion);
-        LanguageVersion languageVersion = new JavaLanguageModule().getVersion(version);
-        if (languageVersion == null) {
-            throw new IllegalArgumentException("Unsupported Java version for PMD: " + version);
+    static LanguageVersion languageVersion(String languageKey, String version) {
+        if (PmdConstants.LANGUAGE_JAVA_KEY.equals(languageKey)) {
+            String normalizedVersion = normalize(version);
+            LanguageVersion languageVersion = new JavaLanguageModule().getVersion(normalizedVersion);
+            if (languageVersion == null) {
+                throw new IllegalArgumentException("Unsupported Java version for PMD: " + normalizedVersion);
+            }
+            LOG.info("Java version: " + normalizedVersion);
+            return languageVersion;
+        } else if (PmdConstants.LANGUAGE_APEX_KEY.equals(languageKey)) {
+            LanguageVersion languageVersion = new ApexLanguageModule().getDefaultVersion();
+            LOG.info("Using Apex default version");
+            return languageVersion;
+        } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(languageKey)) {
+            LanguageVersion languageVersion = new KotlinLanguageModule().getDefaultVersion();
+            LOG.info("Using Kotlin default version");
+            return languageVersion;
         }
-        LOG.info("Java version: " + version);
-        return languageVersion;
+
+        // Default to Java
+        return new JavaLanguageModule().getDefaultVersion();
     }
 
     private static String normalize(String version) {
@@ -100,9 +122,58 @@ public class PmdTemplate {
     public Report process(Iterable<InputFile> files, RuleSet ruleset) {
         try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
             pmd.addRuleSet(ruleset);
-            for (InputFile file: files) {
-                pmd.files().addFile(Paths.get(file.uri()));
+
+            // Group files by language
+            Map<String, List<InputFile>> filesByLanguage = new HashMap<>();
+            for (InputFile file : files) {
+                String language = file.language();
+                if (language == null) {
+                    // Try to determine language from file extension
+                    String filename = file.filename();
+                    if (filename.endsWith(".cls") || filename.endsWith(".trigger")) {
+                        language = PmdConstants.LANGUAGE_APEX_KEY;
+                    } else if (filename.endsWith(".kt") || filename.endsWith(".kts")) {
+                        language = PmdConstants.LANGUAGE_KOTLIN_KEY;
+                    } else {
+                        // Default to Java
+                        language = PmdConstants.LANGUAGE_JAVA_KEY;
+                    }
+                }
+
+                filesByLanguage.computeIfAbsent(language, k -> new ArrayList<>()).add(file);
             }
+
+            // Process files by language
+            for (Map.Entry<String, List<InputFile>> entry : filesByLanguage.entrySet()) {
+                String language = entry.getKey();
+                List<InputFile> languageFiles = entry.getValue();
+
+                if (!languageFiles.isEmpty()) {
+                    LOG.info("Processing {} files with language: {}", languageFiles.size(), language);
+
+                    // Set the appropriate language version for this batch of files
+                    if (PmdConstants.LANGUAGE_APEX_KEY.equals(language)) {
+                        LanguageVersion apexVersion = new ApexLanguageModule().getDefaultVersion();
+                        configuration.setDefaultLanguageVersion(apexVersion);
+                        LOG.info("Set language version to Apex: {}", apexVersion.getName());
+                    } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(language)) {
+                        LanguageVersion kotlinVersion = new KotlinLanguageModule().getDefaultVersion();
+                        configuration.setDefaultLanguageVersion(kotlinVersion);
+                        LOG.info("Set language version to Kotlin: {}", kotlinVersion.getName());
+                    } else {
+                        // Default to Java
+                        LanguageVersion javaVersion = languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, "24");
+                        configuration.setDefaultLanguageVersion(javaVersion);
+                        LOG.info("Set language version to Java: {}", javaVersion.getName());
+                    }
+
+                    // Add files to PMD
+                    for (InputFile file : languageFiles) {
+                        pmd.files().addFile(Paths.get(file.uri()));
+                    }
+                }
+            }
+
             return pmd.performAnalysisAndCollectReport();
         }
     }

@@ -340,7 +340,7 @@
               <Implementation-Build>${buildNumber}</Implementation-Build>
               <!--suppress UnresolvedMavenProperty -->
               <Build-Time>${timestamp}</Build-Time>
-              <Plugin-RequiredForLanguages>java</Plugin-RequiredForLanguages>
+              <Plugin-RequiredForLanguages>java,apex,kotlin</Plugin-RequiredForLanguages>
             </manifestEntries>
           </archive>
         </configuration>

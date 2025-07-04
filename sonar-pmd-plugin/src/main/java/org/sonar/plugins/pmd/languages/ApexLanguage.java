@@ -1,0 +1,50 @@
+/*
+ * SonarQube PMD7 Plugin
+ * Copyright (C) 2012-2021 SonarSource SA and others
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+package org.sonar.plugins.pmd.languages;
+
+import org.sonar.api.config.Configuration;
+import org.sonar.api.resources.AbstractLanguage;
+import org.sonar.plugins.pmd.PmdConstants;
+
+/**
+ * This class defines the Apex language.
+ */
+public final class ApexLanguage extends AbstractLanguage {
+
+    private final Configuration config;
+
+    /**
+     * Creates a new Apex language instance.
+     * @param config The SonarQube configuration
+     */
+    public ApexLanguage(Configuration config) {
+        super(PmdConstants.LANGUAGE_APEX_KEY, PmdConstants.REPOSITORY_APEX_NAME);
+        this.config = config;
+    }
+
+    @Override
+    public String[] getFileSuffixes() {
+        String[] suffixes = config.getStringArray(ApexLanguageProperties.FILE_SUFFIXES_KEY);
+        if (suffixes == null || suffixes.length == 0) {
+            suffixes = ApexLanguageProperties.DEFAULT_FILE_SUFFIXES.split(",");
+        }
+        return suffixes;
+    }
+}

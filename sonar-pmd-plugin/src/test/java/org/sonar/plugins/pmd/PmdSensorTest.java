@@ -43,6 +43,7 @@ class PmdSensorTest {
 
     private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
     private final PmdExecutor executor = mock(PmdExecutor.class);
+    private final PmdExecutorFactory executorFactory = mock(PmdExecutorFactory.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
     private final SensorContext sensorContext = mock(SensorContext.class);
     private final DefaultFileSystem fs = new DefaultFileSystem(new File("."));
@@ -51,7 +52,8 @@ class PmdSensorTest {
 
     @BeforeEach
     void setUpPmdSensor() {
-        pmdSensor = new PmdSensor(profile, executor, pmdViolationRecorder, fs);
+        when(executorFactory.create()).thenReturn(executor);
+        pmdSensor = new PmdSensor(profile, executorFactory, pmdViolationRecorder, fs);
     }
 
     @Test

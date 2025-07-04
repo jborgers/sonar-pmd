@@ -71,6 +71,16 @@ public class PmdExecutor {
         this.settings = settings;
     }
 
+    // Constructor without JavaResourceLocator for non-Java analysis
+    public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
+                       PmdConfiguration pmdConfiguration, Configuration settings) {
+        this.fs = fileSystem;
+        this.rulesProfile = rulesProfile;
+        this.pmdConfiguration = pmdConfiguration;
+        this.javaResourceLocator = null;
+        this.settings = settings;
+    }
+
     private static void accept(FileAnalysisListener fal) {
         LOGGER.debug("Got FileAnalysisListener: {}", fal);
     }
@@ -96,12 +106,28 @@ public class PmdExecutor {
     private Report executePmd(URLClassLoader classLoader) {
 
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
-        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
+
+        // Initialize reports as empty
+        Optional<Report> javaMainReport = Optional.empty();
+        Optional<Report> javaTestReport = Optional.empty();
+        Optional<Report> kotlinMainReport = Optional.empty();
+        Optional<Report> kotlinTestReport = Optional.empty();
+        Optional<Report> apexMainReport = Optional.empty();
+        Optional<Report> apexTestReport = Optional.empty();
+
+        // Only analyze Java files if JavaResourceLocator is available
+        if (javaResourceLocator != null) {
+            javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+            javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        } else {
+            LOGGER.info("Skipping Java analysis because JavaResourceLocator is not available");
+        }
+
+        // Always analyze Kotlin and Apex files
+        kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+        kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+        apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
+        apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
 
         if (LOGGER.isDebugEnabled()) {
             javaMainReport.ifPresent(this::writeDebugLine);
@@ -201,15 +227,22 @@ public class PmdExecutor {
      * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
      */
     private URLClassLoader createClassloader() {
-        Collection<File> classpathElements = javaResourceLocator.classpath();
         List<URL> urls = new ArrayList<>();
-        for (File file : classpathElements) {
-            try {
-                urls.add(file.toURI().toURL());
-            } catch (MalformedURLException e) {
-                throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
+
+        // Only try to get classpath elements if JavaResourceLocator is available
+        if (javaResourceLocator != null) {
+            Collection<File> classpathElements = javaResourceLocator.classpath();
+            for (File file : classpathElements) {
+                try {
+                    urls.add(file.toURI().toURL());
+                } catch (MalformedURLException e) {
+                    throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
+                }
             }
+        } else {
+            LOGGER.debug("JavaResourceLocator not available, using empty classpath");
         }
+
         return new URLClassLoader(urls.toArray(new URL[0]));
     }
 
