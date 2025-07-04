@@ -921,7 +921,7 @@ def camelCaseToReadable = { ruleName ->
         if (!word) return word
 
         // Special case for NaN
-        if (word.equalsIgnoreCase("nan")) {
+        if (word.equals("NaN")) {
             return "NaN"
         }
 
@@ -1118,9 +1118,9 @@ def formatDescription = { ruleData ->
 
     // Add external info URL as the last paragraph if available
     if (externalInfoUrl) {
-        // Extract a more readable link text from the URL
-        def linkText = "PMD rule documentation"
-        htmlContent += "\n<p>Full documentation: <a href=\"${externalInfoUrl}\">${linkText}</a></p>"
+        // Same a in IntelliJ PMD Plugin
+        def linkText = "Full documentation"
+        htmlContent += "\n<p><a href=\"${externalInfoUrl}\">${linkText}</a></p>"
     }
 
     return htmlContent
