@@ -913,9 +913,36 @@ class MdToHtmlConverter {
 }
 
 // Convert camelCase rule name to readable format with only first letter uppercase
+// Note: "APITest" -> "API test", "XMLHttpRequest" -> "XMLHttp request
 def camelCaseToReadable = { ruleName ->
-    def words = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-    words[0].toUpperCase() + words[1..-1].toLowerCase()
+
+    def words = ruleName.replaceAll(/([a-z])([A-Z])/, '$1 $2').trim().split(' ')
+    def result = words.collect { word ->
+        if (!word) return word
+
+        // Special case for NaN
+        if (word.equalsIgnoreCase("nan")) {
+            return "NaN"
+        }
+
+        // If word has multiple consecutive capitals at start, preserve them
+        if (word.matches(/^[A-Z]{2,}.*/)) {
+            def matcher = word =~ /^([A-Z]+)([a-z].*)?/
+            if (matcher) {
+                def capitals = matcher[0][1]
+                def rest = matcher[0][2] ?: ""
+                return capitals + (rest ? rest.toLowerCase() : "")
+            }
+        }
+
+        // Otherwise, lowercase everything
+        return word.toLowerCase()
+    }.join(' ')
+
+    // Capitalize only the first word
+    if (result) {
+        result = result[0].toUpperCase() + (result.length() > 1 ? result[1..-1] : "")
+    }
 }
 
 // We no longer need to check for replacement placeholders since we're using camelCase for all rules

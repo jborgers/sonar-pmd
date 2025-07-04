@@ -420,7 +420,7 @@ that there are no more references to the object. It should not be invoked by app
   </rule>
   <rule>
     <key>AvoidCatchingNPE</key>
-    <name>Avoid catching n p e</name>
+    <name>Avoid catching NPE</name>
     <internalKey>category/java/errorprone.xml/AvoidCatchingNPE</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Code should never throw NullPointerExceptions under normal circumstances.  A catch block may hide the
@@ -1193,7 +1193,7 @@ exceptional cases with a <code>@throws</code> Javadoc tag, which allows being mo
   </rule>
   <rule>
     <key>AvoidUsingHardCodedIP</key>
-    <name>Avoid using hard coded i p</name>
+    <name>Avoid using hard coded IP</name>
     <internalKey>category/java/bestpractices.xml/AvoidUsingHardCodedIP</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Application with hard-coded IP addresses can become impossible to deploy in some cases.
@@ -2327,7 +2327,7 @@ leaks develop within an application, it should be dealt with JVM options rather 
   </rule>
   <rule>
     <key>DoNotHardCodeSDCard</key>
-    <name>Do not hard code s d card</name>
+    <name>Do not hard code SDCard</name>
     <internalKey>category/java/errorprone.xml/DoNotHardCodeSDCard</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Use Environment.getExternalStorageDirectory() instead of "/sdcard"</p>
@@ -2345,7 +2345,7 @@ leaks develop within an application, it should be dealt with JVM options rather 
   </rule>
   <rule>
     <key>DoNotTerminateVM</key>
-    <name>Do not terminate v m</name>
+    <name>Do not terminate VM</name>
     <internalKey>category/java/errorprone.xml/DoNotTerminateVM</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Web applications should not call <code>System.exit()</code>, since only the web container or the
@@ -3427,7 +3427,7 @@ messages are supported (<code>%s</code>).</p>
   </rule>
   <rule>
     <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
-    <name>J unit4 suites should use suite annotation</name>
+    <name>JUnit4suites should use suite annotation</name>
     <internalKey>category/java/bestpractices.xml/JUnit4SuitesShouldUseSuiteAnnotation</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>In JUnit 3, test suites are indicated by the suite() method. In JUnit 4, suites are indicated
@@ -3450,7 +3450,7 @@ through the @RunWith(Suite.class) annotation.</p>
   </rule>
   <rule>
     <key>JUnit4TestShouldUseAfterAnnotation</key>
-    <name>J unit4 test should use after annotation</name>
+    <name>JUnit4test should use after annotation</name>
     <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseAfterAnnotation</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3462,7 +3462,7 @@ through the @RunWith(Suite.class) annotation.</p>
   </rule>
   <rule>
     <key>JUnit4TestShouldUseBeforeAnnotation</key>
-    <name>J unit4 test should use before annotation</name>
+    <name>JUnit4test should use before annotation</name>
     <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseBeforeAnnotation</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3474,7 +3474,7 @@ through the @RunWith(Suite.class) annotation.</p>
   </rule>
   <rule>
     <key>JUnit4TestShouldUseTestAnnotation</key>
-    <name>J unit4 test should use test annotation</name>
+    <name>JUnit4test should use test annotation</name>
     <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseTestAnnotation</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3486,7 +3486,7 @@ through the @RunWith(Suite.class) annotation.</p>
   </rule>
   <rule>
     <key>JUnit5TestShouldBePackagePrivate</key>
-    <name>J unit5 test should be package private</name>
+    <name>JUnit5test should be package private</name>
     <internalKey>category/java/bestpractices.xml/JUnit5TestShouldBePackagePrivate</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Reports JUnit 5 test classes and methods that are not package-private.
@@ -3515,7 +3515,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitAssertionsShouldIncludeMessage</key>
-    <name>J unit assertions should include message</name>
+    <name>JUnit assertions should include message</name>
     <internalKey>category/java/bestpractices.xml/JUnitAssertionsShouldIncludeMessage</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3527,7 +3527,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitSpelling</key>
-    <name>J unit spelling</name>
+    <name>JUnit spelling</name>
     <internalKey>category/java/errorprone.xml/JUnitSpelling</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>In JUnit 3, the setUp method is used to set up all data entities required in running tests.
@@ -3546,7 +3546,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitStaticSuite</key>
-    <name>J unit static suite</name>
+    <name>JUnit static suite</name>
     <internalKey>category/java/errorprone.xml/JUnitStaticSuite</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>The suite() method in a JUnit test needs to be both public and static.</p>
@@ -3569,7 +3569,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitTestContainsTooManyAsserts</key>
-    <name>J unit test contains too many asserts</name>
+    <name>JUnit test contains too many asserts</name>
     <internalKey>category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3581,7 +3581,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitTestsShouldIncludeAssert</key>
-    <name>J unit tests should include assert</name>
+    <name>JUnit tests should include assert</name>
     <internalKey>category/java/bestpractices.xml/JUnitTestsShouldIncludeAssert</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
@@ -3593,7 +3593,7 @@ is a good practice to limit their visibility.</p>
   </rule>
   <rule>
     <key>JUnitUseExpected</key>
-    <name>J unit use expected</name>
+    <name>JUnit use expected</name>
     <internalKey>category/java/bestpractices.xml/JUnitUseExpected</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions.</p>
@@ -3982,7 +3982,7 @@ except when using one of the configured allowed classes.</p>
   </rule>
   <rule>
     <key>MDBAndSessionBeanNamingConvention</key>
-    <name>M d b and session bean naming convention</name>
+    <name>MDBAnd session bean naming convention</name>
     <internalKey>category/java/codestyle.xml/MDBAndSessionBeanNamingConvention</internalKey>
     <severity>MINOR</severity>
     <description><![CDATA[<p>The EJB Specification states that any MessageDrivenBean or SessionBean should be suffixed by 'Bean'.</p>
@@ -4125,7 +4125,7 @@ Either the check is useless (the variable will never be <code>null</code>) or it
   </rule>
   <rule>
     <key>MissingSerialVersionUID</key>
-    <name>Missing serial version u i d</name>
+    <name>Missing serial version UID</name>
     <internalKey>category/java/errorprone.xml/MissingSerialVersionUID</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>Serializable classes should provide a serialVersionUID field.
@@ -4210,7 +4210,7 @@ rule {% rule java/errorprone/AssignmentToNonFinalStatic %}.</p>
   </rule>
   <rule>
     <key>NPathComplexity</key>
-    <name>N path complexity</name>
+    <name>NPath complexity</name>
     <internalKey>category/java/design.xml/NPathComplexity</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>The NPath complexity of a method is the number of acyclic execution paths through that method.
@@ -5233,7 +5233,7 @@ so it might as well not be stored in the enclosing object.</p>
   </rule>
   <rule>
     <key>StaticEJBFieldShouldBeFinal</key>
-    <name>Static e j b field should be final</name>
+    <name>Static EJBField should be final</name>
     <internalKey>category/java/errorprone.xml/StaticEJBFieldShouldBeFinal</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>According to the J2EE specification, an EJB should not have any static fields
@@ -5457,7 +5457,7 @@ by name, set this property to an empty string.</p>
   </rule>
   <rule>
     <key>TooFewBranchesForASwitchStatement</key>
-    <name>Too few branches for a switch statement</name>
+    <name>Too few branches for ASwitch statement</name>
     <internalKey>category/java/performance.xml/TooFewBranchesForASwitchStatement</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to performance optimization.</p></p>
@@ -6652,7 +6652,7 @@ is completely optional).</p>
   </rule>
   <rule>
     <key>UseIOStreamsWithApacheCommonsFileItem</key>
-    <name>Use i o streams with apache commons file item</name>
+    <name>Use IOStreams with apache commons file item</name>
     <internalKey>category/java/performance.xml/UseIOStreamsWithApacheCommonsFileItem</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><p><b>Problem:</b> Use of <a href="https://javadoc.io/static/commons-fileupload/commons-fileupload/1.5/org/apache/commons/fileupload/FileItem.html#get--">FileItem.get()</a>
@@ -6749,7 +6749,7 @@ one is chosen.  The thread chosen is arbitrary; thus it's usually safer to call 
   </rule>
   <rule>
     <key>UseObjectForClearerAPI</key>
-    <name>Use object for clearer a p i</name>
+    <name>Use object for clearer API</name>
     <internalKey>category/java/design.xml/UseObjectForClearerAPI</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>When you write a public method, you should be thinking in terms of an API. If your method is public, it means other class
