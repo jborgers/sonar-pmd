@@ -21,6 +21,7 @@
 
 import groovy.xml.XmlSlurper
 import groovy.cli.commons.CliBuilder
+import groovy.json.JsonSlurper
 import java.util.regex.Pattern
 import java.util.regex.Matcher
 
@@ -213,6 +214,47 @@ if (commonRules.isEmpty()) {
     writer.writeLine("|----------|------|--------------|--------------|------------|------------|--------------|")
     commonRules.sort { it.key }.each { rule ->
         writer.writeLine("| ${rule.key} | ${rule.name} | ${rule.oldPriority} | ${rule.newSeverity} | ${rule.oldStatus ?: 'Active'} | ${rule.newStatus ?: 'Active'} | ${rule.alternative} |")
+    }
+}
+
+// Check for skipped rules information
+def oldRulesDir = new File(oldRulesPath).getParentFile() ?: new File(".")
+def skippedJavaRulesFile = new File(oldRulesDir, "skipped-java-rules.json")
+def skippedKotlinRulesFile = new File(oldRulesDir, "skipped-kotlin-rules.json")
+def skippedRules = []
+
+// Read skipped Java rules if file exists
+if (skippedJavaRulesFile.exists()) {
+    try {
+        def jsonSlurper = new JsonSlurper()
+        def skippedJavaRules = jsonSlurper.parse(skippedJavaRulesFile)
+        skippedRules.addAll(skippedJavaRules.rules)
+        println "Found ${skippedJavaRules.count} skipped Java rules"
+    } catch (Exception e) {
+        println "Warning: Error reading skipped Java rules file: ${e.message}"
+    }
+}
+
+// Read skipped Kotlin rules if file exists
+if (skippedKotlinRulesFile.exists()) {
+    try {
+        def jsonSlurper = new JsonSlurper()
+        def skippedKotlinRules = jsonSlurper.parse(skippedKotlinRulesFile)
+        skippedRules.addAll(skippedKotlinRules.rules)
+        println "Found ${skippedKotlinRules.count} skipped Kotlin rules"
+    } catch (Exception e) {
+        println "Warning: Error reading skipped Kotlin rules file: ${e.message}"
+    }
+}
+
+// Add skipped rules section if any skipped rules were found
+if (!skippedRules.isEmpty()) {
+    writer.writeLine("\n## Skipped Deprecated Rules")
+    writer.writeLine("The following deprecated rules were skipped because they reference other rules (they are renamed):")
+    writer.writeLine("\n| Rule Name | References | Category |")
+    writer.writeLine("|-----------|------------|----------|")
+    skippedRules.sort { it.name }.each { rule ->
+        writer.writeLine("| ${rule.name} | ${rule.ref} | ${rule.category} |")
     }
 }
 

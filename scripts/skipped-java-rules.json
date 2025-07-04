@@ -1,0 +1,86 @@
+{
+    "language": "Java",
+    "count": 10,
+    "rules": [
+        {
+            "name": "DefaultLabelNotLastInSwitchStmt",
+            "ref": "DefaultLabelNotLastInSwitch",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "DefaultLabelNotLastInSwitchStmt"
+        },
+        {
+            "name": "JUnit4TestShouldUseAfterAnnotation",
+            "ref": "UnitTestShouldUseAfterAnnotation",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnit4TestShouldUseAfterAnnotation"
+        },
+        {
+            "name": "JUnit4TestShouldUseBeforeAnnotation",
+            "ref": "UnitTestShouldUseBeforeAnnotation",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnit4TestShouldUseBeforeAnnotation"
+        },
+        {
+            "name": "JUnit4TestShouldUseTestAnnotation",
+            "ref": "UnitTestShouldUseTestAnnotation",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnit4TestShouldUseTestAnnotation"
+        },
+        {
+            "name": "JUnitAssertionsShouldIncludeMessage",
+            "ref": "UnitTestAssertionsShouldIncludeMessage",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnitAssertionsShouldIncludeMessage"
+        },
+        {
+            "name": "JUnitTestContainsTooManyAsserts",
+            "ref": "UnitTestContainsTooManyAsserts",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnitTestContainsTooManyAsserts"
+        },
+        {
+            "name": "JUnitTestsShouldIncludeAssert",
+            "ref": "UnitTestShouldIncludeAssert",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "JUnitTestsShouldIncludeAssert"
+        },
+        {
+            "name": "NonCaseLabelInSwitchStatement",
+            "ref": "NonCaseLabelInSwitch",
+            "category": "errorprone",
+            "categoryFile": "category/java/errorprone.xml",
+            "since": "",
+            "message": "NonCaseLabelInSwitchStatement"
+        },
+        {
+            "name": "SwitchStmtsShouldHaveDefault",
+            "ref": "NonExhaustiveSwitch",
+            "category": "bestpractices",
+            "categoryFile": "category/java/bestpractices.xml",
+            "since": "",
+            "message": "SwitchStmtsShouldHaveDefault"
+        },
+        {
+            "name": "TooFewBranchesForASwitchStatement",
+            "ref": "TooFewBranchesForSwitch",
+            "category": "performance",
+            "categoryFile": "category/java/performance.xml",
+            "since": "",
+            "message": "TooFewBranchesForASwitchStatement"
+        }
+    ]
+}

@@ -3,9 +3,9 @@ _Do not edit this generated file._
 
 ## Summary
 - Total rules in old version: 206
-- Total rules in new version: 291
+- Total rules in new version: 281
 - Rules removed: 6
-- Rules added: 91
+- Rules added: 81
 - Rules unchanged: 200
 
 ## Removed Rules
@@ -41,7 +41,6 @@ The following rules have been added in the new version:
 | ControlStatementBraces | Control statement braces | MAJOR | Active |
 | DataClass | Data class | MAJOR | Active |
 | DefaultLabelNotLastInSwitch | Default label not last in switch | MAJOR | Active |
-| DefaultLabelNotLastInSwitchStmt | Default label not last in switch stmt | MAJOR | DEPRECATED |
 | DetachedTestCase | Detached test case | MAJOR | Active |
 | DoNotExtendJavaLangThrowable | Do not extend java lang throwable | MAJOR | Active |
 | DoNotTerminateVM | Do not terminate VM | MAJOR | Active |
@@ -62,15 +61,9 @@ The following rules have been added in the new version:
 | InvalidJavaBean | Invalid java bean | MAJOR | Active |
 | InvalidLogMessageFormat | Invalid log message format | INFO | Active |
 | JUnit4SuitesShouldUseSuiteAnnotation | JUnit4suites should use suite annotation | MAJOR | Active |
-| JUnit4TestShouldUseAfterAnnotation | JUnit4test should use after annotation | MAJOR | DEPRECATED |
-| JUnit4TestShouldUseBeforeAnnotation | JUnit4test should use before annotation | MAJOR | DEPRECATED |
-| JUnit4TestShouldUseTestAnnotation | JUnit4test should use test annotation | MAJOR | DEPRECATED |
 | JUnit5TestShouldBePackagePrivate | JUnit5test should be package private | MAJOR | Active |
-| JUnitAssertionsShouldIncludeMessage | JUnit assertions should include message | MAJOR | DEPRECATED |
 | JUnitSpelling | JUnit spelling | MAJOR | Active |
 | JUnitStaticSuite | JUnit static suite | MAJOR | Active |
-| JUnitTestContainsTooManyAsserts | JUnit test contains too many asserts | MAJOR | DEPRECATED |
-| JUnitTestsShouldIncludeAssert | JUnit tests should include assert | MAJOR | DEPRECATED |
 | JUnitUseExpected | JUnit use expected | MAJOR | Active |
 | LambdaCanBeMethodReference | Lambda can be method reference | MAJOR | Active |
 | LinguisticNaming | Linguistic naming | MAJOR | Active |
@@ -81,15 +74,12 @@ The following rules have been added in the new version:
 | MutableStaticState | Mutable static state | MAJOR | Active |
 | NcssCount | Ncss count | MAJOR | Active |
 | NonCaseLabelInSwitch | Non case label in switch | MAJOR | Active |
-| NonCaseLabelInSwitchStatement | Non case label in switch statement | MAJOR | DEPRECATED |
 | NonExhaustiveSwitch | Non exhaustive switch | MAJOR | Active |
 | NonSerializableClass | Non serializable class | MAJOR | Active |
 | PrimitiveWrapperInstantiation | Primitive wrapper instantiation | MAJOR | Active |
 | ReturnEmptyCollectionRatherThanNull | Return empty collection rather than null | BLOCKER | Active |
 | SimplifiableTestAssertion | Simplifiable test assertion | MAJOR | Active |
-| SwitchStmtsShouldHaveDefault | Switch stmts should have default | MAJOR | DEPRECATED |
 | TestClassWithoutTestCases | Test class without test cases | MAJOR | Active |
-| TooFewBranchesForASwitchStatement | Too few branches for ASwitch statement | MAJOR | DEPRECATED |
 | TooFewBranchesForSwitch | Too few branches for switch | MAJOR | Active |
 | UnitTestAssertionsShouldIncludeMessage | Unit test assertions should include message | MAJOR | Active |
 | UnitTestContainsTooManyAsserts | Unit test contains too many asserts | MAJOR | Active |
@@ -323,4 +313,20 @@ The following rules exist in both versions:
 | UselessQualifiedThis | Useless qualified this | MAJOR | MAJOR | Active | Active |  |
 | UselessStringValueOf | Useless string value of | MINOR | MAJOR | DEPRECATED | Active | [S1153](https://rules.sonarsource.com/java/RSPEC-1153) |
 
-Report generated on Fri Jul 04 16:18:02 CEST 2025
+## Skipped Deprecated Rules
+The following deprecated rules were skipped because they reference other rules (they are renamed):
+
+| Rule Name | References | Category |
+|-----------|------------|----------|
+| DefaultLabelNotLastInSwitchStmt | DefaultLabelNotLastInSwitch | bestpractices |
+| JUnit4TestShouldUseAfterAnnotation | UnitTestShouldUseAfterAnnotation | bestpractices |
+| JUnit4TestShouldUseBeforeAnnotation | UnitTestShouldUseBeforeAnnotation | bestpractices |
+| JUnit4TestShouldUseTestAnnotation | UnitTestShouldUseTestAnnotation | bestpractices |
+| JUnitAssertionsShouldIncludeMessage | UnitTestAssertionsShouldIncludeMessage | bestpractices |
+| JUnitTestContainsTooManyAsserts | UnitTestContainsTooManyAsserts | bestpractices |
+| JUnitTestsShouldIncludeAssert | UnitTestShouldIncludeAssert | bestpractices |
+| NonCaseLabelInSwitchStatement | NonCaseLabelInSwitch | errorprone |
+| SwitchStmtsShouldHaveDefault | NonExhaustiveSwitch | bestpractices |
+| TooFewBranchesForASwitchStatement | TooFewBranchesForSwitch | performance |
+
+Report generated on Fri Jul 04 17:36:02 CEST 2025

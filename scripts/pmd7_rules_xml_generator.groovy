@@ -2,6 +2,7 @@
 @Grab('net.sourceforge.pmd:pmd-kotlin:7.15.0')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
+import groovy.json.JsonBuilder
 import java.util.zip.ZipFile
 import java.util.regex.Pattern
 import java.util.regex.Matcher
@@ -1225,6 +1226,27 @@ ${language} rules by category:"""
             rulesWithDeprecatedAndRef.each { rule ->
                 println "  - ${rule.name} (ref: ${rule.ref})"
             }
+
+            // Generate JSON file with skipped rules information
+            def skippedRulesData = [
+                language: language,
+                count: skippedRules,
+                rules: rulesWithDeprecatedAndRef.collect { rule ->
+                    [
+                        name: rule.name,
+                        ref: rule.ref,
+                        category: rule.category,
+                        categoryFile: rule.categoryFile,
+                        since: rule.since,
+                        message: rule.message
+                    ]
+                }
+            ]
+
+            def jsonBuilder = new JsonBuilder(skippedRulesData)
+            def skippedRulesFile = new File(outputFile.getParentFile(), "skipped-${language.toLowerCase()}-rules.json")
+            skippedRulesFile.write(jsonBuilder.toPrettyString())
+            println "Generated skipped rules information in ${skippedRulesFile.absolutePath}"
         }
 
         return true
