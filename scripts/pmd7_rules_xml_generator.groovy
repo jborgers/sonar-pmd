@@ -1056,30 +1056,6 @@ def escapeForCdata = { text ->
     return text.replaceAll(/\]\]>/, "]]]]><![CDATA[>")
 }
 
-// Helper function to generate a fallback description based on rule name and category
-def generateFallbackDescription = { ruleName, category ->
-    def categoryDescriptions = [
-        'bestpractices': 'coding best practices',
-        'codestyle': 'code style and formatting',
-        'design': 'design and architecture',
-        'documentation': 'documentation standards',
-        'errorprone': 'error-prone constructs',
-        'multithreading': 'multithreading and concurrency',
-        'performance': 'performance optimization',
-        'security': 'security vulnerabilities'
-    ]
-
-    def categoryDesc = categoryDescriptions[category] ?: 'code quality'
-
-    // Convert camelCase rule name to readable format
-    def readableName = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-
-    return """Problem: This rule identifies issues related to ${categoryDesc}.
-
-Solution: Review the flagged code and apply the recommended practices to improve code quality.
-
-The rule "${readableName}" helps maintain better code standards in the ${category} category."""
-}
 
 // Helper function to format description with examples using MdToHtmlConverter
 def formatDescription = { ruleData ->
@@ -1087,9 +1063,9 @@ def formatDescription = { ruleData ->
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
 
-    // If no description exists, generate a fallback
+    // If no description exists, log warning, do not add rule
     if (!description || description.trim().isEmpty()) {
-        description = generateFallbackDescription(ruleData.name, ruleData.category)
+        // report with println and skip processing
     }
 
     // Build markdown content
@@ -1129,6 +1105,8 @@ def formatDescription = { ruleData ->
 // Function to generate XML file
 def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
+    def skippedRules = 0
+    def rulesWithDeprecatedAndRef = []
 
     try {
         // Generate XML file
@@ -1141,6 +1119,13 @@ def generateXmlFile = { outputFile, rules, language ->
 
             xml.rules {
                 rules.sort { it.name }.each { ruleData ->
+                    // Skip rules with deprecated=true and ref attribute
+                    if (ruleData.deprecated && ruleData.ref) {
+                        skippedRules++
+                        rulesWithDeprecatedAndRef << ruleData
+                        return // Skip this rule
+                    }
+
                     rule {
                         key(ruleData.name)
                         name(camelCaseToReadable(ruleData.name))
@@ -1151,7 +1136,7 @@ def generateXmlFile = { outputFile, rules, language ->
                         description {
                             def descContent = formatDescription(ruleData)
                             if (!descContent || descContent.trim().isEmpty()) {
-                                descContent = MdToHtmlConverter.convertToHtml(generateFallbackDescription(ruleData.name, ruleData.category))
+                                descContent = MdToHtmlConverter.convertToHtml("THIS SHOULD NOT HAPPEN")
                                 rulesWithoutDescription++
                             }
                             mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
@@ -1201,6 +1186,7 @@ Successfully generated ${outputFile.name}
 Total ${language} rules: ${rules.size()}
 Active ${language} rules: ${activeRules}
 Deprecated ${language} rules: ${deprecatedRules}
+${skippedRules > 0 ? "Skipped ${language} rules (deprecated with ref): ${skippedRules}" : ""}
 ${rulesWithoutDescription > 0 ? "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}" : ""}
 Using camelCase transformation for all rule names
 
@@ -1231,6 +1217,14 @@ ${language} rules by category:"""
             }
         } else {
             println "\n✓ All ${language} rules have descriptions"
+        }
+
+        // Print warnings for skipped rules with deprecated=true and ref attribute
+        if (skippedRules > 0) {
+            println "\nWARNING: Skipped ${skippedRules} ${language} rules with deprecated=true and ref attribute:"
+            rulesWithDeprecatedAndRef.each { rule ->
+                println "  - ${rule.name} (ref: ${rule.ref})"
+            }
         }
 
         return true

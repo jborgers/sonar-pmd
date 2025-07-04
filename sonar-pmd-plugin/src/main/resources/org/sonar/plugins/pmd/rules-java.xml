@@ -2229,18 +2229,6 @@ into the former client classes.</p>
     <tag>bestpractices</tag>
   </rule>
   <rule>
-    <key>DefaultLabelNotLastInSwitchStmt</key>
-    <name>Default label not last in switch stmt</name>
-    <internalKey>category/java/bestpractices.xml/DefaultLabelNotLastInSwitchStmt</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "Default Label Not Last In Switch Stmt" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
     <key>DetachedTestCase</key>
     <name>Detached test case</name>
     <internalKey>category/java/errorprone.xml/DetachedTestCase</internalKey>
@@ -3449,42 +3437,6 @@ through the @RunWith(Suite.class) annotation.</p>
     <tag>bestpractices</tag>
   </rule>
   <rule>
-    <key>JUnit4TestShouldUseAfterAnnotation</key>
-    <name>JUnit4test should use after annotation</name>
-    <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseAfterAnnotation</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit4 Test Should Use After Annotation" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
-    <key>JUnit4TestShouldUseBeforeAnnotation</key>
-    <name>JUnit4test should use before annotation</name>
-    <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseBeforeAnnotation</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit4 Test Should Use Before Annotation" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
-    <key>JUnit4TestShouldUseTestAnnotation</key>
-    <name>JUnit4test should use test annotation</name>
-    <internalKey>category/java/bestpractices.xml/JUnit4TestShouldUseTestAnnotation</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit4 Test Should Use Test Annotation" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
     <key>JUnit5TestShouldBePackagePrivate</key>
     <name>JUnit5test should be package private</name>
     <internalKey>category/java/bestpractices.xml/JUnit5TestShouldBePackagePrivate</internalKey>
@@ -3510,18 +3462,6 @@ is a good practice to limit their visibility.</p>
      void testGood() { } // package private as expected
  }</code></pre></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#junit5testshouldbepackageprivate">Full documentation</a></p>]]></description>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
-    <key>JUnitAssertionsShouldIncludeMessage</key>
-    <name>JUnit assertions should include message</name>
-    <internalKey>category/java/bestpractices.xml/JUnitAssertionsShouldIncludeMessage</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit Assertions Should Include Message" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -3566,30 +3506,6 @@ is a good practice to limit their visibility.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#junitstaticsuite">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
-  </rule>
-  <rule>
-    <key>JUnitTestContainsTooManyAsserts</key>
-    <name>JUnit test contains too many asserts</name>
-    <internalKey>category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit Test Contains Too Many Asserts" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
-    <key>JUnitTestsShouldIncludeAssert</key>
-    <name>JUnit tests should include assert</name>
-    <internalKey>category/java/bestpractices.xml/JUnitTestsShouldIncludeAssert</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "J Unit Tests Should Include Assert" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
   </rule>
   <rule>
     <key>JUnitUseExpected</key>
@@ -4334,18 +4250,6 @@ This is legal, but confusing. It is easy to mix up the case labels and the non-c
    }
  }</code></pre></p></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#noncaselabelinswitch">Full documentation</a></p>]]></description>
-    <tag>pmd</tag>
-    <tag>errorprone</tag>
-  </rule>
-  <rule>
-    <key>NonCaseLabelInSwitchStatement</key>
-    <name>Non case label in switch statement</name>
-    <internalKey>category/java/errorprone.xml/NonCaseLabelInSwitchStatement</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to error-prone constructs.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "Non Case Label In Switch Statement" helps maintain better code standards in the errorprone category.</p></p>]]></description>
-    <status>DEPRECATED</status>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -5400,18 +5304,6 @@ on the switch variable.</p>
     <tag>design</tag>
   </rule>
   <rule>
-    <key>SwitchStmtsShouldHaveDefault</key>
-    <name>Switch stmts should have default</name>
-    <internalKey>category/java/bestpractices.xml/SwitchStmtsShouldHaveDefault</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to coding best practices.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "Switch Stmts Should Have Default" helps maintain better code standards in the bestpractices category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>bestpractices</tag>
-  </rule>
-  <rule>
     <key>SystemPrintln</key>
     <name>System println</name>
     <internalKey>category/java/bestpractices.xml/SystemPrintln</internalKey>
@@ -5454,18 +5346,6 @@ by name, set this property to an empty string.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#testclasswithouttestcases">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
-  </rule>
-  <rule>
-    <key>TooFewBranchesForASwitchStatement</key>
-    <name>Too few branches for ASwitch statement</name>
-    <internalKey>category/java/performance.xml/TooFewBranchesForASwitchStatement</internalKey>
-    <severity>MAJOR</severity>
-    <description><![CDATA[<p><p><b>Problem:</b> This rule identifies issues related to performance optimization.</p></p>
-<p><p><b>Solution:</b> Review the flagged code and apply the recommended practices to improve code quality.</p>
-<p>The rule "Too Few Branches For A Switch Statement" helps maintain better code standards in the performance category.</p></p>]]></description>
-    <status>DEPRECATED</status>
-    <tag>pmd</tag>
-    <tag>performance</tag>
   </rule>
   <rule>
     <key>TooFewBranchesForSwitch</key>
