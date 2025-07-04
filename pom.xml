@@ -62,26 +62,6 @@
     </developer>
   </developers>
 
-  <repositories>
-    <repository>
-      <id>central-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      <releases><enabled>false</enabled></releases>
-      <snapshots><enabled>true</enabled></snapshots>
-    </repository>
-  </repositories>
-
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
     <!-- use -Drevision=x.y.z to override in build -->
     <!-- use .mvn/maven.config to update to the current next release SNAPSHOT version -->
@@ -374,14 +354,12 @@
 
       <!-- Release relevant plugins -->
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.7.0</version>
         <extensions>true</extensions>
         <configuration>
-          <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
-          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          <autoPublish>false</autoPublish>
         </configuration>
       </plugin>
       <plugin>
