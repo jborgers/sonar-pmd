@@ -2,11 +2,11 @@
 _Do not edit this generated file._
 
 ## Summary
-- Total rules in old version: 219
+- Total rules in old version: 206
 - Total rules in new version: 291
 - Rules removed: 6
-- Rules added: 78
-- Rules unchanged: 213
+- Rules added: 91
+- Rules unchanged: 200
 
 ## Removed Rules
 The following rules have been removed in the new version:
@@ -61,13 +61,17 @@ The following rules have been added in the new version:
 | InsecureCryptoIv | Insecure crypto iv | MAJOR | Active |
 | InvalidJavaBean | Invalid java bean | MAJOR | Active |
 | InvalidLogMessageFormat | Invalid log message format | INFO | Active |
+| JUnit4SuitesShouldUseSuiteAnnotation | JUnit4suites should use suite annotation | MAJOR | Active |
 | JUnit4TestShouldUseAfterAnnotation | JUnit4test should use after annotation | MAJOR | DEPRECATED |
 | JUnit4TestShouldUseBeforeAnnotation | JUnit4test should use before annotation | MAJOR | DEPRECATED |
 | JUnit4TestShouldUseTestAnnotation | JUnit4test should use test annotation | MAJOR | DEPRECATED |
 | JUnit5TestShouldBePackagePrivate | JUnit5test should be package private | MAJOR | Active |
 | JUnitAssertionsShouldIncludeMessage | JUnit assertions should include message | MAJOR | DEPRECATED |
+| JUnitSpelling | JUnit spelling | MAJOR | Active |
+| JUnitStaticSuite | JUnit static suite | MAJOR | Active |
 | JUnitTestContainsTooManyAsserts | JUnit test contains too many asserts | MAJOR | DEPRECATED |
 | JUnitTestsShouldIncludeAssert | JUnit tests should include assert | MAJOR | DEPRECATED |
+| JUnitUseExpected | JUnit use expected | MAJOR | Active |
 | LambdaCanBeMethodReference | Lambda can be method reference | MAJOR | Active |
 | LinguisticNaming | Linguistic naming | MAJOR | Active |
 | LiteralsFirstInComparisons | Literals first in comparisons | MAJOR | Active |
@@ -82,10 +86,19 @@ The following rules have been added in the new version:
 | NonSerializableClass | Non serializable class | MAJOR | Active |
 | PrimitiveWrapperInstantiation | Primitive wrapper instantiation | MAJOR | Active |
 | ReturnEmptyCollectionRatherThanNull | Return empty collection rather than null | BLOCKER | Active |
+| SimplifiableTestAssertion | Simplifiable test assertion | MAJOR | Active |
 | SwitchStmtsShouldHaveDefault | Switch stmts should have default | MAJOR | DEPRECATED |
+| TestClassWithoutTestCases | Test class without test cases | MAJOR | Active |
 | TooFewBranchesForASwitchStatement | Too few branches for ASwitch statement | MAJOR | DEPRECATED |
 | TooFewBranchesForSwitch | Too few branches for switch | MAJOR | Active |
+| UnitTestAssertionsShouldIncludeMessage | Unit test assertions should include message | MAJOR | Active |
+| UnitTestContainsTooManyAsserts | Unit test contains too many asserts | MAJOR | Active |
+| UnitTestShouldIncludeAssert | Unit test should include assert | MAJOR | Active |
+| UnitTestShouldUseAfterAnnotation | Unit test should use after annotation | MAJOR | Active |
+| UnitTestShouldUseBeforeAnnotation | Unit test should use before annotation | MAJOR | Active |
+| UnitTestShouldUseTestAnnotation | Unit test should use test annotation | MAJOR | Active |
 | UnnecessaryAnnotationValueElement | Unnecessary annotation value element | MAJOR | Active |
+| UnnecessaryBooleanAssertion | Unnecessary boolean assertion | MAJOR | Active |
 | UnnecessaryBoxing | Unnecessary boxing | MAJOR | Active |
 | UnnecessaryCast | Unnecessary cast | MAJOR | Active |
 | UnnecessaryImport | Unnecessary import | MINOR | Active |
@@ -212,10 +225,6 @@ The following rules exist in both versions:
 | InefficientStringBuffering | Inefficient string buffering | MAJOR | MAJOR | Active | Active |  |
 | InstantiationToGetClass | Instantiation to get class | MAJOR | MINOR | DEPRECATED | Active | [S2133](https://rules.sonarsource.com/java/RSPEC-2133) |
 | InsufficientStringBufferDeclaration | Insufficient string buffer declaration | MAJOR | MAJOR | Active | Active |  |
-| JUnit4SuitesShouldUseSuiteAnnotation | JUnit4suites should use suite annotation | MAJOR | MAJOR | Active | Active |  |
-| JUnitSpelling | JUnit spelling | MAJOR | MAJOR | Active | Active |  |
-| JUnitStaticSuite | JUnit static suite | MAJOR | MAJOR | Active | Active |  |
-| JUnitUseExpected | JUnit use expected | MAJOR | MAJOR | Active | Active |  |
 | JumbledIncrementer | Jumbled incrementer | MAJOR | MAJOR | DEPRECATED | Active | `java:ForLoopCounterChangedCheck` |
 | LawOfDemeter | Law of demeter | MAJOR | MAJOR | Active | Active |  |
 | LocalHomeNamingConvention | Local home naming convention | MAJOR | MINOR | Active | Active |  |
@@ -259,7 +268,6 @@ The following rules exist in both versions:
 | ShortVariable | Short variable | MAJOR | MAJOR | DEPRECATED | Active | [S117](https://rules.sonarsource.com/java/RSPEC-117) |
 | SignatureDeclareThrowsException | Signature declare throws exception | MAJOR | MAJOR | DEPRECATED | Active | [S112](https://rules.sonarsource.com/java/RSPEC-112) |
 | SimpleDateFormatNeedsLocale | Simple date format needs locale | MAJOR | MAJOR | Active | Active |  |
-| SimplifiableTestAssertion | Simplifiable test assertion | MAJOR | MAJOR | Active | Active |  |
 | SimplifiedTernary | Simplified ternary | MAJOR | MAJOR | Active | Active |  |
 | SimplifyBooleanExpressions | Simplify boolean expressions | MAJOR | MAJOR | DEPRECATED | Active | [S1125](https://rules.sonarsource.com/java/RSPEC-1125) |
 | SimplifyBooleanReturns | Simplify boolean returns | MINOR | MAJOR | DEPRECATED | Active | [S1126](https://rules.sonarsource.com/java/RSPEC-1126) |
@@ -276,20 +284,12 @@ The following rules exist in both versions:
 | SuspiciousOctalEscape | Suspicious octal escape | MAJOR | MAJOR | Active | Active |  |
 | SwitchDensity | Switch density | MAJOR | MAJOR | DEPRECATED | Active | [S1151](https://rules.sonarsource.com/java/RSPEC-1151) |
 | SystemPrintln | System println | MAJOR | CRITICAL | DEPRECATED | Active | [S106](https://rules.sonarsource.com/java/RSPEC-106) |
-| TestClassWithoutTestCases | Test class without test cases | MAJOR | MAJOR | Active | Active |  |
 | TooManyFields | Too many fields | MAJOR | MAJOR | Active | Active |  |
 | TooManyMethods | Too many methods | MAJOR | MAJOR | DEPRECATED | Active | [S1448](https://rules.sonarsource.com/java/RSPEC-1448) |
 | TooManyStaticImports | Too many static imports | MAJOR | MAJOR | Active | Active |  |
 | UncommentedEmptyConstructor | Uncommented empty constructor | MAJOR | MAJOR | DEPRECATED | Active | [S2094](https://rules.sonarsource.com/java/RSPEC-2094) |
 | UncommentedEmptyMethodBody | Uncommented empty method body | MAJOR | MAJOR | DEPRECATED | Active | [S1186](https://rules.sonarsource.com/java/RSPEC-1186) |
 | UnconditionalIfStatement | Unconditional if statement | CRITICAL | MAJOR | DEPRECATED | Active | [S2583](https://rules.sonarsource.com/java/RSPEC-2583) |
-| UnitTestAssertionsShouldIncludeMessage | Unit test assertions should include message | MINOR | MAJOR | Active | Active |  |
-| UnitTestContainsTooManyAsserts | Unit test contains too many asserts | MAJOR | MAJOR | Active | Active |  |
-| UnitTestShouldIncludeAssert | Unit test should include assert | MAJOR | MAJOR | Active | Active |  |
-| UnitTestShouldUseAfterAnnotation | Unit test should use after annotation | MAJOR | MAJOR | Active | Active |  |
-| UnitTestShouldUseBeforeAnnotation | Unit test should use before annotation | MAJOR | MAJOR | Active | Active |  |
-| UnitTestShouldUseTestAnnotation | Unit test should use test annotation | MAJOR | MAJOR | Active | Active |  |
-| UnnecessaryBooleanAssertion | Unnecessary boolean assertion | MINOR | MAJOR | Active | Active |  |
 | UnnecessaryCaseChange | Unnecessary case change | MINOR | MAJOR | DEPRECATED | Active | [S1157](https://rules.sonarsource.com/java/RSPEC-1157) |
 | UnnecessaryConstructor | Unnecessary constructor | MAJOR | MAJOR | DEPRECATED | Active | [S1186](https://rules.sonarsource.com/java/RSPEC-1186) |
 | UnnecessaryConversionTemporary | Unnecessary conversion temporary | MAJOR | MAJOR | DEPRECATED | Active | [S1158](https://rules.sonarsource.com/java/RSPEC-1158) |
@@ -323,4 +323,4 @@ The following rules exist in both versions:
 | UselessQualifiedThis | Useless qualified this | MAJOR | MAJOR | Active | Active |  |
 | UselessStringValueOf | Useless string value of | MINOR | MAJOR | DEPRECATED | Active | [S1153](https://rules.sonarsource.com/java/RSPEC-1153) |
 
-Report generated on Fri Jul 04 16:02:29 CEST 2025
+Report generated on Fri Jul 04 16:18:02 CEST 2025
