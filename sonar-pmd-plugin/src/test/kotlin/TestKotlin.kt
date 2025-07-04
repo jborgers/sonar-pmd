@@ -1,3 +1,3 @@
-fun a(): Int { 1 }
+fun a(): Int { return 1 }
 
-fun abc(): Int { 2 }
+fun abc(): Int { return 2 }

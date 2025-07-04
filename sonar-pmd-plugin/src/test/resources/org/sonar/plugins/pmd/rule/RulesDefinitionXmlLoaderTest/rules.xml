@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <rule>
+    <key>complete</key>
+    <name>Complete</name>
+    <description>Description of Complete</description>
+    <internalKey>Checker/TreeWalker/LocalVariableName</internalKey>
+    <severity>BLOCKER</severity>
+    <type>BUG</type>
+    <status>BETA</status>
+    <tag>misra</tag>
+    <tag>spring</tag>
+    <cardinality>MULTIPLE</cardinality>
+    <param>
+      <key>ignore</key>
+      <description>Ignore ?</description>
+      <defaultValue>false</defaultValue>
+    </param>
+    <param>
+      <key>format</key>
+      <description>Format</description>
+      <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
+    </param>
+  </rule>
+  <rule>
+    <key>minimal</key>
+    <name>Minimal</name>
+    <description>Description of Minimal</description>
+    <type>CODE_SMELL</type>
+  </rule>
+</rules>

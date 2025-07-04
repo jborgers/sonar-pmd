@@ -1,0 +1,1783 @@
+<rules>
+
+  <rule key="DontCallThreadRun">
+    <priority>MAJOR</priority>
+    <configKey>category/java/multithreading.xml/DontCallThreadRun</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="GuardDebugLogging">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/GuardLogStatement</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="GenericsNaming">
+    <priority>MAJOR</priority>
+    <tag>naming</tag>
+    <configKey>category/java/codestyle.xml/GenericsNaming</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidCatchingGenericException">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/AvoidCatchingGenericException</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidLosingExceptionInformation">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/AvoidLosingExceptionInformation</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidLiteralsInIfCondition">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidLiteralsInIfCondition</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UseConcurrentHashMap">
+    <priority>MAJOR</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/UseConcurrentHashMap</configKey>
+  </rule>
+
+  <rule key="DoNotHardCodeSDCard">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/DoNotHardCodeSDCard</configKey>
+  </rule>
+
+  <rule key="AvoidThrowingNewInstanceOfSameException">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/AvoidThrowingNewInstanceOfSameException</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="CallSuperFirst">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CallSuperFirst</configKey>
+  </rule>
+
+  <rule key="CallSuperLast">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CallSuperLast</configKey>
+  </rule>
+
+  <!--  <rule key="EmptyInitializer">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyInitializer</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="CyclomaticComplexity">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/CyclomaticComplexity</configKey>
+    <param key="classReportLevel" type="INTEGER">
+      <defaultValue>80</defaultValue>
+    </param>
+    <param key="methodReportLevel" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidStringBufferField">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/AvoidStringBufferField</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DoNotThrowExceptionInFinally">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/DoNotThrowExceptionInFinally</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="TooManyMethods">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/TooManyMethods</configKey>
+    <param key="maxmethods" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="ReturnEmptyArrayRatherThanNull">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/ReturnEmptyArrayRatherThanNull</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=TooFewBranchesForSwitch] is empty" -->
+  <!--  <rule key="TooFewBranchesForSwitch">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/TooFewBranchesForSwitch</configKey>-->
+  <!--    <param key="minimumNumberCaseForASwitch" type="INTEGER">-->
+  <!--      <defaultValue>3</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="AbstractClassWithoutAnyMethod">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/AbstractClassWithoutAnyMethod</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DoNotCallGarbageCollectionExplicitly">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/DoNotCallGarbageCollectionExplicitly</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidMultipleUnaryOperators">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidMultipleUnaryOperators</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DoubleCheckedLocking">
+    <priority>MAJOR</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/DoubleCheckedLocking</configKey>
+  </rule>
+
+  <rule key="NPathComplexity">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/NPathComplexity</configKey>
+    <!-- missing description?    <param key="reportLevel" type="INTEGER">-->
+    <!--      <defaultValue>200</defaultValue>-->
+    <!--    </param>-->
+  </rule>
+
+  <rule key="SimplifyBooleanReturns">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/SimplifyBooleanReturns</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SimplifyBooleanExpressions">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/SimplifyBooleanExpressions</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=TooFewBranchesForSwitch] is empty" -->
+  <!--  <rule key="NonExhaustiveSwitch">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/NonExhaustiveSwitch</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=DefaultLabelNotLastInSwitch] is empty" -->
+  <!--  <rule key="DefaultLabelNotLastInSwitch">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/DefaultLabelNotLastInSwitcht</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="ClassWithOnlyPrivateConstructorsShouldBeFinal">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/ClassWithOnlyPrivateConstructorsShouldBeFinal</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="AvoidFinalLocalVariable">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/AvoidFinalLocalVariable</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="UnnecessaryParentheses">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/UselessParentheses</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="OverrideBothEqualsAndHashcode">
+    <priority>BLOCKER</priority>
+    <tag>bug</tag>
+    <configKey>category/java/errorprone.xml/OverrideBothEqualsAndHashcode</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="UnusedImports">-->
+  <!--    <priority>INFO</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/UnusedImports</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="LocalVariableCouldBeFinal">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/LocalVariableCouldBeFinal</configKey>
+  </rule>
+
+  <!--  <rule key="AbstractNaming">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>naming</tag>-->
+  <!--    <configKey>category/java/codestyle.xml/AbstractNaming</configKey>-->
+  <!--    <param key="strict" type="BOOLEAN">-->
+  <!--      <defaultValue>true</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="NoPackage">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/NoPackage</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="PackageCase">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/PackageCase</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="ByteInstantiation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/ByteInstantiation</configKey>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="ShortInstantiation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/ShortInstantiation</configKey>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="LongInstantiation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/LongInstantiation</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="ProperCloneImplementation">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/ProperCloneImplementation</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="EmptyFinalizer">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/EmptyFinalizer</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="FinalizeOnlyCallsSuperFinalize">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/FinalizeOnlyCallsSuperFinalize</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="FinalizeOverloaded">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/FinalizeOverloaded</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="FinalizeDoesNotCallSuperFinalize">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/FinalizeDoesNotCallSuperFinalize</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="FinalizeShouldBeProtected">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/FinalizeShouldBeProtected</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidCallingFinalize">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidCallingFinalize</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnusedPrivateField">
+    <priority>MAJOR</priority>
+    <tag>unused-code</tag>
+    <configKey>category/java/bestpractices.xml/UnusedPrivateField</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnusedLocalVariable">
+    <priority>MAJOR</priority>
+    <tag>unused-code</tag>
+    <configKey>category/java/bestpractices.xml/UnusedLocalVariable</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnusedPrivateMethod">
+    <priority>MAJOR</priority>
+    <tag>unused-code</tag>
+    <configKey>category/java/bestpractices.xml/UnusedPrivateMethod</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnusedFormalParameter">
+    <priority>MAJOR</priority>
+    <tag>unused-code</tag>
+    <configKey>category/java/bestpractices.xml/UnusedFormalParameter</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnnecessaryConstructor">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/UnnecessaryConstructor</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="NullAssignment">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/NullAssignment</configKey>
+  </rule>
+
+  <rule key="OnlyOneReturn">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/OnlyOneReturn</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="UnusedModifier">-->
+  <!--    <priority>INFO</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/UnnecessaryModifier</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="AssignmentInOperand">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AssignmentInOperand</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AtLeastOneConstructor">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/AtLeastOneConstructor</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DontImportSun">
+    <priority>MINOR</priority>
+    <configKey>category/java/errorprone.xml/DontImportSun</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SuspiciousOctalEscape">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/SuspiciousOctalEscape</configKey>
+  </rule>
+
+  <rule key="CallSuperInConstructor">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/CallSuperInConstructor</configKey>
+  </rule>
+
+  <rule key="SingularField">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/SingularField</configKey>
+  </rule>
+
+  <!--  <rule key="DefaultPackage">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/DefaultPackage</configKey>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="DataflowAnomalyAnalysis">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/DataflowAnomalyAnalysis</configKey>-->
+  <!--    <param key="maxViolations" type="INTEGER">-->
+  <!--      <defaultValue>100</defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="maxPaths" type="INTEGER">-->
+  <!--      <defaultValue>1000</defaultValue>-->
+  <!--    </param>-->
+  <!--  </rule>-->
+
+  <rule key="CouplingBetweenObjects">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/CouplingBetweenObjects</configKey>
+    <param key="threshold" type="INTEGER">
+      <defaultValue>20</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ExcessiveImports">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/ExcessiveImports</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>30</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="LooseCoupling">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/LooseCoupling</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="MethodArgumentCouldBeFinal">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/MethodArgumentCouldBeFinal</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidInstantiatingObjectsInLoops">
+    <priority>MINOR</priority>
+    <configKey>category/java/performance.xml/AvoidInstantiatingObjectsInLoops</configKey>
+  </rule>
+
+  <rule key="UseArrayListInsteadOfVector">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/UseArrayListInsteadOfVector</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="SimplifyStartsWith">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/SimplifyStartsWith</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="UseStringBufferForStringAppends">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/UseStringBufferForStringAppends</configKey>
+  </rule>
+
+  <rule key="UseArraysAsList">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/UseArraysAsList</configKey>
+  </rule>
+
+  <rule key="AvoidArrayLoops">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/AvoidArrayLoops</configKey>
+  </rule>
+
+  <!--  <rule key="UnnecessaryWrapperObjectCreation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/UnnecessaryWrapperObjectCreation</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UseProperClassLoader">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/UseProperClassLoader</configKey>
+  </rule>
+
+  <rule key="EmptyCatchBlock">
+    <priority>CRITICAL</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/EmptyCatchBlock</configKey>
+    <param key="allowCommentedBlocks" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="EmptyIfStmt">-->
+  <!--    <priority>CRITICAL</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyIfStmt</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="EmptyWhileStmt">-->
+  <!--    <priority>CRITICAL</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyWhileStmt</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="EmptyTryBlock">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyTryBlock</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="EmptyFinallyBlock">-->
+  <!--    <priority>CRITICAL</priority>-->
+  <!--    <tag>error-handling</tag>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyFinallyBlock</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="EmptySwitchStatements">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptySwitchStatements</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="JumbledIncrementer">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/JumbledIncrementer</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ForLoopShouldBeWhileLoop">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/ForLoopShouldBeWhileLoop</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnnecessaryConversionTemporary">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/UnnecessaryConversionTemporary</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ReturnFromFinallyBlock">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/ReturnFromFinallyBlock</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="EmptySynchronizedBlock">-->
+  <!--    <priority>CRITICAL</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptySynchronizedBlock</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UnnecessaryReturn">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/UnnecessaryReturn</configKey>
+  </rule>
+
+  <!--  <rule key="EmptyStaticInitializer">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyInitializer</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UnconditionalIfStatement">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/UnconditionalIfStatement</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="EmptyStatementNotInLoop">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyStatementNotInLoop</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="BooleanInstantiation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/BooleanInstantiation</configKey>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="UnnecessaryFinalModifier">-->
+  <!--    <priority>INFO</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/UnnecessaryModifier</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="CollapsibleIfStatements">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/CollapsibleIfStatements</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UselessOverridingMethod">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/UselessOverridingMethod</configKey>
+    <param key="ignoreAnnotations" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ClassCastExceptionWithToArray">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/ClassCastExceptionWithToArray</configKey>
+  </rule>
+
+  <rule key="AvoidDecimalLiteralsInBigDecimalConstructor">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UselessOperationOnImmutable">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/UselessOperationOnImmutable</configKey>
+  </rule>
+
+  <rule key="MisplacedNullCheck">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/MisplacedNullCheck</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UnusedNullCheckInEquals">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/UnusedNullCheckInEquals</configKey>
+  </rule>
+
+  <rule key="AvoidThreadGroup">
+    <priority>CRITICAL</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/AvoidThreadGroup</configKey>
+  </rule>
+
+  <rule key="BrokenNullCheck">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/BrokenNullCheck</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="BigIntegerInstantiation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/BigIntegerInstantiation</configKey>
+  </rule>
+
+  <rule key="AvoidUsingOctalValues">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidUsingOctalValues</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UseUtilityClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/UseUtilityClass</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidDeeplyNestedIfStmts">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/AvoidDeeplyNestedIfStmts</configKey>
+    <param key="problemDepth" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidReassigningParameters">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/AvoidReassigningParameters</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SwitchDensity">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/SwitchDensity</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ConstructorCallsOverridableMethod">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/ConstructorCallsOverridableMethod</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AccessorClassGeneration">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/AccessorClassGeneration</configKey>
+  </rule>
+
+  <rule key="FinalFieldCouldBeStatic">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/FinalFieldCouldBeStatic</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="CloseResource">
+    <priority>CRITICAL</priority>
+    <tag>bug</tag>
+    <configKey>category/java/errorprone.xml/CloseResource</configKey>
+    <param key="types" type="STRING">
+      <defaultValue>Connection,Statement,ResultSet</defaultValue>
+    </param>
+    <param key="closeTargets" type="STRING">
+      <defaultValue>close</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="NonStaticInitializer">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/NonStaticInitializer</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!-- PMD-7-MIGRATION: disabled due to "Name of rule [repository=pmd, key=NonCaseLabelInSwitch] is empty" -->
+  <!--  <rule key="NonCaseLabelInSwitch">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/NonCaseLabelInSwitch</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="OptimizableToArrayCall">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/OptimizableToArrayCall</configKey>
+  </rule>
+
+  <!--  <rule key="BadComparison">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/BadComparison</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="EqualsNull">
+    <priority>CRITICAL</priority>
+    <tag>bug</tag>
+    <configKey>category/java/errorprone.xml/EqualsNull</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ConfusingTernary">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/ConfusingTernary</configKey>
+  </rule>
+
+  <rule key="InstantiationToGetClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/InstantiationToGetClass</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="IdempotentOperations">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/IdempotentOperations</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SimpleDateFormatNeedsLocale">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/SimpleDateFormatNeedsLocale</configKey>
+  </rule>
+
+  <rule key="ImmutableField">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/ImmutableField</configKey>
+  </rule>
+
+  <rule key="UseLocaleWithCaseConversions">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/UseLocaleWithCaseConversions</configKey>
+  </rule>
+
+  <rule key="AvoidProtectedFieldInFinalClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/AvoidProtectedFieldInFinalClass</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AssignmentToNonFinalStatic">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AssignmentToNonFinalStatic</configKey>
+  </rule>
+
+  <rule key="MissingStaticMethodInNonInstantiatableClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/MissingStaticMethodInNonInstantiatableClass</configKey>
+  </rule>
+
+  <rule key="AvoidSynchronizedAtMethodLevel">
+    <priority>MAJOR</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/AvoidSynchronizedAtMethodLevel</configKey>
+  </rule>
+
+  <!--  <rule key="MissingBreakInSwitch">-->
+  <!--    <priority>CRITICAL</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/MissingBreakInSwitch</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UseNotifyAllInsteadOfNotify">
+    <priority>MAJOR</priority>
+    <configKey>category/java/multithreading.xml/UseNotifyAllInsteadOfNotify</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidInstanceofChecksInCatchClause">
+    <priority>MINOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidInstanceofChecksInCatchClause</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AbstractClassWithoutAbstractMethod">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SimplifyConditional">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/SimplifyConditional</configKey>
+  </rule>
+
+  <rule key="CompareObjectsWithEquals">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CompareObjectsWithEquals</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="PositionLiteralsFirstInComparisons">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/PositionLiteralsFirstInComparisons</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UnnecessaryLocalBeforeReturn">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/UnnecessaryLocalBeforeReturn</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="NonThreadSafeSingleton">
+    <priority>MAJOR</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/NonThreadSafeSingleton</configKey>
+    <param key="checkNonStaticMethods" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="checkNonStaticFields" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UncommentedEmptyMethodBody">
+    <priority>MAJOR</priority>
+    <tag>comment</tag>
+    <configKey>category/java/documentation.xml/UncommentedEmptyMethodBody</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UncommentedEmptyConstructor">
+    <priority>MAJOR</priority>
+    <tag>comment</tag>
+    <configKey>category/java/documentation.xml/UncommentedEmptyConstructor</configKey>
+    <param key="ignoreExplicitConstructorInvocation" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidConstantsInterface">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/ConstantsInInterface</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="UnsynchronizedStaticDateFormatter">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>multithreading</tag>-->
+  <!--    <configKey>category/java/multithreading.xml/UnsynchronizedStaticDateFormatter</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="PreserveStackTrace">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/bestpractices.xml/PreserveStackTrace</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UseCollectionIsEmpty">
+    <priority>MINOR</priority>
+    <configKey>category/java/bestpractices.xml/UseCollectionIsEmpty</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="MethodReturnsInternalArray">
+    <priority>CRITICAL</priority>
+    <tag>security</tag>
+    <configKey>category/java/bestpractices.xml/MethodReturnsInternalArray</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ArrayIsStoredDirectly">
+    <priority>CRITICAL</priority>
+    <tag>security</tag>
+    <configKey>category/java/bestpractices.xml/ArrayIsStoredDirectly</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidCatchingThrowable">
+    <priority>CRITICAL</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/AvoidCatchingThrowable</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SignatureDeclareThrowsException">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/SignatureDeclareThrowsException</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ExceptionAsFlowControl">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/ExceptionAsFlowControl</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidCatchingNPE">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/AvoidCatchingNPE</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidThrowingRawExceptionTypes">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/AvoidThrowingRawExceptionTypes</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidThrowingNullPointerException">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/AvoidThrowingNullPointerException</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidRethrowingException">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/design.xml/AvoidRethrowingException</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="BeanMembersShouldSerialize">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/BeanMembersShouldSerialize</configKey>-->
+  <!--    <param key="prefix" type="STRING">-->
+  <!--      <defaultValue></defaultValue>-->
+  <!--    </param>-->
+  <!--  </rule>-->
+
+  <rule key="MissingSerialVersionUID">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/MissingSerialVersionUID</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="CloneMethodMustImplementCloneable">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/CloneMethodMustImplementCloneable</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="AvoidDuplicateLiterals">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidDuplicateLiterals</configKey>
+    <param key="maxDuplicateLiterals" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+    <param key="skipAnnotations" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="minimumLength" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="StringInstantiation">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/StringInstantiation</configKey>
+  </rule>
+
+  <rule key="StringToString">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/StringToString</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="InefficientStringBuffering">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/InefficientStringBuffering</configKey>
+  </rule>
+
+  <rule key="UnnecessaryCaseChange">
+    <priority>MINOR</priority>
+    <configKey>category/java/errorprone.xml/UnnecessaryCaseChange</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UseStringBufferLength">
+    <priority>MINOR</priority>
+    <configKey>category/java/performance.xml/UseStringBufferLength</configKey>
+  </rule>
+
+  <rule key="AppendCharacterWithChar">
+    <priority>MINOR</priority>
+    <configKey>category/java/performance.xml/AppendCharacterWithChar</configKey>
+  </rule>
+
+  <rule key="ConsecutiveLiteralAppends">
+    <priority>MINOR</priority>
+    <configKey>category/java/performance.xml/ConsecutiveLiteralAppends</configKey>
+    <param key="threshold" type="INTEGER">
+      <defaultValue>1</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="UseIndexOfChar">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/UseIndexOfChar</configKey>
+  </rule>
+
+  <rule key="InefficientEmptyStringCheck">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/InefficientEmptyStringCheck</configKey>
+  </rule>
+
+  <rule key="InsufficientStringBufferDeclaration">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/InsufficientStringBufferDeclaration</configKey>
+  </rule>
+
+  <rule key="UselessStringValueOf">
+    <priority>MINOR</priority>
+    <configKey>category/java/performance.xml/UselessStringValueOf</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="StringBufferInstantiationWithChar">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/StringBufferInstantiationWithChar</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="ExcessiveMethodLength">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/ExcessiveMethodLength</configKey>-->
+  <!--    <param key="minimum" type="INTEGER">-->
+  <!--      <defaultValue>100</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="ExcessiveParameterList">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/ExcessiveParameterList</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>10</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="ExcessiveClassLength">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/ExcessiveClassLength</configKey>-->
+  <!--    <param key="minimum" type="INTEGER">-->
+  <!--      <defaultValue>1000</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="ExcessivePublicCount">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/ExcessivePublicCount</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>45</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="TooManyFields">
+    <priority>MAJOR</priority>
+    <tag>size</tag>
+    <configKey>category/java/design.xml/TooManyFields</configKey>
+    <param key="maxfields" type="INTEGER">
+      <defaultValue>15</defaultValue>
+    </param>
+  </rule>
+
+  <!--  <rule key="NcssMethodCount">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/NcssMethodCount</configKey>-->
+  <!--    <param key="minimum" type="INTEGER">-->
+  <!--      <defaultValue>100</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="NcssTypeCount">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/NcssTypeCount</configKey>-->
+  <!--    <param key="minimum" type="INTEGER">-->
+  <!--      <defaultValue>1500</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="NcssConstructorCount">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/NcssConstructorCount</configKey>-->
+  <!--    <param key="minimum" type="INTEGER">-->
+  <!--      <defaultValue>100</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="DuplicateImports">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/DuplicateImports</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="DontImportJavaLang">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/DontImportJavaLang</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="ImportFromSamePackage">-->
+  <!--    <priority>MINOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/ImportFromSamePackage</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="CloneThrowsCloneNotSupportedException">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/CloneThrowsCloneNotSupportedException</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UseCorrectExceptionLogging">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/errorprone.xml/UseCorrectExceptionLogging</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ProperLogger">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/ProperLogger</configKey>
+    <param key="staticLoggerName" type="STRING">
+      <defaultValue>LOG</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ShortVariable">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/ShortVariable</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="LongVariable">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/LongVariable</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>17</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ShortMethodName">
+    <priority>MAJOR</priority>
+    <tag>convention</tag>
+    <configKey>category/java/codestyle.xml/ShortMethodName</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="VariableNamingConventions">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>naming</tag>-->
+  <!--    <configKey>category/java/codestyle.xml/VariableNamingConventions</configKey>-->
+  <!--    <param key="staticPrefix" type="STRING">-->
+  <!--      <defaultValue></defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="staticSuffix" type="STRING">-->
+  <!--      <defaultValue></defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="memberPrefix" type="STRING">-->
+  <!--      <defaultValue></defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="memberSuffix" type="STRING">-->
+  <!--      <defaultValue></defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="MethodNamingConventions">
+    <priority>MAJOR</priority>
+    <tag>naming</tag>
+    <configKey>category/java/codestyle.xml/MethodNamingConventions</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ClassNamingConventions">
+    <priority>MAJOR</priority>
+    <tag>naming</tag>
+    <configKey>category/java/codestyle.xml/ClassNamingConventions</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidDollarSigns">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/AvoidDollarSigns</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="MethodWithSameNameAsEnclosingClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/MethodWithSameNameAsEnclosingClass</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SuspiciousHashcodeMethodName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/SuspiciousHashcodeMethodName</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="SuspiciousConstantFieldName">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/SuspiciousConstantFieldName</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="SuspiciousEqualsMethodName">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/SuspiciousEqualsMethodName</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidFieldNameMatchingTypeName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidFieldNameMatchingTypeName</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidFieldNameMatchingMethodName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidFieldNameMatchingMethodName</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="MisleadingVariableName">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/MIsLeadingVariableName</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="ReplaceVectorWithList">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/ReplaceVectorWithList</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ReplaceHashtableWithMap">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/ReplaceHashtableWithMap</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="ReplaceEnumerationWithIterator">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/ReplaceEnumerationWithIterator</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidEnumAsIdentifier">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidEnumAsIdentifier</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidAssertAsIdentifier">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidAssertAsIdentifier</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="IntegerInstantiation">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/IntegerInstantiation</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="MoreThanOneLogger">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/MoreThanOneLogger</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="LoggerIsNotStaticFinal">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/LoggerIsNotStaticFinal</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="SystemPrintln">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/SystemPrintln</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidPrintStackTrace">
+    <priority>MAJOR</priority>
+    <tag>error-handling</tag>
+    <configKey>category/java/bestpractices.xml/AvoidPrintStackTrace</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="IfStmtsMustUseBraces">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/IfStmtsMustUseBraces</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="WhileLoopsMustUseBraces">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/WhileLoopsMustUseBraces</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="IfElseStmtsMustUseBraces">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/IfElseStmtsMustUseBraces</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="ForLoopsMustUseBraces">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/ForLoopsMustUseBraces</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="AvoidUsingHardCodedIP">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/AvoidUsingHardCodedIP</configKey>
+    <!--    <param key="checkAddressTypes" type="STRING">-->
+    <!--      <defaultValue>IPv4|IPv6|IPv4 mapped IPv6</defaultValue>-->
+    <!--    </param>-->
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="CheckResultSet">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/CheckResultSet</configKey>
+  </rule>
+
+  <!--  <rule key="AvoidUsingShortType">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/performance.xml/AvoidUsingShortType</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="AvoidUsingVolatile">
+    <priority>MAJOR</priority>
+    <configKey>category/java/multithreading.xml/AvoidUsingVolatile</configKey>
+  </rule>
+
+  <rule key="AvoidUsingNativeCode">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/AvoidUsingNativeCode</configKey>
+  </rule>
+
+  <rule key="AvoidAccessibilityAlteration">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidAccessibilityAlteration</configKey>
+  </rule>
+
+  <rule key="EmptyMethodInAbstractClassShouldBeAbstract">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/EmptyMethodInAbstractClassShouldBeAbstract</configKey>
+  </rule>
+
+  <rule key="TooManyStaticImports">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/TooManyStaticImports</configKey>
+    <param key="maximumStaticImports" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+  </rule>
+
+  <!--  <rule key="DoNotCallSystemExit">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/DoNotCallSystemExit</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="StaticEJBFieldShouldBeFinal">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/StaticEJBFieldShouldBeFinal</configKey>
+  </rule>
+
+  <rule key="DoNotUseThreads">
+    <priority>MAJOR</priority>
+    <tag>multithreading</tag>
+    <configKey>category/java/multithreading.xml/DoNotUseThreads</configKey>
+  </rule>
+
+  <rule key="MDBAndSessionBeanNamingConvention">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/MDBAndSessionBeanNamingConvention</configKey>
+  </rule>
+
+  <rule key="RemoteSessionInterfaceNamingConvention">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/RemoteSessionInterfaceNamingConvention</configKey>
+  </rule>
+
+  <rule key="LocalInterfaceSessionNamingConvention">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/LocalInterfaceSessionNamingConvention</configKey>
+  </rule>
+
+  <rule key="LocalHomeNamingConvention">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/LocalHomeNamingConvention</configKey>
+  </rule>
+
+  <rule key="RemoteInterfaceNamingConvention">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/RemoteInterfaceNamingConvention</configKey>
+  </rule>
+
+  <rule key="UseEqualsToCompareStrings">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/UseEqualsToCompareStrings</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DoNotExtendJavaLangError">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/DoNotExtendJavaLangError</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AddEmptyString">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/AddEmptyString</configKey>
+  </rule>
+
+  <rule key="BooleanGetMethodName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/BooleanGetMethodName</configKey>
+    <param key="checkParameterizedMethods" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="AvoidBranchingStatementAsLastInLoop">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop</configKey>
+  </rule>
+
+  <rule key="CheckSkipResult">
+    <priority>MINOR</priority>
+    <configKey>category/java/errorprone.xml/CheckSkipResult</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="DontUseFloatTypeForLoopIndices">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/DontUseFloatTypeForLoopIndices</configKey>
+  </rule>
+
+  <rule key="ExtendsObject">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/ExtendsObject</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="CommentContent">
+    <priority>MINOR</priority>
+    <configKey>category/java/documentation.xml/CommentContent</configKey>
+  </rule>
+
+  <rule key="CommentRequired">
+    <priority>MINOR</priority>
+    <configKey>category/java/documentation.xml/CommentRequired</configKey>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="CommentSize">
+    <priority>MINOR</priority>
+    <configKey>category/java/documentation.xml/CommentSize</configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="maxLines" type="INTEGER">
+      <defaultValue>6</defaultValue>
+    </param>
+    <param key="maxLineLength" type="INTEGER">
+      <defaultValue>80</defaultValue>
+    </param>
+  </rule>
+
+  <!--  <rule key="AvoidPrefixingMethodParameters">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/codestyle.xml/AvoidPrefixingMethodParameters</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="OneDeclarationPerLine">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/OneDeclarationPerLine</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="UseObjectForClearerAPI">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/UseObjectForClearerAPI</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="LawOfDemeter">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/LawOfDemeter</configKey>
+  </rule>
+
+  <rule key="LoosePackageCoupling">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/LoosePackageCoupling</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="AvoidProtectedMethodInFinalClassNotExtending">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/AvoidProtectedMethodInFinalClassNotExtending</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="FieldDeclarationsShouldBeAtStartOfClass">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/FieldDeclarationsShouldBeAtStartOfClass</configKey>
+    <param key="ignoreEnumDeclarations" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreAnonymousClassDeclarations" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="GodClass">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/GodClass</configKey>
+  </rule>
+
+  <rule key="LogicInversion">
+    <priority>MINOR</priority>
+    <configKey>category/java/design.xml/LogicInversion</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="PositionLiteralsFirstInCaseInsensitiveComparisons">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/PositionLiteralsFirstInCaseInsensitiveComparisons</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UseVarargs">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UseVarargs</configKey>
+  </rule>
+
+  <rule key="UnusedAssignment">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/UnusedAssignment</configKey>
+  </rule>
+
+  <!--  <rule key="EmptyStatementBlock">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/errorprone.xml/EmptyStatementBlock</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UnnecessaryFullyQualifiedName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/UnnecessaryFullyQualifiedName</configKey>
+  </rule>
+
+  <!--  <rule key="GuardLogStatement">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/GuardLogStatement</configKey>-->
+  <!--  </rule>-->
+
+  <rule key="GuardLogStatementJavaUtil">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/GuardLogStatement</configKey>
+  </rule>
+
+  <rule key="ShortClassName">
+    <priority>MINOR</priority>
+    <configKey>category/java/codestyle.xml/ShortClassName</configKey>
+    <param key="minimum" type="INTEGER">
+      <defaultValue>5</defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="PrematureDeclaration">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/PrematureDeclaration</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="RedundantFieldInitializer">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/RedundantFieldInitializer</configKey>
+  </rule>
+
+  <rule key="ConsecutiveAppendsShouldReuse">
+    <priority>MAJOR</priority>
+    <configKey>category/java/performance.xml/ConsecutiveAppendsShouldReuse</configKey>
+  </rule>
+
+  <rule key="CloneMethodMustImplementCloneableWithTypeResolution">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CloneMethodMustImplementCloneable</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="LooseCouplingWithTypeResolution">
+    <priority>MAJOR</priority>
+    <configKey>category/java/bestpractices.xml/LooseCoupling</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="SignatureDeclareThrowsExceptionWithTypeResolution">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <configKey>category/java/design.xml/SignatureDeclareThrowsException</configKey>-->
+  <!--    <param key="IgnoreJUnitCompletely" type="BOOLEAN">-->
+  <!--      <defaultValue>false</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="UnusedImportsWithTypeResolution">-->
+  <!--    <priority>INFO</priority>-->
+  <!--    <configKey>category/java/bestpractices.xml/UnusedImports</configKey>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="UselessParentheses">
+    <priority>INFO</priority>
+    <configKey>category/java/codestyle.xml/UselessParentheses</configKey>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <!--  <rule key="StdCyclomaticComplexity">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/StdCyclomaticComplexity</configKey>-->
+  <!--    <param key="reportLevel" type="INTEGER">-->
+  <!--      <defaultValue>10</defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="showClassesComplexity" type="BOOLEAN">-->
+  <!--      <defaultValue>true</defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="showMethodsComplexity" type="BOOLEAN">-->
+  <!--      <defaultValue>true</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <!--  <rule key="ModifiedCyclomaticComplexity">-->
+  <!--    <priority>MAJOR</priority>-->
+  <!--    <tag>size</tag>-->
+  <!--    <configKey>category/java/design.xml/ModifiedCyclomaticComplexity</configKey>-->
+  <!--    <param key="reportLevel" type="INTEGER">-->
+  <!--      <defaultValue>10</defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="showClassesComplexity" type="BOOLEAN">-->
+  <!--      <defaultValue>true</defaultValue>-->
+  <!--    </param>-->
+  <!--    <param key="showMethodsComplexity" type="BOOLEAN">-->
+  <!--      <defaultValue>true</defaultValue>-->
+  <!--    </param>-->
+  <!--    <status>DEPRECATED</status>-->
+  <!--  </rule>-->
+
+  <rule key="XPathRule">
+    <priority>MAJOR</priority>
+    <configKey>net.sourceforge.pmd.lang.rule.xpath.XPathRule</configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="xpath" type="TEXT">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="message" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="SimplifiedTernary">
+    <priority>MAJOR</priority>
+    <configKey>category/java/design.xml/SimplifiedTernary</configKey>
+  </rule>
+
+  <rule key="CloneMethodMustBePublic">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CloneMethodMustBePublic</configKey>
+  </rule>
+
+  <rule key="CloneMethodReturnTypeMustMatchClassName">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/CloneMethodReturnTypeMustMatchClassName</configKey>
+  </rule>
+
+  <rule key="CommentDefaultAccessModifier">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/CommentDefaultAccessModifier</configKey>
+    <param key="regex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="SingletonClassReturningNewInstance">
+    <priority>MAJOR</priority>
+    <configKey>category/java/errorprone.xml/SingletonClassReturningNewInstance</configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="SingleMethodSingleton">
+    <priority>CRITICAL</priority>
+    <configKey>category/java/errorprone.xml/SingleMethodSingleton</configKey>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
+  <rule key="UselessQualifiedThis">
+    <priority>MAJOR</priority>
+    <configKey>category/java/codestyle.xml/UselessQualifiedThis</configKey>
+  </rule>
+
+</rules>

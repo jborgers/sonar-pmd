@@ -1,8 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <rules>
-
-  <rule key="FunctionNameTooShort">
-    <priority>MAJOR</priority>
-    <configKey>category/kotlin/bestpractices.xml/FunctionNameTooShort</configKey>
+  <rule>
+    <key>FunctionNameTooShort</key>
+    <name>Function name too short</name>
+    <internalKey>category/kotlin/bestpractices.xml/FunctionNameTooShort</internalKey>
+    <severity>MAJOR</severity>
+    <description><![CDATA[<p>Function names should be easy to understand and describe the intention. Makes developers happy.</p>
+<h2>Example</h2>
+<p><pre><code class="language-java"> fun cl() {} // violation, no unavailable attribute added to the function declaration
+ 
+ fun calculateLayout() // no violation</code></pre></p>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_bestpractices.html#functionnametooshort">Full documentation</a></p>]]></description>
+    <tag>pmd</tag>
+    <tag>bestpractices</tag>
   </rule>
-
+  <rule>
+    <key>OverrideBothEqualsAndHashcode</key>
+    <name>Override both equals and hashcode</name>
+    <internalKey>category/kotlin/errorprone.xml/OverrideBothEqualsAndHashcode</internalKey>
+    <severity>MAJOR</severity>
+    <description><![CDATA[<p>Override both public boolean Object.equals(Object other), and public int Object.hashCode(), or override neither.  Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly delegating to your superclass.</p>
+<h2>Example</h2>
+<p><pre><code class="language-java"> class Bar {        // poor, missing a hashCode() method
+     override fun equals(o: Any?): Boolean {
+       // do some comparison
+     }
+ }
+ 
+ class Baz {        // poor, missing an equals() method
+     override fun hashCode(): Int {
+       // return some hash value
+     }
+ }
+ 
+ class Foo {        // perfect, both methods provided
+     override fun equals(other: Any?): Boolean {
+       // do some comparison
+     }
+     override fun hashCode(): Int {
+       // return some hash value
+     }
+ }</code></pre></p>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_errorprone.html#overridebothequalsandhashcode">Full documentation</a></p>]]></description>
+    <tag>pmd</tag>
+    <tag>errorprone</tag>
+  </rule>
 </rules>

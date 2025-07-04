@@ -43,7 +43,7 @@ class PmdKotlinRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_KOTLIN_KEY);
 
         List<Rule> rules = repository.rules();
-        assertThat(rules).hasSize(1);
+        assertThat(rules).hasSize(2);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();

@@ -5,12 +5,16 @@ println 'Creating markdown rule documentation'
 println '===================================='
 
 
-def ruleSourcePath = '../sonar-pmd-plugin/src/main/resources/org/sonar/l10n/pmd/rules'
-def ruleTargetPath = './rules'
+def pmdRuleSourceDirectory = '../sonar-pmd-plugin/src/main/resources/org/sonar/l10n/pmd/rules'
+def markdownRuleOutputDirectory = './rules'
 
+/**
+ * Creates a markdown warning message for deprecated rules
+ * @param rules List of rule identifiers that replace the deprecated rule
+ * @return Formatted deprecation warning message in markdown
+ */
 def createDeprecationWarning = {
     rules ->
-
         if (!rules.isEmpty()) {
             def parsedRules = rules.collect {
                 def ruleNumber = it.substring(1)
@@ -44,9 +48,13 @@ def removeDeprecationMessage = {
         return content
 }
 
+/**
+ * Converts HTML rule documentation into markdown format for a given category
+ * @param category The rule category to process
+ */
 def createMarkdownPagesForCategory = {
     category ->
-        def currentDir = new File("${ruleSourcePath}/${category}")
+        def currentDir = new File("${pmdRuleSourceDirectory}/${category}")
         currentDir.eachFile FileType.FILES, {
             String rulename = it.name.tokenize('.')[0]
 
@@ -64,7 +72,7 @@ ${deprecationWarning}
 
 ${htmlContent}
 """
-            def file = new File("${ruleTargetPath}/${rulename}.md").newWriter()
+            def file = new File("${markdownRuleOutputDirectory}/${rulename}.md").newWriter()
             file << ruleContent
             file.close()
         }
