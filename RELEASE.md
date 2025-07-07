@@ -30,17 +30,17 @@ To generate release notes comparing the old and new PMD rules:
    chmod +x scripts/generate_release_notes.groovy
 
    # Run with default options
-   ./scripts/generate_release_notes.groovy
+   ./scripts/generate_release_notes.groovy ---version <new-version>
 
    # Or specify custom paths
-   ./scripts/generate_release_notes.groovy --old <path-to-old-rules> --new <path-to-new-rules> --report <output-file>
+   ./scripts/generate_release_notes.groovy --old <path-to-old-rules> --new <path-to-new-rules> --report <output-file> --version <new-version>
    ```
 
 3. The script will generate a Markdown report (default: docs/pmd_release_notes.md) containing:
    - Summary of rule changes
    - Rules that have been removed
    - Rules that have been added
-   - Rules that remain unchanged (but with possible changes in status,  and alternatives)
+   - Rules that remain unchanged (but with possible changes in status, priority or sonar-alternatives)
 
 ## Release Steps
 - create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
