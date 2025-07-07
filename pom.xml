@@ -74,7 +74,7 @@
     <assertj.version>3.27.3</assertj.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
-    <java.frontend.version>8.15.0.39343</java.frontend.version>
+    <java.frontend.version>8.17.0.39817</java.frontend.version>
     <guava.version>33.4.8-jre</guava.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
     <jdom2.version>2.0.6.1</jdom2.version>
