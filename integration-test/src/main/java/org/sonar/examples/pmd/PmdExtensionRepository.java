@@ -23,14 +23,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 
 public class PmdExtensionRepository implements RulesDefinition {
 
-    private static final Logger LOGGER = Loggers.get(PmdExtensionRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmdExtensionRepository.class);
 
     // Must be the same than the PMD plugin
     private static final String REPOSITORY_KEY = "pmd";

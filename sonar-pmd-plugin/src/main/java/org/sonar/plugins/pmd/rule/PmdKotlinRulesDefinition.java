@@ -19,9 +19,9 @@
  */
 package org.sonar.plugins.pmd.rule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.PmdConstants;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 
 public final class PmdKotlinRulesDefinition implements RulesDefinition {
 
-    private static final Logger LOGGER = Loggers.get(PmdKotlinRulesDefinition.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmdKotlinRulesDefinition.class);
 
     public PmdKotlinRulesDefinition() {
         // do nothing

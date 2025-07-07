@@ -25,9 +25,9 @@ import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
 import net.sourceforge.pmd.reporting.Report;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
@@ -35,7 +35,7 @@ import java.util.*;
 
 public class PmdTemplate {
 
-    private static final Logger LOG = Loggers.get(PmdTemplate.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PmdTemplate.class);
     private static final Map<String, String> JAVA_VERSIONS = prepareVersions();
 
     private static Map<String, String> prepareVersions() {

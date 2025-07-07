@@ -19,10 +19,10 @@
  */
 package org.sonar.plugins.pmd.xml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.utils.ValidationMessages;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.xml.factory.ActiveRulesRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.XmlRuleSetFactory;
@@ -35,7 +35,7 @@ import java.io.Reader;
  */
 public class PmdRuleSets {
 
-    private static final Logger LOG = Loggers.get(PmdRuleSets.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PmdRuleSets.class);
 
     private PmdRuleSets() {
     }
