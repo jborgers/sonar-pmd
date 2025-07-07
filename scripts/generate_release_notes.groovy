@@ -13,10 +13,11 @@
  *   ./generate_release_notes.groovy [options]
  * 
  * Options:
- *   -o, --old <file>     Old rules XML file path (default: scripts/old-rules.xml)
- *   -n, --new <file>     New rules XML file path (default: sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml)
- *   -r, --report <file>  Output report file path (default: docs/pmd_release_notes.md)
- *   -h, --help           Show usage information
+ *   -o, --old <file>         Old rules XML file path (default: scripts/old-rules.xml)
+ *   -n, --new <file>         New rules XML file path (default: sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml)
+ *   -r, --report <file>      Output report file path (default: docs/pmd_release_notes.md)
+ *   -v, --version <version>  Version to use in the title
+ *   -h, --help               Show usage information
  */
 
 import groovy.xml.XmlSlurper
@@ -31,6 +32,7 @@ cli.with {
     o(longOpt: 'old', args: 1, argName: 'file', 'Old rules XML file path')
     n(longOpt: 'new', args: 1, argName: 'file', 'New rules XML file path')
     r(longOpt: 'report', args: 1, argName: 'file', 'Output report file path')
+    v(longOpt: 'version', args: 1, argName: 'version', 'Version to use in the title')
     h(longOpt: 'help', 'Show usage information')
 }
 
@@ -44,6 +46,7 @@ if (options.h) {
 def oldRulesPath = options.o ?: "scripts/old-rules.xml"
 def newRulesPath = options.n ?: "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml"
 def outputPath = options.r ?: "docs/pmd_release_notes.md"
+def version = options.v ?: "UNKNOWN"
 
 // Validate file paths
 def oldRulesFile = new File(oldRulesPath)
@@ -172,7 +175,7 @@ def commonRules = commonRuleKeys.collect { key ->
 }
 
 // Generate report
-writer.writeLine("# PMD Rules Release Notes for version 4.1.0")
+writer.writeLine("# PMD Rules Release Notes for version $version")
 writer.writeLine("_Do not edit this generated file._")
 writer.writeLine("\n## Summary")
 writer.writeLine("- Total rules in old version: ${oldRules.size()}")
@@ -197,8 +200,8 @@ writer.writeLine("\n## Added Rules")
 if (addedRules.isEmpty()) {
     writer.writeLine("No new rules were added.")
 } else {
-    writer.writeLine("The following rules have been added in the new version:")
-    writer.writeLine("\n| Rule Key | Name | Severity | Status |")
+    writer.writeLine("The following rules have been added in the new version:\n")
+    writer.writeLine("| Rule Key | Name | Severity | Status |")
     writer.writeLine("|----------|------|----------|--------|")
     addedRules.sort { it.key }.each { rule ->
         writer.writeLine("| ${rule.key} | ${rule.name} | ${rule.severity} | ${rule.status ?: 'Active'} |")
@@ -209,8 +212,8 @@ writer.writeLine("\n## Unchanged Rules")
 if (commonRules.isEmpty()) {
     writer.writeLine("No rules remain unchanged between versions.")
 } else {
-    writer.writeLine("The following rules exist in both versions:")
-    writer.writeLine("\n| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives |")
+    writer.writeLine("The following rules exist in both versions:\n")
+    writer.writeLine("| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives |")
     writer.writeLine("|----------|------|--------------|--------------|------------|------------|--------------|")
     commonRules.sort { it.key }.each { rule ->
         writer.writeLine("| ${rule.key} | ${rule.name} | ${rule.oldPriority} | ${rule.newSeverity} | ${rule.oldStatus ?: 'Active'} | ${rule.newStatus ?: 'Active'} | ${rule.alternative} |")
@@ -249,10 +252,10 @@ if (skippedKotlinRulesFile.exists()) {
 
 // Add skipped rules section if any skipped rules were found
 if (!skippedRules.isEmpty()) {
-    writer.writeLine("\n## Skipped Deprecated Rules")
-    writer.writeLine("The following deprecated rules were skipped because they reference other rules (they are renamed):")
-    writer.writeLine("\n| Rule Name | References | Category |")
-    writer.writeLine("|-----------|------------|----------|")
+    writer.writeLine("\n## Renamed Rules")
+    writer.writeLine("The following rules have new names:\n")
+    writer.writeLine("| Rule name | New rule name | Category |")
+    writer.writeLine("|-----------|---------------|----------|")
     skippedRules.sort { it.name }.each { rule ->
         writer.writeLine("| ${rule.name} | ${rule.ref} | ${rule.category} |")
     }

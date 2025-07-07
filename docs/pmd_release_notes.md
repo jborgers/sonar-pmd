@@ -313,11 +313,11 @@ The following rules exist in both versions:
 | UselessQualifiedThis | Useless qualified this | MAJOR | MAJOR | Active | Active |  |
 | UselessStringValueOf | Useless string value of | MINOR | MAJOR | DEPRECATED | Active | [S1153](https://rules.sonarsource.com/java/RSPEC-1153) |
 
-## Skipped Deprecated Rules
-The following deprecated rules were skipped because they reference other rules (they are renamed):
+## Renamed Rules
+The following rules have new names:
 
-| Rule Name | References | Category |
-|-----------|------------|----------|
+| Rule name | New rule name | Category |
+|-----------|---------------|----------|
 | DefaultLabelNotLastInSwitchStmt | DefaultLabelNotLastInSwitch | bestpractices |
 | JUnit4TestShouldUseAfterAnnotation | UnitTestShouldUseAfterAnnotation | bestpractices |
 | JUnit4TestShouldUseBeforeAnnotation | UnitTestShouldUseBeforeAnnotation | bestpractices |
@@ -329,4 +329,4 @@ The following deprecated rules were skipped because they reference other rules (
 | SwitchStmtsShouldHaveDefault | NonExhaustiveSwitch | bestpractices |
 | TooFewBranchesForASwitchStatement | TooFewBranchesForSwitch | performance |
 
-Report generated on Fri Jul 04 17:36:02 CEST 2025
+Report generated on Mon Jul 07 14:28:57 CEST 2025

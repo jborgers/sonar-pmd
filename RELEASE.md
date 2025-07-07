@@ -40,7 +40,7 @@ To generate release notes comparing the old and new PMD rules:
    - Summary of rule changes
    - Rules that have been removed
    - Rules that have been added
-   - Rules that remain unchanged (with status changes and alternatives for deprecated rules)
+   - Rules that remain unchanged (but with possible changes in status,  and alternatives)
 
 ## Release Steps
 - create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
