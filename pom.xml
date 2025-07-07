@@ -111,6 +111,7 @@
   </properties>
 
   <modules>
+    <module>sonar-pmd-lib</module>
     <module>sonar-pmd-plugin</module>
     <module>integration-test</module>
   </modules>

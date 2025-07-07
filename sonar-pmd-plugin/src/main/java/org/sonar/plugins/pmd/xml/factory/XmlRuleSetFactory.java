@@ -127,7 +127,7 @@ public class XmlRuleSetFactory implements RuleSetFactory {
             result.setDescription(descriptionElement.getValue());
         }
 
-        for (Element eltRule : getChildren(eltResultset, "rule", namespace)) {
+        for (Element eltRule : getChildren(eltResultset, "org/sonar/plugins/pmd/rule", namespace)) {
             PmdRule pmdRule = new PmdRule(eltRule.getAttributeValue("ref"));
             pmdRule.setClazz(eltRule.getAttributeValue("class"));
             pmdRule.setName(eltRule.getAttributeValue("name"));

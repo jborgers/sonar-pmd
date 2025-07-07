@@ -19,13 +19,13 @@
  */
 package org.sonar.plugins.pmd.rule;
 
+import org.sonar.api.server.rule.RulesDefinition;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
-import org.sonar.api.server.rule.RulesDefinition;
 
 /**
  * Reads the corresponding classpath resource to add HTML descriptions to a given rule.

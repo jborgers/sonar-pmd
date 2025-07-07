@@ -62,9 +62,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <scope>test</scope>
+      <groupId>org.sonarsource.pmd</groupId>
+      <artifactId>sonar-pmd-lib</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 

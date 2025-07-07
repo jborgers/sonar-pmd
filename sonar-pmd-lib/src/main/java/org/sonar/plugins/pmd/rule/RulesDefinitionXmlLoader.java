@@ -22,21 +22,6 @@
 
 package org.sonar.plugins.pmd.rule;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nullable;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
@@ -50,6 +35,22 @@ import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Cardinality;
 import org.sonarsource.api.sonarlint.SonarLintSide;
+
+import org.jetbrains.annotations.Nullable;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -274,7 +275,7 @@ public class RulesDefinitionXmlLoader {
         String name = null;
         String description = null;
         // enum is not used as variable type as we want to raise an exception with the rule key when format is not supported
-        String descriptionFormat = RulesDefinitionXmlLoader.DescriptionFormat.HTML.name();
+        String descriptionFormat = DescriptionFormat.HTML.name();
         String internalKey = null;
         String severity = Severity.defaultSeverity();
         String type = null;

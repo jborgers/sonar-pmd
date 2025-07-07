@@ -27,13 +27,14 @@ import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.scanner.ScannerSide;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -56,6 +57,9 @@ public class PmdExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PmdExecutor.class);
 
+    // needed for the Profiler that needs a deprecated Logger
+    private static final org.sonar.api.utils.log.Logger LOGGER_DEPRECATED = Loggers.get(PmdExecutor.class);
+
     private final FileSystem fs;
     private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
@@ -76,7 +80,7 @@ public class PmdExecutor {
     }
 
     public Report execute() {
-        final Profiler profiler = Profiler.create(LOGGER).startInfo("Execute PMD " + PMDVersion.VERSION);
+        final Profiler profiler = Profiler.create(LOGGER_DEPRECATED).startInfo("Execute PMD " + PMDVersion.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
 
         try (URLClassLoader classLoader = createClassloader()) {
@@ -216,7 +220,8 @@ public class PmdExecutor {
         String effectiveJavaVersion = bareReqJavaVersion;
         if (Float.parseFloat(bareReqJavaVersion) >= Float.parseFloat(PmdConstants.JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE)) {
             effectiveJavaVersion = PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE;
-            LOGGER.warn("Requested Java version " + reqJavaVersion + " ('" + PmdConstants.JAVA_SOURCE_VERSION + "') is not supported by PMD. Using maximum supported version: " + PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE + ".");
+            LOGGER.warn("Requested Java version {} ('{}') is not supported by PMD. Using maximum supported version: {}.",
+                    reqJavaVersion, PmdConstants.JAVA_SOURCE_VERSION, PmdConstants.JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE);
         }
         return effectiveJavaVersion;
     }
