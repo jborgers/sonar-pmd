@@ -16,9 +16,11 @@ directly) a protected constructor can be provided to prevent direct instantiatio
    // consider using abstract methods or removing
    // the abstract modifier and adding protected constructors
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1694">java:S1694</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AbstractClassWithoutAnyMethod</key>
@@ -33,9 +35,11 @@ protected constructor in order to prevent instantiation than make the class misl
      String field;
      int otherField;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1694">java:S1694</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#abstractclasswithoutanymethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AccessorClassGeneration</key>
@@ -138,9 +142,11 @@ This prevents future changes from the user from affecting the original array.</p
          this.x=param;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2384">java:S2384</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#arrayisstoreddirectly">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AssignmentInOperand</key>
@@ -155,9 +161,11 @@ This prevents future changes from the user from affecting the original array.</p
        System.out.println(&quot;3!&quot;);
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1121">java:S1121</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#assignmentinoperand">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AssignmentToNonFinalStatic</key>
@@ -189,9 +197,11 @@ Classes with solely static members are ignored, refer to <a href="https://pmd.gi
    public void doSomething() { ... }
    public void doOtherThing { ... }
  }</code></pre></p>
+<p><b>Alternative rules:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1118">java:S1118</a>, <a href="https://rules.sonarsource.com/java/RSPEC-1258">java:S1258</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#atleastoneconstructor">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidAccessibilityAlteration</key>
@@ -310,9 +320,11 @@ for old Java code before Java 1.4. It can be used to identify problematic code p
          String assert = &quot;foo&quot;;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1190">java:S1190</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidassertasidentifier">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidBranchingStatementAsLastInLoop</key>
@@ -414,9 +426,11 @@ that there are no more references to the object. It should not be invoked by app
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2221">java:S2221</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoidcatchinggenericexception">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidCatchingNPE</key>
@@ -434,9 +448,11 @@ original error, causing other, more subtle problems later on.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1696">java:S1696</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidcatchingnpe">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidCatchingThrowable</key>
@@ -453,9 +469,11 @@ OutOfMemoryError that should be exposed and managed separately.</p>
          th.printStackTrace();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1181">java:S1181</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidcatchingthrowable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidDecimalLiteralsInBigDecimalConstructor</key>
@@ -476,9 +494,11 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
  BigDecimal bd = new BigDecimal(&quot;1.123&quot;);     // preferred approach
  
  BigDecimal bd = new BigDecimal(12);          // preferred approach, ok for integer values</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2111">java:S2111</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoiddecimalliteralsinbigdecimalconstructor">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidDeeplyNestedIfStmts</key>
@@ -498,9 +518,11 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
      }
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-134">java:S134</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoiddeeplynestedifstmts">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidDollarSigns</key>
@@ -511,9 +533,11 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Fo$o {  // not a recommended name
  }</code></pre></p>
+<p><b>Alternative rules:</b> <a href="https://rules.sonarsource.com/java/RSPEC-114">java:S114</a>, <a href="https://rules.sonarsource.com/java/RSPEC-115">java:S115</a>, <a href="https://rules.sonarsource.com/java/RSPEC-116">java:S116</a>, <a href="https://rules.sonarsource.com/java/RSPEC-117">java:S117</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#avoiddollarsigns">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidDuplicateLiterals</key>
@@ -529,9 +553,11 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
       buz(&quot;Howdy&quot;);
  }
  private void buz(String x) {}</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1192">java:S1192</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidduplicateliterals">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidEnumAsIdentifier</key>
@@ -548,9 +574,11 @@ for old Java code before Java 1.5. It can be used to identify problematic code p
          String enum = &quot;foo&quot;;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1190">java:S1190</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidenumasidentifier">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidFieldNameMatchingMethodName</key>
@@ -567,9 +595,11 @@ Smalltalk often prefer this approach as the methods denote accessor methods.</p>
      void bar() {
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1845">java:S1845</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidfieldnamematchingmethodname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidFieldNameMatchingTypeName</key>
@@ -585,9 +615,11 @@ This probably means that type and/or field names should be chosen more carefully
  public interface Operation {
      int OPERATION = 1; // There is probably a better name that can be used
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1700">java:S1700</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidfieldnamematchingtypename">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidFileStream</key>
@@ -646,9 +678,11 @@ that one covers both.</p>
  } catch (IOException ee) {
      cleanup();
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1193">java:S1193</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidinstanceofchecksincatchclause">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidInstantiatingObjectsInLoops</key>
@@ -703,9 +737,11 @@ the property ignoreMagicNumbers is not taken into account, if there are multiple
      if (i == pos + SUFFIX_LENGTH) {} // preferred approach
      if (i == 5 &amp;&amp; &quot;none&quot;.equals(aString)) {} // 2 violations: magic number 5 and literal &quot;none&quot;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-109">java:S109</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidliteralsinifcondition">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>ignoreMagicNumbers</key>
       <description><![CDATA[Comma-separated list of magic numbers, that should be ignored]]></description>
@@ -734,9 +770,11 @@ only add to code size.  Either remove the invocation, or use the return result.<
          se.getMessage();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1166">java:S1166</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidlosingexceptioninformation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidMessageDigestField</key>
@@ -799,9 +837,11 @@ Ensure that the intended usage is not a bug, or consider simplifying the express
  // And these just make your brain hurt:
  int i = ~-2;
  int j = -~7;</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-881">java:S881</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidmultipleunaryoperators">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidPrintStackTrace</key>
@@ -819,9 +859,11 @@ Ensure that the intended usage is not a bug, or consider simplifying the express
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1148">java:S1148</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidprintstacktrace">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidProtectedFieldInFinalClass</key>
@@ -836,9 +878,11 @@ Clarify your intent by using private or package access modifiers instead.</p>
    protected int y;  // bar cannot be subclassed, so is y really private or package visible?
    Bar() {}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2156">java:S2156</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#avoidprotectedfieldinfinalclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidProtectedMethodInFinalClassNotExtending</key>
@@ -853,9 +897,11 @@ visibility cannot be reduced). Clarify your intent by using private or package a
    private int bar() {}
    protected int baz() {} // Foo cannot be subclassed, and doesn&#39;t extend anything, so is baz() really private or package visible?
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2156">java:S2156</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#avoidprotectedmethodinfinalclassnotextending">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidReassigningCatchVariables</key>
@@ -947,9 +993,11 @@ parameter, then only the first assignment is reported.</p>
      System.out.println(&quot;Hello &quot; + trimmedName);
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1226">java:S1226</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidreassigningparameters">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidRethrowingException</key>
@@ -965,9 +1013,11 @@ parameter, then only the first assignment is reported.</p>
         throw se;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1166">java:S1166</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoidrethrowingexception">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidStringBufferField</key>
@@ -980,9 +1030,11 @@ if held within objects with long lifetimes.</p>
 <p><pre><code class="language-java"> public class Foo {
      private StringBuffer buffer;    // potential memory leak as an instance variable;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1149">java:S1149</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidstringbufferfield">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidSynchronizedAtMethodLevel</key>
@@ -1117,9 +1169,11 @@ code size and runtime complexity.</p>
          throw new SomeException(se);
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1166">java:S1166</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoidthrowingnewinstanceofsameexception">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidThrowingNullPointerException</key>
@@ -1154,9 +1208,11 @@ validation in methods and constructors with multiple parameters.</p>
          throw new NullPointerException();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1695">java:S1695</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoidthrowingnullpointerexception">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidThrowingRawExceptionTypes</key>
@@ -1171,9 +1227,11 @@ Exception, or Error, use a subclassed exception or error instead.</p>
          throw new Exception();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-112">java:S112</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#avoidthrowingrawexceptiontypes">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidUncheckedExceptionsInSignatures</key>
@@ -1202,9 +1260,11 @@ Externalizing IP adresses is preferable.</p>
 <p><pre><code class="language-java"> public class Foo {
      private String ip = &quot;127.0.0.1&quot;;     // not recommended
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1313">java:S1313</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidusinghardcodedip">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidUsingNativeCode</key>
@@ -1243,9 +1303,11 @@ interpreted as an octal value.</p>
 <p><pre><code class="language-java"> int i = 012;    // set i with 10 not 12
  int j = 010;    // set j with 8 not 10
  k = i * j;      // set k with 80 not 120</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1314">java:S1314</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidusingoctalvalues">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>AvoidUsingVolatile</key>
@@ -1324,9 +1386,11 @@ It is likely that you used || instead of && or vice versa.</p>
      if (string==null &amp;&amp; string.equals(&quot;&quot;))
          return string;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1697">java:S1697</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#brokennullcheck">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>CallSuperFirst</key>
@@ -1437,9 +1501,11 @@ If the value return is 'false', it should be handled properly.</p>
           n -= skipped;
        }
     }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2674">java:S2674</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#checkskipresult">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ClassCastExceptionWithToArray</key>
@@ -1496,9 +1562,11 @@ in a <code>ClassCastException</code>.</p>
  
  // This class doesn&#39;t respect the convention, and will be flagged
  public class Éléphant {}</code></pre></p>
+<p><b>Alternative rules:</b> <a href="https://rules.sonarsource.com/java/RSPEC-101">java:S101</a>, <a href="https://rules.sonarsource.com/java/RSPEC-114">java:S114</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#classnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ClassWithOnlyPrivateConstructorsShouldBeFinal</key>
@@ -1512,9 +1580,11 @@ so a subclass could not call the super constructor.</p>
 <p><pre><code class="language-java"> public class Foo {  //Should be final
      private Foo() { }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2974">java:S2974</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#classwithonlyprivateconstructorsshouldbefinal">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>CloneMethodMustBePublic</key>
@@ -1625,9 +1695,11 @@ just remove "AutoCloseable" from the types.</p>
          }
      }
  }</code></pre></p></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2095">java:S2095</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#closeresource">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>CognitiveComplexity</key>
@@ -1706,9 +1778,11 @@ conditions with a boolean <code>&amp;&amp;</code> operator in between.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1066">java:S1066</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#collapsibleifstatements">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>CommentContent</key>
@@ -1818,9 +1892,11 @@ in the <code>typesThatCompareByReference</code> property.</p>
      return a == b;
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1698">java:S1698</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#compareobjectswithequals">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>typesThatCompareByReference</key>
       <description><![CDATA[List of canonical type names for which reference comparison is allowed.]]></description>
@@ -2023,9 +2099,11 @@ Note that those methods also must not call overridable methods transitively to b
      return name.toUpperCase();
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1699">java:S1699</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#constructorcallsoverridablemethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ControlStatementBraces</key>
@@ -2115,9 +2193,11 @@ A number higher than the specified threshold can indicate a high degree of coupl
          return something();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1200">java:S1200</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#couplingbetweenobjects">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>CyclomaticComplexity</key>
@@ -2161,9 +2241,11 @@ into subcomponents.</p>
      }
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1541">java:S1541</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#cyclomaticcomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DataClass</key>
@@ -2285,9 +2367,11 @@ leaks develop within an application, it should be dealt with JVM options rather 
          Runtime.getRuntime().gc();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1215">java:S1215</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#donotcallgarbagecollectionexplicitly">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DoNotExtendJavaLangError</key>
@@ -2297,9 +2381,11 @@ leaks develop within an application, it should be dealt with JVM options rather 
     <description><![CDATA[<p>Errors are system exceptions. Do not extend them.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo extends Error { }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1194">java:S1194</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#donotextendjavalangerror">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DoNotExtendJavaLangThrowable</key>
@@ -2373,9 +2459,11 @@ or code defects.
          }
      }
  }</code></pre></p></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1163">java:S1163</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#donotthrowexceptioninfinally">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DoNotUseThreads</key>
@@ -2430,9 +2518,11 @@ Also, EJBs might be moved between machines in a cluster and only managed resourc
 <p><pre><code class="language-java"> Thread t = new Thread();
  t.run();            // use t.start() instead
  new Thread().run(); // same violation</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1217">java:S1217</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#dontcallthreadrun">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DontImportSun</key>
@@ -2447,9 +2537,11 @@ the unstable API. You can then suppress this rule in the implementation of the w
 <h2>Example</h2>
 <p><pre><code class="language-java"> import sun.misc.foo;
  public class Foo {}</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1191">java:S1191</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#dontimportsun">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>DontUseFloatTypeForLoopIndices</key>
@@ -2549,9 +2641,11 @@ or reported.</p>
          // not good
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-108">java:S108</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#emptycatchblock">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>allowCommentedBlocks</key>
       <description><![CDATA[Empty blocks containing comments will be skipped]]></description>
@@ -2602,9 +2696,11 @@ or reported.</p>
 <p><pre><code class="language-java"> public class Foo {
     protected void finalize() {}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1186">java:S1186</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#emptyfinalizer">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>EmptyMethodInAbstractClassShouldBeAbstract</key>
@@ -2643,9 +2739,11 @@ usage by developers who should be implementing their own versions in the concret
  if (x == null) {        // preferred
      doSomething();
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2159">java:S2159</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#equalsnull">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ExceptionAsFlowControl</key>
@@ -2668,9 +2766,11 @@ To fix a violation, add the necessary validation or use an alternate control str
          // do some more stuff
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1141">java:S1141</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#exceptionasflowcontrol">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ExcessiveImports</key>
@@ -2687,9 +2787,11 @@ user-specified threshold.</p>
  public class Foo {
      public void doWork() {}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1200">java:S1200</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#excessiveimports">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ExcessiveParameterList</key>
@@ -2710,9 +2812,11 @@ same datatype. These situations usually denote the need for new objects to wrap 
  
      . . . .
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-107">java:S107</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#excessiveparameterlist">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ExcessivePublicCount</key>
@@ -2735,9 +2839,11 @@ developed easily.</p>
      public void doWorkAgain() {}
      // [... more more public methods ...]
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1448">java:S1448</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#excessivepubliccount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ExhaustiveSwitchHasDefault</key>
@@ -2776,9 +2882,11 @@ rather than at runtime (if at all).</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo extends Object {     // not required
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1939">java:S1939</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#extendsobject">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>FieldDeclarationsShouldBeAtStartOfClass</key>
@@ -2799,9 +2907,11 @@ rather than at runtime (if at all).</p>
    // Field declared after methods / inner classes - avoid this
    private String _fieldInWrongLocation;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1213">java:S1213</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#fielddeclarationsshouldbeatstartofclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>FieldNamingConventions</key>
@@ -2845,9 +2955,11 @@ in each object at runtime.</p>
 <p><pre><code class="language-java"> public class Foo {
    public final int BAR = 42; // this could be static and save some space
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1170">java:S1170</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#finalfieldcouldbestatic">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>FinalParameterInAbstractMethod</key>
@@ -2888,9 +3000,11 @@ in each object at runtime.</p>
 <p><pre><code class="language-java"> protected void finalize() {
      super.finalize();
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1185">java:S1185</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#finalizeonlycallssuperfinalize">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>FinalizeOverloaded</key>
@@ -2906,9 +3020,11 @@ overload Object.finalize(). It will not be called by the VM.</p>
      protected void finalize(int a) {
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1175">java:S1175</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#finalizeoverloaded">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>FinalizeShouldBeProtected</key>
@@ -2922,9 +3038,11 @@ other classes may invoke it at inappropriate times.</p>
 <p><pre><code class="language-java"> public void finalize() {
      // do something
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1174">java:S1174</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#finalizeshouldbeprotected">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ForLoopCanBeForeach</key>
@@ -2963,9 +3081,11 @@ element of the list or array left to right.</p>
          for (;true;) true; // No Init or Update part, may as well be: while (true)
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1264">java:S1264</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#forloopshouldbewhileloop">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ForLoopVariableCount</key>
@@ -3044,9 +3164,11 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
  public interface GenericDao&lt;EF extends BaseModel, K extends Serializable&gt; {
     // &#39;EF&#39; is not ok.
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-119">java:S119</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#genericsnaming">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>GodClass</key>
@@ -3135,9 +3257,11 @@ with lambdas. The available alternatives depend on the actual logging framework.
    x = x;
   }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1656">java:S1656</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#idempotentoperations">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>IdenticalCatchBranches</key>
@@ -3343,9 +3467,11 @@ need to be be created and destroyed by the JVM.</p>
  
  // with this:
  Class c = String.class;</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2133">java:S2133</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#instantiationtogetclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>InsufficientStringBufferDeclaration</key>
@@ -3549,9 +3675,11 @@ is a good practice to limit their visibility.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1994">java:S1994</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#jumbledincrementer">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>LambdaCanBeMethodReference</key>
@@ -3814,9 +3942,11 @@ Developers Perceive Them</a>.</p>
  
      return true;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1940">java:S1940</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#logicinversion">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>LongVariable</key>
@@ -3834,9 +3964,11 @@ Developers Perceive Them</a>.</p>
               interestingIntIndex ++ ) {
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-117">java:S117</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#longvariable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>minimum</key>
       <description><![CDATA[The variable length reporting threshold]]></description>
@@ -3933,9 +4065,11 @@ except when using one of the configured allowed classes.</p>
          return &quot;abc&quot;;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1226">java:S1226</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#methodargumentcouldbefinal">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MethodNamingConventions</key>
@@ -3952,9 +4086,11 @@ except when using one of the configured allowed classes.</p>
      public void fooStuff() {
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-100">java:S100</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#methodnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MethodReturnsInternalArray</key>
@@ -3971,9 +4107,11 @@ removed or replaced outside of the object that owns it. It is safer to return a 
          return ud;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2384">java:S2384</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#methodreturnsinternalarray">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MethodWithSameNameAsEnclosingClass</key>
@@ -3989,9 +4127,11 @@ This would be confusing as it would look like a constructor.</p>
  
      public void MyClass() {}    // this is bad because it is a method
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1223">java:S1223</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#methodwithsamenameasenclosingclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MisplacedNullCheck</key>
@@ -4017,9 +4157,11 @@ Either the check is useless (the variable will never be <code>null</code>) or it
          if (a == null || a.equals(baz)) {} // correct null check
      }
  }</code></pre></p>
+<p><b>Alternative rules:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1697">java:S1697</a>, <a href="https://rules.sonarsource.com/java/RSPEC-2259">java:S2259</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#misplacednullcheck">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MissingOverride</key>
@@ -4053,9 +4195,11 @@ chain needs an own serialVersionUID field. See also <a href="https://stackoverfl
      // Define serialization id to avoid serialization related bugs
      // i.e., public static final long serialVersionUID = 4328743;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2057">java:S2057</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#missingserialversionuid">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MissingStaticMethodInNonInstantiatableClass</key>
@@ -4099,9 +4243,11 @@ log4j2 (since 6.19.0).</p>
      // log information is multiplexed by levels
      Logger log2= Logger.getLogger(Foo.class.getName());
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1312">java:S1312</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#morethanonelogger">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>MutableStaticState</key>
@@ -4224,9 +4370,11 @@ statements. For more details on the calculation, see the documentation
 <p><pre><code class="language-java"> // no package declaration
  public class ClassInDefaultPackage {
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1220">java:S1220</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#nopackage">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>NonCaseLabelInSwitch</key>
@@ -4326,9 +4474,11 @@ confusing.</p>
      System.out.println(&quot;I am about to construct myself&quot;);
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1171">java:S1171</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#nonstaticinitializer">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>NonThreadSafeSingleton</key>
@@ -4354,9 +4504,11 @@ performance penalty. <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/Doubl
      }
      return foo;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2444">java:S2444</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#nonthreadsafesingleton">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>NullAssignment</key>
@@ -4394,9 +4546,11 @@ However, it can lead to quite messy code. This rule looks for several declaratio
  String name,
         lastname;        // combined declaration on multiple lines, no violation by default.
                          // Set property strictMode to true to mark this as violation.</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-122">java:S122</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#onedeclarationperline">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>strictMode</key>
       <description><![CDATA[If true, mark combined declaration even if the declarations are on separate lines.]]></description>
@@ -4419,9 +4573,11 @@ However, it can lead to quite messy code. This rule looks for several declaratio
      return &quot;hi&quot;;    // second exit
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1142">java:S1142</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#onlyonereturn">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>OptimizableToArrayCall</key>
@@ -4476,9 +4632,11 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
        // return some hash value
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1206">java:S1206</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#overridebothequalsandhashcode">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>PackageCase</key>
@@ -4491,9 +4649,11 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
  
  public class SomeClass {
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-120">java:S120</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#packagecase">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>PrematureDeclaration</key>
@@ -4539,9 +4699,11 @@ can reorder code.</p>
  
      return System.nanoTime() - startTime;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1941">java:S1941</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#prematuredeclaration">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>PreserveStackTrace</key>
@@ -4583,9 +4745,11 @@ whose name starts with <code>ignored</code>.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1166">java:S1166</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#preservestacktrace">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>PrimitiveWrapperInstantiation</key>
@@ -4622,9 +4786,11 @@ whose name starts with <code>ignored</code>.</p>
          return new Foo(); // This is bad
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1182">java:S1182</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#propercloneimplementation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ProperLogger</key>
@@ -4641,9 +4807,11 @@ with the restriction that the logger needs to be passed into the constructor.</p
  
      protected Log LOG = LogFactory.getLog(Testclass.class);         // wrong approach
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1312">java:S1312</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#properlogger">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>staticLoggerName</key>
       <description><![CDATA[Name of the static Logger variable]]></description>
@@ -4743,9 +4911,11 @@ is redundant and results in a larger class file (approximately three additional 
          return String.valueOf(i++);
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1150">java:S1150</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#replaceenumerationwithiterator">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ReplaceHashtableWithMap</key>
@@ -4759,9 +4929,11 @@ is redundant and results in a larger class file (approximately three additional 
          Hashtable h = new Hashtable();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1149">java:S1149</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#replacehashtablewithmap">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ReplaceVectorWithList</key>
@@ -4776,9 +4948,11 @@ is redundant and results in a larger class file (approximately three additional 
          Vector v = new Vector();
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1149">java:S1149</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#replacevectorwithlist">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ReturnEmptyCollectionRatherThanNull</key>
@@ -4825,9 +4999,11 @@ inadvertent NullPointerExceptions.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1143">java:S1143</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#returnfromfinallyblock">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>ShortClassName</key>
@@ -4838,9 +5014,11 @@ inadvertent NullPointerExceptions.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public class Foo {
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-101">java:S101</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#shortclassname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>minimum</key>
       <description><![CDATA[Number of characters that are required as a minimum for a class name.]]></description>
@@ -4859,9 +5037,11 @@ inadvertent NullPointerExceptions.</p>
      public void a( int i ) { // Violation
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-100">java:S100</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#shortmethodname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>minimum</key>
       <description><![CDATA[Number of characters that are required as a minimum for a method name.]]></description>
@@ -4888,9 +5068,11 @@ inadvertent NullPointerExceptions.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-117">java:S117</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#shortvariable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>minimum</key>
       <description><![CDATA[Number of characters that are required as a minimum for a variable name.]]></description>
@@ -4910,9 +5092,11 @@ derived from RuntimeException or a checked exception.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public void foo() throws Exception {
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-112">java:S112</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#signaturedeclarethrowsexception">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SimpleDateFormatNeedsLocale</key>
@@ -5012,9 +5196,11 @@ or <code>condition ? foo : literalBoolean</code>.</p>
  
    public isFoo() { return false;}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1125">java:S1125</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#simplifybooleanexpressions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SimplifyBooleanReturns</key>
@@ -5035,9 +5221,11 @@ the conditional test can be returned instead.</p>
  public boolean isBarEqualTo(int x) {
      return bar == x;    // can be replaced with this
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1126">java:S1126</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#simplifybooleanreturns">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SimplifyConditional</key>
@@ -5181,9 +5369,11 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
  // in these forms, just single characters are allocated
  StringBuffer  sb3 = new StringBuffer(&quot;c&quot;);
  StringBuilder sb4 = new StringBuilder(&quot;c&quot;);</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1317">java:S1317</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#stringbufferinstantiationwithchar">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>StringInstantiation</key>
@@ -5208,9 +5398,11 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
      String bar = &quot;howdy&quot;;
      return bar.toString();
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1858">java:S1858</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#stringtostring">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SuspiciousEqualsMethodName</key>
@@ -5235,9 +5427,11 @@ Item 10: Obey the general contract when overriding equals.</p>
       // oops, this probably was supposed to be equals(Object)
     }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1201">java:S1201</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#suspiciousequalsmethodname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SuspiciousHashcodeMethodName</key>
@@ -5251,9 +5445,11 @@ to override the hashCode() method.</p>
      public int hashcode() { // oops, this probably was supposed to be &#39;hashCode&#39;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1221">java:S1221</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#suspicioushashcodemethodname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SuspiciousOctalEscape</key>
@@ -5299,9 +5495,11 @@ on the switch variable.</p>
      }
    }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1151">java:S1151</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#switchdensity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>SystemPrintln</key>
@@ -5320,9 +5518,11 @@ will (and by priority) and avoid clogging the Standard out log.</p>
          log.fine(&quot;Entering test&quot;);
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-106">java:S106</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#systemprintln">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>TestClassWithoutTestCases</key>
@@ -5417,9 +5617,11 @@ city/state/zip fields could park them within a single Address field.</p>
     <severity>MAJOR</severity>
     <description><![CDATA[<p>A class with too many methods is probably a good suspect for refactoring, in order to reduce its
 complexity and find a way to have more fine grained objects.</p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1448">java:S1448</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#toomanymethods">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>maxmethods</key>
       <description><![CDATA[The method count reporting threshold]]></description>
@@ -5465,9 +5667,11 @@ and unintentional empty constructors.</p>
 <p><pre><code class="language-java"> public Foo() {
    // This constructor is intentionally empty. Nothing special is needed here.
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2094">java:S2094</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#uncommentedemptyconstructor">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
+    <tag>has-sonar-alternative</tag>
     <param>
       <key>ignoreExplicitConstructorInvocation</key>
       <description><![CDATA[Ignore explicit constructor invocation when deciding whether constructor is empty or not]]></description>
@@ -5487,9 +5691,11 @@ empty methods.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> public void doSomething() {
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1186">java:S1186</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#uncommentedemptymethodbody">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnconditionalIfStatement</key>
@@ -5505,9 +5711,11 @@ empty methods.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2583">java:S2583</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#unconditionalifstatement">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnitTestAssertionsShouldIncludeMessage</key>
@@ -5771,9 +5979,11 @@ an error, use the <code>fail()</code> method and provide an indication message o
 <p><pre><code class="language-java"> boolean answer1 = buz.toUpperCase().equals(&quot;BAZ&quot;);              // should be buz.equalsIgnoreCase(&quot;BAZ&quot;)
  
  boolean answer2 = buz.toUpperCase().equalsIgnoreCase(&quot;BAZ&quot;);    // another unnecessary toUpperCase()</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1157">java:S1157</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#unnecessarycasechange">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnnecessaryCast</key>
@@ -5846,9 +6056,11 @@ modifier as the declaring class. In an enum type, the default constructor is imp
 <p><pre><code class="language-java"> public class Foo {
    public Foo() {}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1186">java:S1186</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessaryconstructor">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnnecessaryConversionTemporary</key>
@@ -5863,9 +6075,11 @@ on the wrapper classes instead.</p>
  
      return Integer.toString(x);             // preferred approach
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1158">java:S1158</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#unnecessaryconversiontemporary">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnnecessaryFullyQualifiedName</key>
@@ -5926,9 +6140,11 @@ which is covered by an import statement is redundant.  Consider using the non-fu
       return x;  // instead, just &#39;return doSomething();&#39;
     }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1488">java:S1488</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessarylocalbeforereturn">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnnecessaryModifier</key>
@@ -6194,9 +6410,11 @@ Hence, by default, this rule only considers private methods. To include non-priv
          // howdy is not used
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1172">java:S1172</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unusedformalparameter">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnusedLocalVariable</key>
@@ -6211,9 +6429,11 @@ Variables whose name starts with <code>ignored</code> or <code>unused</code> are
          int i = 5; // Unused
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1481">java:S1481</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unusedlocalvariable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnusedNullCheckInEquals</key>
@@ -6282,9 +6502,11 @@ Previously these frameworks where explicitly allowed by listing their annotation
          return j++;
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1068">java:S1068</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unusedprivatefield">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UnusedPrivateMethod</key>
@@ -6314,9 +6536,11 @@ Previously these frameworks where explicitly allowed by listing their annotation
      Collection c2 = new ArrayList();    // achieves the same with much better performance
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1149">java:S1149</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#usearraylistinsteadofvector">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseArraysAsList</key>
@@ -6372,9 +6596,11 @@ Comparing the value of size() to 0 does not convey intent as well as the isEmpty
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1155">java:S1155</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#usecollectionisempty">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseConcurrentHashMap</key>
@@ -6416,9 +6642,11 @@ perform efficient map reads without blocking other threads.</p>
          }
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1166">java:S1166</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#usecorrectexceptionlogging">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseDiamondOperator</key>
@@ -6494,9 +6722,11 @@ is used on both sides.</p>
      if (&quot;two&quot;.equals(s)) return true;   // better
      return false;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1698">java:S1698</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#useequalstocomparestrings">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseExplicitTypes</key>
@@ -6623,9 +6853,11 @@ one is chosen.  The thread chosen is arbitrary; thus it's usually safer to call 
      // use instead:
      x.notifyAll();
    }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-2446">java:S2446</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#usenotifyallinsteadofnotify">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseObjectForClearerAPI</key>
@@ -6652,9 +6884,11 @@ your API.</p>
  
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-107">java:S107</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#useobjectforclearerapi">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseProperClassLoader</key>
@@ -6838,9 +7072,11 @@ remember to add a private constructor to prevent instantiation.
    public static void foo() {}
    public static void bar() {}
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1118">java:S1118</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#useutilityclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UseVarargs</key>
@@ -6909,9 +7145,11 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
  public Long getId() {
      return super.getId();  // OK if &#39;ignoreAnnotations&#39; is false, which is the default behavior
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1185">java:S1185</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#uselessoverridingmethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UselessParentheses</key>
@@ -6934,9 +7172,11 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
          n = n * (2 * 3); // and here
      }
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1110">java:S1110</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#uselessparentheses">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>UselessQualifiedThis</key>
@@ -6986,9 +7226,11 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
      s = &quot;a&quot; + i;                    // preferred approach
      return s;
  }</code></pre></p>
+<p><b>Alternative rule:</b> <a href="https://rules.sonarsource.com/java/RSPEC-1153">java:S1153</a></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#uselessstringvalueof">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <tag>has-sonar-alternative</tag>
   </rule>
   <rule>
     <key>WhileLoopWithLiteralBoolean</key>
