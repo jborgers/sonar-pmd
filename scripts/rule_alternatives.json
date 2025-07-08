@@ -20,8 +20,8 @@
         ],
         "AssignmentInOperand": [
             {
-                "key": "java:AssignmentInSubExpressionCheck",
-                "link": null
+                "key": "java:S1121",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1121"
             }
         ],
         "AtLeastOneConstructor": [
@@ -38,12 +38,6 @@
             {
                 "key": "java:S1190",
                 "link": "https://rules.sonarsource.com/java/RSPEC-1190"
-            }
-        ],
-        "AvoidCallingFinalize": [
-            {
-                "key": "java:ObjectFinalizeCheck",
-                "link": null
             }
         ],
         "AvoidCatchingGenericException": [
@@ -268,12 +262,8 @@
         ],
         "CyclomaticComplexity": [
             {
-                "key": "java:MethodCyclomaticComplexity",
-                "link": null
-            },
-            {
-                "key": "java:ClassCyclomaticComplexity",
-                "link": null
+                "key": "java:S1541",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1541"
             }
         ],
         "DoNotCallGarbageCollectionExplicitly": [
@@ -366,12 +356,6 @@
                 "link": "https://rules.sonarsource.com/java/RSPEC-1170"
             }
         ],
-        "FinalizeDoesNotCallSuperFinalize": [
-            {
-                "key": "java:ObjectFinalizeOverridenCallsSuperFinalizeCheck",
-                "link": null
-            }
-        ],
         "FinalizeOnlyCallsSuperFinalize": [
             {
                 "key": "java:S1185",
@@ -416,8 +400,8 @@
         ],
         "JumbledIncrementer": [
             {
-                "key": "java:ForLoopCounterChangedCheck",
-                "link": null
+                "key": "java:S1994",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1994"
             }
         ],
         "LogicInversion": [
@@ -430,12 +414,6 @@
             {
                 "key": "java:S117",
                 "link": "https://rules.sonarsource.com/java/RSPEC-117"
-            }
-        ],
-        "LoosePackageCoupling": [
-            {
-                "key": "java:ArchitecturalConstraint",
-                "link": null
             }
         ],
         "MethodArgumentCouldBeFinal": [
@@ -712,12 +690,6 @@
                 "link": "https://rules.sonarsource.com/java/RSPEC-1068"
             }
         ],
-        "UnusedPrivateMethod": [
-            {
-                "key": "java:UnusedPrivateMethod",
-                "link": null
-            }
-        ],
         "UseArrayListInsteadOfVector": [
             {
                 "key": "java:S1149",
@@ -740,10 +712,6 @@
             {
                 "key": "java:S1698",
                 "link": "https://rules.sonarsource.com/java/RSPEC-1698"
-            },
-            {
-                "key": "java:StringEqualityComparisonCheck",
-                "link": null
             }
         ],
         "UseNotifyAllInsteadOfNotify": [
