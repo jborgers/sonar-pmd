@@ -1113,7 +1113,7 @@ def formatDescription = { ruleData, language ->
             .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')  // Wrap {0}, {1}, etc. in code tags
             .replaceAll(/''/,"\'")  // Replace two subsequent single quotes with a single single quote
 
-        markdownContent.append("**Title of issues:** ").append(processedMessage).append("\n\n")
+        markdownContent.append("## Title of issues: ").append(processedMessage).append("\n\n")
     }
 
     // Add the main description
