@@ -1063,6 +1063,7 @@ def formatDescription = { ruleData ->
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
+    def message = ruleData.message ?: ""
 
     // If no description exists, log warning, do not add rule
     if (!description || description.trim().isEmpty()) {
@@ -1071,6 +1072,16 @@ def formatDescription = { ruleData ->
 
     // Build markdown content
     def markdownContent = new StringBuilder()
+
+    // Add the message as a title at the top of the description
+    if (message && !message.trim().isEmpty()) {
+        // Process message: replace placeholders with code tags and fix double quotes
+        def processedMessage = message
+            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')  // Wrap {0}, {1}, etc. in code tags
+            .replaceAll(/''/,"\'")  // Replace two subsequent single quotes with a single single quote
+
+        markdownContent.append("**Title of issues:** ").append(processedMessage).append("\n\n")
+    }
 
     // Add the main description
     markdownContent.append(description)

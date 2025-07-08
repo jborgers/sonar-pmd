@@ -5,7 +5,8 @@
     <name>Function name too short</name>
     <internalKey>category/kotlin/bestpractices.xml/FunctionNameTooShort</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Function names should be easy to understand and describe the intention. Makes developers happy.</p>
+    <description><![CDATA[<p><b>Title of issues:</b> Function names should have non-cryptic and clear names.</p>
+<p>Function names should be easy to understand and describe the intention. Makes developers happy.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> fun cl() {} // violation, no unavailable attribute added to the function declaration
  
@@ -19,7 +20,8 @@
     <name>Override both equals and hashcode</name>
     <internalKey>category/kotlin/errorprone.xml/OverrideBothEqualsAndHashcode</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Override both public boolean Object.equals(Object other), and public int Object.hashCode(), or override neither.  Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly delegating to your superclass.</p>
+    <description><![CDATA[<p><b>Title of issues:</b> Ensure you override both equals() and hashCode()</p>
+<p>Override both public boolean Object.equals(Object other), and public int Object.hashCode(), or override neither.  Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly delegating to your superclass.</p>
 <h2>Example</h2>
 <p><pre><code class="language-java"> class Bar {        // poor, missing a hashCode() method
      override fun equals(o: Any?): Boolean {
