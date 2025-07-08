@@ -16,6 +16,14 @@ on:
         description: "Skip Tests?"
         required: true
         default: "no"
+      deploySnapshot:
+        description: "Deploy snapshot to Maven Central?"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 defaults:
   run:
@@ -31,6 +39,20 @@ jobs:
       - name: Set Release version env variable
         run: |
           echo "TAG_NAME=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Set branch name env variable
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
+
+          if [ "$BRANCH_NAME" = "master" ]; then
+            echo "ARTIFACT_SUFFIX=" >> $GITHUB_ENV
+          else
+            echo "ARTIFACT_SUFFIX=-$BRANCH_NAME" >> $GITHUB_ENV
+          fi
 
       # only build SNAPSHOTS, use release for tagged releases
       - name: Check if tag contains SNAPSHOT
@@ -55,7 +77,7 @@ jobs:
           ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean package
 
       - name: Deploy SNAPSHOT to maven central
-        if: true # disable when needed
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && github.event.inputs.deploySnapshot == 'true')
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -67,5 +89,5 @@ jobs:
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: sonar-pmd-plugin-${{ env.TAG_NAME }}
+          name: sonar-pmd-plugin-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
           path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
