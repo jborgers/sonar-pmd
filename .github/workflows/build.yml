@@ -51,7 +51,9 @@ jobs:
           if [ "$BRANCH_NAME" = "master" ]; then
             echo "ARTIFACT_SUFFIX=" >> $GITHUB_ENV
           else
-            echo "ARTIFACT_SUFFIX=-$BRANCH_NAME" >> $GITHUB_ENV
+            # Sanitize branch name by replacing invalid characters with dashes
+            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/[\/\\:*?"<>|]/-/g')
+            echo "ARTIFACT_SUFFIX=-$SANITIZED_BRANCH" >> $GITHUB_ENV
           fi
 
       # only build SNAPSHOTS, use release for tagged releases
