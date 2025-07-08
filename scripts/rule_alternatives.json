@@ -1,0 +1,786 @@
+{
+    "ruleAlternatives": {
+        "AbstractClassWithoutAbstractMethod": [
+            {
+                "key": "java:S1694",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1694"
+            }
+        ],
+        "AbstractClassWithoutAnyMethod": [
+            {
+                "key": "java:S1694",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1694"
+            }
+        ],
+        "ArrayIsStoredDirectly": [
+            {
+                "key": "java:S2384",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2384"
+            }
+        ],
+        "AssignmentInOperand": [
+            {
+                "key": "java:AssignmentInSubExpressionCheck",
+                "link": null
+            }
+        ],
+        "AtLeastOneConstructor": [
+            {
+                "key": "java:S1118",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1118"
+            },
+            {
+                "key": "java:S1258",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1258"
+            }
+        ],
+        "AvoidAssertAsIdentifier": [
+            {
+                "key": "java:S1190",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1190"
+            }
+        ],
+        "AvoidCallingFinalize": [
+            {
+                "key": "java:ObjectFinalizeCheck",
+                "link": null
+            }
+        ],
+        "AvoidCatchingGenericException": [
+            {
+                "key": "java:S2221",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2221"
+            }
+        ],
+        "AvoidCatchingNPE": [
+            {
+                "key": "java:S1696",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1696"
+            }
+        ],
+        "AvoidCatchingThrowable": [
+            {
+                "key": "java:S1181",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1181"
+            }
+        ],
+        "AvoidDecimalLiteralsInBigDecimalConstructor": [
+            {
+                "key": "java:S2111",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2111"
+            }
+        ],
+        "AvoidDeeplyNestedIfStmts": [
+            {
+                "key": "java:S134",
+                "link": "https://rules.sonarsource.com/java/RSPEC-134"
+            }
+        ],
+        "AvoidDollarSigns": [
+            {
+                "key": "java:S114",
+                "link": "https://rules.sonarsource.com/java/RSPEC-114"
+            },
+            {
+                "key": "java:S115",
+                "link": "https://rules.sonarsource.com/java/RSPEC-115"
+            },
+            {
+                "key": "java:S116",
+                "link": "https://rules.sonarsource.com/java/RSPEC-116"
+            },
+            {
+                "key": "java:S117",
+                "link": "https://rules.sonarsource.com/java/RSPEC-117"
+            }
+        ],
+        "AvoidDuplicateLiterals": [
+            {
+                "key": "java:S1192",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1192"
+            }
+        ],
+        "AvoidEnumAsIdentifier": [
+            {
+                "key": "java:S1190",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1190"
+            }
+        ],
+        "AvoidFieldNameMatchingMethodName": [
+            {
+                "key": "java:S1845",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1845"
+            }
+        ],
+        "AvoidFieldNameMatchingTypeName": [
+            {
+                "key": "java:S1700",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1700"
+            }
+        ],
+        "AvoidInstanceofChecksInCatchClause": [
+            {
+                "key": "java:S1193",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1193"
+            }
+        ],
+        "AvoidLiteralsInIfCondition": [
+            {
+                "key": "java:S109",
+                "link": "https://rules.sonarsource.com/java/RSPEC-109"
+            }
+        ],
+        "AvoidLosingExceptionInformation": [
+            {
+                "key": "java:S1166",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1166"
+            }
+        ],
+        "AvoidMultipleUnaryOperators": [
+            {
+                "key": "java:S881",
+                "link": "https://rules.sonarsource.com/java/RSPEC-881"
+            }
+        ],
+        "AvoidPrintStackTrace": [
+            {
+                "key": "java:S1148",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1148"
+            }
+        ],
+        "AvoidProtectedFieldInFinalClass": [
+            {
+                "key": "java:S2156",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2156"
+            }
+        ],
+        "AvoidProtectedMethodInFinalClassNotExtending": [
+            {
+                "key": "java:S2156",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2156"
+            }
+        ],
+        "AvoidReassigningParameters": [
+            {
+                "key": "java:S1226",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1226"
+            }
+        ],
+        "AvoidRethrowingException": [
+            {
+                "key": "java:S1166",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1166"
+            }
+        ],
+        "AvoidStringBufferField": [
+            {
+                "key": "java:S1149",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1149"
+            }
+        ],
+        "AvoidThrowingNewInstanceOfSameException": [
+            {
+                "key": "java:S1166",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1166"
+            }
+        ],
+        "AvoidThrowingNullPointerException": [
+            {
+                "key": "java:S1695",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1695"
+            }
+        ],
+        "AvoidThrowingRawExceptionTypes": [
+            {
+                "key": "java:S112",
+                "link": "https://rules.sonarsource.com/java/RSPEC-112"
+            }
+        ],
+        "AvoidUsingHardCodedIP": [
+            {
+                "key": "java:S1313",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1313"
+            }
+        ],
+        "AvoidUsingOctalValues": [
+            {
+                "key": "java:S1314",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1314"
+            }
+        ],
+        "BrokenNullCheck": [
+            {
+                "key": "java:S1697",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1697"
+            }
+        ],
+        "CheckSkipResult": [
+            {
+                "key": "java:S2674",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2674"
+            }
+        ],
+        "ClassNamingConventions": [
+            {
+                "key": "java:S101",
+                "link": "https://rules.sonarsource.com/java/RSPEC-101"
+            },
+            {
+                "key": "java:S114",
+                "link": "https://rules.sonarsource.com/java/RSPEC-114"
+            }
+        ],
+        "ClassWithOnlyPrivateConstructorsShouldBeFinal": [
+            {
+                "key": "java:S2974",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2974"
+            }
+        ],
+        "CloseResource": [
+            {
+                "key": "java:S2095",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2095"
+            }
+        ],
+        "CollapsibleIfStatements": [
+            {
+                "key": "java:S1066",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1066"
+            }
+        ],
+        "CompareObjectsWithEquals": [
+            {
+                "key": "java:S1698",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1698"
+            }
+        ],
+        "ConstructorCallsOverridableMethod": [
+            {
+                "key": "java:S1699",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1699"
+            }
+        ],
+        "CouplingBetweenObjects": [
+            {
+                "key": "java:S1200",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1200"
+            }
+        ],
+        "CyclomaticComplexity": [
+            {
+                "key": "java:MethodCyclomaticComplexity",
+                "link": null
+            },
+            {
+                "key": "java:ClassCyclomaticComplexity",
+                "link": null
+            }
+        ],
+        "DoNotCallGarbageCollectionExplicitly": [
+            {
+                "key": "java:S1215",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1215"
+            }
+        ],
+        "DoNotExtendJavaLangError": [
+            {
+                "key": "java:S1194",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1194"
+            }
+        ],
+        "DoNotThrowExceptionInFinally": [
+            {
+                "key": "java:S1163",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1163"
+            }
+        ],
+        "DontCallThreadRun": [
+            {
+                "key": "java:S1217",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1217"
+            }
+        ],
+        "DontImportSun": [
+            {
+                "key": "java:S1191",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1191"
+            }
+        ],
+        "EmptyCatchBlock": [
+            {
+                "key": "java:S108",
+                "link": "https://rules.sonarsource.com/java/RSPEC-108"
+            }
+        ],
+        "EmptyFinalizer": [
+            {
+                "key": "java:S1186",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1186"
+            }
+        ],
+        "EqualsNull": [
+            {
+                "key": "java:S2159",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2159"
+            }
+        ],
+        "ExceptionAsFlowControl": [
+            {
+                "key": "java:S1141",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1141"
+            }
+        ],
+        "ExcessiveImports": [
+            {
+                "key": "java:S1200",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1200"
+            }
+        ],
+        "ExcessiveParameterList": [
+            {
+                "key": "java:S107",
+                "link": "https://rules.sonarsource.com/java/RSPEC-107"
+            }
+        ],
+        "ExcessivePublicCount": [
+            {
+                "key": "java:S1448",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1448"
+            }
+        ],
+        "ExtendsObject": [
+            {
+                "key": "java:S1939",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1939"
+            }
+        ],
+        "FieldDeclarationsShouldBeAtStartOfClass": [
+            {
+                "key": "java:S1213",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1213"
+            }
+        ],
+        "FinalFieldCouldBeStatic": [
+            {
+                "key": "java:S1170",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1170"
+            }
+        ],
+        "FinalizeDoesNotCallSuperFinalize": [
+            {
+                "key": "java:ObjectFinalizeOverridenCallsSuperFinalizeCheck",
+                "link": null
+            }
+        ],
+        "FinalizeOnlyCallsSuperFinalize": [
+            {
+                "key": "java:S1185",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1185"
+            }
+        ],
+        "FinalizeOverloaded": [
+            {
+                "key": "java:S1175",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1175"
+            }
+        ],
+        "FinalizeShouldBeProtected": [
+            {
+                "key": "java:S1174",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1174"
+            }
+        ],
+        "ForLoopShouldBeWhileLoop": [
+            {
+                "key": "java:S1264",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1264"
+            }
+        ],
+        "GenericsNaming": [
+            {
+                "key": "java:S119",
+                "link": "https://rules.sonarsource.com/java/RSPEC-119"
+            }
+        ],
+        "IdempotentOperations": [
+            {
+                "key": "java:S1656",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1656"
+            }
+        ],
+        "InstantiationToGetClass": [
+            {
+                "key": "java:S2133",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2133"
+            }
+        ],
+        "JumbledIncrementer": [
+            {
+                "key": "java:ForLoopCounterChangedCheck",
+                "link": null
+            }
+        ],
+        "LogicInversion": [
+            {
+                "key": "java:S1940",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1940"
+            }
+        ],
+        "LongVariable": [
+            {
+                "key": "java:S117",
+                "link": "https://rules.sonarsource.com/java/RSPEC-117"
+            }
+        ],
+        "LoosePackageCoupling": [
+            {
+                "key": "java:ArchitecturalConstraint",
+                "link": null
+            }
+        ],
+        "MethodArgumentCouldBeFinal": [
+            {
+                "key": "java:S1226",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1226"
+            }
+        ],
+        "MethodNamingConventions": [
+            {
+                "key": "java:S100",
+                "link": "https://rules.sonarsource.com/java/RSPEC-100"
+            }
+        ],
+        "MethodReturnsInternalArray": [
+            {
+                "key": "java:S2384",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2384"
+            }
+        ],
+        "MethodWithSameNameAsEnclosingClass": [
+            {
+                "key": "java:S1223",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1223"
+            }
+        ],
+        "MisplacedNullCheck": [
+            {
+                "key": "java:S1697",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1697"
+            },
+            {
+                "key": "java:S2259",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2259"
+            }
+        ],
+        "MissingSerialVersionUID": [
+            {
+                "key": "java:S2057",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2057"
+            }
+        ],
+        "MoreThanOneLogger": [
+            {
+                "key": "java:S1312",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1312"
+            }
+        ],
+        "NoPackage": [
+            {
+                "key": "java:S1220",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1220"
+            }
+        ],
+        "NonStaticInitializer": [
+            {
+                "key": "java:S1171",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1171"
+            }
+        ],
+        "NonThreadSafeSingleton": [
+            {
+                "key": "java:S2444",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2444"
+            }
+        ],
+        "OneDeclarationPerLine": [
+            {
+                "key": "java:S122",
+                "link": "https://rules.sonarsource.com/java/RSPEC-122"
+            }
+        ],
+        "OnlyOneReturn": [
+            {
+                "key": "java:S1142",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1142"
+            }
+        ],
+        "OverrideBothEqualsAndHashcode": [
+            {
+                "key": "java:S1206",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1206"
+            }
+        ],
+        "PackageCase": [
+            {
+                "key": "java:S120",
+                "link": "https://rules.sonarsource.com/java/RSPEC-120"
+            }
+        ],
+        "PrematureDeclaration": [
+            {
+                "key": "java:S1941",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1941"
+            }
+        ],
+        "PreserveStackTrace": [
+            {
+                "key": "java:S1166",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1166"
+            }
+        ],
+        "ProperCloneImplementation": [
+            {
+                "key": "java:S1182",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1182"
+            }
+        ],
+        "ProperLogger": [
+            {
+                "key": "java:S1312",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1312"
+            }
+        ],
+        "ReplaceEnumerationWithIterator": [
+            {
+                "key": "java:S1150",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1150"
+            }
+        ],
+        "ReplaceHashtableWithMap": [
+            {
+                "key": "java:S1149",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1149"
+            }
+        ],
+        "ReplaceVectorWithList": [
+            {
+                "key": "java:S1149",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1149"
+            }
+        ],
+        "ReturnFromFinallyBlock": [
+            {
+                "key": "java:S1143",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1143"
+            }
+        ],
+        "ShortClassName": [
+            {
+                "key": "java:S101",
+                "link": "https://rules.sonarsource.com/java/RSPEC-101"
+            }
+        ],
+        "ShortMethodName": [
+            {
+                "key": "java:S100",
+                "link": "https://rules.sonarsource.com/java/RSPEC-100"
+            }
+        ],
+        "ShortVariable": [
+            {
+                "key": "java:S117",
+                "link": "https://rules.sonarsource.com/java/RSPEC-117"
+            }
+        ],
+        "SignatureDeclareThrowsException": [
+            {
+                "key": "java:S112",
+                "link": "https://rules.sonarsource.com/java/RSPEC-112"
+            }
+        ],
+        "SimplifyBooleanExpressions": [
+            {
+                "key": "java:S1125",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1125"
+            }
+        ],
+        "SimplifyBooleanReturns": [
+            {
+                "key": "java:S1126",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1126"
+            }
+        ],
+        "StringBufferInstantiationWithChar": [
+            {
+                "key": "java:S1317",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1317"
+            }
+        ],
+        "StringToString": [
+            {
+                "key": "java:S1858",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1858"
+            }
+        ],
+        "SuspiciousEqualsMethodName": [
+            {
+                "key": "java:S1201",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1201"
+            }
+        ],
+        "SuspiciousHashcodeMethodName": [
+            {
+                "key": "java:S1221",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1221"
+            }
+        ],
+        "SwitchDensity": [
+            {
+                "key": "java:S1151",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1151"
+            }
+        ],
+        "SystemPrintln": [
+            {
+                "key": "java:S106",
+                "link": "https://rules.sonarsource.com/java/RSPEC-106"
+            }
+        ],
+        "TooManyMethods": [
+            {
+                "key": "java:S1448",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1448"
+            }
+        ],
+        "UncommentedEmptyConstructor": [
+            {
+                "key": "java:S2094",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2094"
+            }
+        ],
+        "UncommentedEmptyMethodBody": [
+            {
+                "key": "java:S1186",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1186"
+            }
+        ],
+        "UnconditionalIfStatement": [
+            {
+                "key": "java:S2583",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2583"
+            }
+        ],
+        "UnnecessaryCaseChange": [
+            {
+                "key": "java:S1157",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1157"
+            }
+        ],
+        "UnnecessaryConstructor": [
+            {
+                "key": "java:S1186",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1186"
+            }
+        ],
+        "UnnecessaryConversionTemporary": [
+            {
+                "key": "java:S1158",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1158"
+            }
+        ],
+        "UnnecessaryLocalBeforeReturn": [
+            {
+                "key": "java:S1488",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1488"
+            }
+        ],
+        "UnusedFormalParameter": [
+            {
+                "key": "java:S1172",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1172"
+            }
+        ],
+        "UnusedLocalVariable": [
+            {
+                "key": "java:S1481",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1481"
+            }
+        ],
+        "UnusedPrivateField": [
+            {
+                "key": "java:S1068",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1068"
+            }
+        ],
+        "UnusedPrivateMethod": [
+            {
+                "key": "java:UnusedPrivateMethod",
+                "link": null
+            }
+        ],
+        "UseArrayListInsteadOfVector": [
+            {
+                "key": "java:S1149",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1149"
+            }
+        ],
+        "UseCollectionIsEmpty": [
+            {
+                "key": "java:S1155",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1155"
+            }
+        ],
+        "UseCorrectExceptionLogging": [
+            {
+                "key": "java:S1166",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1166"
+            }
+        ],
+        "UseEqualsToCompareStrings": [
+            {
+                "key": "java:S1698",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1698"
+            },
+            {
+                "key": "java:StringEqualityComparisonCheck",
+                "link": null
+            }
+        ],
+        "UseNotifyAllInsteadOfNotify": [
+            {
+                "key": "java:S2446",
+                "link": "https://rules.sonarsource.com/java/RSPEC-2446"
+            }
+        ],
+        "UseObjectForClearerAPI": [
+            {
+                "key": "java:S107",
+                "link": "https://rules.sonarsource.com/java/RSPEC-107"
+            }
+        ],
+        "UseUtilityClass": [
+            {
+                "key": "java:S1118",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1118"
+            }
+        ],
+        "UselessOverridingMethod": [
+            {
+                "key": "java:S1185",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1185"
+            }
+        ],
+        "UselessParentheses": [
+            {
+                "key": "java:S1110",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1110"
+            }
+        ],
+        "UselessStringValueOf": [
+            {
+                "key": "java:S1153",
+                "link": "https://rules.sonarsource.com/java/RSPEC-1153"
+            }
+        ]
+    }
+}
