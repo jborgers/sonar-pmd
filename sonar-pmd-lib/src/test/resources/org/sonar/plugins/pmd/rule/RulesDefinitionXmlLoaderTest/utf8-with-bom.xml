@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <rule>
+    <key>com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck</key>
+    <name>M &amp; M</name>
+    <description>éà&amp; Description</description>
+  </rule>
+</rules>

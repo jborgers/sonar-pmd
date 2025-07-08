@@ -22,11 +22,11 @@ package org.sonar.plugins.pmd;
 import net.sourceforge.pmd.renderers.Renderer;
 import net.sourceforge.pmd.renderers.XMLRenderer;
 import net.sourceforge.pmd.reporting.Report;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,7 @@ import java.nio.file.Path;
 public class PmdConfiguration {
     static final String PROPERTY_GENERATE_XML = "sonar.pmd.generateXml";
     private static final String PMD_RESULT_XML = "pmd-result.xml";
-    private static final Logger LOG = Loggers.get(PmdConfiguration.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PmdConfiguration.class);
     private final FileSystem fileSystem;
     private final Configuration settings;
 

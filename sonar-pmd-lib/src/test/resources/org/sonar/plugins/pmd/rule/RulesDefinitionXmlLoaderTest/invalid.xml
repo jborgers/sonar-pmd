@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <rule>
+    <key>invalid</key>
+    <name>Invalid</name>
+    <description>Invalid XML file</description>
+    <unclosed-tag>
+  </rule>
+</rules>

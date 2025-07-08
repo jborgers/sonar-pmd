@@ -20,6 +20,8 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.reporting.RuleViolation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -29,8 +31,6 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ import java.util.Optional;
 @ScannerSide
 public class PmdViolationRecorder {
 
-    private static final Logger LOGGER = Loggers.get(PmdKotlinRulesDefinition.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmdKotlinRulesDefinition.class);
 
     private final FileSystem fs;
     private final ActiveRules activeRules;

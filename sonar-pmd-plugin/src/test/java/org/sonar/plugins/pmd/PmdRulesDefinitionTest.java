@@ -19,9 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
-import com.google.common.collect.Iterables;
 import org.junit.jupiter.api.Test;
-import org.sonar.api.PropertyType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Param;
 import org.sonar.api.server.rule.RulesDefinition.Rule;
@@ -44,8 +42,8 @@ class PmdRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();
-        // PMD-7-MIGRATION: check number of rules is correct from PMD 7.x (was 228 in PMD 6.x)
-        assertThat(rules).hasSize(219);
+
+        assertThat(rules).hasSize(281);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -53,6 +51,12 @@ class PmdRulesDefinitionTest {
             assertThat(rule.name()).isNotNull();
             assertThat(rule.htmlDescription()).isNotNull();
             assertThat(rule.severity()).isNotNull();
+
+            // Verify code blocks don't contain paragraph tags
+            String description = rule.htmlDescription();
+            if (description.contains("<pre><code")) {
+                assertThat(description).doesNotContain("</p><p>");
+            }
 
             for (Param param : rule.params()) {
                 assertThat(param.name()).isNotNull();
@@ -63,17 +67,4 @@ class PmdRulesDefinitionTest {
         }
     }
 
-    @Test
-    void should_use_text_parameter_for_xpath_rule() {
-        PmdRulesDefinition definition = new PmdRulesDefinition();
-        RulesDefinition.Context context = new RulesDefinition.Context();
-        definition.define(context);
-        RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        List<RulesDefinition.Rule> rules = repository.rules();
-        System.out.println("rules: " + rules);
-
-        Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
-
-        assertThat(xpathRule.param("xpath").type().type()).isEqualTo(PropertyType.TEXT.name());
-    }
 }

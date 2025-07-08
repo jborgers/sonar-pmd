@@ -59,6 +59,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.sonarsource.pmd</groupId>
+      <artifactId>sonar-pmd-lib</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>org.codehaus.staxmate</groupId>
       <artifactId>staxmate</artifactId>
       <version>${staxmate.version}</version>
@@ -127,7 +132,11 @@
       <artifactId>jdom2</artifactId>
       <version>${jdom2.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -194,7 +203,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>19000000</maxsize>
+                  <maxsize>20000000</maxsize>
                   <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
@@ -207,4 +216,52 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      Profile to generate the rules-java.xml and rules-kotlin.xml files from PMD 7 rules.
+      Usage: mvn generate-resources -Pgenerate-pmd-rules
+      This will run the Groovy script that extracts rules from PMD 7 and generates the rules-java.xml and rules-kotlin.xml files.
+    -->
+    <profile>
+      <id>generate-pmd-rules</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.gmaven</groupId>
+            <artifactId>groovy-maven-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+              <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>3.0.19</version>
+                <type>pom</type>
+              </dependency>
+              <dependency>
+                <groupId>org.apache.ivy</groupId>
+                <artifactId>ivy</artifactId>
+                <version>2.5.2</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>generate-pmd-rules-xml</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <source>${project.basedir}/../scripts/pmd7_rules_xml_generator.groovy</source>
+                  <properties>
+                    <outputDir>${project.basedir}/src/main/resources/org/sonar/plugins/pmd</outputDir>
+                  </properties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
