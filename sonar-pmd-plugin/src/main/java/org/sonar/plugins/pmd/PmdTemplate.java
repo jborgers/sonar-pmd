@@ -85,7 +85,7 @@ public class PmdTemplate {
         if (languageVersion == null) {
             throw new IllegalArgumentException("Unsupported Java version for PMD: " + version);
         }
-        LOG.info("Java version: " + version);
+        LOG.info("Java version: {}", version);
         return languageVersion;
     }
 

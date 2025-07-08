@@ -34,8 +34,6 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.utils.log.Loggers;
-import org.sonar.api.utils.log.Profiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
@@ -57,9 +55,6 @@ public class PmdExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PmdExecutor.class);
 
-    // needed for the Profiler that needs a deprecated Logger
-    private static final org.sonar.api.utils.log.Logger LOGGER_DEPRECATED = Loggers.get(PmdExecutor.class);
-
     private final FileSystem fs;
     private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
@@ -80,7 +75,8 @@ public class PmdExecutor {
     }
 
     public Report execute() {
-        final Profiler profiler = Profiler.create(LOGGER_DEPRECATED).startInfo("Execute PMD " + PMDVersion.VERSION);
+        final long startTimeMs = System.currentTimeMillis();
+        LOGGER.info("Execute PMD {}", PMDVersion.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
 
         try (URLClassLoader classLoader = createClassloader()) {
@@ -91,7 +87,7 @@ public class PmdExecutor {
             LOGGER.error("Failed to close URLClassLoader.", e);
         } finally {
             Thread.currentThread().setContextClassLoader(initialClassLoader);
-            profiler.stopInfo();
+            LOGGER.info("Execute PMD {} (done) | time={}ms", PMDVersion.VERSION, System.currentTimeMillis() - startTimeMs);
         }
 
         return null;
