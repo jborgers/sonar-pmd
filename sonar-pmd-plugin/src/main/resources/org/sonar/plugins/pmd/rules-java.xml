@@ -3553,7 +3553,7 @@ messages are supported (<code>%s</code>).</p>
   </rule>
   <rule>
     <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
-    <name>JUnit4suites should use suite annotation</name>
+    <name>JUnit4 suites should use suite annotation</name>
     <internalKey>category/java/bestpractices.xml/JUnit4SuitesShouldUseSuiteAnnotation</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><b>Title of issues:</b> JUnit 4 indicates test suites via annotations, not the suite method.</p>
@@ -3577,7 +3577,7 @@ through the @RunWith(Suite.class) annotation.</p>
   </rule>
   <rule>
     <key>JUnit5TestShouldBePackagePrivate</key>
-    <name>JUnit5test should be package private</name>
+    <name>JUnit5 test should be package private</name>
     <internalKey>category/java/bestpractices.xml/JUnit5TestShouldBePackagePrivate</internalKey>
     <severity>MAJOR</severity>
     <description><![CDATA[<p><b>Title of issues:</b> JUnit 5 tests should be package-private.</p>

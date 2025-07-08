@@ -940,6 +940,9 @@ def camelCaseToReadable = { ruleName ->
         return word.toLowerCase()
     }.join(' ')
 
+    // Add space after words ending with consecutive digits
+    result = result.replaceAll(/(\w*\d+)([a-zA-Z])/, '$1 $2')
+
     // Capitalize only the first word
     if (result) {
         result = result[0].toUpperCase() + (result.length() > 1 ? result[1..-1] : "")
