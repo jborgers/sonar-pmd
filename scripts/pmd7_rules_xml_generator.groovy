@@ -1133,7 +1133,9 @@ def formatDescription = { ruleData, language ->
                 if (index > 0) {
                     alternativesHtml.append(", ")
                 }
-                alternativesHtml.append("<a href=\"${alt.link}\">${alt.key}</a>")
+
+                def internalLink = "./coding_rules?rule_key=${URLEncoder.encode(alt.key, 'UTF-8')}&open=${URLEncoder.encode(alt.key, 'UTF-8')}"
+                alternativesHtml.append("<a href=\"${internalLink}\">${alt.key}</a>")
             }
             alternativesHtml.append("</p>")
             htmlContent += "\n" + alternativesHtml.toString()
