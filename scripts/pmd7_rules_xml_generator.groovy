@@ -3,6 +3,7 @@
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
 import java.util.regex.Pattern
 import java.util.regex.Matcher
@@ -13,6 +14,34 @@ def pmdJavaJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sour
 def pmdKotlinJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
+// Define language-specific rule alternatives paths
+def javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
+def kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
+
+// Function to read rule alternatives from a JSON file
+def readRuleAlternatives = { filePath ->
+    def alternatives = [:]
+    try {
+        def alternativesFile = new File(filePath)
+        if (alternativesFile.exists()) {
+            def jsonSlurper = new JsonSlurper()
+            def alternativesData = jsonSlurper.parse(alternativesFile)
+            alternatives = alternativesData.ruleAlternatives
+            println "Loaded ${alternatives.size()} rule alternatives from ${filePath}"
+        } else {
+            println "WARNING: Rule alternatives file not found at ${filePath}"
+        }
+    } catch (Exception e) {
+        println "ERROR reading rule alternatives: ${e.message}"
+    }
+    return alternatives
+}
+
+// Read Java rule alternatives
+def javaRuleAlternatives = readRuleAlternatives(javaRuleAlternativesPath)
+
+// Read Kotlin rule alternatives (for future use)
+def kotlinRuleAlternatives = readRuleAlternatives(kotlinRuleAlternativesPath)
 
 // If we're in test mode, make the MdToHtmlConverter available but don't run the main code
 if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
@@ -1059,10 +1088,11 @@ def escapeForCdata = { text ->
 
 
 // Helper function to format description with examples using MdToHtmlConverter
-def formatDescription = { ruleData ->
+def formatDescription = { ruleData, language ->
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
+    def ruleName = ruleData.name
 
     // If no description exists, log warning, do not add rule
     if (!description || description.trim().isEmpty()) {
@@ -1092,6 +1122,25 @@ def formatDescription = { ruleData ->
 
     // Convert markdown to HTML using our Groovy MdToHtmlConverter
     def htmlContent = MdToHtmlConverter.convertToHtml(markdownContent.toString())
+
+    // Add Sonar alternative rules if available, based on language
+    def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+    if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleName)) {
+        def alternatives = ruleAlternativesForLanguage[ruleName]
+        if (alternatives && !alternatives.isEmpty()) {
+            def alternativesHtml = new StringBuilder("<p><b>Alternative " + (alternatives.size() == 1 ? "rule" : "rules") + ":</b> ")
+            alternatives.eachWithIndex { alt, index ->
+                if (index > 0) {
+                    alternativesHtml.append(", ")
+                }
+
+                def internalLink = "./coding_rules?rule_key=${URLEncoder.encode(alt.key, 'UTF-8')}&open=${URLEncoder.encode(alt.key, 'UTF-8')}"
+                alternativesHtml.append("<a href=\"${internalLink}\">${alt.key}</a>")
+            }
+            alternativesHtml.append("</p>")
+            htmlContent += "\n" + alternativesHtml.toString()
+        }
+    }
 
     // Add external info URL as the last paragraph if available
     if (externalInfoUrl) {
@@ -1135,7 +1184,7 @@ def generateXmlFile = { outputFile, rules, language ->
 
                         // Add description with CDATA
                         description {
-                            def descContent = formatDescription(ruleData)
+                            def descContent = formatDescription(ruleData, language)
                             if (!descContent || descContent.trim().isEmpty()) {
                                 descContent = MdToHtmlConverter.convertToHtml("THIS SHOULD NOT HAPPEN")
                                 rulesWithoutDescription++
@@ -1151,6 +1200,12 @@ def generateXmlFile = { outputFile, rules, language ->
                         // Add tags
                         tag("pmd")
                         tag(ruleData.category)
+
+                        // Add has-sonar-alternative tag if the rule has alternatives
+                        def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+                        if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleData.name)) {
+                            tag("has-sonar-alternative")
+                        }
 
                         // Add parameters
                         ruleData.properties.findAll { prop -> 
