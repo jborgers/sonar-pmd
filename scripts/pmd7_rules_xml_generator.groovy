@@ -7,6 +7,7 @@ import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
 import java.util.regex.Pattern
 import java.util.regex.Matcher
+import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor
 
 // Configuration
 def pmdVersion = MdToHtmlConverter.PMD_VERSION
@@ -17,6 +18,18 @@ def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 // Define language-specific rule alternatives paths
 def javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
 def kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
+
+// Extract Java rule properties from the jar file
+println "Extracting Java rule properties from ${pmdJavaJarPath}"
+def javaRulePropertyExtractor = new JavaRulePropertyExtractor()
+def javaRuleProperties = javaRulePropertyExtractor.extractProperties(pmdJavaJarPath)
+println "Found properties for ${javaRuleProperties.size()} Java rule classes"
+
+// Extract Kotlin rule properties from the jar file
+println "Extracting Kotlin rule properties from ${pmdKotlinJarPath}"
+def kotlinRulePropertyExtractor = new JavaRulePropertyExtractor()
+def kotlinRuleProperties = kotlinRulePropertyExtractor.extractProperties(pmdKotlinJarPath)
+println "Found properties for ${kotlinRuleProperties.size()} Kotlin rule classes"
 
 // Function to read rule alternatives from a JSON file
 def readRuleAlternatives = { filePath ->
@@ -1207,22 +1220,65 @@ def generateXmlFile = { outputFile, rules, language ->
                             tag("has-sonar-alternative")
                         }
 
-                        // Add parameters
-                        ruleData.properties.findAll { prop -> 
-                            prop.name && prop.description && !prop.name.startsWith("violation") 
-                        }.each { prop ->
-                            param {
-                                key(prop.name)
-                                description {
-                                    mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
+                        // Add parameters from XML rule definition
+                        if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
+                                ruleData.properties.findAll { prop ->
+                                    prop.name && prop.description
+                            }.each { prop ->
+                                param {
+                                    key(prop.name)
+                                    description {
+                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
+                                    }
+                                    if (prop.value) defaultValue(prop.value)
+                                    if (prop.type) {
+                                        // Map LIST[STRING] and REGEX to STRING
+                                        if (prop.type.toUpperCase() == "LIST[STRING]" || prop.type.toUpperCase() == "REGEX") {
+                                            type("STRING")
+                                        } else {
+                                            type(prop.type.toUpperCase())
+                                        }
+                                    }
                                 }
-                                if (prop.value) defaultValue(prop.value)
-                                if (prop.type) {
-                                    // Map LIST[STRING] and REGEX to STRING
-                                    if (prop.type.toUpperCase() == "LIST[STRING]" || prop.type.toUpperCase() == "REGEX") {
-                                        type("STRING")
-                                    } else {
-                                        type(prop.type.toUpperCase())
+                            }
+                        }
+                        else {
+                            // Add parameters from Java rule classes
+                            def ruleClass = ruleData.class
+
+                            if (ruleClass) {
+                                def rulePropertiesMap = language == "Java" ? javaRuleProperties : kotlinRuleProperties
+                                def ruleProperties = rulePropertiesMap.get(ruleClass)
+                                if (ruleProperties.size()) {
+                                    println "  - Found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})"
+                                    ruleProperties.each { propInfo ->
+                                        // Check if this property is already defined in the XML
+                                        def existingProp = ruleData.properties.find { it.name == propInfo.name }
+                                        if (!existingProp) {
+                                            param {
+                                                key(propInfo.name)
+                                                description {
+                                                    mkp.yieldUnescaped("<![CDATA[${escapeForCdata(propInfo.description)}]]>")
+                                                }
+
+                                                def defVal = propInfo.defaultValuesAsString
+                                                if (defVal == "[]") {
+                                                    println("WRONG $defVal for $propInfo")
+                                                }
+                                                defaultValue(defVal)
+                                                def propType = propInfo.type
+                                                println "### TYPE: $propType"
+                                                if (propType == "Integer") {
+                                                    type("INTEGER")
+                                                } else if (propType == "Boolean") {
+                                                    type("BOOLEAN")
+                                                } else if (propType == "Double") {
+                                                    type("FLOAT")
+                                                } else {
+                                                    type("STRING")
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

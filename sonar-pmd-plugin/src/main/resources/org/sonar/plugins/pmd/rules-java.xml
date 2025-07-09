@@ -21,6 +21,18 @@ directly) a protected constructor can be provided to prevent direct instantiatio
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AbstractClassWithoutAnyMethod</key>
@@ -66,6 +78,18 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#accessorclassgeneration">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AccessorMethodGeneration</key>
@@ -96,6 +120,18 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#accessormethodgeneration">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AddEmptyString</key>
@@ -110,6 +146,18 @@ It is much better to use one of the type-specific <code>toString()</code> method
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#addemptystring">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AppendCharacterWithChar</key>
@@ -126,6 +174,18 @@ It is much better to use one of the type-specific <code>toString()</code> method
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#appendcharacterwithchar">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ArrayIsStoredDirectly</key>
@@ -147,6 +207,24 @@ This prevents future changes from the user from affecting the original array.</p
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>allowPrivate</key>
+      <description><![CDATA[If true, allow private methods/constructors to store arrays directly]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>AssignmentInOperand</key>
@@ -166,6 +244,42 @@ This prevents future changes from the user from affecting the original array.</p
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>allowIf</key>
+      <description><![CDATA[Allow assignment within the conditional expression of an if statement]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>allowFor</key>
+      <description><![CDATA[Allow assignment within the conditional expression of a for statement]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>allowWhile</key>
+      <description><![CDATA[Allow assignment within the conditional expression of a while statement]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>allowIncrementDecrement</key>
+      <description><![CDATA[Allow increment or decrement operators within the conditional expression of an if, for, or while statement]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>AssignmentToNonFinalStatic</key>
@@ -183,6 +297,18 @@ This prevents future changes from the user from affecting the original array.</p
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#assignmenttononfinalstatic">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AtLeastOneConstructor</key>
@@ -202,6 +328,24 @@ Classes with solely static members are ignored, refer to <a href="https://pmd.gi
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>lombok.Data,lombok.Value,lombok.Builder,lombok.NoArgsConstructor,lombok.RequiredArgsConstructor,lombok.AllArgsConstructor</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidAccessibilityAlteration</key>
@@ -351,6 +495,36 @@ Ensure that the usage is not a bug, or consider using another approach.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#avoidbranchingstatementaslastinloop">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkBreakLoopTypes</key>
+      <description><![CDATA[List of loop types in which break statements will be checked]]></description>
+      <defaultValue>for,do,while</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkContinueLoopTypes</key>
+      <description><![CDATA[List of loop types in which continue statements will be checked]]></description>
+      <defaultValue>for,do,while</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkReturnLoopTypes</key>
+      <description><![CDATA[List of loop types in which return statements will be checked]]></description>
+      <defaultValue>for,do,while</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidCalendarDateCreation</key>
@@ -523,6 +697,24 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>problemDepth</key>
+      <description><![CDATA[The if statement depth reporting threshold]]></description>
+      <defaultValue>3</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidDollarSigns</key>
@@ -558,6 +750,42 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>maxDuplicateLiterals</key>
+      <description><![CDATA[Max duplicate literals]]></description>
+      <defaultValue>4</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>minimumLength</key>
+      <description><![CDATA[Minimum string length to check]]></description>
+      <defaultValue>3</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>skipAnnotations</key>
+      <description><![CDATA[Skip literals within annotations]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>exceptionList</key>
+      <description><![CDATA[List of literals to ignore. A literal is ignored if its image can be found in this list. Components of this list should not be surrounded by double quotes.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidEnumAsIdentifier</key>
@@ -701,6 +929,18 @@ that one covers both.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#avoidinstantiatingobjectsinloops">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidLiteralsInIfCondition</key>
@@ -931,6 +1171,18 @@ is always the one thrown in a try block.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidreassigningcatchvariables">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidReassigningLoopVariables</key>
@@ -967,6 +1219,30 @@ is always the one thrown in a try block.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#avoidreassigningloopvariables">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>foreachReassign</key>
+      <description><![CDATA[how/if foreach control variables may be reassigned]]></description>
+      <defaultValue>deny</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>forReassign</key>
+      <description><![CDATA[how/if for control variables may be reassigned]]></description>
+      <defaultValue>deny</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidReassigningParameters</key>
@@ -998,6 +1274,18 @@ parameter, then only the first assignment is reported.</p>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidRethrowingException</key>
@@ -1213,6 +1501,18 @@ validation in methods and constructors with multiple parameters.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidThrowingRawExceptionTypes</key>
@@ -1265,6 +1565,24 @@ Externalizing IP adresses is preferable.</p>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkAddressTypes</key>
+      <description><![CDATA[Check for IP address types.]]></description>
+      <defaultValue>IPv4,IPv6,IPv4 mapped IPv6</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidUsingNativeCode</key>
@@ -1308,6 +1626,24 @@ interpreted as an octal value.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>strict</key>
+      <description><![CDATA[Detect violations between 00 and 07]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>AvoidUsingVolatile</key>
@@ -1346,6 +1682,18 @@ for Java 9 onwards <code>BigInteger.TWO</code>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#bigintegerinstantiation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>BooleanGetMethodName</key>
@@ -1391,6 +1739,18 @@ It is likely that you used || instead of && or vice versa.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CallSuperFirst</key>
@@ -1477,6 +1837,18 @@ If the value return is 'false', it should be handled properly.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#checkresultset">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CheckSkipResult</key>
@@ -1506,6 +1878,18 @@ If the value return is 'false', it should be handled properly.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ClassCastExceptionWithToArray</key>
@@ -1567,6 +1951,60 @@ in a <code>ClassCastException</code>.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>classPattern</key>
+      <description><![CDATA[Regex which applies to concrete class names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>abstractClassPattern</key>
+      <description><![CDATA[Regex which applies to abstract class names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>interfacePattern</key>
+      <description><![CDATA[Regex which applies to interface names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>enumPattern</key>
+      <description><![CDATA[Regex which applies to enum names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>annotationPattern</key>
+      <description><![CDATA[Regex which applies to annotation names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>utilityClassPattern</key>
+      <description><![CDATA[Regex which applies to utility class names]]></description>
+      <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>testClassPattern</key>
+      <description><![CDATA[Regex which applies to test class names. Since PMD 6.52.0.]]></description>
+      <defaultValue>^Test.*$|^[A-Z][a-zA-Z0-9]*Test(s|Case)?$</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ClassWithOnlyPrivateConstructorsShouldBeFinal</key>
@@ -1585,6 +2023,18 @@ so a subclass could not call the super constructor.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CloneMethodMustBePublic</key>
@@ -1631,6 +2081,18 @@ a final method that only throws CloneNotSupportedException.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#clonemethodmustimplementcloneable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CloneMethodReturnTypeMustMatchClassName</key>
@@ -1700,6 +2162,48 @@ just remove "AutoCloseable" from the types.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>closeTargets</key>
+      <description><![CDATA[Methods which may close this resource]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>types</key>
+      <description><![CDATA[Affected types]]></description>
+      <defaultValue>java.lang.AutoCloseable,java.sql.Connection,java.sql.Statement,java.sql.ResultSet</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>closeAsDefaultTarget</key>
+      <description><![CDATA[Consider 'close' as a target by default]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>allowedResourceTypes</key>
+      <description><![CDATA[Exact class names that do not need to be closed]]></description>
+      <defaultValue>java.io.ByteArrayOutputStream,java.io.ByteArrayInputStream,java.io.StringWriter,java.io.CharArrayWriter,java.util.stream.Stream,java.util.stream.IntStream,java.util.stream.LongStream,java.util.stream.DoubleStream</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>closeNotInFinally</key>
+      <description><![CDATA[Detect if 'close' (or other closeTargets) is called outside of a finally-block]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>CognitiveComplexity</key>
@@ -1753,6 +2257,24 @@ just remove "AutoCloseable" from the types.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#cognitivecomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>reportLevel</key>
+      <description><![CDATA[Cognitive Complexity reporting threshold]]></description>
+      <defaultValue>15</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>CollapsibleIfStatements</key>
@@ -1795,6 +2317,24 @@ conditions with a boolean <code>&amp;&amp;</code> operator in between.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#commentcontent">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>forbiddenRegex</key>
+      <description><![CDATA[Illegal terms or phrases]]></description>
+      <defaultValue>idiot|jerk</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CommentDefaultAccessModifier</key>
@@ -1830,6 +2370,36 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#commentdefaultaccessmodifier">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>android.support.annotation.VisibleForTesting,co.elastic.clients.util.VisibleForTesting,com.google.common.annotations.VisibleForTesting,org.junit.jupiter.api.AfterAll,org.junit.jupiter.api.AfterEach,org.junit.jupiter.api.BeforeAll,org.junit.jupiter.api.BeforeEach,org.junit.jupiter.api.RepeatedTest,org.junit.jupiter.api.Test,org.junit.jupiter.api.TestFactory,org.junit.jupiter.api.TestTemplate,org.junit.jupiter.api.extension.RegisterExtension,org.junit.jupiter.params.ParameterizedTest,org.testng.annotations.AfterClass,org.testng.annotations.AfterGroups,org.testng.annotations.AfterMethod,org.testng.annotations.AfterSuite,org.testng.annotations.AfterTest,org.testng.annotations.BeforeClass,org.testng.annotations.BeforeGroups,org.testng.annotations.BeforeMethod,org.testng.annotations.BeforeSuite,org.testng.annotations.BeforeTest,org.testng.annotations.Test</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>regex</key>
+      <description><![CDATA[Regular expression]]></description>
+      <defaultValue>\/\*\s*(default|package)\s*\*\/</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkTopLevelTypes</key>
+      <description><![CDATA[Check for default access modifier in top-level classes, annotations, and enums]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>CommentRequired</key>
@@ -1846,6 +2416,72 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#commentrequired">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>methodWithOverrideCommentRequirement</key>
+      <description><![CDATA[Comments on @Override methods. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Ignored</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>accessorCommentRequirement</key>
+      <description><![CDATA[Comments on getters and setters". Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Ignored</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>classCommentRequirement</key>
+      <description><![CDATA[Class comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Required</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>fieldCommentRequirement</key>
+      <description><![CDATA[Field comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Required</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>publicMethodCommentRequirement</key>
+      <description><![CDATA[Public method and constructor comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Required</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>protectedMethodCommentRequirement</key>
+      <description><![CDATA[Protected method constructor comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Required</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>enumCommentRequirement</key>
+      <description><![CDATA[Enum comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Required</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>serialVersionUIDCommentRequired</key>
+      <description><![CDATA[Serial version UID comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Ignored</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>serialPersistentFieldsCommentRequired</key>
+      <description><![CDATA[Serial persistent fields comments. Possible values: [Required, Ignored, Unwanted]]]></description>
+      <defaultValue>Ignored</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>CommentSize</key>
@@ -1873,6 +2509,30 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_documentation.html#commentsize">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>maxLines</key>
+      <description><![CDATA[Maximum lines]]></description>
+      <defaultValue>6</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>maxLineLength</key>
+      <description><![CDATA[Maximum line length]]></description>
+      <defaultValue>80</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>CompareObjectsWithEquals</key>
@@ -1967,6 +2627,18 @@ in the <code>typesThatCompareByReference</code> property.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#confusingargumenttovarargsmethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ConfusingTernary</key>
@@ -1985,6 +2657,24 @@ as "does the error case go first?" or "does the common case go first?".</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#confusingternary">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreElseIf</key>
+      <description><![CDATA[Ignore conditions with an else-if case]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>ConsecutiveAppendsShouldReuse</key>
@@ -2006,6 +2696,18 @@ by producing a smaller bytecode, reducing overhead and improving inlining. A com
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#consecutiveappendsshouldreuse">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ConsecutiveLiteralAppends</key>
@@ -2028,6 +2730,24 @@ can be appended in a single method call.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#consecutiveliteralappends">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>threshold</key>
+      <description><![CDATA[Max consecutive appends]]></description>
+      <defaultValue>1</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>ConstantsInInterface</key>
@@ -2104,6 +2824,18 @@ Note that those methods also must not call overridable methods transitively to b
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ControlStatementBraces</key>
@@ -2198,6 +2930,24 @@ A number higher than the specified threshold can indicate a high degree of coupl
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>threshold</key>
+      <description><![CDATA[Unique type reporting threshold]]></description>
+      <defaultValue>20</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>CyclomaticComplexity</key>
@@ -2246,6 +2996,36 @@ into subcomponents.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>classReportLevel</key>
+      <description><![CDATA[Total class complexity reporting threshold]]></description>
+      <defaultValue>80</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>methodReportLevel</key>
+      <description><![CDATA[Cyclomatic complexity reporting threshold]]></description>
+      <defaultValue>10</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>cycloOptions</key>
+      <description><![CDATA[Choose options for the computation of Cyclo]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>DataClass</key>
@@ -2285,6 +3065,18 @@ into the former client classes.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#dataclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>DefaultLabelNotLastInSwitch</key>
@@ -2334,6 +3126,18 @@ should be annotated with @Test and @Ignore.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#detachedtestcase">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>DoNotCallGarbageCollectionExplicitly</key>
@@ -2624,6 +3428,18 @@ or <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.ht
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#doublecheckedlocking">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>EmptyCatchBlock</key>
@@ -2685,6 +3501,24 @@ or reported.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#emptycontrolstatement">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>allowCommentedBlocks</key>
+      <description><![CDATA[Option for allowing empty but commented blocks. This is useful where a developer wants to have the code structure and explain why a condition does not require logic or to hold TODO comments for future work.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>EmptyFinalizer</key>
@@ -2771,6 +3605,18 @@ To fix a violation, add the necessary validation or use an alternate control str
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ExcessiveImports</key>
@@ -2792,6 +3638,24 @@ user-specified threshold.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>minimum</key>
+      <description><![CDATA[Threshold above which a node is reported]]></description>
+      <defaultValue>30</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>ExcessiveParameterList</key>
@@ -2817,6 +3681,24 @@ same datatype. These situations usually denote the need for new objects to wrap 
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>minimum</key>
+      <description><![CDATA[Threshold above which a node is reported]]></description>
+      <defaultValue>10</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>ExcessivePublicCount</key>
@@ -2844,6 +3726,24 @@ developed easily.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>minimum</key>
+      <description><![CDATA[Threshold above which a node is reported]]></description>
+      <defaultValue>45</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>ExhaustiveSwitchHasDefault</key>
@@ -2912,6 +3812,36 @@ rather than at runtime (if at all).</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreAnonymousClassDeclarations</key>
+      <description><![CDATA[Ignore field declarations, that are initialized with an anonymous class creation expression]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>ignoreInterfaceDeclarations</key>
+      <description><![CDATA[Ignore interface declarations that precede fields]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>ignoreEnumDeclarations</key>
+      <description><![CDATA[Ignore enum declarations that precede fields]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>FieldNamingConventions</key>
@@ -2943,6 +3873,60 @@ rather than at runtime (if at all).</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#fieldnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>publicConstantPattern</key>
+      <description><![CDATA[Regex which applies to public constant names]]></description>
+      <defaultValue>[A-Z][A-Z_0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>constantPattern</key>
+      <description><![CDATA[Regex which applies to non-public static final field names]]></description>
+      <defaultValue>[A-Z][A-Z_0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>enumConstantPattern</key>
+      <description><![CDATA[Regex which applies to enum constant names]]></description>
+      <defaultValue>[A-Z][A-Z_0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>finalFieldPattern</key>
+      <description><![CDATA[Regex which applies to final field names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>staticFieldPattern</key>
+      <description><![CDATA[Regex which applies to static field names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>defaultFieldPattern</key>
+      <description><![CDATA[Regex which applies to field names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>exclusions</key>
+      <description><![CDATA[Names of fields to whitelist.]]></description>
+      <defaultValue>serialVersionUID,serialPersistentFields</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>FinalFieldCouldBeStatic</key>
@@ -2960,6 +3944,18 @@ in each object at runtime.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>FinalParameterInAbstractMethod</key>
@@ -3068,6 +4064,18 @@ element of the list or array left to right.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#forloopcanbeforeach">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ForLoopShouldBeWhileLoop</key>
@@ -3141,6 +4149,42 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#formalparameternamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>methodParameterPattern</key>
+      <description><![CDATA[Regex which applies to formal parameter names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>finalMethodParameterPattern</key>
+      <description><![CDATA[Regex which applies to final formal parameter names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>lambdaParameterPattern</key>
+      <description><![CDATA[Regex which applies to inferred-type lambda parameter names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>explicitLambdaParameterPattern</key>
+      <description><![CDATA[Regex which applies to explicitly-typed lambda parameter names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>GenericsNaming</key>
@@ -3190,6 +4234,18 @@ of Object-Oriented Systems.</i> Springer, Berlin, 1 edition, October 2006. Page 
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#godclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>GuardLogStatement</key>
@@ -3223,6 +4279,30 @@ with lambdas. The available alternatives depend on the actual logging framework.
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#guardlogstatement">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>logLevels</key>
+      <description><![CDATA[LogLevels to guard]]></description>
+      <defaultValue>trace,debug,info,warn,error,log,finest,finer,fine,info,warning,severe</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>guardsMethods</key>
+      <description><![CDATA[Method use to guard the log statement]]></description>
+      <defaultValue>isTraceEnabled,isDebugEnabled,isInfoEnabled,isWarnEnabled,isErrorEnabled,isLoggable</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>HardCodedCryptoKey</key>
@@ -3243,6 +4323,18 @@ with lambdas. The available alternatives depend on the actual logging framework.
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_security.html#hardcodedcryptokey">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>IdempotentOperations</key>
@@ -3262,6 +4354,18 @@ with lambdas. The available alternatives depend on the actual logging framework.
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>IdenticalCatchBranches</key>
@@ -3288,6 +4392,18 @@ with lambdas. The available alternatives depend on the actual logging framework.
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#identicalcatchbranches">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ImmutableField</key>
@@ -3314,6 +4430,18 @@ see <i>Effective Java, 3rd Edition, Item 17: Minimize mutability</i>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#immutablefield">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ImplicitFunctionalInterface</key>
@@ -3344,6 +4472,18 @@ see <i>Effective Java, 3rd Edition, Item 17: Minimize mutability</i>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#implicitfunctionalinterface">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ImplicitSwitchFallThrough</key>
@@ -3378,6 +4518,18 @@ which is reached by fallthrough, or with <code>@SuppressWarnings(&quot;fallthrou
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#implicitswitchfallthrough">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InefficientEmptyStringCheck</key>
@@ -3410,6 +4562,18 @@ include the check for != null).</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#inefficientemptystringcheck">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InefficientStringBuffering</key>
@@ -3428,6 +4592,18 @@ need to be be created and destroyed by the JVM.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#inefficientstringbuffering">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InsecureCryptoIv</key>
@@ -3454,6 +4630,18 @@ need to be be created and destroyed by the JVM.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_security.html#insecurecryptoiv">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InstantiationToGetClass</key>
@@ -3492,6 +4680,18 @@ is assumed if the length of the constructor can not be determined.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#insufficientstringbufferdeclaration">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InvalidJavaBean</key>
@@ -3520,6 +4720,30 @@ enabled by configuring the property <code>packages</code>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#invalidjavabean">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ensureSerialization</key>
+      <description><![CDATA[Require that beans implement java.io.Serializable.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>packages</key>
+      <description><![CDATA[Consider classes in only these package to be beans. Set to an empty value to check all classes.]]></description>
+      <defaultValue>org.example.beans</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>InvalidLogMessageFormat</key>
@@ -3538,6 +4762,18 @@ messages are supported (<code>%s</code>).</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#invalidlogmessageformat">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
@@ -3609,6 +4845,18 @@ is a good practice to limit their visibility.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#junitspelling">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>JUnitStaticSuite</key>
@@ -3632,6 +4880,18 @@ is a good practice to limit their visibility.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#junitstaticsuite">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>JUnitUseExpected</key>
@@ -3658,6 +4918,18 @@ is a good practice to limit their visibility.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#junituseexpected">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>JumbledIncrementer</key>
@@ -3710,6 +4982,30 @@ is a good practice to limit their visibility.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#lambdacanbemethodreference">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreIfMayNPE</key>
+      <description><![CDATA[Ignore lambdas that may throw a null pointer exception (NPE) when converted to a method reference. Those expressions will NPE at mref creation time, while the equivalent lambda would NPE only when invoked (which may be never).]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>ignoreIfReceiverIsMethod</key>
+      <description><![CDATA[Ignore if the receiver of the method reference is a method call. These may cause side effects that often should prevent the conversion to a method reference.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>LawOfDemeter</key>
@@ -3753,6 +5049,24 @@ to break a boundary of abstraction.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#lawofdemeter">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>trustRadius</key>
+      <description><![CDATA[Maximum degree of trusted data. The default of 1 is the most restrictive.]]></description>
+      <defaultValue>1</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>LinguisticNaming</key>
@@ -3810,6 +5124,84 @@ Developers Perceive Them</a>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#linguisticnaming">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>java.lang.Override</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkBooleanMethod</key>
+      <description><![CDATA[Check method names and types for inconsistent naming.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkGetters</key>
+      <description><![CDATA[Check return type of getters.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkSetters</key>
+      <description><![CDATA[Check return type of setters.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkPrefixedTransformMethods</key>
+      <description><![CDATA[Check return type of methods whose names start with the configured prefix (see transformMethodNames property).]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkTransformMethods</key>
+      <description><![CDATA[Check return type of methods which contain the configured infix in their name (see transformMethodNames property).]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>booleanMethodPrefixes</key>
+      <description><![CDATA[The prefixes of methods that return boolean.]]></description>
+      <defaultValue>is,has,can,have,will,should</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>transformMethodNames</key>
+      <description><![CDATA[The prefixes and infixes that indicate a transform method.]]></description>
+      <defaultValue>to,as</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkFields</key>
+      <description><![CDATA[Check field names and types for inconsistent naming.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkVariables</key>
+      <description><![CDATA[Check local variable names and types for inconsistent naming.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>booleanFieldPrefixes</key>
+      <description><![CDATA[The prefixes of fields and variables that indicate boolean.]]></description>
+      <defaultValue>is,has,can,have,will,should</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>LiteralsFirstInComparisons</key>
@@ -3847,6 +5239,18 @@ Developers Perceive Them</a>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#literalsfirstincomparisons">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>LocalHomeNamingConvention</key>
@@ -3892,6 +5296,24 @@ Developers Perceive Them</a>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#localvariablecouldbefinal">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreForEachDecl</key>
+      <description><![CDATA[Ignore non-final loop variables in a for-each statement.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>LocalVariableNamingConventions</key>
@@ -3922,6 +5344,36 @@ Developers Perceive Them</a>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#localvariablenamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>localVarPattern</key>
+      <description><![CDATA[Regex which applies to non-final local variable names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>finalVarPattern</key>
+      <description><![CDATA[Regex which applies to final local variable names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>catchParameterPattern</key>
+      <description><![CDATA[Regex which applies to exception block parameter names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>LogicInversion</key>
@@ -4008,6 +5460,24 @@ the same as interfaces can be configured with the property <code>allowedTypes</c
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#loosecoupling">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>allowedTypes</key>
+      <description><![CDATA[Exceptions to the rule]]></description>
+      <defaultValue>java.util.Properties</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>LoosePackageCoupling</key>
@@ -4027,6 +5497,30 @@ except when using one of the configured allowed classes.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#loosepackagecoupling">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>packages</key>
+      <description><![CDATA[Restricted packages]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>classes</key>
+      <description><![CDATA[Allowed classes]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MDBAndSessionBeanNamingConvention</key>
@@ -4070,6 +5564,18 @@ except when using one of the configured allowed classes.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MethodNamingConventions</key>
@@ -4091,6 +5597,54 @@ except when using one of the configured allowed classes.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>methodPattern</key>
+      <description><![CDATA[Regex which applies to instance method names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>staticPattern</key>
+      <description><![CDATA[Regex which applies to static method names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>nativePattern</key>
+      <description><![CDATA[Regex which applies to native method names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>junit3TestPattern</key>
+      <description><![CDATA[Regex which applies to JUnit 3 test method names]]></description>
+      <defaultValue>test[A-Z0-9][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>junit4TestPattern</key>
+      <description><![CDATA[Regex which applies to JUnit 4 test method names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>junit5TestPattern</key>
+      <description><![CDATA[Regex which applies to JUnit 5 test method names]]></description>
+      <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MethodReturnsInternalArray</key>
@@ -4112,6 +5666,18 @@ removed or replaced outside of the object that owns it. It is safer to return a 
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MethodWithSameNameAsEnclosingClass</key>
@@ -4180,6 +5746,18 @@ Either the check is useless (the variable will never be <code>null</code>) or it
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#missingoverride">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MissingSerialVersionUID</key>
@@ -4320,6 +5898,24 @@ complexity and increase readability.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#npathcomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>reportLevel</key>
+      <description><![CDATA[N-Path Complexity reporting threshold]]></description>
+      <defaultValue>200</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>NcssCount</key>
@@ -4359,6 +5955,36 @@ statements. For more details on the calculation, see the documentation
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#ncsscount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>methodReportLevel</key>
+      <description><![CDATA[NCSS reporting threshold for methods]]></description>
+      <defaultValue>60</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>classReportLevel</key>
+      <description><![CDATA[NCSS reporting threshold for classes]]></description>
+      <defaultValue>1500</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>ncssOptions</key>
+      <description><![CDATA[Choose options for the computation of Ncss]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>NoPackage</key>
@@ -4458,6 +6084,24 @@ serializable regardless of the name.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#nonserializableclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkAbstractTypes</key>
+      <description><![CDATA[Enable to verify fields with abstract types like abstract classes, interfaces, generic types or java.lang.Object. Enabling this might lead to more false positives, since the concrete runtime type can actually be serializable.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>NonStaticInitializer</key>
@@ -4509,6 +6153,30 @@ performance penalty. <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/Doubl
     <tag>pmd</tag>
     <tag>multithreading</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkNonStaticMethods</key>
+      <description><![CDATA[Check for non-static methods.  Do not set this to false and checkNonStaticFields to true.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>checkNonStaticFields</key>
+      <description><![CDATA[Check for non-static fields.  Do not set this to true and checkNonStaticMethods to false.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>NullAssignment</key>
@@ -4529,6 +6197,18 @@ of assignment is an indication that the programmer doesn't completely understand
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#nullassignment">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>OneDeclarationPerLine</key>
@@ -4578,6 +6258,18 @@ However, it can lead to quite messy code. This rule looks for several declaratio
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>OptimizableToArrayCall</key>
@@ -4637,6 +6329,18 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>PackageCase</key>
@@ -4704,6 +6408,18 @@ can reorder code.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>PreserveStackTrace</key>
@@ -4750,6 +6466,18 @@ whose name starts with <code>ignored</code>.</p>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>PrimitiveWrapperInstantiation</key>
@@ -4773,6 +6501,18 @@ whose name starts with <code>ignored</code>.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#primitivewrapperinstantiation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ProperCloneImplementation</key>
@@ -4791,6 +6531,18 @@ whose name starts with <code>ignored</code>.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>ProperLogger</key>
@@ -4861,6 +6613,18 @@ is redundant and results in a larger class file (approximately three additional 
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#redundantfieldinitializer">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>RemoteInterfaceNamingConvention</key>
@@ -5097,6 +6861,24 @@ derived from RuntimeException or a checked exception.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>IgnoreJUnitCompletely</key>
+      <description><![CDATA[Allow all methods in a JUnit3 TestCase to throw Exceptions]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>SimpleDateFormatNeedsLocale</key>
@@ -5146,6 +6928,18 @@ formatting is used.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#simplifiabletestassertion">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SimplifiedTernary</key>
@@ -5226,6 +7020,18 @@ the conditional test can be returned instead.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SimplifyConditional</key>
@@ -5244,6 +7050,18 @@ the conditional test can be returned instead.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#simplifyconditional">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SingleMethodSingleton</key>
@@ -5272,6 +7090,18 @@ for each call and new objects will be created for every invocation.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#singlemethodsingleton">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SingletonClassReturningNewInstance</key>
@@ -5293,6 +7123,18 @@ for each call and new objects will be created for every invocation.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#singletonclassreturningnewinstance">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SingularField</key>
@@ -5322,6 +7164,24 @@ so it might as well not be stored in the enclosing object.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_design.html#singularfield">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>java.lang.Deprecated,javafx.fxml.FXML,lombok.Getter,lombok.Setter,lombok.experimental.Delegate</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>StaticEJBFieldShouldBeFinal</key>
@@ -5386,6 +7246,18 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#stringinstantiation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>StringToString</key>
@@ -5472,6 +7344,18 @@ the literal character "8".</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#suspiciousoctalescape">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>SwitchDensity</key>
@@ -5500,6 +7384,24 @@ on the switch variable.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>minimum</key>
+      <description><![CDATA[Threshold above which a switch statement or expression is reported]]></description>
+      <defaultValue>10</defaultValue>
+      <type>INTEGER</type>
+    </param>
   </rule>
   <rule>
     <key>SystemPrintln</key>
@@ -5546,6 +7448,24 @@ by name, set this property to an empty string.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#testclasswithouttestcases">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>testClassPattern</key>
+      <description><![CDATA[Test class name pattern to identify test classes by their fully qualified name. An empty pattern disables test class detection by name. Since PMD 6.51.0.]]></description>
+      <defaultValue>^(?:.*\.)?Test[^\.]*$|^(?:.*\.)?.*Tests?$|^(?:.*\.)?.*TestCase$</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>TooFewBranchesForSwitch</key>
@@ -5739,6 +7659,18 @@ empty methods.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestassertionsshouldincludemessage">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnitTestContainsTooManyAsserts</key>
@@ -5770,6 +7702,30 @@ empty methods.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestcontainstoomanyasserts">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>maximumAsserts</key>
+      <description><![CDATA[Maximum number of assert calls in a test method]]></description>
+      <defaultValue>1</defaultValue>
+      <type>INTEGER</type>
+    </param>
+    <param>
+      <key>extraAssertMethodNames</key>
+      <description><![CDATA[Extra valid assertion methods names]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnitTestShouldIncludeAssert</key>
@@ -5793,6 +7749,24 @@ empty methods.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unittestshouldincludeassert">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>extraAssertMethodNames</key>
+      <description><![CDATA[Extra valid assertion methods names]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnitTestShouldUseAfterAnnotation</key>
@@ -5968,6 +7942,18 @@ an error, use the <code>fail()</code> method and provide an indication message o
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessaryboxing">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryCaseChange</key>
@@ -5984,6 +7970,18 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryCast</key>
@@ -6043,6 +8041,18 @@ The literal would be autoboxed to <code>Integer</code> anyway.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessarycast">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryConstructor</key>
@@ -6061,6 +8071,24 @@ modifier as the declaring class. In an enum type, the default constructor is imp
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>javax.inject.Inject,com.google.inject.Inject,org.springframework.beans.factory.annotation.Autowired</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryConversionTemporary</key>
@@ -6098,6 +8126,30 @@ which is covered by an import statement is redundant.  Consider using the non-fu
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>reportStaticMethods</key>
+      <description><![CDATA[Report unnecessary static method qualifiers like in `Collections.emptyList()`, if the method is imported or inherited.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>reportStaticFields</key>
+      <description><![CDATA[Report unnecessary static field qualifiers like in `Math.PI`, if the field is imported or inherited.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryImport</key>
@@ -6126,6 +8178,18 @@ which is covered by an import statement is redundant.  Consider using the non-fu
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessaryimport">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryLocalBeforeReturn</key>
@@ -6145,6 +8209,24 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>statementOrderMatters</key>
+      <description><![CDATA[If set to false this rule no longer requires the variable declaration and return statement to be on consecutive lines. Any variable that is used solely in a return statement will be reported.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryModifier</key>
@@ -6184,6 +8266,18 @@ For historical reasons, modifiers which are implied by the context are accepted 
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessarymodifier">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryReturn</key>
@@ -6202,6 +8296,18 @@ instructions follow anyway.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#unnecessaryreturn">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessarySemicolon</key>
@@ -6248,6 +8354,18 @@ instructions follow anyway.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unnecessaryvarargsarraycreation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnnecessaryWarningSuppression</key>
@@ -6291,6 +8409,24 @@ synchronized on block level.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_multithreading.html#unsynchronizedstaticformatter">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>multithreading</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>allowMethodLevelSynchronization</key>
+      <description><![CDATA[If true, method level synchronization is allowed as well as synchronized block. Otherwise only synchronized blocks are allowed.]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UnusedAssignment</key>
@@ -6393,6 +8529,30 @@ synchronized on block level.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unusedassignment">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkUnusedPrefixIncrement</key>
+      <description><![CDATA[Report expressions like ++i that may be replaced with (i + 1)]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>reportUnusedVariables</key>
+      <description><![CDATA[Report variables that are only initialized, and never read at all. The rule UnusedVariable already cares for that, but you can enable it if needed]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UnusedFormalParameter</key>
@@ -6415,6 +8575,24 @@ Hence, by default, this rule only considers private methods. To include non-priv
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>checkAll</key>
+      <description><![CDATA[Check all methods, including non-private ones]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UnusedLocalVariable</key>
@@ -6434,6 +8612,18 @@ Variables whose name starts with <code>ignored</code> or <code>unused</code> are
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnusedNullCheckInEquals</key>
@@ -6507,6 +8697,30 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredFieldNames</key>
+      <description><![CDATA[Field Names that are ignored from the unused check]]></description>
+      <defaultValue>serialVersionUID,serialPersistentFields</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>reportForAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be reported anyway. If an unused field has any of these annotations, then it is reported. If it has any other annotation, then it is still considered to used and is not reported.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UnusedPrivateMethod</key>
@@ -6521,6 +8735,24 @@ Previously these frameworks where explicitly allowed by listing their annotation
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#unusedprivatemethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoredAnnotations</key>
+      <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
+      <defaultValue>java.lang.Deprecated,jakarta.annotation.PostConstruct,jakarta.annotation.PreDestroy,lombok.EqualsAndHashCode.Include</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseArrayListInsteadOfVector</key>
@@ -6601,6 +8833,18 @@ Comparing the value of size() to 0 does not convey intent as well as the isEmpty
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseConcurrentHashMap</key>
@@ -6679,6 +8923,18 @@ was made possible for anonymous class constructors.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_codestyle.html#usediamondoperator">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseEnumCollections</key>
@@ -6707,6 +8963,18 @@ was made possible for anonymous class constructors.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#useenumcollections">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseEqualsToCompareStrings</key>
@@ -6801,6 +9069,18 @@ and buffering.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#useindexofchar">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseLocaleWithCaseConversions</key>
@@ -6978,6 +9258,18 @@ threadsafe StringBuffer is recommended to avoid this.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_performance.html#usestringbufferforstringappends">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseStringBufferLength</key>
@@ -7032,6 +9324,24 @@ preserved.</p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_bestpractices.html#usetrywithresources">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>closeMethods</key>
+      <description><![CDATA[Method names in finally block, which trigger this rule]]></description>
+      <defaultValue>close,closeQuietly</defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseUnderscoresInNumericLiterals</key>
@@ -7077,6 +9387,18 @@ remember to add a private constructor to prevent instantiation.
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UseVarargs</key>
@@ -7125,6 +9447,18 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_java_errorprone.html#uselessoperationonimmutable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>UselessOverridingMethod</key>
@@ -7150,6 +9484,24 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <tag>pmd</tag>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreAnnotations</key>
+      <description><![CDATA[Ignore methods that have annotations (except @Override)]]></description>
+      <defaultValue>false</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UselessParentheses</key>
@@ -7177,6 +9529,30 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>ignoreClarifying</key>
+      <description><![CDATA[Ignore parentheses that separate expressions of difference precedence, like in `(a % 2 == 0) ? x : -x`]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>ignoreBalancing</key>
+      <description><![CDATA[Ignore unnecessary parentheses that appear balanced around an equality operator, because the other operand requires parentheses.For example, in `(a == null) == (b == null)`, only the second pair of parentheses is necessary, but the expression is clearer that way.]]></description>
+      <defaultValue>true</defaultValue>
+      <type>BOOLEAN</type>
+    </param>
   </rule>
   <rule>
     <key>UselessQualifiedThis</key>
@@ -7231,6 +9607,18 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <tag>pmd</tag>
     <tag>performance</tag>
     <tag>has-sonar-alternative</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>WhileLoopWithLiteralBoolean</key>

@@ -233,6 +233,11 @@
             <version>2.1.1</version>
             <dependencies>
               <dependency>
+                <groupId>org.sonarsource.pmd</groupId>
+                <artifactId>sonar-pmd-lib</artifactId>
+                <version>${revision}</version>
+              </dependency>
+              <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>3.0.19</version>
