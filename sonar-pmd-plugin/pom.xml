@@ -243,11 +243,6 @@
                 <version>3.0.19</version>
                 <type>pom</type>
               </dependency>
-              <dependency>
-                <groupId>org.apache.ivy</groupId>
-                <artifactId>ivy</artifactId>
-                <version>2.5.2</version>
-              </dependency>
             </dependencies>
             <executions>
               <execution>
