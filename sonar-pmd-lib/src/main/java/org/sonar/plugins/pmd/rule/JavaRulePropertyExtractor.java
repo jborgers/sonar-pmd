@@ -49,7 +49,13 @@ public class JavaRulePropertyExtractor {
             try (URLClassLoader classLoader = new URLClassLoader(urls, getClass().getClassLoader())) {
                 // Find all class files in the jar
                 Enumeration<JarEntry> entries = jarFile.entries();
-                while (entries.hasMoreElements()) {
+
+                // prevent Zip bomb attack
+                final int MAX_JAR_ENTRIES = 10000;
+                int numEntries = 0;
+
+                while (entries.hasMoreElements() && numEntries < MAX_JAR_ENTRIES) {
+                    numEntries++;
                     JarEntry entry = entries.nextElement();
                     if (entry.getName().endsWith(".class")) {
                         String className = entry.getName().replace('/', '.').replace(".class", "");
@@ -70,6 +76,10 @@ public class JavaRulePropertyExtractor {
                         }
                     }
                 }
+                if (numEntries >= MAX_JAR_ENTRIES) {
+                    LOGGER.warn("Too many entries in jar file: " + jarFilePath + ". Skipping rule extraction.");
+                }
+                LOGGER.info("Extracted " + result.size() + " rule properties from jar file: " + jarFilePath);
             }
         } catch (IOException e) {
             LOGGER.error("Error processing jar file: " + jarFilePath, e);
