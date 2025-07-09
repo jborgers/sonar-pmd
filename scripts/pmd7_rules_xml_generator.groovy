@@ -982,6 +982,9 @@ def camelCaseToReadable = { ruleName ->
         return word.toLowerCase()
     }.join(' ')
 
+    // Add space after words ending with consecutive digits
+    result = result.replaceAll(/(\w*\d+)([a-zA-Z])/, '$1 $2')
+
     // Capitalize only the first word
     if (result) {
         result = result[0].toUpperCase() + (result.length() > 1 ? result[1..-1] : "")
@@ -1105,6 +1108,7 @@ def formatDescription = { ruleData, language ->
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
+    def message = ruleData.message ?: ""
     def ruleName = ruleData.name
 
     // If no description exists, log warning, do not add rule
@@ -1114,6 +1118,16 @@ def formatDescription = { ruleData, language ->
 
     // Build markdown content
     def markdownContent = new StringBuilder()
+
+    // Add the message as a title at the top of the description
+    if (message && !message.trim().isEmpty()) {
+        // Process message: replace placeholders with code tags and fix double quotes
+        def processedMessage = message
+            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')  // Wrap {0}, {1}, etc. in code tags
+            .replaceAll(/''/,"\'")  // Replace two subsequent single quotes with a single single quote
+
+        markdownContent.append("## Title of issues: ").append(processedMessage).append("\n\n")
+    }
 
     // Add the main description
     markdownContent.append(description)
