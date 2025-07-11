@@ -1169,7 +1169,7 @@ def formatDescription = { ruleData, language ->
 // Function to generate XML file
 def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
-    def skippedRules = 0
+    def renamedRules = 0
     def rulesWithDeprecatedAndRef = []
 
     try {
@@ -1185,7 +1185,7 @@ def generateXmlFile = { outputFile, rules, language ->
                 rules.sort { it.name }.each { ruleData ->
                     // Skip rules with deprecated=true and ref attribute
                     if (ruleData.deprecated && ruleData.ref) {
-                        skippedRules++
+                        renamedRules++
                         rulesWithDeprecatedAndRef << ruleData
                         return // Skip this rule
                     }
@@ -1256,7 +1256,7 @@ Successfully generated ${outputFile.name}
 Total ${language} rules: ${rules.size()}
 Active ${language} rules: ${activeRules}
 Deprecated ${language} rules: ${deprecatedRules}
-${skippedRules > 0 ? "Skipped ${language} rules (deprecated with ref): ${skippedRules}" : ""}
+${renamedRules > 0 ? "Renamed ${language} rules (deprecated with ref): ${renamedRules}" : ""}
 ${rulesWithoutDescription > 0 ? "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}" : ""}
 Using camelCase transformation for all rule names
 
@@ -1289,33 +1289,32 @@ ${language} rules by category:"""
             println "\n✓ All ${language} rules have descriptions"
         }
 
-        // Print warnings for skipped rules with deprecated=true and ref attribute
-        if (skippedRules > 0) {
-            println "\nWARNING: Skipped ${skippedRules} ${language} rules with deprecated=true and ref attribute:"
+        // Print warnings for renamed rules with deprecated=true and ref attribute
+        if (renamedRules > 0) {
+            println "\nWARNING: Renamed ${renamedRules} ${language} rules with deprecated=true and ref attribute:"
             rulesWithDeprecatedAndRef.each { rule ->
                 println "  - ${rule.name} (ref: ${rule.ref})"
             }
 
-            // Generate JSON file with skipped rules information
-            def skippedRulesData = [
+            // Generate JSON file with renamed rules information
+            // Use simplified structure (name, ref, category only) for all languages
+            def renamedRulesData = [
                 language: language,
-                count: skippedRules,
+                count: renamedRules,
                 rules: rulesWithDeprecatedAndRef.collect { rule ->
                     [
                         name: rule.name,
                         ref: rule.ref,
-                        category: rule.category,
-                        categoryFile: rule.categoryFile,
-                        since: rule.since,
-                        message: rule.message
+                        category: rule.category
                     ]
                 }
             ]
 
-            def jsonBuilder = new JsonBuilder(skippedRulesData)
-            def skippedRulesFile = new File(outputFile.getParentFile(), "skipped-${language.toLowerCase()}-rules.json")
-            skippedRulesFile.write(jsonBuilder.toPrettyString())
-            println "Generated skipped rules information in ${skippedRulesFile.absolutePath}"
+            def jsonBuilder = new JsonBuilder(renamedRulesData)
+            // Use consistent naming convention for all languages
+            def renamedRulesFile = new File("scripts/renamed-${language.toLowerCase()}-rules.json")
+            renamedRulesFile.write(jsonBuilder.toPrettyString())
+            println "Generated renamed rules information in ${renamedRulesFile.absolutePath}"
         }
 
         return true
