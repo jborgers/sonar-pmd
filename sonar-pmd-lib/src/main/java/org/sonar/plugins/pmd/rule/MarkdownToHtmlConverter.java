@@ -798,7 +798,7 @@ public class MarkdownToHtmlConverter {
      * Handles markdown italics pattern.
      */
     private static String handleMarkdownItalicsPattern(String result) {
-        Matcher italicMatcher = Pattern.compile("\\*([^*]+)\\*").matcher(result);
+        Matcher italicMatcher = MARKDOWN_ITALICS_PATTERN.matcher(result);
         StringBuffer sb = new StringBuffer();
         while (italicMatcher.find()) {
             String replacement = "<i>" + escapeHtml(italicMatcher.group(1)) + "</i>";
@@ -812,7 +812,7 @@ public class MarkdownToHtmlConverter {
      * Handles markdown bold pattern.
      */
     private static String handleMarkdownBoldPattern(String result) {
-        Matcher boldMatcher = Pattern.compile("\\*\\*([^*]+)\\*\\*").matcher(result);
+        Matcher boldMatcher = MARKDOWN_BOLD_PATTERN.matcher(result);
         StringBuffer sb = new StringBuffer();
         while (boldMatcher.find()) {
             String replacement = "<b>" + escapeHtml(boldMatcher.group(1)) + "</b>";
@@ -933,8 +933,7 @@ public class MarkdownToHtmlConverter {
      * Extract <pre> blocks and replace them with placeholders.
      */
     private static String extractPreBlocks(String text, List<String> preBlocks) {
-        Pattern pattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(text);
+        Matcher matcher = PRE_BLOCK_PATTERN.matcher(text);
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
@@ -951,8 +950,7 @@ public class MarkdownToHtmlConverter {
     private static String processPreBlockParagraph(String paragraph) {
         // Extract all <pre> blocks from the paragraph
         List<String> preBlocks = new ArrayList<>();
-        Pattern pattern = Pattern.compile("<pre>([\\s\\S]*?)</pre>", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(paragraph);
+        Matcher matcher = PRE_BLOCK_PATTERN.matcher(paragraph);
         StringBuffer sb = new StringBuffer();
 
         // Replace <pre> blocks with placeholders
