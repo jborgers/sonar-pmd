@@ -330,4 +330,4 @@ The following rules have new names:
 | SwitchStmtsShouldHaveDefault | NonExhaustiveSwitch | bestpractices |
 | TooFewBranchesForASwitchStatement | TooFewBranchesForSwitch | performance |
 
-Report generated on Fri Jul 11 12:46:49 CEST 2025
+Report generated on Fri Jul 11 13:04:40 CEST 2025

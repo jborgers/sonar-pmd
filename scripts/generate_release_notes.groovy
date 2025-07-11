@@ -177,35 +177,35 @@ def commonRules = commonRuleKeys.collect { key ->
     ]
 }
 
-// Initialize and populate skippedRules variable before it's used in the summary
-def skippedRules = []
+// Initialize and populate renamedRules variable before it's used in the summary
+def renamedRules = []
 
-// Check for skipped rules information
+// Check for renamed rules information
 def oldRulesDir = new File(oldRulesPath).getParentFile() ?: new File(".")
-def skippedJavaRulesFile = new File(oldRulesDir, "skipped-java-rules.json")
-def skippedKotlinRulesFile = new File(oldRulesDir, "skipped-kotlin-rules.json")
+def renamedJavaRulesFile = new File(oldRulesDir, "renamed-java-rules.json")
+def renamedKotlinRulesFile = new File(oldRulesDir, "renamed-kotlin-rules.json")
 
-// Read skipped Java rules if file exists
-if (skippedJavaRulesFile.exists()) {
+// Read renamed Java rules if file exists
+if (renamedJavaRulesFile.exists()) {
     try {
         def jsonSlurper = new JsonSlurper()
-        def skippedJavaRules = jsonSlurper.parse(skippedJavaRulesFile)
-        skippedRules.addAll(skippedJavaRules.rules)
-        println "Found ${skippedJavaRules.count} skipped Java rules"
+        def renamedJavaRules = jsonSlurper.parse(renamedJavaRulesFile)
+        renamedRules.addAll(renamedJavaRules.rules)
+        println "Found ${renamedJavaRules.count} renamed Java rules"
     } catch (Exception e) {
-        println "Warning: Error reading skipped Java rules file: ${e.message}"
+        println "Warning: Error reading renamed Java rules file: ${e.message}"
     }
 }
 
-// Read skipped Kotlin rules if file exists
-if (skippedKotlinRulesFile.exists()) {
+// Read renamed Kotlin rules if file exists
+if (renamedKotlinRulesFile.exists()) {
     try {
         def jsonSlurper = new JsonSlurper()
-        def skippedKotlinRules = jsonSlurper.parse(skippedKotlinRulesFile)
-        skippedRules.addAll(skippedKotlinRules.rules)
-        println "Found ${skippedKotlinRules.count} skipped Kotlin rules"
+        def renamedKotlinRules = jsonSlurper.parse(renamedKotlinRulesFile)
+        renamedRules.addAll(renamedKotlinRules.rules)
+        println "Found ${renamedKotlinRules.count} renamed Kotlin rules"
     } catch (Exception e) {
-        println "Warning: Error reading skipped Kotlin rules file: ${e.message}"
+        println "Warning: Error reading renamed Kotlin rules file: ${e.message}"
     }
 }
 
@@ -218,7 +218,7 @@ writer.writeLine("- Total rules in new version ($version): ${newRules.size()}")
 writer.writeLine("- Rules added: ${addedRules.size()}")
 writer.writeLine("- Rules removed: ${removedRules.size()}")
 writer.writeLine("- Rules unchanged: ${commonRules.size()}")
-writer.writeLine("- Rules renamed: ${skippedRules.size()}")
+writer.writeLine("- Rules renamed: ${renamedRules.size()}")
 
 writer.writeLine("\n## Removed Rules")
 if (removedRules.isEmpty()) {
@@ -256,16 +256,16 @@ if (commonRules.isEmpty()) {
     }
 }
 
-// Skipped rules have already been processed before generating the summary
+// Renamed rules have already been processed before generating the summary
 
 
-// Add skipped rules section if any skipped rules were found
-if (!skippedRules.isEmpty()) {
+// Add renamed rules section if any renamed rules were found
+if (!renamedRules.isEmpty()) {
     writer.writeLine("\n## Renamed Rules")
     writer.writeLine("The following rules have new names:\n")
     writer.writeLine("| Rule name | New rule name | Category |")
     writer.writeLine("|-----------|---------------|----------|")
-    skippedRules.sort { it.name }.each { rule ->
+    renamedRules.sort { it.name }.each { rule ->
         writer.writeLine("| ${rule.name} | ${rule.ref} | ${rule.category} |")
     }
 }
