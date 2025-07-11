@@ -13,10 +13,11 @@
  *   ./generate_release_notes.groovy [options]
  * 
  * Options:
- *   -o, --old <file>         Old rules XML file path (default: scripts/old-rules.xml)
+ *   -o, --old <file>         Old rules XML file path (default: scripts/old-rules-$oldVersion.xml)
  *   -n, --new <file>         New rules XML file path (default: sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml)
- *   -r, --report <file>      Output report file path (default: docs/pmd_release_notes.md)
+ *   -r, --report <file>      Output report file path (default: docs/pmd_release_notes_$version.md)
  *   -v, --version <version>  Version to use in the title
+ *   -ov, --oldversion <ver>  Old version to use for old rules file name
  *   -h, --help               Show usage information
  */
 
@@ -33,6 +34,7 @@ cli.with {
     n(longOpt: 'new', args: 1, argName: 'file', 'New rules XML file path')
     r(longOpt: 'report', args: 1, argName: 'file', 'Output report file path')
     v(longOpt: 'version', args: 1, argName: 'version', 'Version to use in the title')
+    ov(longOpt: 'oldversion', args: 1, argName: 'ver', 'Old version to use for old rules file name')
     h(longOpt: 'help', 'Show usage information')
 }
 
@@ -43,10 +45,11 @@ if (options.h) {
 }
 
 // Define file paths (use command line args if provided, otherwise use defaults)
-def oldRulesPath = options.o ?: "scripts/old-rules.xml"
-def newRulesPath = options.n ?: "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml"
-def outputPath = options.r ?: "docs/pmd_release_notes.md"
+def oldVersion = options.ov ?: "UNKNOWN"
 def version = options.v ?: "UNKNOWN"
+def oldRulesPath = options.o ?: "scripts/old-rules-${oldVersion}.xml"
+def newRulesPath = options.n ?: "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml"
+def outputPath = options.r ?: "docs/pmd_release_notes_${version}.md"
 
 // Validate file paths
 def oldRulesFile = new File(oldRulesPath)
@@ -174,15 +177,48 @@ def commonRules = commonRuleKeys.collect { key ->
     ]
 }
 
+// Initialize and populate skippedRules variable before it's used in the summary
+def skippedRules = []
+
+// Check for skipped rules information
+def oldRulesDir = new File(oldRulesPath).getParentFile() ?: new File(".")
+def skippedJavaRulesFile = new File(oldRulesDir, "skipped-java-rules.json")
+def skippedKotlinRulesFile = new File(oldRulesDir, "skipped-kotlin-rules.json")
+
+// Read skipped Java rules if file exists
+if (skippedJavaRulesFile.exists()) {
+    try {
+        def jsonSlurper = new JsonSlurper()
+        def skippedJavaRules = jsonSlurper.parse(skippedJavaRulesFile)
+        skippedRules.addAll(skippedJavaRules.rules)
+        println "Found ${skippedJavaRules.count} skipped Java rules"
+    } catch (Exception e) {
+        println "Warning: Error reading skipped Java rules file: ${e.message}"
+    }
+}
+
+// Read skipped Kotlin rules if file exists
+if (skippedKotlinRulesFile.exists()) {
+    try {
+        def jsonSlurper = new JsonSlurper()
+        def skippedKotlinRules = jsonSlurper.parse(skippedKotlinRulesFile)
+        skippedRules.addAll(skippedKotlinRules.rules)
+        println "Found ${skippedKotlinRules.count} skipped Kotlin rules"
+    } catch (Exception e) {
+        println "Warning: Error reading skipped Kotlin rules file: ${e.message}"
+    }
+}
+
 // Generate report
 writer.writeLine("# PMD Rules Release Notes for version $version")
 writer.writeLine("_Do not edit this generated file._")
 writer.writeLine("\n## Summary")
-writer.writeLine("- Total rules in old version: ${oldRules.size()}")
-writer.writeLine("- Total rules in new version: ${newRules.size()}")
-writer.writeLine("- Rules removed: ${removedRules.size()}")
+writer.writeLine("- Total rules in old version ($oldVersion): ${oldRules.size()}")
+writer.writeLine("- Total rules in new version ($version): ${newRules.size()}")
 writer.writeLine("- Rules added: ${addedRules.size()}")
+writer.writeLine("- Rules removed: ${removedRules.size()}")
 writer.writeLine("- Rules unchanged: ${commonRules.size()}")
+writer.writeLine("- Rules renamed: ${skippedRules.size()}")
 
 writer.writeLine("\n## Removed Rules")
 if (removedRules.isEmpty()) {
@@ -220,35 +256,8 @@ if (commonRules.isEmpty()) {
     }
 }
 
-// Check for skipped rules information
-def oldRulesDir = new File(oldRulesPath).getParentFile() ?: new File(".")
-def skippedJavaRulesFile = new File(oldRulesDir, "skipped-java-rules.json")
-def skippedKotlinRulesFile = new File(oldRulesDir, "skipped-kotlin-rules.json")
-def skippedRules = []
+// Skipped rules have already been processed before generating the summary
 
-// Read skipped Java rules if file exists
-if (skippedJavaRulesFile.exists()) {
-    try {
-        def jsonSlurper = new JsonSlurper()
-        def skippedJavaRules = jsonSlurper.parse(skippedJavaRulesFile)
-        skippedRules.addAll(skippedJavaRules.rules)
-        println "Found ${skippedJavaRules.count} skipped Java rules"
-    } catch (Exception e) {
-        println "Warning: Error reading skipped Java rules file: ${e.message}"
-    }
-}
-
-// Read skipped Kotlin rules if file exists
-if (skippedKotlinRulesFile.exists()) {
-    try {
-        def jsonSlurper = new JsonSlurper()
-        def skippedKotlinRules = jsonSlurper.parse(skippedKotlinRulesFile)
-        skippedRules.addAll(skippedKotlinRules.rules)
-        println "Found ${skippedKotlinRules.count} skipped Kotlin rules"
-    } catch (Exception e) {
-        println "Warning: Error reading skipped Kotlin rules file: ${e.message}"
-    }
-}
 
 // Add skipped rules section if any skipped rules were found
 if (!skippedRules.isEmpty()) {
