@@ -23,7 +23,7 @@ public class MarkdownToHtmlConverter {
     // Regex patterns for Markdown parsing
     private static final Pattern PARAGRAPH_SPLITTER_PATTERN = Pattern.compile("\n\\s*\n");
     private static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = Pattern.compile("(?s)\\s*1\\...*");
-    private static final Pattern LIST_ITEM_PATTERN = Pattern.compile("(\\d+)\\.(\\s+)(.*)");
+    private static final Pattern LIST_ITEM_PATTERN = Pattern.compile("(\\d+)\\.(\\s+)([^\r\n]*)");
     private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]+)([^\r\n]*)");
     private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,}([^*\\-][^\r\n]*)$");
     private static final Pattern TITLE_PATTERN = Pattern.compile("([A-Z][A-Za-z]+):(\\s*)(.*)");
@@ -41,6 +41,18 @@ public class MarkdownToHtmlConverter {
     private static final Pattern URL_TAG_PATTERN = Pattern.compile("<(https?:\\/\\/[^>]+)>");
     private static final Pattern JDOC_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*jdoc\\s+([\\w-]+)::([\\.\\w#]+)\\s*\\%\\}");
     private static final String JDOC_LINK = "https://docs.pmd-code.org/apidocs/pmd-java/" + PMD_VERSION + "/net/sourceforge/pmd/";
+
+    // Additional regex patterns used in methods
+    private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("([a-z])([A-Z])");
+    private static final Pattern MULTIPLE_CAPITALS_PATTERN = Pattern.compile("^[A-Z]{2,}[a-zA-Z0-9]*");
+    private static final Pattern CAPITALS_REST_PATTERN = Pattern.compile("^([A-Z]+)([a-z][a-zA-Z0-9]*)?");
+    private static final Pattern DIGITS_LETTER_PATTERN = Pattern.compile("([a-zA-Z0-9]*\\d+)([a-zA-Z])");
+    private static final Pattern NEWLINE_PATTERN = Pattern.compile("\n");
+    private static final Pattern TRAILING_WHITESPACE_PATTERN = Pattern.compile("[ \t\n\r]+$");
+    private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
+    private static final Pattern PRE_BLOCK_PLACEHOLDER_PATTERN = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL);
+    private static final Pattern MARKDOWN_ITALICS_PATTERN = Pattern.compile("\\*([^*]+)\\*");
+    private static final Pattern MARKDOWN_BOLD_PATTERN = Pattern.compile("\\*\\*([^*]+)\\*\\*");
 
     /**
      * Converts Markdown text to HTML format.
@@ -351,7 +363,7 @@ public class MarkdownToHtmlConverter {
         }
 
         // Split the rule name into words
-        String[] words = ruleName.replaceAll("([a-z])([A-Z])", "$1 $2").trim().split(" ");
+        String[] words = CAMEL_CASE_SPLIT_PATTERN.matcher(ruleName).replaceAll("$1 $2").trim().split(" ");
         List<String> processedWords = new ArrayList<>();
 
         for (String word : words) {
@@ -366,8 +378,8 @@ public class MarkdownToHtmlConverter {
             }
 
             // If word has multiple consecutive capitals at start, preserve them
-            if (word.matches("^[A-Z]{2,}[a-zA-Z0-9]*")) {
-                Matcher matcher = Pattern.compile("^([A-Z]+)([a-z][a-zA-Z0-9]*)?").matcher(word);
+            if (MULTIPLE_CAPITALS_PATTERN.matcher(word).matches()) {
+                Matcher matcher = CAPITALS_REST_PATTERN.matcher(word);
                 if (matcher.matches()) {
                     String capitals = matcher.group(1);
                     String rest = matcher.group(2) != null ? matcher.group(2) : "";
@@ -383,7 +395,7 @@ public class MarkdownToHtmlConverter {
         String result = String.join(" ", processedWords);
 
         // Add space after words ending with consecutive digits
-        result = result.replaceAll("([a-zA-Z0-9]*\\d+)([a-zA-Z])", "$1 $2");
+        result = DIGITS_LETTER_PATTERN.matcher(result).replaceAll("$1 $2");
 
         // Capitalize only the first word
         if (!result.isEmpty()) {
@@ -412,7 +424,8 @@ public class MarkdownToHtmlConverter {
             String code = matcher.group(2) != null ? matcher.group(2) : "";
 
             // Format code with proper spacing and trim trailing whitespace
-            code = " " + code.replaceAll("\n", "\n ").replaceAll("[ \t\n\r]+$", "");
+            code = " " + NEWLINE_PATTERN.matcher(code).replaceAll("\n "); 
+            code = TRAILING_WHITESPACE_PATTERN.matcher(code).replaceAll("");
 
             // Create HTML code block with optional language class
             String langClass = language.isEmpty() ? "" : " class=\"language-" + language + "\"";
@@ -701,8 +714,7 @@ public class MarkdownToHtmlConverter {
      * Extracts <pre> blocks from text and replaces them with placeholders.
      */
     private static PreProcessingResult extractPreBlocksWithPlaceholders(String text) {
-        Pattern prePattern = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
-        Matcher matcher = prePattern.matcher(text);
+        Matcher matcher = PRE_BLOCK_PATTERN.matcher(text);
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
@@ -742,8 +754,7 @@ public class MarkdownToHtmlConverter {
      * Restores <pre> blocks from placeholder markers.
      */
     private static String restorePreBlocks(String processedText) {
-        Pattern blockPattern = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL);
-        Matcher blockMatcher = blockPattern.matcher(processedText);
+        Matcher blockMatcher = PRE_BLOCK_PLACEHOLDER_PATTERN.matcher(processedText);
         StringBuffer result = new StringBuffer();
 
         while (blockMatcher.find()) {
