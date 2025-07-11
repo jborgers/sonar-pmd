@@ -24,15 +24,15 @@ public class MarkdownToHtmlConverter {
     private static final Pattern PARAGRAPH_SPLITTER_PATTERN = Pattern.compile("\n\\s*\n");
     private static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = Pattern.compile("(?s)\\s*1\\...*");
     private static final Pattern LIST_ITEM_PATTERN = Pattern.compile("(\\d+)\\.(\\s+)(.*)");
-    private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[\\s\\t]*[\\*\\-](\\s+)(.*)");
-    private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[\\s\\t]{2,}([^\\*\\-].+)$");
+    private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]+)([^\r\n]*)");
+    private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,}([^*\\-][^\r\n]*)$");
     private static final Pattern TITLE_PATTERN = Pattern.compile("([A-Z][A-Za-z]+):(\\s*)(.*)");
     private static final Pattern CODE_BLOCK_PATTERN = Pattern.compile("`([^`]+)`");
     private static final Pattern RULE_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*rule\\s*\"([^\"]+)\"\\s*\\%\\}");
     private static final Pattern SECTION_PATTERN = Pattern.compile("(?s)(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)");
-    private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("(?s)```(\\w*)\\s*([\\s\\S]*?)```");
-    private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("(?s)````(\\w*)\\s*([\\s\\S]*?)````");
-    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s+(.+)$");
+    private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("```(\\w*)\\s*+(((?!```).)*+)```", Pattern.DOTALL);
+    private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("````(\\w*)\\s*+(((?!````).)*+)````", Pattern.DOTALL);
+    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s+([^\r\n]+)$");
 
     // Additional patterns for formatting
     private static final Pattern ITALIC_NOTE_PATTERN = Pattern.compile("_Note:_");
@@ -366,8 +366,8 @@ public class MarkdownToHtmlConverter {
             }
 
             // If word has multiple consecutive capitals at start, preserve them
-            if (word.matches("^[A-Z]{2,}.*")) {
-                Matcher matcher = Pattern.compile("^([A-Z]+)([a-z].*)?").matcher(word);
+            if (word.matches("^[A-Z]{2,}[a-zA-Z0-9]*")) {
+                Matcher matcher = Pattern.compile("^([A-Z]+)([a-z][a-zA-Z0-9]*)?").matcher(word);
                 if (matcher.matches()) {
                     String capitals = matcher.group(1);
                     String rest = matcher.group(2) != null ? matcher.group(2) : "";
@@ -383,7 +383,7 @@ public class MarkdownToHtmlConverter {
         String result = String.join(" ", processedWords);
 
         // Add space after words ending with consecutive digits
-        result = result.replaceAll("(\\w*\\d+)([a-zA-Z])", "$1 $2");
+        result = result.replaceAll("([a-zA-Z0-9]*\\d+)([a-zA-Z])", "$1 $2");
 
         // Capitalize only the first word
         if (!result.isEmpty()) {
@@ -412,7 +412,7 @@ public class MarkdownToHtmlConverter {
             String code = matcher.group(2) != null ? matcher.group(2) : "";
 
             // Format code with proper spacing and trim trailing whitespace
-            code = " " + code.replaceAll("\n", "\n ").replaceAll("\\s+$", "");
+            code = " " + code.replaceAll("\n", "\n ").replaceAll("[ \t\n\r]+$", "");
 
             // Create HTML code block with optional language class
             String langClass = language.isEmpty() ? "" : " class=\"language-" + language + "\"";
