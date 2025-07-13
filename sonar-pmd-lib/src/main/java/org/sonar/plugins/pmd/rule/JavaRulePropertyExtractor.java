@@ -68,9 +68,8 @@ public class JavaRulePropertyExtractor {
                     if (entry.getSize() > 0 && entry.getCompressedSize() > 0) {
                         double compressionRatio = (double) entry.getSize() / entry.getCompressedSize();
                         if (compressionRatio > THRESHOLD_RATIO) {
-                            LOGGER.warn("Suspicious compression ratio detected in jar file: " + jarFilePath + 
-                                       ", entry: " + entry.getName() + ", ratio: " + compressionRatio + 
-                                       ". Possible ZIP bomb attack. Skipping rule extraction.");
+                            LOGGER.warn("Suspicious compression ratio detected in jar file: {}, entry: {}, ratio: {}. Possible ZIP bomb attack. Skipping rule extraction.",
+                                    jarFilePath, entry.getName(), compressionRatio);
                             break;
                         }
                     }
@@ -78,8 +77,8 @@ public class JavaRulePropertyExtractor {
                     // Track total uncompressed size
                     totalSizeArchive += entry.getSize();
                     if (totalSizeArchive > THRESHOLD_SIZE_BYTES) {
-                        LOGGER.warn("Total uncompressed size exceeds threshold in jar file: " + jarFilePath + 
-                                   ". Possible ZIP bomb attack. Skipping rule extraction.");
+                        LOGGER.warn("Total uncompressed size exceeds threshold in jar file: {}. Possible ZIP bomb attack. Skipping rule extraction.",
+                                jarFilePath);
                         break;
                     }
 
@@ -98,7 +97,7 @@ public class JavaRulePropertyExtractor {
                             }
                         } catch (ClassNotFoundException | NoClassDefFoundError e) {
                             // Skip classes that can't be loaded
-                            LOGGER.debug("Could not load class: " + className, e);
+                            LOGGER.debug("Could not load class: {}", className, e);
                         }
                     }
                 }
@@ -106,10 +105,10 @@ public class JavaRulePropertyExtractor {
                 if (totalEntryArchive >= THRESHOLD_ENTRIES) {
                     LOGGER.warn("Too many entries in jar file: " + jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.");
                 }
-                LOGGER.info("Extracted " + result.size() + " rule properties from jar file: " + jarFilePath);
+                LOGGER.info("Extracted {} rule properties from jar file: {}", result.size(), jarFilePath);
             }
         } catch (IOException e) {
-            LOGGER.error("Error processing jar file: " + jarFilePath, e);
+            LOGGER.error("Error processing jar file: {}", jarFilePath, e);
         }
 
         return result;
@@ -156,7 +155,7 @@ public class JavaRulePropertyExtractor {
         List<PropertyInfo> properties = new ArrayList<>();
 
         if (!canInstantiate(clazz)) {
-            LOGGER.info("Skip non instantiatable rule class: " + clazz.getName());
+            LOGGER.info("Skip non instantiatable rule class: {}", clazz.getName());
             return properties;
         }
 
@@ -199,7 +198,7 @@ public class JavaRulePropertyExtractor {
                     }
                 } catch (Exception e) {
                     // Ignore exceptions and try the next method
-                    LOGGER.debug("Error invoking method: " + methodName);
+                    LOGGER.debug("Error invoking method: {}", methodName);
                 }
             }
 
@@ -236,7 +235,7 @@ public class JavaRulePropertyExtractor {
                     }
                 } catch (Exception e) {
                     // Ignore exceptions and try the next field
-                    LOGGER.debug("Error accessing field: " + fieldName);
+                    LOGGER.debug("Error accessing field: {}", fieldName);
                 }
             }
 
@@ -257,11 +256,11 @@ public class JavaRulePropertyExtractor {
                         }
                     }
                 } catch (IllegalAccessException | SecurityException e) {
-                    LOGGER.warn("Error accessing field: " + field.getName());
+                    LOGGER.warn("Error accessing field: {}", field.getName());
                 }
             }
         } catch (Exception e) {
-            LOGGER.warn("Error instantiating rule class: " + clazz.getName());
+            LOGGER.warn("Error instantiating rule class: {}", clazz.getName());
 
             // If we can't instantiate the class, fall back to the original approach
             // Get all fields in the class
@@ -280,7 +279,7 @@ public class JavaRulePropertyExtractor {
                         }
                     }
                 } catch (IllegalAccessException | SecurityException ex) {
-                    LOGGER.warn("Error accessing field: " + field.getName(), ex);
+                    LOGGER.warn("Error accessing field: {}", field.getName(), ex);
                 }
             }
         }
@@ -439,7 +438,7 @@ public class JavaRulePropertyExtractor {
             this.name = name;
             this.description = description;
             this.type = type;
-            this.defaultValues = defaultValues;
+            this.defaultValues = Collections.unmodifiableList(new ArrayList<>(defaultValues));
         }
 
         public String getName() {
@@ -465,6 +464,18 @@ public class JavaRulePropertyExtractor {
         @Override
         public String toString() {
             return "PropertyInfo [name=" + name + ", description=" + description + ", type=" + type + ", defaultValues=" + defaultValues + "]";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            PropertyInfo that = (PropertyInfo) o;
+            return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(type, that.type) && Objects.equals(defaultValues, that.defaultValues);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, description, type, defaultValues);
         }
     }
 }
