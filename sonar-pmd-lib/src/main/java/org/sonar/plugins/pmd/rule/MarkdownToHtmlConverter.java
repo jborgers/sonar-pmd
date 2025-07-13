@@ -32,7 +32,7 @@ public class MarkdownToHtmlConverter {
     private static final Pattern SECTION_PATTERN = Pattern.compile("(?s)(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)");
     private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("```(\\w*)\\s*+(((?!```).)*+)```", Pattern.DOTALL);
     private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("````(\\w*)\\s*+(((?!````).)*+)````", Pattern.DOTALL);
-    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s+([^\r\n]+)$");
+    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s+([^\r\n]++)$");
 
     // Additional patterns for formatting
     private static final Pattern ITALIC_NOTE_PATTERN = Pattern.compile("_Note:_");
@@ -44,9 +44,9 @@ public class MarkdownToHtmlConverter {
 
     // Additional regex patterns used in methods
     private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("([a-z])([A-Z])");
-    private static final Pattern MULTIPLE_CAPITALS_PATTERN = Pattern.compile("^[A-Z]{2,}[a-zA-Z0-9]*");
+    private static final Pattern MULTIPLE_CAPITALS_PATTERN = Pattern.compile("^[A-Z]{2,}[a-zA-Z0-9]*+");
     private static final Pattern CAPITALS_REST_PATTERN = Pattern.compile("^([A-Z]+)([a-z][a-zA-Z0-9]*)?");
-    private static final Pattern DIGITS_LETTER_PATTERN = Pattern.compile("([a-zA-Z0-9]*\\d+)([a-zA-Z])");
+    private static final Pattern DIGITS_LETTER_PATTERN = Pattern.compile("((?:[a-zA-Z0-9]*?)\\d+)([a-zA-Z])");
     private static final Pattern NEWLINE_PATTERN = Pattern.compile("\n");
     private static final Pattern TRAILING_WHITESPACE_PATTERN = Pattern.compile("[ \t\n\r]+$");
     private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
