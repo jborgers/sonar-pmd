@@ -27,6 +27,11 @@ public class JavaRulePropertyExtractor {
 
     static final String ABSTRACT_RULE_CLASS_NAME = AbstractRule.class.getName();
 
+    // Security thresholds to prevent ZIP bomb attacks
+    private static final int THRESHOLD_ENTRIES = 10_000;
+    private static final int THRESHOLD_SIZE_BYTES = 10_000_000; // 10 MB
+    private static final double THRESHOLD_RATIO = 15; // Increased to accommodate legitimate JAR files
+
     /**
      * Extracts property information from Java rule classes in the specified jar file.
      *
@@ -50,13 +55,33 @@ public class JavaRulePropertyExtractor {
                 // Find all class files in the jar
                 Enumeration<JarEntry> entries = jarFile.entries();
 
-                // prevent Zip bomb attack
-                final int MAX_JAR_ENTRIES = 10000;
-                int numEntries = 0;
+                // Variables to track security thresholds for preventing ZIP bomb attacks
+                int totalEntryArchive = 0;
+                long totalSizeArchive = 0;
 
-                while (entries.hasMoreElements() && numEntries < MAX_JAR_ENTRIES) {
-                    numEntries++;
+                while (entries.hasMoreElements() && totalEntryArchive < THRESHOLD_ENTRIES) {
+                    totalEntryArchive++;
                     JarEntry entry = entries.nextElement();
+
+                    // Check for ZIP bomb based on compression ratio
+                    if (entry.getSize() > 0 && entry.getCompressedSize() > 0) {
+                        double compressionRatio = (double) entry.getSize() / entry.getCompressedSize();
+                        if (compressionRatio > THRESHOLD_RATIO) {
+                            LOGGER.warn("Suspicious compression ratio detected in jar file: " + jarFilePath + 
+                                       ", entry: " + entry.getName() + ", ratio: " + compressionRatio + 
+                                       ". Possible ZIP bomb attack. Skipping rule extraction.");
+                            break;
+                        }
+                    }
+
+                    // Track total uncompressed size
+                    totalSizeArchive += entry.getSize();
+                    if (totalSizeArchive > THRESHOLD_SIZE_BYTES) {
+                        LOGGER.warn("Total uncompressed size exceeds threshold in jar file: " + jarFilePath + 
+                                   ". Possible ZIP bomb attack. Skipping rule extraction.");
+                        break;
+                    }
+
                     if (entry.getName().endsWith(".class")) {
                         String className = entry.getName().replace('/', '.').replace(".class", "");
                         try {
@@ -76,8 +101,9 @@ public class JavaRulePropertyExtractor {
                         }
                     }
                 }
-                if (numEntries >= MAX_JAR_ENTRIES) {
-                    LOGGER.warn("Too many entries in jar file: " + jarFilePath + ". Skipping rule extraction.");
+
+                if (totalEntryArchive >= THRESHOLD_ENTRIES) {
+                    LOGGER.warn("Too many entries in jar file: " + jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.");
                 }
                 LOGGER.info("Extracted " + result.size() + " rule properties from jar file: " + jarFilePath);
             }
