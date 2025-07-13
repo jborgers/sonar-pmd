@@ -1,8 +1,0 @@
-# AvoidThreadGroup
-**Category:** `pmd`<br/>
-**Rule Key:** `pmd:AvoidThreadGroup`<br/>
-
-
------
-
-Avoid using ThreadGroup; although it is intended to be used in a threaded environment it contains methods that are not thread safe.

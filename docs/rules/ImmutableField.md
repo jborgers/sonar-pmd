@@ -1,8 +1,0 @@
-# ImmutableField
-**Category:** `pmd`<br/>
-**Rule Key:** `pmd:ImmutableField`<br/>
-
-
------
-
-Identifies private fields whose values never change once they are initialized either in the declaration of the field or by a constructor. This aids in converting existing classes to immutable classes.
