@@ -38,6 +38,7 @@ public class JavaRulePropertyExtractor {
      * @param jarFilePath Path to the PMD jar file
      * @return Map of rule class names to their property information
      */
+    @SuppressWarnings("java:S5042") // security warning for ZIP bomb attack: implemented countermeasures
     public Map<String, List<PropertyInfo>> extractProperties(String jarFilePath) {
         // Create a map that returns an empty list for any key that's not in the map
         Map<String, List<PropertyInfo>> result = new HashMap<String, List<PropertyInfo>>() {
