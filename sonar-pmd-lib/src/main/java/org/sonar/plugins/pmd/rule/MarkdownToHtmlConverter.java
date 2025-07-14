@@ -23,25 +23,25 @@ public class MarkdownToHtmlConverter {
     // Splits paragraphs on double newlines
     private static final Pattern PARAGRAPH_SPLITTER_PATTERN = Pattern.compile("\n\\s*\n");
     // Matches paragraphs starting with "1." ordered list
-    private static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = Pattern.compile("(?s)\\s*1\\...*");
-    // Matches numbered list items like "1. Item"
-    private static final Pattern LIST_ITEM_PATTERN = Pattern.compile("(\\d+)\\.(\\s+)([^\r\n]*)");
+    private static final Pattern ORDERED_LIST_PARAGRAPH_PATTERN = Pattern.compile("\\s*1\\...*", Pattern.DOTALL);
+    // Matches numbered list items like "1. Item", up to 6 digits
+    private static final Pattern LIST_ITEM_PATTERN = Pattern.compile("(\\d{1,6})\\.(\\s{1,100})([^\r\n]*)");
     // Matches unordered list items starting with * or -
-    private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]+)([^\r\n]*)");
-    // Matches indented lines that are continuations of list items
-    private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,}([^*\\-][^\r\n]*)$");
+    private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]++)([^\r\n]*)");
+    // Matches indented lines, from 2 up to 100 spaces or tabs, that are continuations of list items
+    private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,100}([^*\\-][^\r\n]*)$");
     // Matches inline code blocks between backticks
     private static final Pattern CODE_BLOCK_PATTERN = Pattern.compile("`([^`]+)`");
     // Matches rule references like {% rule "rulename" %}
     private static final Pattern RULE_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*rule\\s*\"([^\"]+)\"\\s*\\%\\}");
     // Matches document sections like "Problem:", "Solution:" etc
-    private static final Pattern SECTION_PATTERN = Pattern.compile("(?s)(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)");
+    private static final Pattern SECTION_PATTERN = Pattern.compile("(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)", Pattern.DOTALL);
     // Matches multi-line code blocks between triple backticks
     private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("```(\\w*)\\s*+(((?!```).)*+)```", Pattern.DOTALL);
     // Matches code blocks between quadruple backticks
     private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("````(\\w*)\\s*+(((?!````).)*+)````", Pattern.DOTALL);
     // Matches markdown headers like "# Title"
-    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s+([^\r\n]++)$");
+    private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s++([^\r\n]++)$");
 
     // Matches markdown links like [text](url)
     private static final Pattern MARKDOWN_LINK_PATTERN = Pattern.compile("\\[([^\\]]+)\\]\\(([^)]+)\\)");
@@ -55,12 +55,12 @@ public class MarkdownToHtmlConverter {
 
     // Pattern to split camelCase words like "camelCase" into "camel Case"
     private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("([a-z])([A-Z])");
-    // Pattern to identify if word starts with 2 or more capital letters like "XML" or "API"  
-    private static final Pattern MULTIPLE_CAPITALS_PATTERN = Pattern.compile("^[A-Z]{2,}[a-zA-Z0-9]*+");
+    // Pattern to identify if word starts with 2 or up to 20 capital letters like "XML" or "API"
+    private static final Pattern MULTIPLE_CAPITALS_PATTERN = Pattern.compile("^[A-Z]{2,20}[a-zA-Z0-9]*+");
     // Pattern to extract capital letters prefix like "API" from "APITest"
     private static final Pattern CAPITALS_REST_PATTERN = Pattern.compile("^([A-Z]+)([a-z][a-zA-Z0-9]*)?");
     // Pattern to add space after digits like "123a" -> "123 a"  
-    private static final Pattern DIGITS_LETTER_PATTERN = Pattern.compile("((?:[a-zA-Z0-9]*?)\\d+)([a-zA-Z])");
+    private static final Pattern DIGITS_LETTER_PATTERN = Pattern.compile("([a-zA-Z0-9]*?\\d{1,100})([a-zA-Z])");
     // Pattern to match newlines
     private static final Pattern NEWLINE_PATTERN = Pattern.compile("\n");
     // Pattern to match and remove trailing whitespace
