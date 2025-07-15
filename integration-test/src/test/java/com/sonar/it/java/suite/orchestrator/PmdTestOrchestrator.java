@@ -41,6 +41,7 @@ import static com.sonar.orchestrator.locator.FileLocation.ofClasspath;
 public class PmdTestOrchestrator {
 
     private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
+    private static final String SONAR_KOTLIN_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.kotlin";
     private static final String SONAR_VERSION_KEY = "test.sonar.version";
     private static final String LANGUAGE_KEY = "java";
     private static final String CENTRAL_MAVEN = "https://repo1.maven.org/maven2";
@@ -87,9 +88,13 @@ public class PmdTestOrchestrator {
     }
 
     public void associateProjectToQualityProfile(String profile, String project) {
+        associateProjectToQualityProfile(profile, project, LANGUAGE_KEY);
+    }
+
+    public void associateProjectToQualityProfile(String profile, String project, String language) {
         final String projectKey = deriveProjectKey(project);
         delegate.getServer().provisionProject(projectKey, project);
-        delegate.getServer().associateProjectToQualityProfile(projectKey, LANGUAGE_KEY, profile);
+        delegate.getServer().associateProjectToQualityProfile(projectKey, language, profile);
     }
 
     public static PmdTestOrchestrator init() {
@@ -102,12 +107,19 @@ public class PmdTestOrchestrator {
                             "sonar-java-plugin",
                             determineJavaPluginVersion()
                     ))
+                    .addPlugin(MavenLocation.create(
+                            "org.sonarsource.kotlin",
+                            "sonar-kotlin-plugin",
+                            determineKotlinPluginVersion()
+                    ))
                     .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
                     .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-test-rule.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-profile.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-all-rules.xml"))
                     .build();
 
             return new PmdTestOrchestrator(orchestrator);
@@ -124,6 +136,10 @@ public class PmdTestOrchestrator {
 
     private static String determineJavaPluginVersion() {
         return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.15]"); // use 8.9 to test with SQ 9.9
+    }
+
+    private static String determineKotlinPluginVersion() {
+        return System.getProperty(SONAR_KOTLIN_PLUGIN_VERSION_KEY, "LATEST_RELEASE[2.15]");
     }
 
     private static String determineSonarqubeVersion() {
