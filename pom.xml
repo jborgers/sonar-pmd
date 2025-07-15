@@ -62,26 +62,6 @@
     </developer>
   </developers>
 
-  <repositories>
-    <repository>
-      <id>central-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      <releases><enabled>false</enabled></releases>
-      <snapshots><enabled>true</enabled></snapshots>
-    </repository>
-  </repositories>
-
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
     <!-- use -Drevision=x.y.z to override in build -->
     <!-- use .mvn/maven.config to update to the current next release SNAPSHOT version -->
@@ -89,10 +69,10 @@
     <license.owner>SonarSource SA and others</license.owner>
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
     <pmd.version>7.15.0</pmd.version>
-    <junit.jupiter.version>5.13.2</junit.jupiter.version>
+    <junit.jupiter.version>5.13.3</junit.jupiter.version>
     <mockito.version>5.18.0</mockito.version>
     <assertj.version>3.27.3</assertj.version>
-    <commons-lang3.version>3.17.0</commons-lang3.version>
+    <commons-lang3.version>3.18.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
     <java.frontend.version>8.15.0.39343</java.frontend.version>
     <guava.version>33.4.8-jre</guava.version>
@@ -108,17 +88,16 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
     <!-- Maven plugin versions -->
-    <maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
+    <maven.enforcer.plugin.version>3.6.0</maven.enforcer.plugin.version>
     <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
     <maven.failsafe.plugin.version>3.5.3</maven.failsafe.plugin.version>
     <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
-    <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+    <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
     <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
-    <nexus-staging.plugin.version>1.7.0</nexus-staging.plugin.version>
     <flatten.maven.plugin.version>1.7.1</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -132,6 +111,7 @@
   </properties>
 
   <modules>
+    <module>sonar-pmd-lib</module>
     <module>sonar-pmd-plugin</module>
     <module>integration-test</module>
   </modules>
@@ -261,11 +241,6 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>${nexus-staging.plugin.version}</version>
-        </plugin>
-        <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>${maven.cleanup.plugin.version}</version>
         </plugin>
@@ -374,14 +349,15 @@
 
       <!-- Release relevant plugins -->
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
         <extensions>true</extensions>
         <configuration>
-          <serverId>sonatype-nexus</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
-          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          <autoPublish>false</autoPublish>
+          <excludeArtifacts>
+            <excludeArtifact>integration-test</excludeArtifact>
+          </excludeArtifacts>
         </configuration>
       </plugin>
       <plugin>

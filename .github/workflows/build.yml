@@ -16,6 +16,14 @@ on:
         description: "Skip Tests?"
         required: true
         default: "no"
+      deploySnapshot:
+        description: "Deploy snapshot to Maven Central?"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 defaults:
   run:
@@ -32,6 +40,22 @@ jobs:
         run: |
           echo "TAG_NAME=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
+      - name: Set branch name env variable
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
+
+          if [ "$BRANCH_NAME" = "master" ]; then
+            echo "ARTIFACT_SUFFIX=" >> $GITHUB_ENV
+          else
+            # Sanitize branch name by replacing invalid characters with dashes
+            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/[\/\\:*?"<>|]/-/g')
+            echo "ARTIFACT_SUFFIX=-$SANITIZED_BRANCH" >> $GITHUB_ENV
+          fi
+
       # only build SNAPSHOTS, use release for tagged releases
       - name: Check if tag contains SNAPSHOT
         if: contains(env.TAG_NAME, 'SNAPSHOT') != true
@@ -44,7 +68,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-          server-id: sonatype-nexus
+          server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
@@ -55,7 +79,7 @@ jobs:
           ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean package
 
       - name: Deploy SNAPSHOT to maven central
-        if: false # disable until migration to Central Portal releases
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && github.event.inputs.deploySnapshot == 'true')
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -67,5 +91,5 @@ jobs:
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: sonar-pmd-plugin-${{ env.TAG_NAME }}
+          name: sonar-pmd-plugin-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
           path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar

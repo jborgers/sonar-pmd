@@ -43,7 +43,7 @@ class PmdRulesDefinitionTest {
 
         List<Rule> rules = repository.rules();
 
-        assertThat(rules).hasSize(291);
+        assertThat(rules).hasSize(281);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();

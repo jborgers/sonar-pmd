@@ -62,9 +62,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <scope>test</scope>
+      <groupId>org.sonarsource.pmd</groupId>
+      <artifactId>sonar-pmd-lib</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 
@@ -105,19 +105,6 @@
           <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
           <!-- This is important. It means that this plugin extends the PMD plugin -->
           <basePlugin>pmd</basePlugin>
-
-          <!-- This is important. It means that this plugin extends the PMD plugin -->
-          <basePlugin>pmd</basePlugin>
-        </configuration>
-      </plugin>
-      <!-- prevent deploy: https://stackoverflow.com/questions/25305850/how-to-disable-nexus-staging-maven-plugin-in-sub-modules -->
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <configuration>
-          <!-- prevent deploy of integration test: 'true' does not work as all modules are
-           skipped when the last module is skipped, integration-test is last module -->
-          <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
         </configuration>
       </plugin>
       <plugin>

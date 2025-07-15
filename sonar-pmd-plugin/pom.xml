@@ -59,6 +59,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.sonarsource.pmd</groupId>
+      <artifactId>sonar-pmd-lib</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>org.codehaus.staxmate</groupId>
       <artifactId>staxmate</artifactId>
       <version>${staxmate.version}</version>
@@ -137,12 +142,6 @@
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j-api.version}</version>
     </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -241,7 +240,7 @@
               <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>3.0.19</version>
+                <version>3.0.25</version>
                 <type>pom</type>
               </dependency>
               <dependency>

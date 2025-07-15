@@ -15,6 +15,33 @@ If the PMD version has been updated or rules have changed, regenerate the rules-
 ```
 This will run the Groovy script that extracts rules from PMD and generates the rules-java.xml file in the correct location.
 
+### Generate Release Notes for PMD Rules
+To generate release notes comparing the old and new PMD rules:
+
+1. Download the rules file from the previous release tag directly:
+
+   ```commandline
+   wget https://raw.githubusercontent.com/jborgers/sonar-pmd/<previous-release-tag>/sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml -O scripts/old-rules.xml
+   ```
+
+2. Run the release notes generator script:
+   ```commandline
+   # Make the script executable (if needed)
+   chmod +x scripts/generate_release_notes.groovy
+
+   # Run with default options
+   ./scripts/generate_release_notes.groovy ---version <new-version>
+
+   # Or specify custom paths
+   ./scripts/generate_release_notes.groovy --old <path-to-old-rules> --new <path-to-new-rules> --report <output-file> --version <new-version>
+   ```
+
+3. The script will generate a Markdown report (default: docs/pmd_release_notes.md) containing:
+   - Summary of rule changes
+   - Rules that have been removed
+   - Rules that have been added
+   - Rules that remain unchanged (but with possible changes in status, priority or sonar-alternatives)
+
 ## Release Steps
 - create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
 - commit both

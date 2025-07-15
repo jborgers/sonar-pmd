@@ -1036,6 +1036,8 @@
       <priority>MAJOR</priority>
       <parameters/>
     </rule>
+    <!-- To avoid this line in logging, comment out the following: [WARNING] Removed misconfigured rule: LoosePackageCoupling cause: No packages or classes specified -->
+    <!-- if you want to use it you have to explicitly supply the manditory "packages" and "classes" properties -->
     <rule>
       <repositoryKey>pmd</repositoryKey>
       <key>LoosePackageCoupling</key>

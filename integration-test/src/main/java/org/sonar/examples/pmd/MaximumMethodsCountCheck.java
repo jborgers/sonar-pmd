@@ -30,12 +30,12 @@ import net.sourceforge.pmd.properties.NumericConstraints;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertyFactory;
 import net.sourceforge.pmd.reporting.RuleContext;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MaximumMethodsCountCheck extends AbstractJavaRule {
 
-    private static final Logger LOG = Loggers.get(MaximumMethodsCountCheck.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MaximumMethodsCountCheck.class);
 
     private static final PropertyDescriptor<Integer> propertyDescriptor = PropertyFactory.intProperty("maxAuthorisedMethodsCount")
             .desc("Maximum number of methods authorised")

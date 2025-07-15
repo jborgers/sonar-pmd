@@ -1,8 +1,0 @@
-# SimplifyConditional
-**Category:** `pmd`<br/>
-**Rule Key:** `pmd:SimplifyConditional`<br/>
-
-
------
-
-No need to check for null before an instanceof; the instanceof keyword returns false when given a null argument.

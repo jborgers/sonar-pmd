@@ -3,6 +3,8 @@
 @Grab('net.sourceforge.pmd:pmd-apex:7.15.0')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
 import java.util.regex.Pattern
 import java.util.regex.Matcher
@@ -15,6 +17,35 @@ def pmdApexJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sour
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 def apexCategoriesPropertiesPath = "category/apex/categories.properties"
+
+// Define language-specific rule alternatives paths
+def javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
+def kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
+
+// Function to read rule alternatives from a JSON file
+def readRuleAlternatives = { filePath ->
+    def alternatives = [:]
+    try {
+        def alternativesFile = new File(filePath)
+        if (alternativesFile.exists()) {
+            def jsonSlurper = new JsonSlurper()
+            def alternativesData = jsonSlurper.parse(alternativesFile)
+            alternatives = alternativesData.ruleAlternatives
+            println "Loaded ${alternatives.size()} rule alternatives from ${filePath}"
+        } else {
+            println "WARNING: Rule alternatives file not found at ${filePath}"
+        }
+    } catch (Exception e) {
+        println "ERROR reading rule alternatives: ${e.message}"
+    }
+    return alternatives
+}
+
+// Read Java rule alternatives
+def javaRuleAlternatives = readRuleAlternatives(javaRuleAlternativesPath)
+
+// Read Kotlin rule alternatives (for future use)
+def kotlinRuleAlternatives = readRuleAlternatives(kotlinRuleAlternativesPath)
 
 // If we're in test mode, make the MdToHtmlConverter available but don't run the main code
 if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
@@ -919,9 +950,39 @@ class MdToHtmlConverter {
 }
 
 // Convert camelCase rule name to readable format with only first letter uppercase
+// Note: "APITest" -> "API test", "XMLHttpRequest" -> "XMLHttp request
 def camelCaseToReadable = { ruleName ->
-    def words = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-    words[0].toUpperCase() + words[1..-1].toLowerCase()
+
+    def words = ruleName.replaceAll(/([a-z])([A-Z])/, '$1 $2').trim().split(' ')
+    def result = words.collect { word ->
+        if (!word) return word
+
+        // Special case for NaN
+        if (word.equals("NaN")) {
+            return "NaN"
+        }
+
+        // If word has multiple consecutive capitals at start, preserve them
+        if (word.matches(/^[A-Z]{2,}.*/)) {
+            def matcher = word =~ /^([A-Z]+)([a-z].*)?/
+            if (matcher) {
+                def capitals = matcher[0][1]
+                def rest = matcher[0][2] ?: ""
+                return capitals + (rest ? rest.toLowerCase() : "")
+            }
+        }
+
+        // Otherwise, lowercase everything
+        return word.toLowerCase()
+    }.join(' ')
+
+    // Add space after words ending with consecutive digits
+    result = result.replaceAll(/(\w*\d+)([a-zA-Z])/, '$1 $2')
+
+    // Capitalize only the first word
+    if (result) {
+        result = result[0].toUpperCase() + (result.length() > 1 ? result[1..-1] : "")
+    }
 }
 
 // We no longer need to check for replacement placeholders since we're using camelCase for all rules
@@ -1041,44 +1102,32 @@ def escapeForCdata = { text ->
     return text.replaceAll(/\]\]>/, "]]]]><![CDATA[>")
 }
 
-// Helper function to generate a fallback description based on rule name and category
-def generateFallbackDescription = { ruleName, category ->
-    def categoryDescriptions = [
-        'bestpractices': 'coding best practices',
-        'codestyle': 'code style and formatting',
-        'design': 'design and architecture',
-        'documentation': 'documentation standards',
-        'errorprone': 'error-prone constructs',
-        'multithreading': 'multithreading and concurrency',
-        'performance': 'performance optimization',
-        'security': 'security vulnerabilities'
-    ]
-
-    def categoryDesc = categoryDescriptions[category] ?: 'code quality'
-
-    // Convert camelCase rule name to readable format
-    def readableName = ruleName.replaceAll(/([A-Z])/, ' $1').trim()
-
-    return """Problem: This rule identifies issues related to ${categoryDesc}.
-
-Solution: Review the flagged code and apply the recommended practices to improve code quality.
-
-The rule "${readableName}" helps maintain better code standards in the ${category} category."""
-}
 
 // Helper function to format description with examples using MdToHtmlConverter
-def formatDescription = { ruleData ->
+def formatDescription = { ruleData, language ->
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
+    def message = ruleData.message ?: ""
+    def ruleName = ruleData.name
 
-    // If no description exists, generate a fallback
+    // If no description exists, log warning, do not add rule
     if (!description || description.trim().isEmpty()) {
-        description = generateFallbackDescription(ruleData.name, ruleData.category)
+        // report with println and skip processing
     }
 
     // Build markdown content
     def markdownContent = new StringBuilder()
+
+    // Add the message as a title at the top of the description
+    if (message && !message.trim().isEmpty()) {
+        // Process message: replace placeholders with code tags and fix double quotes
+        def processedMessage = message
+            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')  // Wrap {0}, {1}, etc. in code tags
+            .replaceAll(/''/,"\'")  // Replace two subsequent single quotes with a single single quote
+
+        markdownContent.append("## Title of issues: ").append(processedMessage).append("\n\n")
+    }
 
     // Add the main description
     markdownContent.append(description)
@@ -1101,11 +1150,30 @@ def formatDescription = { ruleData ->
     // Convert markdown to HTML using our Groovy MdToHtmlConverter
     def htmlContent = MdToHtmlConverter.convertToHtml(markdownContent.toString())
 
+    // Add Sonar alternative rules if available, based on language
+    def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+    if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleName)) {
+        def alternatives = ruleAlternativesForLanguage[ruleName]
+        if (alternatives && !alternatives.isEmpty()) {
+            def alternativesHtml = new StringBuilder("<p><b>Alternative " + (alternatives.size() == 1 ? "rule" : "rules") + ":</b> ")
+            alternatives.eachWithIndex { alt, index ->
+                if (index > 0) {
+                    alternativesHtml.append(", ")
+                }
+
+                def internalLink = "./coding_rules?rule_key=${URLEncoder.encode(alt.key, 'UTF-8')}&open=${URLEncoder.encode(alt.key, 'UTF-8')}"
+                alternativesHtml.append("<a href=\"${internalLink}\">${alt.key}</a>")
+            }
+            alternativesHtml.append("</p>")
+            htmlContent += "\n" + alternativesHtml.toString()
+        }
+    }
+
     // Add external info URL as the last paragraph if available
     if (externalInfoUrl) {
-        // Extract a more readable link text from the URL
-        def linkText = "PMD rule documentation"
-        htmlContent += "\n<p>Full documentation: <a href=\"${externalInfoUrl}\">${linkText}</a></p>"
+        // Same a in IntelliJ PMD Plugin
+        def linkText = "Full documentation"
+        htmlContent += "\n<p><a href=\"${externalInfoUrl}\">${linkText}</a></p>"
     }
 
     return htmlContent
@@ -1114,6 +1182,8 @@ def formatDescription = { ruleData ->
 // Function to generate XML file
 def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
+    def skippedRules = 0
+    def rulesWithDeprecatedAndRef = []
 
     try {
         // Generate XML file
@@ -1126,6 +1196,13 @@ def generateXmlFile = { outputFile, rules, language ->
 
             xml.rules {
                 rules.sort { it.name }.each { ruleData ->
+                    // Skip rules with deprecated=true and ref attribute
+                    if (ruleData.deprecated && ruleData.ref) {
+                        skippedRules++
+                        rulesWithDeprecatedAndRef << ruleData
+                        return // Skip this rule
+                    }
+
                     rule {
                         key(ruleData.name)
                         name(camelCaseToReadable(ruleData.name))
@@ -1134,9 +1211,9 @@ def generateXmlFile = { outputFile, rules, language ->
 
                         // Add description with CDATA
                         description {
-                            def descContent = formatDescription(ruleData)
+                            def descContent = formatDescription(ruleData, language)
                             if (!descContent || descContent.trim().isEmpty()) {
-                                descContent = MdToHtmlConverter.convertToHtml(generateFallbackDescription(ruleData.name, ruleData.category))
+                                descContent = MdToHtmlConverter.convertToHtml("THIS SHOULD NOT HAPPEN")
                                 rulesWithoutDescription++
                             }
                             mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
@@ -1150,6 +1227,12 @@ def generateXmlFile = { outputFile, rules, language ->
                         // Add tags
                         tag("pmd")
                         tag(ruleData.category)
+
+                        // Add has-sonar-alternative tag if the rule has alternatives
+                        def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+                        if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleData.name)) {
+                            tag("has-sonar-alternative")
+                        }
 
                         // Add parameters
                         ruleData.properties.findAll { prop -> 
@@ -1186,6 +1269,7 @@ Successfully generated ${outputFile.name}
 Total ${language} rules: ${rules.size()}
 Active ${language} rules: ${activeRules}
 Deprecated ${language} rules: ${deprecatedRules}
+${skippedRules > 0 ? "Skipped ${language} rules (deprecated with ref): ${skippedRules}" : ""}
 ${rulesWithoutDescription > 0 ? "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}" : ""}
 Using camelCase transformation for all rule names
 
@@ -1216,6 +1300,35 @@ ${language} rules by category:"""
             }
         } else {
             println "\n✓ All ${language} rules have descriptions"
+        }
+
+        // Print warnings for skipped rules with deprecated=true and ref attribute
+        if (skippedRules > 0) {
+            println "\nWARNING: Skipped ${skippedRules} ${language} rules with deprecated=true and ref attribute:"
+            rulesWithDeprecatedAndRef.each { rule ->
+                println "  - ${rule.name} (ref: ${rule.ref})"
+            }
+
+            // Generate JSON file with skipped rules information
+            def skippedRulesData = [
+                language: language,
+                count: skippedRules,
+                rules: rulesWithDeprecatedAndRef.collect { rule ->
+                    [
+                        name: rule.name,
+                        ref: rule.ref,
+                        category: rule.category,
+                        categoryFile: rule.categoryFile,
+                        since: rule.since,
+                        message: rule.message
+                    ]
+                }
+            ]
+
+            def jsonBuilder = new JsonBuilder(skippedRulesData)
+            def skippedRulesFile = new File(outputFile.getParentFile(), "skipped-${language.toLowerCase()}-rules.json")
+            skippedRulesFile.write(jsonBuilder.toPrettyString())
+            println "Generated skipped rules information in ${skippedRulesFile.absolutePath}"
         }
 
         return true

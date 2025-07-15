@@ -24,9 +24,9 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.utils.ValidationMessages;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class XmlRuleSetFactory implements RuleSetFactory {
 
-    private static final Logger LOG = Loggers.get(XmlRuleSetFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(XmlRuleSetFactory.class);
     private static final String INVALID_INPUT = "The PMD configuration file is not valid";
 
     private final Reader source;
@@ -127,7 +127,7 @@ public class XmlRuleSetFactory implements RuleSetFactory {
             result.setDescription(descriptionElement.getValue());
         }
 
-        for (Element eltRule : getChildren(eltResultset, "rule", namespace)) {
+        for (Element eltRule : getChildren(eltResultset, "org/sonar/plugins/pmd/rule", namespace)) {
             PmdRule pmdRule = new PmdRule(eltRule.getAttributeValue("ref"));
             pmdRule.setClazz(eltRule.getAttributeValue("class"));
             pmdRule.setName(eltRule.getAttributeValue("name"));
