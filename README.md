@@ -57,6 +57,18 @@ Limitations:
 If you find missing alternative rules please create a Github issue.
 2. The estimated amount of time to fix issues is only available for rules from before 2016.
 
+## Java PMD rules summary
+
+- Total rules in old version (4.0.3): 206
+- Total rules in new version (4.1.0): 281
+- Rules added: 80
+- Rules removed: 5
+- Rules unchanged: 46
+- Rules updated: 154
+- Rules renamed: 11
+
+See details: [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md)
+
 ## Support for other languages
 Support for Kotlin and Apex PMD rules is work in progress. 
 
