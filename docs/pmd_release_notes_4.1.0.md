@@ -4,315 +4,309 @@ _Do not edit this generated file._
 ## Summary
 - Total rules in old version (4.0.3): 206
 - Total rules in new version (4.1.0): 281
-- Rules added: 81
-- Rules removed: 6
-- Rules unchanged: 200
-- Rules renamed: 10
-
-## Removed Rules
-The following rules have been removed in the new version:
-
-| Rule Key | Priority | Status |
-|----------|----------|--------|
-| AvoidConstantsInterface | MAJOR | DEPRECATED |
-| CloneMethodMustImplementCloneableWithTypeResolution | MAJOR | DEPRECATED |
-| GuardLogStatementJavaUtil | MAJOR | Active |
-| LooseCouplingWithTypeResolution | MAJOR | DEPRECATED |
-| UnnecessaryParentheses | MINOR | DEPRECATED |
-| XPathRule | MAJOR | DEPRECATED |
+- Rules added: 80
+- Rules removed: 5
+- Rules unchanged: 46
+- Rules updated: 154
+- Rules renamed: 11
 
 ## Added Rules
 The following rules have been added in the new version:
 
-| Rule Key | Name | Severity | Status |
-|----------|------|----------|--------|
-| AccessorMethodGeneration | Accessor method generation | MAJOR | Active |
-| AvoidCalendarDateCreation | Avoid calendar date creation | MAJOR | Active |
-| AvoidFileStream | Avoid file stream | BLOCKER | Active |
-| AvoidMessageDigestField | Avoid message digest field | MAJOR | Active |
-| AvoidReassigningCatchVariables | Avoid reassigning catch variables | MAJOR | Active |
-| AvoidReassigningLoopVariables | Avoid reassigning loop variables | MAJOR | Active |
-| AvoidSynchronizedStatement | Avoid synchronized statement | MAJOR | Active |
-| AvoidUncheckedExceptionsInSignatures | Avoid unchecked exceptions in signatures | MAJOR | Active |
-| CloneMethodMustImplementCloneable | Clone method must implement cloneable | MAJOR | Active |
-| CognitiveComplexity | Cognitive complexity | MAJOR | Active |
-| ComparisonWithNaN | Comparison with na n | MAJOR | Active |
-| ConfusingArgumentToVarargsMethod | Confusing argument to varargs method | MAJOR | Active |
-| ConstantsInInterface | Constants in interface | MAJOR | Active |
-| ControlStatementBraces | Control statement braces | MAJOR | Active |
-| DataClass | Data class | MAJOR | Active |
-| DefaultLabelNotLastInSwitch | Default label not last in switch | MAJOR | Active |
-| DetachedTestCase | Detached test case | MAJOR | Active |
-| DoNotExtendJavaLangThrowable | Do not extend java lang throwable | MAJOR | Active |
-| DoNotTerminateVM | Do not terminate VM | MAJOR | Active |
-| DoubleBraceInitialization | Double brace initialization | MAJOR | Active |
-| EmptyControlStatement | Empty control statement | MAJOR | Active |
-| ExhaustiveSwitchHasDefault | Exhaustive switch has default | MAJOR | Active |
-| FieldNamingConventions | Field naming conventions | BLOCKER | Active |
-| FinalParameterInAbstractMethod | Final parameter in abstract method | BLOCKER | Active |
-| ForLoopCanBeForeach | For loop can be foreach | MAJOR | Active |
-| ForLoopVariableCount | For loop variable count | MAJOR | Active |
-| FormalParameterNamingConventions | Formal parameter naming conventions | BLOCKER | Active |
-| GuardLogStatement | Guard log statement | CRITICAL | Active |
-| HardCodedCryptoKey | Hard coded crypto key | MAJOR | Active |
-| IdenticalCatchBranches | Identical catch branches | MAJOR | Active |
-| ImplicitFunctionalInterface | Implicit functional interface | CRITICAL | Active |
-| ImplicitSwitchFallThrough | Implicit switch fall through | MAJOR | Active |
-| InsecureCryptoIv | Insecure crypto iv | MAJOR | Active |
-| InvalidJavaBean | Invalid java bean | MAJOR | Active |
-| InvalidLogMessageFormat | Invalid log message format | INFO | Active |
-| JUnit4SuitesShouldUseSuiteAnnotation | JUnit4 suites should use suite annotation | MAJOR | Active |
-| JUnit5TestShouldBePackagePrivate | JUnit5 test should be package private | MAJOR | Active |
-| JUnitSpelling | JUnit spelling | MAJOR | Active |
-| JUnitStaticSuite | JUnit static suite | MAJOR | Active |
-| JUnitUseExpected | JUnit use expected | MAJOR | Active |
-| LambdaCanBeMethodReference | Lambda can be method reference | MAJOR | Active |
-| LinguisticNaming | Linguistic naming | MAJOR | Active |
-| LiteralsFirstInComparisons | Literals first in comparisons | MAJOR | Active |
-| LocalVariableNamingConventions | Local variable naming conventions | BLOCKER | Active |
-| LooseCoupling | Loose coupling | MAJOR | Active |
-| MissingOverride | Missing override | MAJOR | Active |
-| MutableStaticState | Mutable static state | MAJOR | Active |
-| NcssCount | Ncss count | MAJOR | Active |
-| NonCaseLabelInSwitch | Non case label in switch | MAJOR | Active |
-| NonExhaustiveSwitch | Non exhaustive switch | MAJOR | Active |
-| NonSerializableClass | Non serializable class | MAJOR | Active |
-| PrimitiveWrapperInstantiation | Primitive wrapper instantiation | MAJOR | Active |
-| ReturnEmptyCollectionRatherThanNull | Return empty collection rather than null | BLOCKER | Active |
-| SimplifiableTestAssertion | Simplifiable test assertion | MAJOR | Active |
-| TestClassWithoutTestCases | Test class without test cases | MAJOR | Active |
-| TooFewBranchesForSwitch | Too few branches for switch | MAJOR | Active |
-| UnitTestAssertionsShouldIncludeMessage | Unit test assertions should include message | MAJOR | Active |
-| UnitTestContainsTooManyAsserts | Unit test contains too many asserts | MAJOR | Active |
-| UnitTestShouldIncludeAssert | Unit test should include assert | MAJOR | Active |
-| UnitTestShouldUseAfterAnnotation | Unit test should use after annotation | MAJOR | Active |
-| UnitTestShouldUseBeforeAnnotation | Unit test should use before annotation | MAJOR | Active |
-| UnitTestShouldUseTestAnnotation | Unit test should use test annotation | MAJOR | Active |
-| UnnecessaryAnnotationValueElement | Unnecessary annotation value element | MAJOR | Active |
-| UnnecessaryBooleanAssertion | Unnecessary boolean assertion | MAJOR | Active |
-| UnnecessaryBoxing | Unnecessary boxing | MAJOR | Active |
-| UnnecessaryCast | Unnecessary cast | MAJOR | Active |
-| UnnecessaryImport | Unnecessary import | MINOR | Active |
-| UnnecessaryModifier | Unnecessary modifier | MAJOR | Active |
-| UnnecessarySemicolon | Unnecessary semicolon | MAJOR | Active |
-| UnnecessaryVarargsArrayCreation | Unnecessary varargs array creation | MAJOR | Active |
-| UnnecessaryWarningSuppression | Unnecessary warning suppression | MAJOR | Active |
-| UnsynchronizedStaticFormatter | Unsynchronized static formatter | MAJOR | Active |
-| UseDiamondOperator | Use diamond operator | MAJOR | Active |
-| UseEnumCollections | Use enum collections | MAJOR | Active |
-| UseExplicitTypes | Use explicit types | MAJOR | Active |
-| UseIOStreamsWithApacheCommonsFileItem | Use IOStreams with apache commons file item | MAJOR | Active |
-| UseShortArrayInitializer | Use short array initializer | MAJOR | Active |
-| UseStandardCharsets | Use standard charsets | MAJOR | Active |
-| UseTryWithResources | Use try with resources | MAJOR | Active |
-| UseUnderscoresInNumericLiterals | Use underscores in numeric literals | MAJOR | Active |
-| WhileLoopWithLiteralBoolean | While loop with literal boolean | MAJOR | Active |
+| Rule Key | Name | Severity | Category |
+|----------|------|----------|----------|
+| AccessorMethodGeneration | Accessor method generation | Medium | bestpractices |
+| AvoidCalendarDateCreation | Avoid calendar date creation | Medium | performance |
+| AvoidFileStream | Avoid file stream | Blocker | performance |
+| AvoidMessageDigestField | Avoid message digest field | Medium | bestpractices |
+| AvoidReassigningCatchVariables | Avoid reassigning catch variables | Medium | bestpractices |
+| AvoidReassigningLoopVariables | Avoid reassigning loop variables | Medium | bestpractices |
+| AvoidSynchronizedStatement | Avoid synchronized statement | Medium | multithreading |
+| AvoidUncheckedExceptionsInSignatures | Avoid unchecked exceptions in signatures | Medium | design |
+| CloneMethodMustImplementCloneable | Clone method must implement cloneable | Medium | errorprone |
+| CognitiveComplexity | Cognitive complexity | Medium | design |
+| ComparisonWithNaN | Comparison with na n | Medium | errorprone |
+| ConfusingArgumentToVarargsMethod | Confusing argument to varargs method | Medium | errorprone |
+| ConstantsInInterface | Constants in interface | Medium | bestpractices |
+| ControlStatementBraces | Control statement braces | Medium | codestyle |
+| DataClass | Data class | Medium | design |
+| DefaultLabelNotLastInSwitch | Default label not last in switch | Medium | bestpractices |
+| DetachedTestCase | Detached test case | Medium | errorprone |
+| DoNotExtendJavaLangThrowable | Do not extend java lang throwable | Medium | errorprone |
+| DoNotTerminateVM | Do not terminate VM | Medium | errorprone |
+| DoubleBraceInitialization | Double brace initialization | Medium | bestpractices |
+| EmptyControlStatement | Empty control statement | Medium | codestyle |
+| ExhaustiveSwitchHasDefault | Exhaustive switch has default | Medium | bestpractices |
+| FieldNamingConventions | Field naming conventions | Blocker | codestyle |
+| FinalParameterInAbstractMethod | Final parameter in abstract method | Blocker | codestyle |
+| ForLoopCanBeForeach | For loop can be foreach | Medium | bestpractices |
+| ForLoopVariableCount | For loop variable count | Medium | bestpractices |
+| FormalParameterNamingConventions | Formal parameter naming conventions | Blocker | codestyle |
+| HardCodedCryptoKey | Hard coded crypto key | Medium | security |
+| IdenticalCatchBranches | Identical catch branches | Medium | codestyle |
+| ImplicitFunctionalInterface | Implicit functional interface | High | bestpractices |
+| ImplicitSwitchFallThrough | Implicit switch fall through | Medium | errorprone |
+| InsecureCryptoIv | Insecure crypto iv | Medium | security |
+| InvalidJavaBean | Invalid java bean | Medium | design |
+| InvalidLogMessageFormat | Invalid log message format | Info | errorprone |
+| JUnit4SuitesShouldUseSuiteAnnotation | JUnit4 suites should use suite annotation | Medium | bestpractices |
+| JUnit5TestShouldBePackagePrivate | JUnit5 test should be package private | Medium | bestpractices |
+| JUnitSpelling | JUnit spelling | Medium | errorprone |
+| JUnitStaticSuite | JUnit static suite | Medium | errorprone |
+| JUnitUseExpected | JUnit use expected | Medium | bestpractices |
+| LambdaCanBeMethodReference | Lambda can be method reference | Medium | codestyle |
+| LinguisticNaming | Linguistic naming | Medium | codestyle |
+| LiteralsFirstInComparisons | Literals first in comparisons | Medium | bestpractices |
+| LocalVariableNamingConventions | Local variable naming conventions | Blocker | codestyle |
+| LooseCoupling | Loose coupling | Medium | bestpractices |
+| MissingOverride | Missing override | Medium | bestpractices |
+| MutableStaticState | Mutable static state | Medium | design |
+| NcssCount | Ncss count | Medium | design |
+| NonCaseLabelInSwitch | Non case label in switch | Medium | errorprone |
+| NonExhaustiveSwitch | Non exhaustive switch | Medium | bestpractices |
+| NonSerializableClass | Non serializable class | Medium | errorprone |
+| PrimitiveWrapperInstantiation | Primitive wrapper instantiation | Medium | bestpractices |
+| ReturnEmptyCollectionRatherThanNull | Return empty collection rather than null | Blocker | errorprone |
+| SimplifiableTestAssertion | Simplifiable test assertion | Medium | bestpractices |
+| TestClassWithoutTestCases | Test class without test cases | Medium | errorprone |
+| TooFewBranchesForSwitch | Too few branches for switch | Medium | performance |
+| UnitTestAssertionsShouldIncludeMessage | Unit test assertions should include message | Medium | bestpractices |
+| UnitTestContainsTooManyAsserts | Unit test contains too many asserts | Medium | bestpractices |
+| UnitTestShouldIncludeAssert | Unit test should include assert | Medium | bestpractices |
+| UnitTestShouldUseAfterAnnotation | Unit test should use after annotation | Medium | bestpractices |
+| UnitTestShouldUseBeforeAnnotation | Unit test should use before annotation | Medium | bestpractices |
+| UnitTestShouldUseTestAnnotation | Unit test should use test annotation | Medium | bestpractices |
+| UnnecessaryAnnotationValueElement | Unnecessary annotation value element | Medium | codestyle |
+| UnnecessaryBooleanAssertion | Unnecessary boolean assertion | Medium | errorprone |
+| UnnecessaryBoxing | Unnecessary boxing | Medium | codestyle |
+| UnnecessaryCast | Unnecessary cast | Medium | codestyle |
+| UnnecessaryImport | Unnecessary import | Low | codestyle |
+| UnnecessaryModifier | Unnecessary modifier | Medium | codestyle |
+| UnnecessarySemicolon | Unnecessary semicolon | Medium | codestyle |
+| UnnecessaryVarargsArrayCreation | Unnecessary varargs array creation | Medium | bestpractices |
+| UnnecessaryWarningSuppression | Unnecessary warning suppression | Medium | bestpractices |
+| UnsynchronizedStaticFormatter | Unsynchronized static formatter | Medium | multithreading |
+| UseDiamondOperator | Use diamond operator | Medium | codestyle |
+| UseEnumCollections | Use enum collections | Medium | bestpractices |
+| UseExplicitTypes | Use explicit types | Medium | codestyle |
+| UseIOStreamsWithApacheCommonsFileItem | Use IOStreams with apache commons file item | Medium | performance |
+| UseShortArrayInitializer | Use short array initializer | Medium | codestyle |
+| UseStandardCharsets | Use standard charsets | Medium | bestpractices |
+| UseTryWithResources | Use try with resources | Medium | bestpractices |
+| UseUnderscoresInNumericLiterals | Use underscores in numeric literals | Medium | codestyle |
+| WhileLoopWithLiteralBoolean | While loop with literal boolean | Medium | bestpractices |
+
+## Updated Rules
+The following rules have been updated in the new version:
+
+| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives | Category |
+|----------|------|--------------|--------------|------------|------------|--------------|----------|
+| AbstractClassWithoutAbstractMethod | Abstract class without abstract method |  | Medium | Deprecated | Active | [java:S1694](https://rules.sonarsource.com/java/RSPEC-1694) | bestpractices |
+| AbstractClassWithoutAnyMethod | Abstract class without any method | Medium | Blocker | Deprecated | Active | [java:S1694](https://rules.sonarsource.com/java/RSPEC-1694) | design |
+| AppendCharacterWithChar | Append character with char | Low | Medium |  | Active |  | performance |
+| ArrayIsStoredDirectly | Array is stored directly | High | Medium | Deprecated | Active | [java:S2384](https://rules.sonarsource.com/java/RSPEC-2384) | bestpractices |
+| AssignmentInOperand | Assignment in operand |  | Medium | Deprecated | Active | [java:S1121](https://rules.sonarsource.com/java/RSPEC-1121) | errorprone |
+| AtLeastOneConstructor | At least one constructor |  | Medium | Deprecated | Active | [java:S1118](https://rules.sonarsource.com/java/RSPEC-1118), [java:S1258](https://rules.sonarsource.com/java/RSPEC-1258) | codestyle |
+| AvoidAssertAsIdentifier | Avoid assert as identifier | Medium | High | Deprecated | Active | [java:S1190](https://rules.sonarsource.com/java/RSPEC-1190) | errorprone |
+| AvoidBranchingStatementAsLastInLoop | Avoid branching statement as last in loop | Medium | High |  | Active |  | errorprone |
+| AvoidCallingFinalize | Avoid calling finalize |  | Medium | Deprecated | Active |  | errorprone |
+| AvoidCatchingGenericException | Avoid catching generic exception |  | Medium | Deprecated | Active | [java:S2221](https://rules.sonarsource.com/java/RSPEC-2221) | design |
+| AvoidCatchingNPE | Avoid catching NPE |  | Medium | Deprecated | Active | [java:S1696](https://rules.sonarsource.com/java/RSPEC-1696) | errorprone |
+| AvoidCatchingThrowable | Avoid catching throwable | High | Medium | Deprecated | Active | [java:S1181](https://rules.sonarsource.com/java/RSPEC-1181) | errorprone |
+| AvoidDecimalLiteralsInBigDecimalConstructor | Avoid decimal literals in big decimal constructor |  | Medium | Deprecated | Active | [java:S2111](https://rules.sonarsource.com/java/RSPEC-2111) | errorprone |
+| AvoidDeeplyNestedIfStmts | Avoid deeply nested if stmts |  | Medium | Deprecated | Active | [java:S134](https://rules.sonarsource.com/java/RSPEC-134) | design |
+| AvoidDollarSigns | Avoid dollar signs | Low | Medium | Deprecated | Active | [java:S114](https://rules.sonarsource.com/java/RSPEC-114), [java:S115](https://rules.sonarsource.com/java/RSPEC-115), [java:S116](https://rules.sonarsource.com/java/RSPEC-116), [java:S117](https://rules.sonarsource.com/java/RSPEC-117) | codestyle |
+| AvoidDuplicateLiterals | Avoid duplicate literals |  | Medium | Deprecated | Active | [java:S1192](https://rules.sonarsource.com/java/RSPEC-1192) | errorprone |
+| AvoidEnumAsIdentifier | Avoid enum as identifier | Medium | High | Deprecated | Active | [java:S1190](https://rules.sonarsource.com/java/RSPEC-1190) | errorprone |
+| AvoidFieldNameMatchingMethodName | Avoid field name matching method name |  | Medium | Deprecated | Active | [java:S1845](https://rules.sonarsource.com/java/RSPEC-1845) | errorprone |
+| AvoidFieldNameMatchingTypeName | Avoid field name matching type name |  | Medium | Deprecated | Active | [java:S1700](https://rules.sonarsource.com/java/RSPEC-1700) | errorprone |
+| AvoidInstanceofChecksInCatchClause | Avoid instanceof checks in catch clause | Low | Medium | Deprecated | Active | [java:S1193](https://rules.sonarsource.com/java/RSPEC-1193) | errorprone |
+| AvoidInstantiatingObjectsInLoops | Avoid instantiating objects in loops | Low | Medium |  | Active |  | performance |
+| AvoidLiteralsInIfCondition | Avoid literals in if condition |  | Medium | Deprecated | Active | [java:S109](https://rules.sonarsource.com/java/RSPEC-109) | errorprone |
+| AvoidLosingExceptionInformation | Avoid losing exception information | Medium | High | Deprecated | Active | [java:S1166](https://rules.sonarsource.com/java/RSPEC-1166) | errorprone |
+| AvoidMultipleUnaryOperators | Avoid multiple unary operators | Medium | High | Deprecated | Active | [java:S881](https://rules.sonarsource.com/java/RSPEC-881) | errorprone |
+| AvoidPrintStackTrace | Avoid print stack trace |  | Medium | Deprecated | Active | [java:S1148](https://rules.sonarsource.com/java/RSPEC-1148) | bestpractices |
+| AvoidProtectedFieldInFinalClass | Avoid protected field in final class |  | Medium | Deprecated | Active | [java:S2156](https://rules.sonarsource.com/java/RSPEC-2156) | codestyle |
+| AvoidProtectedMethodInFinalClassNotExtending | Avoid protected method in final class not extending |  | Medium | Deprecated | Active | [java:S2156](https://rules.sonarsource.com/java/RSPEC-2156) | codestyle |
+| AvoidReassigningParameters | Avoid reassigning parameters | Medium | High | Deprecated | Active | [java:S1226](https://rules.sonarsource.com/java/RSPEC-1226) | bestpractices |
+| AvoidRethrowingException | Avoid rethrowing exception |  | Medium | Deprecated | Active | [java:S1166](https://rules.sonarsource.com/java/RSPEC-1166) | design |
+| AvoidStringBufferField | Avoid string buffer field |  | Medium | Deprecated | Active | [java:S1149](https://rules.sonarsource.com/java/RSPEC-1149) | bestpractices |
+| AvoidThreadGroup | Avoid thread group | High | Medium |  | Active |  | multithreading |
+| AvoidThrowingNewInstanceOfSameException | Avoid throwing new instance of same exception |  | Medium | Deprecated | Active | [java:S1166](https://rules.sonarsource.com/java/RSPEC-1166) | design |
+| AvoidThrowingNullPointerException | Avoid throwing null pointer exception | Medium | Blocker | Deprecated | Active | [java:S1695](https://rules.sonarsource.com/java/RSPEC-1695) | design |
+| AvoidThrowingRawExceptionTypes | Avoid throwing raw exception types | Medium | Blocker | Deprecated | Active | [java:S112](https://rules.sonarsource.com/java/RSPEC-112) | design |
+| AvoidUsingHardCodedIP | Avoid using hard coded IP |  | Medium | Deprecated | Active | [java:S1313](https://rules.sonarsource.com/java/RSPEC-1313) | bestpractices |
+| AvoidUsingNativeCode | Avoid using native code | Medium | High |  | Active |  | codestyle |
+| AvoidUsingOctalValues | Avoid using octal values |  | Medium | Deprecated | Active | [java:S1314](https://rules.sonarsource.com/java/RSPEC-1314) | errorprone |
+| AvoidUsingVolatile | Avoid using volatile | Medium | High |  | Active |  | multithreading |
+| BooleanGetMethodName | Boolean get method name | Medium | Low |  | Active |  | codestyle |
+| BrokenNullCheck | Broken null check |  | High | Deprecated | Active | [java:S1697](https://rules.sonarsource.com/java/RSPEC-1697) | errorprone |
+| CallSuperInConstructor | Call super in constructor | Low | Medium |  | Active |  | codestyle |
+| CheckSkipResult | Check skip result | Low | Medium | Deprecated | Active | [java:S2674](https://rules.sonarsource.com/java/RSPEC-2674) | errorprone |
+| ClassNamingConventions | Class naming conventions | Medium | Blocker | Deprecated | Active | [java:S101](https://rules.sonarsource.com/java/RSPEC-101), [java:S114](https://rules.sonarsource.com/java/RSPEC-114) | codestyle |
+| ClassWithOnlyPrivateConstructorsShouldBeFinal | Class with only private constructors should be final | Medium | Blocker | Deprecated | Active | [java:S2974](https://rules.sonarsource.com/java/RSPEC-2974) | design |
+| CloseResource | Close resource | High | Medium | Deprecated | Active | [java:S2095](https://rules.sonarsource.com/java/RSPEC-2095) | errorprone |
+| CollapsibleIfStatements | Collapsible if statements | Low | Medium | Deprecated | Active | [java:S1066](https://rules.sonarsource.com/java/RSPEC-1066) | design |
+| CommentContent | Comment content | Low | Medium |  | Active |  | documentation |
+| CommentRequired | Comment required | Low | Medium |  | Active |  | documentation |
+| CommentSize | Comment size | Low | Medium |  | Active |  | documentation |
+| CompareObjectsWithEquals | Compare objects with equals |  | Medium | Deprecated | Active | [java:S1698](https://rules.sonarsource.com/java/RSPEC-1698) | errorprone |
+| ConsecutiveLiteralAppends | Consecutive literal appends | Low | Medium |  | Active |  | performance |
+| ConstructorCallsOverridableMethod | Constructor calls overridable method | Medium | Blocker | Deprecated | Active | [java:S1699](https://rules.sonarsource.com/java/RSPEC-1699) | errorprone |
+| CouplingBetweenObjects | Coupling between objects |  | Medium | Deprecated | Active | [java:S1200](https://rules.sonarsource.com/java/RSPEC-1200) | design |
+| CyclomaticComplexity | Cyclomatic complexity |  | Medium | Deprecated | Active | [java:S1541](https://rules.sonarsource.com/java/RSPEC-1541) | design |
+| DoNotCallGarbageCollectionExplicitly | Do not call garbage collection explicitly |  | High | Deprecated | Active | [java:S1215](https://rules.sonarsource.com/java/RSPEC-1215) | errorprone |
+| DoNotExtendJavaLangError | Do not extend java lang error |  | Medium | Deprecated | Active | [java:S1194](https://rules.sonarsource.com/java/RSPEC-1194) | design |
+| DoNotThrowExceptionInFinally | Do not throw exception in finally | Medium | Low | Deprecated | Active | [java:S1163](https://rules.sonarsource.com/java/RSPEC-1163) | errorprone |
+| DontCallThreadRun | Dont call thread run | Medium | Low | Deprecated | Active | [java:S1217](https://rules.sonarsource.com/java/RSPEC-1217) | multithreading |
+| DontImportSun | Dont import sun |  | Low | Deprecated | Active | [java:S1191](https://rules.sonarsource.com/java/RSPEC-1191) | errorprone |
+| DoubleCheckedLocking | Double checked locking | Medium | Blocker |  | Active |  | multithreading |
+| EmptyCatchBlock | Empty catch block | High | Medium | Deprecated | Active | [java:S108](https://rules.sonarsource.com/java/RSPEC-108) | errorprone |
+| EmptyFinalizer | Empty finalizer |  | Medium | Deprecated | Active | [java:S1186](https://rules.sonarsource.com/java/RSPEC-1186) | errorprone |
+| EmptyMethodInAbstractClassShouldBeAbstract | Empty method in abstract class should be abstract | Medium | Blocker |  | Active |  | codestyle |
+| EqualsNull | Equals null | High | Blocker | Deprecated | Active | [java:S2159](https://rules.sonarsource.com/java/RSPEC-2159) | errorprone |
+| ExceptionAsFlowControl | Exception as flow control |  | Medium | Deprecated | Active | [java:S1141](https://rules.sonarsource.com/java/RSPEC-1141) | design |
+| ExcessiveImports | Excessive imports |  | Medium | Deprecated | Active | [java:S1200](https://rules.sonarsource.com/java/RSPEC-1200) | design |
+| ExcessiveParameterList | Excessive parameter list |  | Medium | Deprecated | Active | [java:S107](https://rules.sonarsource.com/java/RSPEC-107) | design |
+| ExcessivePublicCount | Excessive public count |  | Medium | Deprecated | Active | [java:S1448](https://rules.sonarsource.com/java/RSPEC-1448) | design |
+| ExtendsObject | Extends object |  | Low | Deprecated | Active | [java:S1939](https://rules.sonarsource.com/java/RSPEC-1939) | codestyle |
+| FieldDeclarationsShouldBeAtStartOfClass | Field declarations should be at start of class | Low | Medium | Deprecated | Active | [java:S1213](https://rules.sonarsource.com/java/RSPEC-1213) | codestyle |
+| FinalFieldCouldBeStatic | Final field could be static | Low | Medium | Deprecated | Active | [java:S1170](https://rules.sonarsource.com/java/RSPEC-1170) | design |
+| FinalizeDoesNotCallSuperFinalize | Finalize does not call super finalize |  | Medium | Deprecated | Active |  | errorprone |
+| FinalizeOnlyCallsSuperFinalize | Finalize only calls super finalize |  | Medium | Deprecated | Active | [java:S1185](https://rules.sonarsource.com/java/RSPEC-1185) | errorprone |
+| FinalizeOverloaded | Finalize overloaded |  | Medium | Deprecated | Active | [java:S1175](https://rules.sonarsource.com/java/RSPEC-1175) | errorprone |
+| FinalizeShouldBeProtected | Finalize should be protected |  | Medium | Deprecated | Active | [java:S1174](https://rules.sonarsource.com/java/RSPEC-1174) | errorprone |
+| ForLoopShouldBeWhileLoop | For loop should be while loop | Low | Medium | Deprecated | Active | [java:S1264](https://rules.sonarsource.com/java/RSPEC-1264) | codestyle |
+| GenericsNaming | Generics naming | Medium | Low | Deprecated | Active | [java:S119](https://rules.sonarsource.com/java/RSPEC-119) | codestyle |
+| IdempotentOperations | Idempotent operations |  | Medium | Deprecated | Active | [java:S1656](https://rules.sonarsource.com/java/RSPEC-1656) | errorprone |
+| InstantiationToGetClass | Instantiation to get class | Medium | Low | Deprecated | Active | [java:S2133](https://rules.sonarsource.com/java/RSPEC-2133) | errorprone |
+| JumbledIncrementer | Jumbled incrementer |  | Medium | Deprecated | Active | [java:S1994](https://rules.sonarsource.com/java/RSPEC-1994) | errorprone |
+| LocalHomeNamingConvention | Local home naming convention | Medium | Low |  | Active |  | codestyle |
+| LocalInterfaceSessionNamingConvention | Local interface session naming convention | Medium | Low |  | Active |  | codestyle |
+| LocalVariableCouldBeFinal | Local variable could be final | Low | Medium |  | Active |  | codestyle |
+| LogicInversion | Logic inversion | Low | Medium | Deprecated | Active | [java:S1940](https://rules.sonarsource.com/java/RSPEC-1940) | design |
+| LongVariable | Long variable |  | Medium | Deprecated | Active | [java:S117](https://rules.sonarsource.com/java/RSPEC-117) | codestyle |
+| LoosePackageCoupling | Loose package coupling |  | Medium | Deprecated | Active |  | design |
+| MDBAndSessionBeanNamingConvention | MDBAnd session bean naming convention | Medium | Low |  | Active |  | codestyle |
+| MethodArgumentCouldBeFinal | Method argument could be final | Low | Medium | Deprecated | Active | [java:S1226](https://rules.sonarsource.com/java/RSPEC-1226) | codestyle |
+| MethodNamingConventions | Method naming conventions | Medium | Blocker | Deprecated | Active | [java:S100](https://rules.sonarsource.com/java/RSPEC-100) | codestyle |
+| MethodReturnsInternalArray | Method returns internal array | High | Medium | Deprecated | Active | [java:S2384](https://rules.sonarsource.com/java/RSPEC-2384) | bestpractices |
+| MethodWithSameNameAsEnclosingClass | Method with same name as enclosing class |  | Medium | Deprecated | Active | [java:S1223](https://rules.sonarsource.com/java/RSPEC-1223) | errorprone |
+| MisplacedNullCheck | Misplaced null check | High | Medium | Deprecated | Active | [java:S1697](https://rules.sonarsource.com/java/RSPEC-1697), [java:S2259](https://rules.sonarsource.com/java/RSPEC-2259) | errorprone |
+| MissingSerialVersionUID | Missing serial version UID |  | Medium | Deprecated | Active | [java:S2057](https://rules.sonarsource.com/java/RSPEC-2057) | errorprone |
+| MoreThanOneLogger | More than one logger | Medium | High | Deprecated | Active | [java:S1312](https://rules.sonarsource.com/java/RSPEC-1312) | errorprone |
+| NoPackage | No package |  | Medium | Deprecated | Active | [java:S1220](https://rules.sonarsource.com/java/RSPEC-1220) | codestyle |
+| NonStaticInitializer | Non static initializer |  | Medium | Deprecated | Active | [java:S1171](https://rules.sonarsource.com/java/RSPEC-1171) | errorprone |
+| NonThreadSafeSingleton | Non thread safe singleton |  | Medium | Deprecated | Active | [java:S2444](https://rules.sonarsource.com/java/RSPEC-2444) | multithreading |
+| OneDeclarationPerLine | One declaration per line | Medium | Low | Deprecated | Active | [java:S122](https://rules.sonarsource.com/java/RSPEC-122) | bestpractices |
+| OnlyOneReturn | Only one return | Low | Medium | Deprecated | Active | [java:S1142](https://rules.sonarsource.com/java/RSPEC-1142) | codestyle |
+| OverrideBothEqualsAndHashcode | Override both equals and hashcode | Blocker | Medium | Deprecated | Active | [java:S1206](https://rules.sonarsource.com/java/RSPEC-1206) | errorprone |
+| PackageCase | Package case |  | Medium | Deprecated | Active | [java:S120](https://rules.sonarsource.com/java/RSPEC-120) | codestyle |
+| PrematureDeclaration | Premature declaration |  | Medium | Deprecated | Active | [java:S1941](https://rules.sonarsource.com/java/RSPEC-1941) | codestyle |
+| PreserveStackTrace | Preserve stack trace |  | Medium | Deprecated | Active | [java:S1166](https://rules.sonarsource.com/java/RSPEC-1166) | bestpractices |
+| ProperCloneImplementation | Proper clone implementation |  | High | Deprecated | Active | [java:S1182](https://rules.sonarsource.com/java/RSPEC-1182) | errorprone |
+| ProperLogger | Proper logger |  | Medium | Deprecated | Active | [java:S1312](https://rules.sonarsource.com/java/RSPEC-1312) | errorprone |
+| RemoteInterfaceNamingConvention | Remote interface naming convention | Medium | Low |  | Active |  | codestyle |
+| RemoteSessionInterfaceNamingConvention | Remote session interface naming convention | Medium | Low |  | Active |  | codestyle |
+| ReplaceEnumerationWithIterator | Replace enumeration with iterator |  | Medium | Deprecated | Active | [java:S1150](https://rules.sonarsource.com/java/RSPEC-1150) | bestpractices |
+| ReplaceHashtableWithMap | Replace hashtable with map |  | Medium | Deprecated | Active | [java:S1149](https://rules.sonarsource.com/java/RSPEC-1149) | bestpractices |
+| ReplaceVectorWithList | Replace vector with list |  | Medium | Deprecated | Active | [java:S1149](https://rules.sonarsource.com/java/RSPEC-1149) | bestpractices |
+| ReturnFromFinallyBlock | Return from finally block |  | Medium | Deprecated | Active | [java:S1143](https://rules.sonarsource.com/java/RSPEC-1143) | errorprone |
+| ShortClassName | Short class name |  | Low | Deprecated | Active | [java:S101](https://rules.sonarsource.com/java/RSPEC-101) | codestyle |
+| ShortMethodName | Short method name |  | Medium | Deprecated | Active | [java:S100](https://rules.sonarsource.com/java/RSPEC-100) | codestyle |
+| ShortVariable | Short variable |  | Medium | Deprecated | Active | [java:S117](https://rules.sonarsource.com/java/RSPEC-117) | codestyle |
+| SignatureDeclareThrowsException | Signature declare throws exception |  | Medium | Deprecated | Active | [java:S112](https://rules.sonarsource.com/java/RSPEC-112) | design |
+| SimplifyBooleanExpressions | Simplify boolean expressions |  | Medium | Deprecated | Active | [java:S1125](https://rules.sonarsource.com/java/RSPEC-1125) | design |
+| SimplifyBooleanReturns | Simplify boolean returns | Low | Medium | Deprecated | Active | [java:S1126](https://rules.sonarsource.com/java/RSPEC-1126) | design |
+| SingletonClassReturningNewInstance | Singleton class returning new instance | Medium | High |  | Active |  | errorprone |
+| SingularField | Singular field | Low | Medium |  | Active |  | design |
+| StringBufferInstantiationWithChar | String buffer instantiation with char | Medium | Low | Deprecated | Active | [java:S1317](https://rules.sonarsource.com/java/RSPEC-1317) | errorprone |
+| StringInstantiation | String instantiation | Medium | High |  | Active |  | performance |
+| StringToString | String to string |  | Medium | Deprecated | Active | [java:S1858](https://rules.sonarsource.com/java/RSPEC-1858) | performance |
+| SuspiciousEqualsMethodName | Suspicious equals method name |  | High | Deprecated | Active | [java:S1201](https://rules.sonarsource.com/java/RSPEC-1201) | errorprone |
+| SuspiciousHashcodeMethodName | Suspicious hashcode method name |  | Medium | Deprecated | Active | [java:S1221](https://rules.sonarsource.com/java/RSPEC-1221) | errorprone |
+| SwitchDensity | Switch density |  | Medium | Deprecated | Active | [java:S1151](https://rules.sonarsource.com/java/RSPEC-1151) | design |
+| SystemPrintln | System println | Medium | High | Deprecated | Active | [java:S106](https://rules.sonarsource.com/java/RSPEC-106) | bestpractices |
+| TooManyMethods | Too many methods |  | Medium | Deprecated | Active | [java:S1448](https://rules.sonarsource.com/java/RSPEC-1448) | design |
+| UncommentedEmptyConstructor | Uncommented empty constructor |  | Medium | Deprecated | Active | [java:S2094](https://rules.sonarsource.com/java/RSPEC-2094) | documentation |
+| UncommentedEmptyMethodBody | Uncommented empty method body |  | Medium | Deprecated | Active | [java:S1186](https://rules.sonarsource.com/java/RSPEC-1186) | documentation |
+| UnconditionalIfStatement | Unconditional if statement | High | Medium | Deprecated | Active | [java:S2583](https://rules.sonarsource.com/java/RSPEC-2583) | errorprone |
+| UnnecessaryCaseChange | Unnecessary case change | Low | Medium | Deprecated | Active | [java:S1157](https://rules.sonarsource.com/java/RSPEC-1157) | errorprone |
+| UnnecessaryConstructor | Unnecessary constructor |  | Medium | Deprecated | Active | [java:S1186](https://rules.sonarsource.com/java/RSPEC-1186) | codestyle |
+| UnnecessaryConversionTemporary | Unnecessary conversion temporary |  | Medium | Deprecated | Active | [java:S1158](https://rules.sonarsource.com/java/RSPEC-1158) | errorprone |
+| UnnecessaryFullyQualifiedName | Unnecessary fully qualified name | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryLocalBeforeReturn | Unnecessary local before return |  | Medium | Deprecated | Active | [java:S1488](https://rules.sonarsource.com/java/RSPEC-1488) | codestyle |
+| UnnecessaryReturn | Unnecessary return | Low | Medium |  | Active |  | codestyle |
+| UnusedFormalParameter | Unused formal parameter |  | Medium | Deprecated | Active | [java:S1172](https://rules.sonarsource.com/java/RSPEC-1172) | bestpractices |
+| UnusedLocalVariable | Unused local variable |  | Medium | Deprecated | Active | [java:S1481](https://rules.sonarsource.com/java/RSPEC-1481) | bestpractices |
+| UnusedPrivateField | Unused private field |  | Medium | Deprecated | Active | [java:S1068](https://rules.sonarsource.com/java/RSPEC-1068) | bestpractices |
+| UnusedPrivateMethod | Unused private method |  | Medium | Deprecated | Active |  | bestpractices |
+| UseArrayListInsteadOfVector | Use array list instead of vector |  | Medium | Deprecated | Active | [java:S1149](https://rules.sonarsource.com/java/RSPEC-1149) | performance |
+| UseCollectionIsEmpty | Use collection is empty | Low | Medium | Deprecated | Active | [java:S1155](https://rules.sonarsource.com/java/RSPEC-1155) | bestpractices |
+| UseCorrectExceptionLogging | Use correct exception logging |  | Medium | Deprecated | Active | [java:S1166](https://rules.sonarsource.com/java/RSPEC-1166) | errorprone |
+| UseEqualsToCompareStrings | Use equals to compare strings |  | Medium | Deprecated | Active | [java:S1698](https://rules.sonarsource.com/java/RSPEC-1698) | errorprone |
+| UseNotifyAllInsteadOfNotify | Use notify all instead of notify |  | Medium | Deprecated | Active | [java:S2446](https://rules.sonarsource.com/java/RSPEC-2446) | multithreading |
+| UseObjectForClearerAPI | Use object for clearer API | Low | Medium | Deprecated | Active | [java:S107](https://rules.sonarsource.com/java/RSPEC-107) | design |
+| UseProperClassLoader | Use proper class loader | High | Medium |  | Active |  | errorprone |
+| UseStringBufferLength | Use string buffer length | Low | Medium |  | Active |  | performance |
+| UseUtilityClass | Use utility class |  | Medium | Deprecated | Active | [java:S1118](https://rules.sonarsource.com/java/RSPEC-1118) | design |
+| UseVarargs | Use varargs | Medium | Low |  | Active |  | bestpractices |
+| UselessOperationOnImmutable | Useless operation on immutable | High | Medium |  | Active |  | errorprone |
+| UselessOverridingMethod | Useless overriding method |  | Medium | Deprecated | Active | [java:S1185](https://rules.sonarsource.com/java/RSPEC-1185) | design |
+| UselessParentheses | Useless parentheses | Info | Low | Deprecated | Active | [java:S1110](https://rules.sonarsource.com/java/RSPEC-1110) | codestyle |
+| UselessStringValueOf | Useless string value of | Low | Medium | Deprecated | Active | [java:S1153](https://rules.sonarsource.com/java/RSPEC-1153) | performance |
 
 ## Unchanged Rules
-The following rules exist in both versions:
+The following rules exist in both versions with no changes:
 
-| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives |
-|----------|------|--------------|--------------|------------|------------|--------------|
-| AbstractClassWithoutAbstractMethod | Abstract class without abstract method | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AbstractClassWithoutAnyMethod | Abstract class without any method | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| AccessorClassGeneration | Accessor class generation | MAJOR | MAJOR | Active | Active |  |
-| AddEmptyString | Add empty string | MAJOR | MAJOR | Active | Active |  |
-| AppendCharacterWithChar | Append character with char | MINOR | MAJOR | Active | Active |  |
-| ArrayIsStoredDirectly | Array is stored directly | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| AssignmentInOperand | Assignment in operand | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AssignmentToNonFinalStatic | Assignment to non final static | MAJOR | MAJOR | Active | Active |  |
-| AtLeastOneConstructor | At least one constructor | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidAccessibilityAlteration | Avoid accessibility alteration | MAJOR | MAJOR | Active | Active |  |
-| AvoidArrayLoops | Avoid array loops | MAJOR | MAJOR | Active | Active |  |
-| AvoidAssertAsIdentifier | Avoid assert as identifier | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| AvoidBranchingStatementAsLastInLoop | Avoid branching statement as last in loop | MAJOR | CRITICAL | Active | Active |  |
-| AvoidCallingFinalize | Avoid calling finalize | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidCatchingGenericException | Avoid catching generic exception | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidCatchingNPE | Avoid catching NPE | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidCatchingThrowable | Avoid catching throwable | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| AvoidDecimalLiteralsInBigDecimalConstructor | Avoid decimal literals in big decimal constructor | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidDeeplyNestedIfStmts | Avoid deeply nested if stmts | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidDollarSigns | Avoid dollar signs | MINOR | MAJOR | DEPRECATED | Active |  |
-| AvoidDuplicateLiterals | Avoid duplicate literals | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidEnumAsIdentifier | Avoid enum as identifier | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| AvoidFieldNameMatchingMethodName | Avoid field name matching method name | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidFieldNameMatchingTypeName | Avoid field name matching type name | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidInstanceofChecksInCatchClause | Avoid instanceof checks in catch clause | MINOR | MAJOR | DEPRECATED | Active |  |
-| AvoidInstantiatingObjectsInLoops | Avoid instantiating objects in loops | MINOR | MAJOR | Active | Active |  |
-| AvoidLiteralsInIfCondition | Avoid literals in if condition | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidLosingExceptionInformation | Avoid losing exception information | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| AvoidMultipleUnaryOperators | Avoid multiple unary operators | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| AvoidPrintStackTrace | Avoid print stack trace | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidProtectedFieldInFinalClass | Avoid protected field in final class | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidProtectedMethodInFinalClassNotExtending | Avoid protected method in final class not extending | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidReassigningParameters | Avoid reassigning parameters | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| AvoidRethrowingException | Avoid rethrowing exception | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidStringBufferField | Avoid string buffer field | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidSynchronizedAtMethodLevel | Avoid synchronized at method level | MAJOR | MAJOR | Active | Active |  |
-| AvoidThreadGroup | Avoid thread group | CRITICAL | MAJOR | Active | Active |  |
-| AvoidThrowingNewInstanceOfSameException | Avoid throwing new instance of same exception | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidThrowingNullPointerException | Avoid throwing null pointer exception | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| AvoidThrowingRawExceptionTypes | Avoid throwing raw exception types | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| AvoidUsingHardCodedIP | Avoid using hard coded IP | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidUsingNativeCode | Avoid using native code | MAJOR | CRITICAL | Active | Active |  |
-| AvoidUsingOctalValues | Avoid using octal values | MAJOR | MAJOR | DEPRECATED | Active |  |
-| AvoidUsingVolatile | Avoid using volatile | MAJOR | CRITICAL | Active | Active |  |
-| BigIntegerInstantiation | Big integer instantiation | MAJOR | MAJOR | Active | Active |  |
-| BooleanGetMethodName | Boolean get method name | MAJOR | MINOR | Active | Active |  |
-| BrokenNullCheck | Broken null check | CRITICAL | CRITICAL | DEPRECATED | Active |  |
-| CallSuperFirst | Call super first | MAJOR | MAJOR | Active | Active |  |
-| CallSuperInConstructor | Call super in constructor | MINOR | MAJOR | Active | Active |  |
-| CallSuperLast | Call super last | MAJOR | MAJOR | Active | Active |  |
-| CheckResultSet | Check result set | MAJOR | MAJOR | Active | Active |  |
-| CheckSkipResult | Check skip result | MINOR | MAJOR | DEPRECATED | Active |  |
-| ClassCastExceptionWithToArray | Class cast exception with to array | MAJOR | MAJOR | Active | Active |  |
-| ClassNamingConventions | Class naming conventions | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| ClassWithOnlyPrivateConstructorsShouldBeFinal | Class with only private constructors should be final | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| CloneMethodMustBePublic | Clone method must be public | MAJOR | MAJOR | Active | Active |  |
-| CloneMethodReturnTypeMustMatchClassName | Clone method return type must match class name | MAJOR | MAJOR | Active | Active |  |
-| CloseResource | Close resource | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| CollapsibleIfStatements | Collapsible if statements | MINOR | MAJOR | DEPRECATED | Active |  |
-| CommentContent | Comment content | MINOR | MAJOR | Active | Active |  |
-| CommentDefaultAccessModifier | Comment default access modifier | MAJOR | MAJOR | Active | Active |  |
-| CommentRequired | Comment required | MINOR | MAJOR | Active | Active |  |
-| CommentSize | Comment size | MINOR | MAJOR | Active | Active |  |
-| CompareObjectsWithEquals | Compare objects with equals | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ConfusingTernary | Confusing ternary | MAJOR | MAJOR | Active | Active |  |
-| ConsecutiveAppendsShouldReuse | Consecutive appends should reuse | MAJOR | MAJOR | Active | Active |  |
-| ConsecutiveLiteralAppends | Consecutive literal appends | MINOR | MAJOR | Active | Active |  |
-| ConstructorCallsOverridableMethod | Constructor calls overridable method | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| CouplingBetweenObjects | Coupling between objects | MAJOR | MAJOR | DEPRECATED | Active |  |
-| CyclomaticComplexity | Cyclomatic complexity | MAJOR | MAJOR | DEPRECATED | Active |  |
-| DoNotCallGarbageCollectionExplicitly | Do not call garbage collection explicitly | CRITICAL | CRITICAL | DEPRECATED | Active |  |
-| DoNotExtendJavaLangError | Do not extend java lang error | MAJOR | MAJOR | DEPRECATED | Active |  |
-| DoNotHardCodeSDCard | Do not hard code SDCard | MAJOR | MAJOR | Active | Active |  |
-| DoNotThrowExceptionInFinally | Do not throw exception in finally | MAJOR | MINOR | DEPRECATED | Active |  |
-| DoNotUseThreads | Do not use threads | MAJOR | MAJOR | Active | Active |  |
-| DontCallThreadRun | Dont call thread run | MAJOR | MINOR | DEPRECATED | Active |  |
-| DontImportSun | Dont import sun | MINOR | MINOR | DEPRECATED | Active |  |
-| DontUseFloatTypeForLoopIndices | Dont use float type for loop indices | MAJOR | MAJOR | Active | Active |  |
-| DoubleCheckedLocking | Double checked locking | MAJOR | BLOCKER | Active | Active |  |
-| EmptyCatchBlock | Empty catch block | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| EmptyFinalizer | Empty finalizer | MAJOR | MAJOR | DEPRECATED | Active |  |
-| EmptyMethodInAbstractClassShouldBeAbstract | Empty method in abstract class should be abstract | MAJOR | BLOCKER | Active | Active |  |
-| EqualsNull | Equals null | CRITICAL | BLOCKER | DEPRECATED | Active |  |
-| ExceptionAsFlowControl | Exception as flow control | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ExcessiveImports | Excessive imports | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ExcessiveParameterList | Excessive parameter list | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ExcessivePublicCount | Excessive public count | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ExtendsObject | Extends object | MINOR | MINOR | DEPRECATED | Active |  |
-| FieldDeclarationsShouldBeAtStartOfClass | Field declarations should be at start of class | MINOR | MAJOR | DEPRECATED | Active |  |
-| FinalFieldCouldBeStatic | Final field could be static | MINOR | MAJOR | DEPRECATED | Active |  |
-| FinalizeDoesNotCallSuperFinalize | Finalize does not call super finalize | MAJOR | MAJOR | DEPRECATED | Active |  |
-| FinalizeOnlyCallsSuperFinalize | Finalize only calls super finalize | MAJOR | MAJOR | DEPRECATED | Active |  |
-| FinalizeOverloaded | Finalize overloaded | MAJOR | MAJOR | DEPRECATED | Active |  |
-| FinalizeShouldBeProtected | Finalize should be protected | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ForLoopShouldBeWhileLoop | For loop should be while loop | MINOR | MAJOR | DEPRECATED | Active |  |
-| GenericsNaming | Generics naming | MAJOR | MINOR | DEPRECATED | Active |  |
-| GodClass | God class | MAJOR | MAJOR | Active | Active |  |
-| IdempotentOperations | Idempotent operations | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ImmutableField | Immutable field | MAJOR | MAJOR | Active | Active |  |
-| InefficientEmptyStringCheck | Inefficient empty string check | MAJOR | MAJOR | Active | Active |  |
-| InefficientStringBuffering | Inefficient string buffering | MAJOR | MAJOR | Active | Active |  |
-| InstantiationToGetClass | Instantiation to get class | MAJOR | MINOR | DEPRECATED | Active |  |
-| InsufficientStringBufferDeclaration | Insufficient string buffer declaration | MAJOR | MAJOR | Active | Active |  |
-| JumbledIncrementer | Jumbled incrementer | MAJOR | MAJOR | DEPRECATED | Active |  |
-| LawOfDemeter | Law of demeter | MAJOR | MAJOR | Active | Active |  |
-| LocalHomeNamingConvention | Local home naming convention | MAJOR | MINOR | Active | Active |  |
-| LocalInterfaceSessionNamingConvention | Local interface session naming convention | MAJOR | MINOR | Active | Active |  |
-| LocalVariableCouldBeFinal | Local variable could be final | MINOR | MAJOR | Active | Active |  |
-| LogicInversion | Logic inversion | MINOR | MAJOR | DEPRECATED | Active |  |
-| LongVariable | Long variable | MAJOR | MAJOR | DEPRECATED | Active |  |
-| LoosePackageCoupling | Loose package coupling | MAJOR | MAJOR | DEPRECATED | Active |  |
-| MDBAndSessionBeanNamingConvention | MDBAnd session bean naming convention | MAJOR | MINOR | Active | Active |  |
-| MethodArgumentCouldBeFinal | Method argument could be final | MINOR | MAJOR | DEPRECATED | Active |  |
-| MethodNamingConventions | Method naming conventions | MAJOR | BLOCKER | DEPRECATED | Active |  |
-| MethodReturnsInternalArray | Method returns internal array | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| MethodWithSameNameAsEnclosingClass | Method with same name as enclosing class | MAJOR | MAJOR | DEPRECATED | Active |  |
-| MisplacedNullCheck | Misplaced null check | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| MissingSerialVersionUID | Missing serial version UID | MAJOR | MAJOR | DEPRECATED | Active |  |
-| MissingStaticMethodInNonInstantiatableClass | Missing static method in non instantiatable class | MAJOR | MAJOR | Active | Active |  |
-| MoreThanOneLogger | More than one logger | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| NPathComplexity | NPath complexity | MAJOR | MAJOR | Active | Active |  |
-| NoPackage | No package | MAJOR | MAJOR | DEPRECATED | Active |  |
-| NonStaticInitializer | Non static initializer | MAJOR | MAJOR | DEPRECATED | Active |  |
-| NonThreadSafeSingleton | Non thread safe singleton | MAJOR | MAJOR | DEPRECATED | Active |  |
-| NullAssignment | Null assignment | MAJOR | MAJOR | Active | Active |  |
-| OneDeclarationPerLine | One declaration per line | MAJOR | MINOR | DEPRECATED | Active |  |
-| OnlyOneReturn | Only one return | MINOR | MAJOR | DEPRECATED | Active |  |
-| OptimizableToArrayCall | Optimizable to array call | MAJOR | MAJOR | Active | Active |  |
-| OverrideBothEqualsAndHashcode | Override both equals and hashcode | BLOCKER | MAJOR | DEPRECATED | Active |  |
-| PackageCase | Package case | MAJOR | MAJOR | DEPRECATED | Active |  |
-| PrematureDeclaration | Premature declaration | MAJOR | MAJOR | DEPRECATED | Active |  |
-| PreserveStackTrace | Preserve stack trace | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ProperCloneImplementation | Proper clone implementation | CRITICAL | CRITICAL | DEPRECATED | Active |  |
-| ProperLogger | Proper logger | MAJOR | MAJOR | DEPRECATED | Active |  |
-| RedundantFieldInitializer | Redundant field initializer | MAJOR | MAJOR | Active | Active |  |
-| RemoteInterfaceNamingConvention | Remote interface naming convention | MAJOR | MINOR | Active | Active |  |
-| RemoteSessionInterfaceNamingConvention | Remote session interface naming convention | MAJOR | MINOR | Active | Active |  |
-| ReplaceEnumerationWithIterator | Replace enumeration with iterator | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ReplaceHashtableWithMap | Replace hashtable with map | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ReplaceVectorWithList | Replace vector with list | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ReturnFromFinallyBlock | Return from finally block | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ShortClassName | Short class name | MINOR | MINOR | DEPRECATED | Active |  |
-| ShortMethodName | Short method name | MAJOR | MAJOR | DEPRECATED | Active |  |
-| ShortVariable | Short variable | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SignatureDeclareThrowsException | Signature declare throws exception | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SimpleDateFormatNeedsLocale | Simple date format needs locale | MAJOR | MAJOR | Active | Active |  |
-| SimplifiedTernary | Simplified ternary | MAJOR | MAJOR | Active | Active |  |
-| SimplifyBooleanExpressions | Simplify boolean expressions | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SimplifyBooleanReturns | Simplify boolean returns | MINOR | MAJOR | DEPRECATED | Active |  |
-| SimplifyConditional | Simplify conditional | MAJOR | MAJOR | Active | Active |  |
-| SingleMethodSingleton | Single method singleton | CRITICAL | CRITICAL | Active | Active |  |
-| SingletonClassReturningNewInstance | Singleton class returning new instance | MAJOR | CRITICAL | Active | Active |  |
-| SingularField | Singular field | MINOR | MAJOR | Active | Active |  |
-| StaticEJBFieldShouldBeFinal | Static EJBField should be final | MAJOR | MAJOR | Active | Active |  |
-| StringBufferInstantiationWithChar | String buffer instantiation with char | MAJOR | MINOR | DEPRECATED | Active |  |
-| StringInstantiation | String instantiation | MAJOR | CRITICAL | Active | Active |  |
-| StringToString | String to string | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SuspiciousEqualsMethodName | Suspicious equals method name | CRITICAL | CRITICAL | DEPRECATED | Active |  |
-| SuspiciousHashcodeMethodName | Suspicious hashcode method name | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SuspiciousOctalEscape | Suspicious octal escape | MAJOR | MAJOR | Active | Active |  |
-| SwitchDensity | Switch density | MAJOR | MAJOR | DEPRECATED | Active |  |
-| SystemPrintln | System println | MAJOR | CRITICAL | DEPRECATED | Active |  |
-| TooManyFields | Too many fields | MAJOR | MAJOR | Active | Active |  |
-| TooManyMethods | Too many methods | MAJOR | MAJOR | DEPRECATED | Active |  |
-| TooManyStaticImports | Too many static imports | MAJOR | MAJOR | Active | Active |  |
-| UncommentedEmptyConstructor | Uncommented empty constructor | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UncommentedEmptyMethodBody | Uncommented empty method body | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnconditionalIfStatement | Unconditional if statement | CRITICAL | MAJOR | DEPRECATED | Active |  |
-| UnnecessaryCaseChange | Unnecessary case change | MINOR | MAJOR | DEPRECATED | Active |  |
-| UnnecessaryConstructor | Unnecessary constructor | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnnecessaryConversionTemporary | Unnecessary conversion temporary | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnnecessaryFullyQualifiedName | Unnecessary fully qualified name | MAJOR | MINOR | Active | Active |  |
-| UnnecessaryLocalBeforeReturn | Unnecessary local before return | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnnecessaryReturn | Unnecessary return | MINOR | MAJOR | Active | Active |  |
-| UnusedAssignment | Unused assignment | MAJOR | MAJOR | Active | Active |  |
-| UnusedFormalParameter | Unused formal parameter | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnusedLocalVariable | Unused local variable | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnusedNullCheckInEquals | Unused null check in equals | MAJOR | MAJOR | Active | Active |  |
-| UnusedPrivateField | Unused private field | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UnusedPrivateMethod | Unused private method | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseArrayListInsteadOfVector | Use array list instead of vector | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseArraysAsList | Use arrays as list | MAJOR | MAJOR | Active | Active |  |
-| UseCollectionIsEmpty | Use collection is empty | MINOR | MAJOR | DEPRECATED | Active |  |
-| UseConcurrentHashMap | Use concurrent hash map | MAJOR | MAJOR | Active | Active |  |
-| UseCorrectExceptionLogging | Use correct exception logging | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseEqualsToCompareStrings | Use equals to compare strings | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseIndexOfChar | Use index of char | MAJOR | MAJOR | Active | Active |  |
-| UseLocaleWithCaseConversions | Use locale with case conversions | MAJOR | MAJOR | Active | Active |  |
-| UseNotifyAllInsteadOfNotify | Use notify all instead of notify | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseObjectForClearerAPI | Use object for clearer API | MINOR | MAJOR | DEPRECATED | Active |  |
-| UseProperClassLoader | Use proper class loader | CRITICAL | MAJOR | Active | Active |  |
-| UseStringBufferForStringAppends | Use string buffer for string appends | MAJOR | MAJOR | Active | Active |  |
-| UseStringBufferLength | Use string buffer length | MINOR | MAJOR | Active | Active |  |
-| UseUtilityClass | Use utility class | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UseVarargs | Use varargs | MAJOR | MINOR | Active | Active |  |
-| UselessOperationOnImmutable | Useless operation on immutable | CRITICAL | MAJOR | Active | Active |  |
-| UselessOverridingMethod | Useless overriding method | MAJOR | MAJOR | DEPRECATED | Active |  |
-| UselessParentheses | Useless parentheses | INFO | MINOR | DEPRECATED | Active |  |
-| UselessQualifiedThis | Useless qualified this | MAJOR | MAJOR | Active | Active |  |
-| UselessStringValueOf | Useless string value of | MINOR | MAJOR | DEPRECATED | Active |  |
+| Rule Key | Name | Severity | Status | Alternatives | Category |
+|----------|------|----------|--------|--------------|----------|
+| AccessorClassGeneration | Accessor class generation | Medium | Active |  | bestpractices |
+| AddEmptyString | Add empty string | Medium | Active |  | performance |
+| AssignmentToNonFinalStatic | Assignment to non final static | Medium | Active |  | errorprone |
+| AvoidAccessibilityAlteration | Avoid accessibility alteration | Medium | Active |  | errorprone |
+| AvoidArrayLoops | Avoid array loops | Medium | Active |  | performance |
+| AvoidSynchronizedAtMethodLevel | Avoid synchronized at method level | Medium | Active |  | multithreading |
+| BigIntegerInstantiation | Big integer instantiation | Medium | Active |  | performance |
+| CallSuperFirst | Call super first | Medium | Active |  | errorprone |
+| CallSuperLast | Call super last | Medium | Active |  | errorprone |
+| CheckResultSet | Check result set | Medium | Active |  | bestpractices |
+| ClassCastExceptionWithToArray | Class cast exception with to array | Medium | Active |  | errorprone |
+| CloneMethodMustBePublic | Clone method must be public | Medium | Active |  | errorprone |
+| CloneMethodReturnTypeMustMatchClassName | Clone method return type must match class name | Medium | Active |  | errorprone |
+| CommentDefaultAccessModifier | Comment default access modifier | Medium | Active |  | codestyle |
+| ConfusingTernary | Confusing ternary | Medium | Active |  | codestyle |
+| ConsecutiveAppendsShouldReuse | Consecutive appends should reuse | Medium | Active |  | performance |
+| DoNotHardCodeSDCard | Do not hard code SDCard | Medium | Active |  | errorprone |
+| DoNotUseThreads | Do not use threads | Medium | Active |  | multithreading |
+| DontUseFloatTypeForLoopIndices | Dont use float type for loop indices | Medium | Active |  | errorprone |
+| GodClass | God class | Medium | Active |  | design |
+| ImmutableField | Immutable field | Medium | Active |  | design |
+| InefficientEmptyStringCheck | Inefficient empty string check | Medium | Active |  | performance |
+| InefficientStringBuffering | Inefficient string buffering | Medium | Active |  | performance |
+| InsufficientStringBufferDeclaration | Insufficient string buffer declaration | Medium | Active |  | performance |
+| LawOfDemeter | Law of demeter | Medium | Active |  | design |
+| MissingStaticMethodInNonInstantiatableClass | Missing static method in non instantiatable class | Medium | Active |  | errorprone |
+| NPathComplexity | NPath complexity | Medium | Active |  | design |
+| NullAssignment | Null assignment | Medium | Active |  | errorprone |
+| OptimizableToArrayCall | Optimizable to array call | Medium | Active |  | performance |
+| RedundantFieldInitializer | Redundant field initializer | Medium | Active |  | performance |
+| SimpleDateFormatNeedsLocale | Simple date format needs locale | Medium | Active |  | errorprone |
+| SimplifiedTernary | Simplified ternary | Medium | Active |  | design |
+| SimplifyConditional | Simplify conditional | Medium | Active |  | design |
+| SingleMethodSingleton | Single method singleton | High | Active |  | errorprone |
+| StaticEJBFieldShouldBeFinal | Static EJBField should be final | Medium | Active |  | errorprone |
+| SuspiciousOctalEscape | Suspicious octal escape | Medium | Active |  | errorprone |
+| TooManyFields | Too many fields | Medium | Active |  | design |
+| TooManyStaticImports | Too many static imports | Medium | Active |  | codestyle |
+| UnusedAssignment | Unused assignment | Medium | Active |  | bestpractices |
+| UnusedNullCheckInEquals | Unused null check in equals | Medium | Active |  | errorprone |
+| UseArraysAsList | Use arrays as list | Medium | Active |  | performance |
+| UseConcurrentHashMap | Use concurrent hash map | Medium | Active |  | multithreading |
+| UseIndexOfChar | Use index of char | Medium | Active |  | performance |
+| UseLocaleWithCaseConversions | Use locale with case conversions | Medium | Active |  | errorprone |
+| UseStringBufferForStringAppends | Use string buffer for string appends | Medium | Active |  | performance |
+| UselessQualifiedThis | Useless qualified this | Medium | Active |  | codestyle |
 
 ## Renamed Rules
 The following rules have new names:
@@ -320,6 +314,7 @@ The following rules have new names:
 | Rule name | New rule name | Category |
 |-----------|---------------|----------|
 | DefaultLabelNotLastInSwitchStmt | DefaultLabelNotLastInSwitch | bestpractices |
+| GuardLogStatementJavaUtil | GuardLogStatement | bestpractices |
 | JUnit4TestShouldUseAfterAnnotation | UnitTestShouldUseAfterAnnotation | bestpractices |
 | JUnit4TestShouldUseBeforeAnnotation | UnitTestShouldUseBeforeAnnotation | bestpractices |
 | JUnit4TestShouldUseTestAnnotation | UnitTestShouldUseTestAnnotation | bestpractices |
@@ -330,4 +325,15 @@ The following rules have new names:
 | SwitchStmtsShouldHaveDefault | NonExhaustiveSwitch | bestpractices |
 | TooFewBranchesForASwitchStatement | TooFewBranchesForSwitch | performance |
 
-Report generated on Fri Jul 11 13:04:40 CEST 2025
+## Removed Rules
+The following rules have been removed in the new version:
+
+| Rule Key | Priority | Status | Category |
+|----------|----------|--------|----------|
+| AvoidConstantsInterface | Medium | Deprecated | bestpractices |
+| CloneMethodMustImplementCloneableWithTypeResolution | Medium | Deprecated | errorprone |
+| LooseCouplingWithTypeResolution | Medium | Deprecated | bestpractices |
+| UnnecessaryParentheses | Low | Deprecated | codestyle |
+| XPathRule | Medium | Deprecated |  |
+
+Report generated on Tue Jul 15 17:33:57 CEST 2025

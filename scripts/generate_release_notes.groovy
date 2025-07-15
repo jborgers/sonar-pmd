@@ -101,11 +101,22 @@ def oldRules = []
 oldRulesXml.rule.each { rule ->
     // Skip commented out rules
     if (rule.@key.toString()) {
+        // Extract category from configKey if available
+        def configKey = rule.configKey.text()
+        def category = ""
+        if (configKey) {
+            def parts = configKey.split('/')
+            if (parts.length >= 3) {
+                category = parts[2].split('\\.')[0]
+            }
+        }
+
         oldRules << [
             key: rule.@key.toString(),
-            configKey: rule.configKey.text(),
+            configKey: configKey,
             priority: rule.priority.text(),
-            status: rule.status.text()
+            status: rule.status.text(),
+            category: category
         ]
     }
 }
@@ -113,36 +124,67 @@ oldRulesXml.rule.each { rule ->
 // Extract rule keys from new rules (they are elements)
 def newRules = []
 newRulesXml.rule.each { rule ->
+    // Extract category from internalKey if available
+    def internalKey = rule.internalKey.text()
+    def category = ""
+    if (internalKey) {
+        def parts = internalKey.split('/')
+        if (parts.length >= 3) {
+            category = parts[2].split('\\.')[0]
+        }
+    }
+
     newRules << [
         key: rule.key.text(),
-        internalKey: rule.internalKey.text(),
+        internalKey: internalKey,
         severity: rule.severity.text(),
         name: rule.name.text(),
-        status: rule.status.text()
+        status: rule.status.text(),
+        category: category
     ]
 }
 
-// Function to extract alternative rule references from markdown files
+// Function to map priority/severity to SonarQube display values
+def mapSeverity(severity) {
+    switch (severity) {
+        case "BLOCKER": return "Blocker"
+        case "CRITICAL": return "High"
+        case "MAJOR": return "Medium"
+        case "MINOR": return "Low"
+        case "INFO": return "Info"
+        default: return severity
+    }
+}
+
+// Function to map status values
+def mapStatus(status) {
+    switch (status) {
+        case "DEPRECATED": return "Deprecated"
+        default: return status
+    }
+}
+
+// Function to extract alternative rule references from rule-alternatives-java.json file
 def extractAlternativeRule(ruleKey) {
-    def mdFile = new File("docs/rules/${ruleKey}.md")
-    if (!mdFile.exists()) {
+    def alternativesFile = new File("scripts/rule-alternatives-java.json")
+    if (!alternativesFile.exists()) {
         return ""
     }
 
-    def content = mdFile.text
-    def pattern = Pattern.compile(":warning: This rule is \\*\\*deprecated\\*\\* in favour of ((?:\\[[^\\]]+\\]\\([^)]+\\)|`[^`]+`)(?:, (?:\\[[^\\]]+\\]\\([^)]+\\)|`[^`]+`))*)")
-    def matcher = pattern.matcher(content)
+    try {
+        def jsonSlurper = new JsonSlurper()
+        def alternativesData = jsonSlurper.parse(alternativesFile)
+        def alternatives = alternativesData.ruleAlternatives[ruleKey]
 
-    if (matcher.find()) {
-        def alternatives = matcher.group(1)
-        // Extract all alternatives from the matched group, preserving the original markdown format
-        def altPattern = Pattern.compile("(\\[[^\\]]+\\]\\([^)]+\\))|((`[^`]+`))")
-        def altMatcher = altPattern.matcher(alternatives)
-        def result = []
-        while (altMatcher.find()) {
-            result << (altMatcher.group(1) ?: altMatcher.group(3))
+        if (alternatives) {
+            def result = []
+            alternatives.each { alt ->
+                result << "[${alt.key}](${alt.link})"
+            }
+            return result.join(", ")
         }
-        return result.join(", ")
+    } catch (Exception e) {
+        println "Warning: Error reading alternatives from JSON file: ${e.message}"
     }
 
     return ""
@@ -173,9 +215,16 @@ def commonRules = commonRuleKeys.collect { key ->
         name: newRule.name,
         oldStatus: oldRule.status,
         newStatus: newRule.status,
-        alternative: alternative
+        alternative: alternative,
+        category: newRule.category, // Use the category from the new rule
+        isUpdated: mapSeverity(oldRule.priority) != mapSeverity(newRule.severity) || 
+                  (oldRule.status ?: 'Active') != (newRule.status ?: 'Active')
     ]
 }
+
+// Split common rules into updated and unchanged
+def updatedRules = commonRules.findAll { it.isUpdated }
+def unchangedRules = commonRules.findAll { !it.isUpdated }
 
 // Initialize and populate renamedRules variable before it's used in the summary
 def renamedRules = []
@@ -184,6 +233,26 @@ def renamedRules = []
 def oldRulesDir = new File(oldRulesPath).getParentFile() ?: new File(".")
 def renamedJavaRulesFile = new File(oldRulesDir, "renamed-java-rules.json")
 def renamedKotlinRulesFile = new File(oldRulesDir, "renamed-kotlin-rules.json")
+
+// Special handling for GuardLogStatementJavaUtil which is renamed to GuardLogStatement
+// but not via the deprecated and ref way as the others
+def guardLogStatementJavaUtil = removedRules.find { it.key == "GuardLogStatementJavaUtil" }
+def guardLogStatement = addedRules.find { it.key == "GuardLogStatement" }
+
+if (guardLogStatementJavaUtil && guardLogStatement) {
+    // Add to renamed rules
+    renamedRules << [
+        name: "GuardLogStatementJavaUtil",
+        ref: "GuardLogStatement",
+        category: guardLogStatement.category ?: "bestpractices"
+    ]
+
+    // Remove from removed and added rules to avoid duplication
+    removedRules.removeIf { it.key == "GuardLogStatementJavaUtil" }
+    addedRules.removeIf { it.key == "GuardLogStatement" }
+
+    println "Special handling: GuardLogStatementJavaUtil renamed to GuardLogStatement"
+}
 
 // Read renamed Java rules if file exists
 if (renamedJavaRulesFile.exists()) {
@@ -217,42 +286,45 @@ writer.writeLine("- Total rules in old version ($oldVersion): ${oldRules.size()}
 writer.writeLine("- Total rules in new version ($version): ${newRules.size()}")
 writer.writeLine("- Rules added: ${addedRules.size()}")
 writer.writeLine("- Rules removed: ${removedRules.size()}")
-writer.writeLine("- Rules unchanged: ${commonRules.size()}")
+writer.writeLine("- Rules unchanged: ${unchangedRules.size()}")
+writer.writeLine("- Rules updated: ${updatedRules.size()}")
 writer.writeLine("- Rules renamed: ${renamedRules.size()}")
-
-writer.writeLine("\n## Removed Rules")
-if (removedRules.isEmpty()) {
-    writer.writeLine("No rules were removed.")
-} else {
-    writer.writeLine("The following rules have been removed in the new version:")
-    writer.writeLine("\n| Rule Key | Priority | Status |")
-    writer.writeLine("|----------|----------|--------|")
-    removedRules.sort { it.key }.each { rule ->
-        writer.writeLine("| ${rule.key} | ${rule.priority} | ${rule.status ?: 'Active'} |")
-    }
-}
 
 writer.writeLine("\n## Added Rules")
 if (addedRules.isEmpty()) {
     writer.writeLine("No new rules were added.")
 } else {
     writer.writeLine("The following rules have been added in the new version:\n")
-    writer.writeLine("| Rule Key | Name | Severity | Status |")
-    writer.writeLine("|----------|------|----------|--------|")
+    writer.writeLine("| Rule Key | Name | Severity | Category |")
+    writer.writeLine("|----------|------|----------|----------|")
     addedRules.sort { it.key }.each { rule ->
-        writer.writeLine("| ${rule.key} | ${rule.name} | ${rule.severity} | ${rule.status ?: 'Active'} |")
+        writer.writeLine("| ${rule.key} | ${rule.name} | ${mapSeverity(rule.severity)} | ${rule.category ?: ''} |")
+    }
+}
+
+writer.writeLine("\n## Updated Rules")
+if (updatedRules.isEmpty()) {
+    writer.writeLine("No rules have been updated between versions.")
+} else {
+    writer.writeLine("The following rules have been updated in the new version:\n")
+    writer.writeLine("| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives | Category |")
+    writer.writeLine("|----------|------|--------------|--------------|------------|------------|--------------|----------|")
+    updatedRules.sort { it.key }.each { rule ->
+        def oldPriorityDisplay = mapSeverity(rule.oldPriority) == mapSeverity(rule.newSeverity) ? "" : mapSeverity(rule.oldPriority)
+        def oldStatusDisplay = mapStatus(rule.oldStatus ?: 'Active') == mapStatus(rule.newStatus ?: 'Active') ? "" : mapStatus(rule.oldStatus ?: 'Active')
+        writer.writeLine("| ${rule.key} | ${rule.name} | ${oldPriorityDisplay} | ${mapSeverity(rule.newSeverity)} | ${oldStatusDisplay} | ${mapStatus(rule.newStatus) ?: 'Active'} | ${rule.alternative} | ${rule.category ?: ''} |")
     }
 }
 
 writer.writeLine("\n## Unchanged Rules")
-if (commonRules.isEmpty()) {
+if (unchangedRules.isEmpty()) {
     writer.writeLine("No rules remain unchanged between versions.")
 } else {
-    writer.writeLine("The following rules exist in both versions:\n")
-    writer.writeLine("| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives |")
-    writer.writeLine("|----------|------|--------------|--------------|------------|------------|--------------|")
-    commonRules.sort { it.key }.each { rule ->
-        writer.writeLine("| ${rule.key} | ${rule.name} | ${rule.oldPriority} | ${rule.newSeverity} | ${rule.oldStatus ?: 'Active'} | ${rule.newStatus ?: 'Active'} | ${rule.alternative} |")
+    writer.writeLine("The following rules exist in both versions with no changes:\n")
+    writer.writeLine("| Rule Key | Name | Severity | Status | Alternatives | Category |")
+    writer.writeLine("|----------|------|----------|--------|--------------|----------|")
+    unchangedRules.sort { it.key }.each { rule ->
+        writer.writeLine("| ${rule.key} | ${rule.name} | ${mapSeverity(rule.newSeverity)} | ${mapStatus(rule.newStatus) ?: 'Active'} | ${rule.alternative} | ${rule.category ?: ''} |")
     }
 }
 
@@ -267,6 +339,18 @@ if (!renamedRules.isEmpty()) {
     writer.writeLine("|-----------|---------------|----------|")
     renamedRules.sort { it.name }.each { rule ->
         writer.writeLine("| ${rule.name} | ${rule.ref} | ${rule.category} |")
+    }
+}
+
+writer.writeLine("\n## Removed Rules")
+if (removedRules.isEmpty()) {
+    writer.writeLine("No rules were removed.")
+} else {
+    writer.writeLine("The following rules have been removed in the new version:")
+    writer.writeLine("\n| Rule Key | Priority | Status | Category |")
+    writer.writeLine("|----------|----------|--------|----------|")
+    removedRules.sort { it.key }.each { rule ->
+        writer.writeLine("| ${rule.key} | ${mapSeverity(rule.priority)} | ${mapStatus(rule.status) ?: 'Active'} | ${rule.category ?: ''} |")
     }
 }
 
