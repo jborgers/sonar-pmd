@@ -56,10 +56,11 @@ Limitations:
 1. Referred alternative Java Sonar rules are limited to rules from before 2016, newer Java Sonar rules are not referred to yet. 
 If you find missing alternative rules please create a Github issue.
 2. The estimated amount of time to fix issues is only available for rules from before 2016.
+3. Properties of the rules cannot be changed via SonarQube, only defaults can be used.
 
 ## Java PMD rules summary
 
-- Total rules in old version (4.0.3): 206
+- Total rules in previous version (4.0.3): 206
 - Total rules in new version (4.1.0): 281
 - Rules added: 80
 - Rules removed: 5
