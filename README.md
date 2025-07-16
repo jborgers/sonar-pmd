@@ -56,7 +56,7 @@ Limitations:
 1. Referred alternative Java Sonar rules are limited to rules from before 2016, newer Java Sonar rules are not referred to yet. 
 If you find missing alternative rules please create a Github issue.
 2. The estimated amount of time to fix issues is only available for rules from before 2016.
-3. Properties of the rules cannot be changed via SonarQube, only defaults can be used.
+3. Properties of the rules cannot be changed via SonarQube, currently only defaults can be used.
 
 ## Java PMD rules summary
 
