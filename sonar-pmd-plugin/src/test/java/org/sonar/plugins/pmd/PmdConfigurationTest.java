@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 
 class PmdConfigurationTest {
 
-    private static final Pattern PMD_XML_PATTERN = Pattern.compile("^<\\?xml version=\"1\\.0\" encoding=\"UTF-8\"\\?><pmd xmlns=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0\" xmlns:xsi=\"http://www\\.w3\\.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0 https://pmd\\.github\\.io/schema/report_2_0_0.xsd\" version=\"7\\.\\d+\\.\\d+\".*></pmd>$");
+    private static final Pattern PMD_XML_PATTERN = Pattern.compile("^<\\?xml version=\'1\\.0\' encoding=\'UTF-8\'\\?><pmd xmlns=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0\" xmlns:xsi=\"http://www\\.w3\\.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://pmd\\.sourceforge\\.net/report/2\\.0\\.0 https://pmd\\.github\\.io/schema/report_2_0_0.xsd\" version=\"7\\.\\d+\\.\\d+\".*></pmd>$");
     private static final File WORK_DIR = new File("test-work-dir");
 
     private final FileSystem fs = mock(FileSystem.class);
