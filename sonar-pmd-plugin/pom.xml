@@ -58,45 +58,10 @@
       <artifactId>sonar-plugin-api-impl</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- similar as findbugs plugin that needs classpath -->
     <dependency>
       <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
+      <artifactId>java-frontend</artifactId>
       <version>${sonar-java.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.sonarsource.java</groupId>
-          <artifactId>external-reports</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.java</groupId>
-          <artifactId>java-checks</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.analyzer-commons</groupId>
-          <artifactId>sonar-xml-parsing</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.analyzer-commons</groupId>
-          <artifactId>sonar-analyzer-commons</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.java</groupId>
-          <artifactId>java-checks-aws</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.java</groupId>
-          <artifactId>java-jsp</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.analyzer-commons</groupId>
-          <artifactId>sonar-performance-measure</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.sonarsource.java</groupId>
-          <artifactId>java-surefire</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.pmd</groupId>
@@ -233,7 +198,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>50000000</maxsize>
+                  <maxsize>20000000</maxsize>
                   <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>

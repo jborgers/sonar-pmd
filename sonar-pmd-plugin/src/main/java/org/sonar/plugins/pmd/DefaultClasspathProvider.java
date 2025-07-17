@@ -10,8 +10,10 @@ import java.io.File;
 import java.util.Collection;
 
 /**
- * Default implementation of ClasspathProvider that returns an empty classpath.
- * This is sufficient for most PMD analysis scenarios.
+ * Default implementation of ClasspathProvider that uses java-frontend's ClasspathForMain and ClasspathForTest
+ * to provide classpath information for PMD analysis.
+ *
+ * Based on findbugs sonar plugin approach.
  */
 @ScannerSide
 public class DefaultClasspathProvider implements ClasspathProvider {
