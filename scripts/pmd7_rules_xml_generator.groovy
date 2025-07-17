@@ -1128,7 +1128,7 @@ def formatDescription = { ruleData, language ->
             }
             // Ensure the code example is properly formatted with proper line breaks
             // and no paragraph tags inside code blocks
-            markdownContent.append("```java\n")
+            markdownContent.append("```${language.toLowerCase()}\n")
             markdownContent.append(example)
             markdownContent.append("\n```\n\n")
         }
@@ -1336,6 +1336,78 @@ println ""
 println "Generating Kotlin rules XML file..."
 println "=" * 30
 def kotlinSuccess = generateXmlFile(kotlinOutputFilePath, kotlinRules, "Kotlin")
+
+// Add XPathRule as a special case to the Java rules XML file
+println ""
+println "Adding XPathRule to Java rules XML file..."
+println "=" * 30
+
+try {
+    // Read the existing XML file
+    def xmlFile = javaOutputFilePath
+    def xmlContent = xmlFile.text
+
+    // Check if XPathRule already exists
+    if (xmlContent.contains("<key>XPathRule</key>")) {
+        println "XPathRule already exists in the Java rules XML file."
+    } else {
+        // Find the closing </rules> tag
+        def closingTagIndex = xmlContent.lastIndexOf("</rules>")
+        if (closingTagIndex != -1) {
+            // Insert the XPathRule before the closing tag
+            def xpathRuleXml = """  <rule>
+    <key>XPathRule</key>
+    <name>PMD XPath Template Rule</name>
+    <priority>MAJOR</priority>
+    <configKey>net.sourceforge.pmd.lang.rule.xpath.XPathRule</configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="xpath" type="TEXT">
+      <defaultValue></defaultValue>
+      <description>The PMD 7 compatible XPath expression for Java.</description>
+    </param>
+    <param key="message" type="STRING">
+      <defaultValue></defaultValue>
+      <description>The message for issues created by this rule.</description>
+    </param>
+    <description><![CDATA[<p>PMD provides a very handy method for creating new rules by writing an XPath query. When the XPath query finds a match, a violation is created.</p>
+<p>Let's take a simple example: assume we have a Factory class that must be always declared final.
+We'd like to report a violation each time a declaration of Factory is not declared final. Consider the following class:</p>
+<pre><code class="language-java">
+import io.factories.Factory;
+
+public class Foo {
+  Factory f1;
+
+  void myMethod() {
+    Factory f2;
+    int a;
+  }
+}
+</code></pre>
+<p>The following expression does the magic we need:</p>
+<pre><code class="language-xpath">
+//(FieldDeclaration|LocalVariableDeclaration)[
+      not (pmd-java:modifiers() = 'final')
+   ]/ClassType[pmd-java:typeIs('io.factories.Factory')]
+</code></pre>
+<p>See the <a href="https://docs.pmd-code.org/latest/pmd_userdocs_extending_writing_xpath_rules.html" target="_blank">XPath rule tutorial</a> for more information.</p>
+<p>Tip: use the PMD Designer application to create the XPath expressions.</p>
+]]></description>
+    <tag>pmd</tag>
+    <tag>xpath</tag>
+  </rule>
+"""
+            def newXmlContent = xmlContent.substring(0, closingTagIndex) + xpathRuleXml + xmlContent.substring(closingTagIndex)
+            xmlFile.text = newXmlContent
+            println "Successfully added XPathRule to Java rules XML file."
+        } else {
+            println "ERROR: Could not find closing </rules> tag in Java rules XML file."
+        }
+    }
+} catch (Exception e) {
+    println "ERROR adding XPathRule to Java rules XML file: ${e.message}"
+    e.printStackTrace()
+}
 
 println ""
 if (javaSuccess && kotlinSuccess) {

@@ -3,11 +3,11 @@ _Do not edit this generated file._
 
 ## Summary
 - Total rules in old version (4.0.3): 206
-- Total rules in new version (4.1.0): 281
+- Total rules in new version (4.1.0): 282
 - Rules added: 80
-- Rules removed: 5
+- Rules removed: 4
 - Rules unchanged: 46
-- Rules updated: 154
+- Rules updated: 155
 - Rules renamed: 11
 
 ## Added Rules
@@ -255,6 +255,7 @@ The following rules have been updated in the new version:
 | UselessOverridingMethod | Useless overriding method |  | Medium | Deprecated | Active | [java:S1185](https://rules.sonarsource.com/java/RSPEC-1185) | design |
 | UselessParentheses | Useless parentheses | Info | Low | Deprecated | Active | [java:S1110](https://rules.sonarsource.com/java/RSPEC-1110) | codestyle |
 | UselessStringValueOf | Useless string value of | Low | Medium | Deprecated | Active | [java:S1153](https://rules.sonarsource.com/java/RSPEC-1153) | performance |
+| XPathRule | XPath rule | Medium |  | Deprecated | Active |  |  |
 
 ## Unchanged Rules
 The following rules exist in both versions with no changes:
@@ -334,6 +335,5 @@ The following rules have been removed in the new version:
 | CloneMethodMustImplementCloneableWithTypeResolution | Medium | Deprecated | errorprone |
 | LooseCouplingWithTypeResolution | Medium | Deprecated | bestpractices |
 | UnnecessaryParentheses | Low | Deprecated | codestyle |
-| XPathRule | Medium | Deprecated |  |
 
-Report generated on Tue Jul 15 17:33:57 CEST 2025
+Report generated on Wed Jul 16 16:21:38 CEST 2025
