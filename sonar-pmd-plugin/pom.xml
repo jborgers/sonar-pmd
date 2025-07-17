@@ -187,7 +187,7 @@
           <pluginKey>pmd</pluginKey>
           <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
-          <pluginDescription>Analyze Java code with PMD.</pluginDescription>
+          <pluginDescription>Analyze Java and Kotlin code with PMD.</pluginDescription>
         </configuration>
       </plugin>
       <plugin>

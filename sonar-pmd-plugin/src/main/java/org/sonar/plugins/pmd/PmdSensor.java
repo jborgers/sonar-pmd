@@ -30,13 +30,16 @@ import org.sonar.api.batch.sensor.SensorDescriptor;
 
 public class PmdSensor implements Sensor {
     private final ActiveRules profile;
-    private final PmdExecutor executor;
+    private final PmdExecutor javaExecutor;
+    private final PmdKotlinExecutor kotlinExecutor;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
 
-    public PmdSensor(ActiveRules profile, PmdExecutor executor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+    public PmdSensor(ActiveRules profile, PmdExecutor javaExecutor, PmdKotlinExecutor kotlinExecutor, 
+                    PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
-        this.executor = executor;
+        this.javaExecutor = javaExecutor;
+        this.kotlinExecutor = kotlinExecutor;
         this.pmdViolationRecorder = pmdViolationRecorder;
         this.fs = fs;
     }
@@ -71,8 +74,32 @@ public class PmdSensor implements Sensor {
     @Override
     public void execute(SensorContext context) {
         if (shouldExecuteOnProject()) {
-            for (RuleViolation violation : executor.execute().getViolations()) {
-                pmdViolationRecorder.saveViolation(violation, context);
+            // Check if there are Kotlin files to analyze
+            boolean hasKotlinFiles = hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY) ||
+                                    hasFilesToCheck(Type.TEST, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, PmdConstants.LANGUAGE_KOTLIN_KEY);
+
+            // Check if there are Java files to analyze
+            boolean hasJavaFiles = hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY) ||
+                                  hasFilesToCheck(Type.TEST, PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY);
+
+            // Process Kotlin files if present
+            if (hasKotlinFiles) {
+                net.sourceforge.pmd.reporting.Report kotlinReport = kotlinExecutor.execute();
+                if (kotlinReport != null) {
+                    for (RuleViolation violation : kotlinReport.getViolations()) {
+                        pmdViolationRecorder.saveViolation(violation, context);
+                    }
+                }
+            }
+
+            // Process Java files if present
+            if (hasJavaFiles) {
+                net.sourceforge.pmd.reporting.Report javaReport = javaExecutor.execute();
+                if (javaReport != null) {
+                    for (RuleViolation violation : javaReport.getViolations()) {
+                        pmdViolationRecorder.saveViolation(violation, context);
+                    }
+                }
             }
         }
     }

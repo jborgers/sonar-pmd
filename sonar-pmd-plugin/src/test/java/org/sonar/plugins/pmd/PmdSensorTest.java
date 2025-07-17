@@ -42,7 +42,8 @@ import static org.mockito.Mockito.*;
 class PmdSensorTest {
 
     private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
-    private final PmdExecutor executor = mock(PmdExecutor.class);
+    private final PmdExecutor javaExecutor = mock(PmdExecutor.class);
+    private final PmdKotlinExecutor kotlinExecutor = mock(PmdKotlinExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
     private final SensorContext sensorContext = mock(SensorContext.class);
     private final DefaultFileSystem fs = new DefaultFileSystem(new File("."));
@@ -51,7 +52,7 @@ class PmdSensorTest {
 
     @BeforeEach
     void setUpPmdSensor() {
-        pmdSensor = new PmdSensor(profile, executor, pmdViolationRecorder, fs);
+        pmdSensor = new PmdSensor(profile, javaExecutor, kotlinExecutor, pmdViolationRecorder, fs);
     }
 
     @Test
@@ -64,7 +65,7 @@ class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(executor, atLeastOnce()).execute();
+        verify(javaExecutor, atLeastOnce()).execute();
     }
 
     @Test
@@ -77,7 +78,7 @@ class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(executor, atLeastOnce()).execute();
+        verify(javaExecutor, atLeastOnce()).execute();
     }
 
     @Test
@@ -90,7 +91,7 @@ class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(executor, never()).execute();
+        verify(javaExecutor, never()).execute();
     }
 
     @Test
@@ -106,7 +107,7 @@ class PmdSensorTest {
         pmdSensor.execute(sensorContext);
 
         // then
-        verify(executor, never()).execute();
+        verify(javaExecutor, never()).execute();
     }
 
     @Test
@@ -159,7 +160,7 @@ class PmdSensorTest {
         addOneJavaFile(Type.MAIN);
 
         final RuntimeException expectedException = new RuntimeException();
-        when(executor.execute()).thenThrow(expectedException);
+        when(javaExecutor.execute()).thenThrow(expectedException);
 
         // when
         final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
@@ -205,7 +206,7 @@ class PmdSensorTest {
 
         final Report report = Report.buildReport(fileAnalysisListenerConsumer);
 
-        when(executor.execute())
+        when(javaExecutor.execute())
                 .thenReturn(report);
     }
 
