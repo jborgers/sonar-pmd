@@ -82,6 +82,32 @@ class PmdSensorTest {
     }
 
     @Test
+    void should_execute_kotlin_executor_on_project_with_kotlin_main_files() {
+
+        // given
+        addOneKotlinFile(Type.MAIN);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(kotlinExecutor, atLeastOnce()).execute();
+    }
+
+    @Test
+    void should_execute_kotlin_executor_on_project_with_kotlin_test_files() {
+
+        // given
+        addOneKotlinFile(Type.TEST);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(kotlinExecutor, atLeastOnce()).execute();
+    }
+
+    @Test
     void should_not_execute_on_project_without_any_files() {
 
         // given
@@ -92,6 +118,7 @@ class PmdSensorTest {
 
         // then
         verify(javaExecutor, never()).execute();
+        verify(kotlinExecutor, never()).execute();
     }
 
     @Test
@@ -100,14 +127,18 @@ class PmdSensorTest {
         // given
         addOneJavaFile(Type.MAIN);
         addOneJavaFile(Type.TEST);
+        addOneKotlinFile(Type.MAIN);
+        addOneKotlinFile(Type.TEST);
 
         when(profile.findByRepository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when
         pmdSensor.execute(sensorContext);
 
         // then
         verify(javaExecutor, never()).execute();
+        verify(kotlinExecutor, never()).execute();
     }
 
     @Test
@@ -126,10 +157,40 @@ class PmdSensorTest {
     }
 
     @Test
+    void should_report_kotlin_violations() {
+
+        // given
+        addOneKotlinFile(Type.MAIN);
+        final RuleViolation pmdViolation = violation();
+        mockKotlinExecutorResult(pmdViolation);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder).saveViolation(pmdViolation, sensorContext);
+    }
+
+    @Test
     void should_not_report_zero_violation() {
 
         // given
         mockExecutorResult();
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
+        verifyNoMoreInteractions(sensorContext);
+    }
+
+    @Test
+    void should_not_report_zero_kotlin_violation() {
+
+        // given
+        mockKotlinExecutorResult();
+        addOneKotlinFile(Type.MAIN);
 
         // when
         pmdSensor.execute(sensorContext);
@@ -154,6 +215,21 @@ class PmdSensorTest {
     }
 
     @Test
+    void should_not_report_invalid_kotlin_violation() {
+
+        // given
+        mockKotlinExecutorResult(violation());
+        addOneKotlinFile(Type.MAIN);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
+        verifyNoMoreInteractions(sensorContext);
+    }
+
+    @Test
     void pmdSensorShouldNotRethrowOtherExceptions() {
 
         // given
@@ -161,6 +237,24 @@ class PmdSensorTest {
 
         final RuntimeException expectedException = new RuntimeException();
         when(javaExecutor.execute()).thenThrow(expectedException);
+
+        // when
+        final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
+
+        // then
+        assertThat(thrown)
+                .isInstanceOf(RuntimeException.class)
+                .isEqualTo(expectedException);
+    }
+
+    @Test
+    void pmdSensorShouldNotRethrowKotlinExecutorExceptions() {
+
+        // given
+        addOneKotlinFile(Type.MAIN);
+
+        final RuntimeException expectedException = new RuntimeException();
+        when(kotlinExecutor.execute()).thenThrow(expectedException);
 
         // when
         final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
@@ -197,17 +291,23 @@ class PmdSensorTest {
     }
 
     private void mockExecutorResult(RuleViolation... violations) {
+        when(javaExecutor.execute())
+                .thenReturn(createReport(violations));
+    }
 
+    private void mockKotlinExecutorResult(RuleViolation... violations) {
+        when(kotlinExecutor.execute())
+                .thenReturn(createReport(violations));
+    }
+
+    private Report createReport(RuleViolation... violations) {
         Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = fal -> {
             for (RuleViolation violation : violations) {
                 fal.onRuleViolation(violation);
             }
         };
 
-        final Report report = Report.buildReport(fileAnalysisListenerConsumer);
-
-        when(javaExecutor.execute())
-                .thenReturn(report);
+        return Report.buildReport(fileAnalysisListenerConsumer);
     }
 
     private void addOneJavaFile(Type type) {
@@ -219,6 +319,20 @@ class PmdSensorTest {
                         file.getName()
                 )
                         .setLanguage("java")
+                        .setType(type)
+                        .build()
+        );
+    }
+
+    private void addOneKotlinFile(Type type) {
+        mockKotlinExecutorResult();
+        File file = new File("x.kt");
+        fs.add(
+                TestInputFileBuilder.create(
+                        "sonar-pmd-test",
+                        file.getName()
+                )
+                        .setLanguage("kotlin")
                         .setType(type)
                         .build()
         );
