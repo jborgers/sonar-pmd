@@ -40,7 +40,7 @@ public class PmdPlugin implements Plugin {
 
                 PmdSensor.class,
                 PmdConfiguration.class,
-                PmdExecutor.class,
+                PmdJavaExecutor.class,
                 PmdKotlinExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,

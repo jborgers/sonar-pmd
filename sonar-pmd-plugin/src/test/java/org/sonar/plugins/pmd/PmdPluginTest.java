@@ -55,7 +55,7 @@ class PmdPluginTest {
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
-                        PmdExecutor.class,
+                        PmdJavaExecutor.class,
                         PmdKotlinExecutor.class,
                         PmdRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,

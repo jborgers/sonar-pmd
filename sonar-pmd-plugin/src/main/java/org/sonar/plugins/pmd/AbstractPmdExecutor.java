@@ -27,7 +27,6 @@ import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -40,42 +39,42 @@ import org.sonar.plugins.pmd.xml.PmdRuleSets;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@ScannerSide
-public class PmdExecutor {
+/**
+ * Abstract base class for PMD executors that contains common functionality.
+ */
+public abstract class AbstractPmdExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PmdExecutor.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractPmdExecutor.class);
 
-    private final FileSystem fs;
-    private final ActiveRules rulesProfile;
-    private final PmdConfiguration pmdConfiguration;
-    private final ClasspathProvider classpathProvider;
-    private final Configuration settings;
+    protected final FileSystem fs;
+    protected final ActiveRules rulesProfile;
+    protected final PmdConfiguration pmdConfiguration;
+    protected final Configuration settings;
 
-    public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
-                       PmdConfiguration pmdConfiguration, ClasspathProvider classpathProvider, Configuration settings) {
+    protected AbstractPmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
+                       PmdConfiguration pmdConfiguration, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
         this.pmdConfiguration = pmdConfiguration;
-        this.classpathProvider = classpathProvider;
         this.settings = settings;
     }
 
-    private static void accept(FileAnalysisListener fal) {
+    protected static void accept(FileAnalysisListener fal) {
         LOGGER.debug("Got FileAnalysisListener: {}", fal);
     }
 
+    /**
+     * Execute PMD analysis
+     * @return The PMD report containing the results of the analysis
+     */
     public Report execute() {
         final long startTimeMs = System.currentTimeMillis();
-        LOGGER.info("Execute PMD {}", PMDVersion.VERSION);
+        LOGGER.info(getStartMessage(), PMDVersion.VERSION);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
 
         try (URLClassLoader classLoader = createClassloader()) {
@@ -86,41 +85,42 @@ public class PmdExecutor {
             LOGGER.error("Failed to close URLClassLoader.", e);
         } finally {
             Thread.currentThread().setContextClassLoader(initialClassLoader);
-            LOGGER.info("Execute PMD {} (done) | time={}ms", PMDVersion.VERSION, System.currentTimeMillis() - startTimeMs);
+            LOGGER.info(getEndMessage(), PMDVersion.VERSION, System.currentTimeMillis() - startTimeMs);
         }
 
         return null;
     }
 
-    private Report executePmd(URLClassLoader classLoader) {
+    /**
+     * Get the start message for logging
+     * @return The start message
+     */
+    protected abstract String getStartMessage();
 
-        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+    /**
+     * Get the end message for logging
+     * @return The end message
+     */
+    protected abstract String getEndMessage();
 
-        if (LOGGER.isDebugEnabled()) {
-            javaMainReport.ifPresent(this::writeDebugLine);
-            javaTestReport.ifPresent(this::writeDebugLine);
-            kotlinMainReport.ifPresent(this::writeDebugLine);
-            kotlinTestReport.ifPresent(this::writeDebugLine);
-        }
+    /**
+     * Create a classloader for PMD analysis
+     * @return The classloader
+     */
+    protected abstract URLClassLoader createClassloader();
 
-        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = PmdExecutor::accept;
+    /**
+     * Execute PMD analysis with the given classloader
+     * @param classLoader The classloader to use
+     * @return The PMD report
+     */
+    protected abstract Report executePmd(URLClassLoader classLoader);
 
-        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
-        unionReport = javaMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = javaTestReport.map(unionReport::union).orElse(unionReport);
-        unionReport = kotlinMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = kotlinTestReport.map(unionReport::union).orElse(unionReport);
-
-        pmdConfiguration.dumpXmlReport(unionReport);
-
-        return unionReport;
-    }
-
-    private void writeDebugLine(Report r) {
+    /**
+     * Write debug information about the report
+     * @param r The report
+     */
+    protected void writeDebugLine(Report r) {
         LOGGER.debug("Report (violations, suppressedViolations, processingErrors, configurationErrors): {}, {}, {}, {}", r.getViolations().size(), r.getSuppressedViolations().size(), r.getProcessingErrors().size(), r.getConfigurationErrors().size());
         if (!r.getViolations().isEmpty()) {
             LOGGER.debug("Violations: {}", r.getViolations());
@@ -136,7 +136,13 @@ public class PmdExecutor {
         }
     }
 
-    private Iterable<InputFile> hasFiles(Type fileType, String languageKey) {
+    /**
+     * Get files of the given type and language
+     * @param fileType The file type (MAIN or TEST)
+     * @param languageKey The language key
+     * @return The files
+     */
+    protected Iterable<InputFile> hasFiles(Type fileType, String languageKey) {
         final FilePredicates predicates = fs.predicates();
         return fs.inputFiles(
                 predicates.and(
@@ -146,7 +152,14 @@ public class PmdExecutor {
         );
     }
 
-    private Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
+    /**
+     * Execute PMD rules on the given files
+     * @param pmdFactory The PMD template
+     * @param files The files to analyze
+     * @param repositoryKey The repository key
+     * @return The report
+     */
+    protected Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
             LOGGER.debug("No files to analyze for {}", repositoryKey);
@@ -165,7 +178,12 @@ public class PmdExecutor {
         return Optional.ofNullable(pmdFactory.process(files, ruleSet));
     }
 
-    private RuleSet createRuleSet(String repositoryKey) {
+    /**
+     * Create a ruleset for the given repository
+     * @param repositoryKey The repository key
+     * @return The ruleset
+     */
+    protected RuleSet createRuleSet(String repositoryKey) {
         final String rulesXml = dumpXml(rulesProfile, repositoryKey);
         final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
         final String ruleSetFilePath = ruleSetFile.getAbsolutePath();
@@ -178,7 +196,13 @@ public class PmdExecutor {
         }
     }
 
-    private String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
+    /**
+     * Dump the rules to XML
+     * @param rulesProfile The active rules
+     * @param repositoryKey The repository key
+     * @return The XML
+     */
+    protected String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
         final StringWriter writer = new StringWriter();
         final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey);
         ruleSet.writeTo(writer);
@@ -186,27 +210,20 @@ public class PmdExecutor {
         return writer.toString();
     }
 
-    PmdTemplate createPmdTemplate(URLClassLoader classLoader) {
+    /**
+     * Create a PMD template
+     * @param classLoader The classloader
+     * @return The PMD template
+     */
+    protected PmdTemplate createPmdTemplate(URLClassLoader classLoader) {
         return PmdTemplate.create(getSourceVersion(), classLoader, fs.encoding());
     }
 
     /**
-     * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
+     * Get the Java source version
+     * @return The Java source version
      */
-    private URLClassLoader createClassloader() {
-        Collection<File> classpathElements = classpathProvider.classpath();
-        List<URL> urls = new ArrayList<>();
-        for (File file : classpathElements) {
-            try {
-                urls.add(file.toURI().toURL());
-            } catch (MalformedURLException e) {
-                throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
-            }
-        }
-        return new URLClassLoader(urls.toArray(new URL[0]));
-    }
-
-    private String getSourceVersion() {
+    protected String getSourceVersion() {
         String reqJavaVersion = settings.get(PmdConstants.JAVA_SOURCE_VERSION).orElse(PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
         String bareReqJavaVersion = reqJavaVersion;
         if (reqJavaVersion.endsWith("-preview")) {
@@ -220,5 +237,4 @@ public class PmdExecutor {
         }
         return effectiveJavaVersion;
     }
-
 }

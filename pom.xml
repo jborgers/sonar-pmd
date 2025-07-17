@@ -316,7 +316,6 @@
               <Implementation-Build>${buildNumber}</Implementation-Build>
               <!--suppress UnresolvedMavenProperty -->
               <Build-Time>${timestamp}</Build-Time>
-              <Plugin-RequiredForLanguages>java,kotlin</Plugin-RequiredForLanguages>
             </manifestEntries>
           </archive>
         </configuration>

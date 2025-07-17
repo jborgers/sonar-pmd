@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
 class PmdSensorTest {
 
     private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
-    private final PmdExecutor javaExecutor = mock(PmdExecutor.class);
+    private final PmdJavaExecutor javaExecutor = mock(PmdJavaExecutor.class);
     private final PmdKotlinExecutor kotlinExecutor = mock(PmdKotlinExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
     private final SensorContext sensorContext = mock(SensorContext.class);

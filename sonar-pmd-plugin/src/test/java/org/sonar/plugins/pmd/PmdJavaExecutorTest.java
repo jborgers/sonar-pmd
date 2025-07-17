@@ -47,7 +47,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class PmdExecutorTest {
+class PmdJavaExecutorTest {
 
     private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
     private final ActiveRules activeRules = mock(ActiveRules.class);
@@ -55,7 +55,7 @@ class PmdExecutorTest {
     private final PmdTemplate pmdTemplate = mock(PmdTemplate.class);
     private final ClasspathProvider classpathProvider = mock(ClasspathProvider.class);
     private final MapSettings settings = new MapSettings();
-    private final PmdExecutor realPmdExecutor = new PmdExecutor(
+    private final PmdJavaExecutor realPmdExecutor = new PmdJavaExecutor(
             fileSystem,
             activeRules,
             pmdConfiguration,
@@ -63,7 +63,7 @@ class PmdExecutorTest {
             settings.asConfig()
     );
 
-    private PmdExecutor pmdExecutor;
+    private PmdJavaExecutor pmdExecutor;
 
     private static DefaultInputFile file(String path, Type type) {
         return TestInputFileBuilder.create("sonar-pmd-test", path)

@@ -30,12 +30,12 @@ import org.sonar.api.batch.sensor.SensorDescriptor;
 
 public class PmdSensor implements Sensor {
     private final ActiveRules profile;
-    private final PmdExecutor javaExecutor;
+    private final PmdJavaExecutor javaExecutor;
     private final PmdKotlinExecutor kotlinExecutor;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
 
-    public PmdSensor(ActiveRules profile, PmdExecutor javaExecutor, PmdKotlinExecutor kotlinExecutor, 
+    public PmdSensor(ActiveRules profile, PmdJavaExecutor javaExecutor, PmdKotlinExecutor kotlinExecutor, 
                     PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
         this.javaExecutor = javaExecutor;
