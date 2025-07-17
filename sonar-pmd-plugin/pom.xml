@@ -70,20 +70,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>java-frontend</artifactId>
-      <version>${java.frontend.version}</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.code.gson</groupId>
-          <artifactId>gson</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.code.findbugs</groupId>
-          <artifactId>jsr305</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -177,7 +166,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <!-- Sets the VM argument line used when unit tests are run. -->
-          <argLine>${surefireArgLine}</argLine>
+          <argLine>-Xmx512m</argLine>
         </configuration>
       </plugin>
       <plugin>
@@ -188,6 +177,7 @@
           <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
           <pluginDescription>Analyze Java and Kotlin code with PMD.</pluginDescription>
+          <requiredForLanguages>java,kotlin</requiredForLanguages>
         </configuration>
       </plugin>
       <plugin>

@@ -51,7 +51,7 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(8)
+                .hasSize(9)
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
@@ -59,7 +59,8 @@ class PmdPluginTest {
                         PmdKotlinExecutor.class,
                         PmdRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,
-                        PmdViolationRecorder.class
+                        PmdViolationRecorder.class,
+                        DefaultClasspathProvider.class
                 );
     }
 

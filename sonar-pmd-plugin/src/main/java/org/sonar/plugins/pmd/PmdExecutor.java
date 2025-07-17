@@ -34,7 +34,6 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.plugins.java.api.JavaResourceLocator;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
@@ -58,15 +57,15 @@ public class PmdExecutor {
     private final FileSystem fs;
     private final ActiveRules rulesProfile;
     private final PmdConfiguration pmdConfiguration;
-    private final JavaResourceLocator javaResourceLocator;
+    private final ClasspathProvider classpathProvider;
     private final Configuration settings;
 
     public PmdExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
-                       PmdConfiguration pmdConfiguration, JavaResourceLocator javaResourceLocator, Configuration settings) {
+                       PmdConfiguration pmdConfiguration, ClasspathProvider classpathProvider, Configuration settings) {
         this.fs = fileSystem;
         this.rulesProfile = rulesProfile;
         this.pmdConfiguration = pmdConfiguration;
-        this.javaResourceLocator = javaResourceLocator;
+        this.classpathProvider = classpathProvider;
         this.settings = settings;
     }
 
@@ -195,7 +194,7 @@ public class PmdExecutor {
      * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
      */
     private URLClassLoader createClassloader() {
-        Collection<File> classpathElements = javaResourceLocator.classpath();
+        Collection<File> classpathElements = classpathProvider.classpath();
         List<URL> urls = new ArrayList<>();
         for (File file : classpathElements) {
             try {

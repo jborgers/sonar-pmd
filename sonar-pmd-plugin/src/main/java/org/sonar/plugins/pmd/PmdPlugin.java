@@ -44,7 +44,8 @@ public class PmdPlugin implements Plugin {
                 PmdKotlinExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,
-                PmdViolationRecorder.class
+                PmdViolationRecorder.class,
+                DefaultClasspathProvider.class
         );
     }
 }
