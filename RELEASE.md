@@ -8,6 +8,7 @@ Before starting the release process:
 
 1. Ensure all commits have been pushed
 2. Verify the build passes with the `build.yml` GitHub Actions workflow
+3. In Github, close all issues and pull requests related to the new release x.y.z.
 
 ## Preparation
 
@@ -15,30 +16,33 @@ Before starting the release process:
 
 For updating PMD rules and generating release notes, refer to the [scripts documentation](scripts/README.md).
 
+In Github create a Draft release, or a pre-release.
+
 ## Release Steps
 
 1. Update documentation:
    - Create release notes in `CHANGELOG.md` (update `..master` to `..x.y.z`)
+   - Copy the commented out SNAPSHOT section to new SNAPSHOT release x.y.z+1-SNAPSHOT
+   - Uncomment the current SNAPSHOT release to non-SNAPSHOT upcoming release x.y.z
+   - Fill in the "Implemented highlights"
    - Update `README.md` if needed
-   - Commit changes
+   - Commit an push changes
 
-2. Create and push the release tag:
-   ```bash
-   git tag x.y.z
-   git push --tags
-   ```
+2. Publish the release in Github:
+   - Fill the to-be-created version
+   - Generate the release notes, sync with "Implemented highlights" from `CHANGELOG.md`
+   - Press Publish button
 
-   This will trigger the release workflow, which uses the git tag for `-Drevision=<tag>`.
+   This will trigger the release workflow, which injects the git tag via maven `-Drevision=<tag>`.
 
 3. Post-release tasks:
    - Manually release the staging repository in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
-   - Update the GitHub Actions release from draft to final and edit the changelog at [GitHub Releases](https://github.com/jborgers/sonar-pmd/releases)
+   - Make release available in Sonar marketplace and post a message for the shiny new release (see below)
 
 ## Prepare for Next Development Cycle
 
 1. Update version information:
-   - Change the `revision` property to `x.y.z+1-SNAPSHOT` in the parent pom
-   - Prepare `CHANGELOG.md` for the next version
+   - Change the `revision` property to `x.y.z+1-SNAPSHOT` in `.mvn/maven.config`
    - Commit and push with the message "Prepare release x.y.z+1-SNAPSHOT"
 
 2. Update GitHub:
@@ -47,11 +51,12 @@ For updating PMD rules and generating release notes, refer to the [scripts docum
 
 ## Troubleshooting
 
-If the release fails before "release staging in Sonatype":
+If the release fails and needs to be "restarted":
 1. Drop the staging repository
 2. Delete the tag locally: `git tag -d x.y.z` (or delete in IntelliJ)
-3. Delete the tag remotely: `git push origin :refs/tags/x.y.z` (or use context menu)
-4. Fix the issue, commit, push, and restart the release process
+3. Delete the tag remotely: `git push origin :refs/tags/x.y.z` (or use context menu in Intellij)
+4. Might need to also delete the tag in Github
+5. Fix the issue, commit, push, and restart the release process
 
 ## Publishing to Marketplace
 
