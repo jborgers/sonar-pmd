@@ -10,9 +10,9 @@ Starting April 2022, the project has found a new home. We, [jborgers](https://gi
 aim to provide an active project and well-maintained sonar-pmd plugin. It is now sponsored by [Rabobank](https://www.rabobank.com/).
 
 ## Installation
-The plugin should be available in the SonarQube marketplace and is preferably installed from within SonarQube (Administration -->  Marketplace --> Search _pmd_).
+The plugin should be available in the SonarQube marketplace and is preferably installed from within SonarQube (Administration → Marketplace → Search _pmd_).
 
-Alternatively, download the [latest JAR file](https://github.com/jborgers/sonar-pmd/releases/latest), put it into the plugin directory (`./extensions/plugins`) and restart SonarQube.
+Alternatively, download the [latest JAR file](https://github.com/jborgers/sonar-pmd/releases/latest), put it into the plugin directory (`./extensions/downloads`) and restart SonarQube.
 
 ## Usage
 Usage should be straight forward:
@@ -23,27 +23,55 @@ Usage should be straight forward:
 Sonar PMD plugin version 4.0+ supports PMD 7 which is incompatible with PMD 6: the reason for a major release. 
 Use version 4.0+ for child plugins with custom rules written in PMD 7, such as [sonar-pmd-jpinpoint 2.0.0](https://github.com/jborgers/sonar-pmd-jpinpoint/releases/tag/2.0.0).
 
-
 ### Java version
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-Possible values : 8 to 24 and 24-preview
+Possible values: 8 to 24 and 24-preview
 
 ## Table of supported versions
-| Sonar-PMD Plugin       | 3.4.0           | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.1      |4.0.3 (*)
-|------------------------|-----------------|-----------------|-----------------|---------|------------|-----
-| PMD                    | 6.45.0          | 6.55.0          | 6.55.0          | 7.10.0  | 7.10.0     |7.14.0
-| Max. Java Version      | 18              | 20-preview (*2) | 20-preview (*2) | 20 (*3) | 24-preview |24-preview
-| Min. SonarQube Version | _8.9(*1)_ / 9.3 | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      |9.9.4
-| Max. SonarQube Version | 9.9             | 10.4            | 10.5+           | 10.8+   | 10.8+      |25.6+
+| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       |  
+|------------------------|-----------------|-----------------|---------|------------|-------------| 
+| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | 
+| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  |  
+| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 
+| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 
 
-(*1) Note: Plugin version 3.4.x runs in SonarQube 8.9, however, Java 17+ is only fully supported in SonarQube 9.3+.   
-(*2) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks.   
-(*3) Note: Does not support Java 20-preview nor Java 21.
-(*4) Note: 4.0.3 compatible with SonarQube 25.6+, full upgrade to 25.6 dependencies in upcoming 4.1.0.
+(*1) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks.   
+(*2) Note: Does not support Java 20-preview nor Java 21.
 
-A majority of the PMD rules have been rewritten in the Sonar Java plugin. Rewritten rules are marked "Deprecated" in the PMD plugin.
+## Limited Java PMD rule support before 4.1.0
+PMD rules created since PMD 5.5.0 in 2016 were missing in release 4.0.3 and before.
+
+Additionally, the sonar-pmd plugin marked the PMD rules which have a known adopted alternative in Sonar as `Deprecated`. 
+Furthermore, PMD rules which were deprecated by PMD itself had the `Deprecated` mark as well, which was confusing. 
+
+## Full Java PMD rule support starting with 4.1.0
+With version 4.1.0 we introduce easy incorporation of new PMD rules into this plugin and thereby support the full up-to-date set of PMD rules in Sonar.
+
+From now on, only rules that are deprecated in PMD are also marked `Deprecated` in Sonar. Rules that have alternative rules in Sonar are tagged with 
+`has-sonar-alternative`, so they can be easily selected in SonarQube. The documentation will include the link to known alternative Sonar rule.
+
+Limitations:
+1. Referred alternative Java Sonar rules are limited to rules from before 2016, newer Java Sonar rules are not referred to yet. 
+If you find missing alternative rules please create a Github issue.
+2. The estimated amount of time to fix issues is only available for rules from before 2016.
+3. Properties of the rules cannot be changed via SonarQube, currently only defaults can be used.
+
+## Java PMD rules summary
+
+- Total rules in previous version (4.0.3): 206
+- Total rules in new version (4.1.0): 282
+- Rules added: 80
+- Rules removed: 4
+- Rules unchanged: 46
+- Rules updated: 155
+- Rules renamed: 11
+
+See details: [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md)
+
+## Support for other languages
+Support for Kotlin and Apex PMD rules is work in progress. 
 
 ## License
 Sonar-PMD is licensed under the [GNU Lesser General Public License, Version 3.0](https://github.com/jborgers/sonar-pmd/blob/master/LICENSE.md).

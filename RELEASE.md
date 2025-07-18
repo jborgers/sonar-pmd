@@ -1,76 +1,64 @@
-# Create release
+# Release Process
 
-To create a new release, set git tag with new version number and push the tag.
-The Github Actions `release.yml` will build and release to Github actions and Maven Central.
+This document describes the process for creating a new release of the SonarQube PMD plugin.
 
-Make sure that all commits have been pushed and build 
-with `build.yml` workflow before setting and pushing the tag.
+## Prerequisites
+
+Before starting the release process:
+
+1. Ensure all commits have been pushed
+2. Verify the build passes with the `build.yml` GitHub Actions workflow
+3. In Github, close all issues and pull requests related to the new release x.y.z.
 
 ## Preparation
 
-### Update PMD rules (if needed)
-If the PMD version has been updated or rules have changed, regenerate the rules-java.xml file:
-```
-./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
-```
-This will run the Groovy script that extracts rules from PMD and generates the rules-java.xml file in the correct location.
+### Update PMD Rules and Generate Release Notes
 
-### Generate Release Notes for PMD Rules
-To generate release notes comparing the old and new PMD rules:
+For updating PMD rules and generating release notes, refer to the [scripts documentation](scripts/README.md).
 
-1. Download the rules file from the previous release tag directly:
-
-   ```commandline
-   wget https://raw.githubusercontent.com/jborgers/sonar-pmd/<previous-release-tag>/sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd/rules-java.xml -O scripts/old-rules.xml
-   ```
-
-2. Run the release notes generator script:
-   ```commandline
-   # Make the script executable (if needed)
-   chmod +x scripts/generate_release_notes.groovy
-
-   # Run with default options
-   ./scripts/generate_release_notes.groovy ---version <new-version>
-
-   # Or specify custom paths
-   ./scripts/generate_release_notes.groovy --old <path-to-old-rules> --new <path-to-new-rules> --report <output-file> --version <new-version>
-   ```
-
-3. The script will generate a Markdown report (default: docs/pmd_release_notes.md) containing:
-   - Summary of rule changes
-   - Rules that have been removed
-   - Rules that have been added
-   - Rules that remain unchanged (but with possible changes in status, priority or sonar-alternatives)
+In Github create a Draft release, or a pre-release.
 
 ## Release Steps
-- create release notes in `CHANGELOG.md`, update `..master` to `..x.y.z`; and update `README.md`
-- commit both
-- `git tag x.y.z`
-- `git push --tags`
 
-The release workflow will be triggered, using the git tag for `-Drevision=<tag>`. 
+1. Update documentation:
+   - Create release notes in `CHANGELOG.md` (update `..master` to `..x.y.z`)
+   - Copy the commented out SNAPSHOT section to new SNAPSHOT release x.y.z+1-SNAPSHOT
+   - Uncomment the current SNAPSHOT release to non-SNAPSHOT upcoming release x.y.z
+   - Fill in the "Implemented highlights"
+   - Update `README.md` if needed
+   - Commit an push changes
 
-- manually release staging repo in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
-- manually change Github actions release from draft to final and limit the changelog here: [releases](https://github.com/jborgers/sonar-pmd/releases) 
+2. Publish the release in Github:
+   - Fill the to-be-created version
+   - Generate the release notes, sync with "Implemented highlights" from `CHANGELOG.md`
+   - Press Publish button
 
-Next prepare for next SNAPSHOT:
+   This will trigger the release workflow, which injects the git tag via maven `-Drevision=<tag>`.
 
-- change `revision` property in `x.y.z+1-SNAPSHOT` in parent pom
-- prepare `CHANGELOG.md` for `x.y.z+1-SNAPSHOT`
-- commit and push with comment "Prepare release x.y.z+1-SNAPSHOT"
+3. Post-release tasks:
+   - Manually release the staging repository in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
+   - Make release available in Sonar marketplace and post a message for the shiny new release (see below)
 
-When release fails before "release staging in Sonatype"
-- drop staging repo
-- `git tag -d x.y.z` or delete tag in IntelliJ
-- `git push origin :refs/tags/x.y.z` or delete tag in context menu, delete remotes
-- fix-commit-push and start release again with tagging steps above
+## Prepare for Next Development Cycle
 
-In GitHub:
+1. Update version information:
+   - Change the `revision` property to `x.y.z+1-SNAPSHOT` in `.mvn/maven.config`
+   - Commit and push with the message "Prepare release x.y.z+1-SNAPSHOT"
 
-- close milestone `x.y.z`
-- create new milestone `x.y.z+1`
+2. Update GitHub:
+   - Close milestone `x.y.z`
+   - Create new milestone `x.y.z+1`
 
-To marketplace:
+## Troubleshooting
 
-- See [deploying-to-the-marketplace](https://community.sonarsource.com/t/deploying-to-the-marketplace/35236)
-- See our first forum post: [new-release-sonar-pmd-plugin-3-4-0](https://community.sonarsource.com/t/new-release-sonar-pmd-plugin-3-4-0/63091)
+If the release fails and needs to be "restarted":
+1. Drop the staging repository
+2. Delete the tag locally: `git tag -d x.y.z` (or delete in IntelliJ)
+3. Delete the tag remotely: `git push origin :refs/tags/x.y.z` (or use context menu in Intellij)
+4. Might need to also delete the tag in Github
+5. Fix the issue, commit, push, and restart the release process
+
+## Publishing to Marketplace
+
+- Follow the [Deploying to the Marketplace](https://community.sonarsource.com/t/deploying-to-the-marketplace/35236) guide
+- Reference our [first forum post](https://community.sonarsource.com/t/new-release-sonar-pmd-plugin-3-4-0/63091) as an example
