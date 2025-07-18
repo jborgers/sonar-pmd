@@ -9,6 +9,7 @@
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..4.1.0)
 
 **Implemented highlights**
+* Now all current PMD Java rules are available (282, up from 206), see details [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md) 
 * Generate Sonar rules xml for the plugin directly from the PMD 7.15.0 rules xml: makes all Java rules available and up-to-date automatically
 * Updated and non-deprecated the "PMD XPath Template Rule" (pmd:XPathRule) to create custom Java rules with powerful PMD7 XPath expressions
 * Generate nicely formatted html descriptions from the PMD rule description markup
