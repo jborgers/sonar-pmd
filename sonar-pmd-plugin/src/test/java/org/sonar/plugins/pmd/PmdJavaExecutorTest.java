@@ -20,85 +20,46 @@
 package org.sonar.plugins.pmd;
 
 import net.sourceforge.pmd.lang.rule.RuleSet;
-import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
 import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.sonar.api.batch.fs.InputFile.Type;
-import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.config.internal.MapSettings;
-import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.Mockito.*;
 
-class PmdExecutorTest {
+class PmdJavaExecutorTest extends AbstractPmdExecutorTest {
 
-    private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File("."));
-    private final ActiveRules activeRules = mock(ActiveRules.class);
-    private final PmdConfiguration pmdConfiguration = mock(PmdConfiguration.class);
-    private final PmdTemplate pmdTemplate = mock(PmdTemplate.class);
-    private final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
-    private final MapSettings settings = new MapSettings();
-    private final PmdExecutor realPmdExecutor = new PmdExecutor(
-            fileSystem,
-            activeRules,
-            pmdConfiguration,
-            javaResourceLocator,
-            settings.asConfig()
-    );
-
-    private PmdExecutor pmdExecutor;
-
-    private static DefaultInputFile file(String path, Type type) {
-        return TestInputFileBuilder.create("sonar-pmd-test", path)
-                .setType(type)
-                .setLanguage(PmdConstants.LANGUAGE_JAVA_KEY)
-                .build();
-    }
-
-    private static DefaultInputFile fileKotlin(String path, Type type) {
-        return TestInputFileBuilder.create("", path)
-                .setType(type)
-                .setLanguage(PmdConstants.LANGUAGE_KOTLIN_KEY)
-                .build();
-    }
+    private final ClasspathProvider classpathProvider = mock(ClasspathProvider.class);
+    private PmdJavaExecutor realPmdExecutor;
 
     @BeforeEach
     void setUp() {
+        realPmdExecutor = new PmdJavaExecutor(
+                fileSystem,
+                activeRules,
+                pmdConfiguration,
+                classpathProvider,
+                settings.asConfig()
+        );
         pmdExecutor = Mockito.spy(realPmdExecutor);
-        fileSystem.setEncoding(StandardCharsets.UTF_8);
-        settings.setProperty(PmdConstants.JAVA_SOURCE_VERSION, "1.8");
     }
 
-    @Test
-    void whenNoFilesToAnalyzeThenExecutionSucceedsWithBlankReport() {
-
-        // when
-        final Report result = pmdExecutor.execute();
-
-        // then
-        assertThat(result).isNotNull();
-        assertThat(result.getViolations())
-                .isEmpty();
-        assertThat(result.getProcessingErrors())
-                .isEmpty();
+    @Override
+    protected DefaultInputFile getAppropriateInputFileForTest() {
+        return file("src/Class.java", Type.MAIN);
     }
 
     @Test
@@ -135,9 +96,9 @@ class PmdExecutorTest {
     }
 
     @Test
-    void should_build_project_classloader_from_javaresourcelocator() throws Exception {
+    void should_build_project_classloader_from_classpathprovider() throws Exception {
         File file = new File("x");
-        when(javaResourceLocator.classpath()).thenReturn(List.of(file));
+        when(classpathProvider.classpath()).thenReturn(List.of(file));
         pmdExecutor.execute();
         ArgumentCaptor<URLClassLoader> classLoaderArgument = ArgumentCaptor.forClass(URLClassLoader.class);
         verify(pmdExecutor).createPmdTemplate(classLoaderArgument.capture());
@@ -150,7 +111,7 @@ class PmdExecutorTest {
     void invalid_classpath_element() {
         File invalidFile = mock(File.class);
         when(invalidFile.toURI()).thenReturn(URI.create("x://xxx"));
-        when(javaResourceLocator.classpath()).thenReturn(List.of(invalidFile));
+        when(classpathProvider.classpath()).thenReturn(List.of(invalidFile));
 
         final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
 
@@ -160,22 +121,7 @@ class PmdExecutorTest {
     }
 
     @Test
-    void unknown_pmd_ruleset() {
-        when(pmdConfiguration.dumpXmlRuleSet(eq(PmdConstants.MAIN_JAVA_REPOSITORY_KEY), anyString())).thenReturn(new File("unknown"));
-
-        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
-        fileSystem.add(srcFile);
-
-        final Throwable thrown = catchThrowable(() -> pmdExecutor.execute());
-
-        assertThat(thrown)
-                .isInstanceOf(IllegalStateException.class)
-                .hasCauseInstanceOf(RuleSetLoadException.class);
-    }
-
-    @Test
     void should_execute_pmd_on_kotlin_source_files() {
-
         DefaultInputFile srcFile = fileKotlin("src/test/kotlin/TestKotlin.kt", Type.MAIN);
 
         setupPmdRuleSet(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, "simple-kotlin.xml");
@@ -187,11 +133,5 @@ class PmdExecutorTest {
         assertThat(report.getViolations()).hasSize(1);
         assertThat(report.getProcessingErrors()).isEmpty();
         verify(pmdConfiguration).dumpXmlReport(report);
-
-    }
-
-    private void setupPmdRuleSet(String repositoryKey, String profileFileName) {
-        final Path sourcePath = Paths.get("src/test/resources/org/sonar/plugins/pmd/").resolve(profileFileName);
-        when(pmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString())).thenReturn(sourcePath.toFile());
     }
 }
