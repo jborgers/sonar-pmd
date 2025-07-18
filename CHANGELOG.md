@@ -4,13 +4,13 @@
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..master)
 
 **Implemented highlights**
-* Generate Sonar rules xml for the plugin directly from the PMD 7.15.0 rules xml: makes all Java and Kotlin rules available and up-to-date automatically
+* Generate Sonar rules xml for the plugin directly from the PMD 7.15.0 rules xml: makes all Java rules available and up-to-date automatically
+* Updated and non-deprecated the "PMD XPath Template Rule" (pmd:XPathRule) to create custom Java rules with powerful PMD7 XPath expressions
 * Generate nicely formatted html descriptions from the PMD rule description markup
 * Added `pmd` tag and category tag for each rule
 * Added `has-sonar-alternative` tag for rules with known Sonar alternative (instead of making rules with alternatives `Deprecated`)
 * Simplified release process by automation
 * Maven release via Sonatype Central Portal
-* Note: the `XPathRule` Rule Template is not part of this release, it might return in a future version.
 
 ## [4.0.3](https://github.com/jborgers/sonar-pmd/tree/4.0.3) (2025-06-06)
 
