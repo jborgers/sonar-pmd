@@ -1,7 +1,12 @@
 # Changelog
 
-## [4.1.0-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.1.0-SNAPSHOT) (2025-xx-xx)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..master)
+## [4.2.0-SNAPSHOT](https://github.com/jborgers/sonar-pmd/tree/4.2.0-SNAPSHOT) (2025-xx-xx)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.1.0..master)
+
+**Implemented highlights**
+
+## [4.1.0](https://github.com/jborgers/sonar-pmd/tree/4.1.0) (2025-07-18)
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..4.1.0)
 
 **Implemented highlights**
 * Generate Sonar rules xml for the plugin directly from the PMD 7.15.0 rules xml: makes all Java rules available and up-to-date automatically
