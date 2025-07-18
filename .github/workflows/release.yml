@@ -3,7 +3,7 @@ run-name: Build ${{ github.ref_name }} by @${{ github.actor }}
 
 on:
   release:
-    types: [ created ]
+    types: [ published ]
   workflow_dispatch:
 
 defaults:
@@ -46,11 +46,3 @@ jobs:
         run: |
           ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
 
-      - name: Create GHA release
-        uses: ncipollo/release-action@v1
-        with:
-          draft: true
-          artifacts: "sonar-pmd-plugin/target/*.jar"
-          bodyFile: CHANGELOG.md
-          allowUpdates: true
-          makeLatest: true
