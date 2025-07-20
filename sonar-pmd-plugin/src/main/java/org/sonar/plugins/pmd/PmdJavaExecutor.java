@@ -66,14 +66,10 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
         final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
         final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
 
         if (LOGGER.isDebugEnabled()) {
             javaMainReport.ifPresent(this::writeDebugLine);
             javaTestReport.ifPresent(this::writeDebugLine);
-            kotlinMainReport.ifPresent(this::writeDebugLine);
-            kotlinTestReport.ifPresent(this::writeDebugLine);
         }
 
         Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
@@ -81,8 +77,6 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
         Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
         unionReport = javaMainReport.map(unionReport::union).orElse(unionReport);
         unionReport = javaTestReport.map(unionReport::union).orElse(unionReport);
-        unionReport = kotlinMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = kotlinTestReport.map(unionReport::union).orElse(unionReport);
 
         pmdConfiguration.dumpXmlReport(unionReport);
 

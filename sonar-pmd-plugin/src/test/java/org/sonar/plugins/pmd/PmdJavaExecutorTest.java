@@ -120,18 +120,4 @@ class PmdJavaExecutorTest extends AbstractPmdExecutorTest {
                 .hasMessageContaining("Classpath");
     }
 
-    @Test
-    void should_execute_pmd_on_kotlin_source_files() {
-        DefaultInputFile srcFile = fileKotlin("src/test/kotlin/TestKotlin.kt", Type.MAIN);
-
-        setupPmdRuleSet(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, "simple-kotlin.xml");
-        fileSystem.add(srcFile);
-
-        Report report = pmdExecutor.execute();
-
-        assertThat(report).isNotNull();
-        assertThat(report.getViolations()).hasSize(1);
-        assertThat(report.getProcessingErrors()).isEmpty();
-        verify(pmdConfiguration).dumpXmlReport(report);
-    }
 }
