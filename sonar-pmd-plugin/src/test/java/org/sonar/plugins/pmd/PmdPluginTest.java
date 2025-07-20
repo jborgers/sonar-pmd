@@ -54,17 +54,20 @@ class PmdPluginTest {
         // then
         final List extensions = context.getExtensions();
         assertThat(extensions)
-                .hasSize(11) // 8 original extensions + ApexLanguage + 1 property definition + PmdApexSonarWayProfile
+                .hasSize(12)
                 .contains(
                         PmdSensor.class,
                         PmdConfiguration.class,
                         PmdExecutorFactory.class,
+                        PmdJavaExecutor.class,
+                        PmdKotlinExecutor.class,
                         PmdRulesDefinition.class,
                         PmdKotlinRulesDefinition.class,
                         PmdApexRulesDefinition.class,
                         PmdViolationRecorder.class,
                         ApexLanguage.class,
-                        PmdApexSonarWayProfile.class
+                        PmdApexSonarWayProfile.class,
+                        DefaultClasspathProvider.class
                 );
     }
 

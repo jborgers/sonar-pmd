@@ -45,12 +45,15 @@ public class PmdPlugin implements Plugin {
                 PmdSensor.class,
                 PmdConfiguration.class,
                 PmdExecutorFactory.class,
+                PmdJavaExecutor.class,
+                PmdKotlinExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,
                 PmdApexRulesDefinition.class,
-                PmdViolationRecorder.class,
                 ApexLanguage.class,
-                PmdApexSonarWayProfile.class
+                PmdApexSonarWayProfile.class,
+                PmdViolationRecorder.class,
+                DefaultClasspathProvider.class
         );
 
         context.addExtensions(ApexLanguageProperties.getProperties());
