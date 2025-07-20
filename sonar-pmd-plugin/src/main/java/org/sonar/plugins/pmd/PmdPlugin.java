@@ -46,6 +46,7 @@ public class PmdPlugin implements Plugin {
                 PmdConfiguration.class,
                 PmdJavaExecutor.class,
                 PmdKotlinExecutor.class,
+                PmdApexExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,
                 PmdApexRulesDefinition.class,
