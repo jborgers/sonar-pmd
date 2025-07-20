@@ -8,7 +8,7 @@
     <description><![CDATA[<h2>Title of issues: Function names should have non-cryptic and clear names.</h2>
 <p>Function names should be easy to understand and describe the intention. Makes developers happy.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> fun cl() {} // violation, no unavailable attribute added to the function declaration
+<p><pre><code class="language-kotlin"> fun cl() {} // violation, no unavailable attribute added to the function declaration
  
  fun calculateLayout() // no violation</code></pre></p>
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_bestpractices.html#functionnametooshort">Full documentation</a></p>]]></description>
@@ -23,7 +23,7 @@
     <description><![CDATA[<h2>Title of issues: Ensure you override both equals() and hashCode()</h2>
 <p>Override both public boolean Object.equals(Object other), and public int Object.hashCode(), or override neither.  Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly delegating to your superclass.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> class Bar {        // poor, missing a hashCode() method
+<p><pre><code class="language-kotlin"> class Bar {        // poor, missing a hashCode() method
      override fun equals(o: Any?): Boolean {
        // do some comparison
      }
