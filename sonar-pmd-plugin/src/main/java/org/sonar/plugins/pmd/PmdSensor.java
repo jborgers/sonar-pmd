@@ -32,14 +32,16 @@ public class PmdSensor implements Sensor {
     private final ActiveRules profile;
     private final PmdJavaExecutor javaExecutor;
     private final PmdKotlinExecutor kotlinExecutor;
+    private final PmdApexExecutor apexExecutor;
     private final PmdViolationRecorder pmdViolationRecorder;
     private final FileSystem fs;
 
     public PmdSensor(ActiveRules profile, PmdJavaExecutor javaExecutor, PmdKotlinExecutor kotlinExecutor,
-                    PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
+                    PmdApexExecutor apexExecutor, PmdViolationRecorder pmdViolationRecorder, FileSystem fs) {
         this.profile = profile;
         this.javaExecutor = javaExecutor;
         this.kotlinExecutor = kotlinExecutor;
+        this.apexExecutor = apexExecutor;
         this.pmdViolationRecorder = pmdViolationRecorder;
         this.fs = fs;
     }
@@ -84,6 +86,10 @@ public class PmdSensor implements Sensor {
             boolean hasJavaFiles = hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY) ||
                                   hasFilesToCheck(Type.TEST, PmdConstants.MAIN_JAVA_REPOSITORY_KEY, PmdConstants.LANGUAGE_JAVA_KEY);
 
+            // Check if there are Apex files to analyze
+            boolean hasApexFiles = hasFilesToCheck(Type.MAIN, PmdConstants.MAIN_APEX_REPOSITORY_KEY, PmdConstants.LANGUAGE_APEX_KEY) ||
+                                  hasFilesToCheck(Type.TEST, PmdConstants.MAIN_APEX_REPOSITORY_KEY, PmdConstants.LANGUAGE_APEX_KEY);
+
             // Process Kotlin files if present
             if (hasKotlinFiles) {
                 net.sourceforge.pmd.reporting.Report kotlinReport = kotlinExecutor.execute();
@@ -99,6 +105,16 @@ public class PmdSensor implements Sensor {
                 net.sourceforge.pmd.reporting.Report javaReport = javaExecutor.execute();
                 if (javaReport != null) {
                     for (RuleViolation violation : javaReport.getViolations()) {
+                        pmdViolationRecorder.saveViolation(violation, context);
+                    }
+                }
+            }
+
+            // Process Apex files if present
+            if (hasApexFiles) {
+                net.sourceforge.pmd.reporting.Report apexReport = apexExecutor.execute();
+                if (apexReport != null) {
+                    for (RuleViolation violation : apexReport.getViolations()) {
                         pmdViolationRecorder.saveViolation(violation, context);
                     }
                 }

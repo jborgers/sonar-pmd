@@ -44,6 +44,7 @@ class PmdSensorTest {
     private final ActiveRules profile = mock(ActiveRules.class, RETURNS_DEEP_STUBS);
     private final PmdJavaExecutor javaExecutor = mock(PmdJavaExecutor.class);
     private final PmdKotlinExecutor kotlinExecutor = mock(PmdKotlinExecutor.class);
+    private final PmdApexExecutor apexExecutor = mock(PmdApexExecutor.class);
     private final PmdViolationRecorder pmdViolationRecorder = mock(PmdViolationRecorder.class);
     private final SensorContext sensorContext = mock(SensorContext.class);
     private final DefaultFileSystem fs = new DefaultFileSystem(new File("."));
@@ -52,7 +53,7 @@ class PmdSensorTest {
 
     @BeforeEach
     void setUpPmdSensor() {
-        pmdSensor = new PmdSensor(profile, javaExecutor, kotlinExecutor, pmdViolationRecorder, fs);
+        pmdSensor = new PmdSensor(profile, javaExecutor, kotlinExecutor, apexExecutor, pmdViolationRecorder, fs);
     }
 
     @Test
@@ -119,6 +120,7 @@ class PmdSensorTest {
         // then
         verify(javaExecutor, never()).execute();
         verify(kotlinExecutor, never()).execute();
+        verify(apexExecutor, never()).execute();
     }
 
     @Test
@@ -129,9 +131,12 @@ class PmdSensorTest {
         addOneJavaFile(Type.TEST);
         addOneKotlinFile(Type.MAIN);
         addOneKotlinFile(Type.TEST);
+        addOneApexFile(Type.MAIN);
+        addOneApexFile(Type.TEST);
 
         when(profile.findByRepository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEmpty()).thenReturn(true);
         when(profile.findByRepository(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY).isEmpty()).thenReturn(true);
+        when(profile.findByRepository(PmdConstants.MAIN_APEX_REPOSITORY_KEY).isEmpty()).thenReturn(true);
 
         // when
         pmdSensor.execute(sensorContext);
@@ -139,6 +144,7 @@ class PmdSensorTest {
         // then
         verify(javaExecutor, never()).execute();
         verify(kotlinExecutor, never()).execute();
+        verify(apexExecutor, never()).execute();
     }
 
     @Test
@@ -266,6 +272,95 @@ class PmdSensorTest {
     }
 
     @Test
+    void should_execute_apex_executor_on_project_with_apex_main_files() {
+
+        // given
+        addOneApexFile(Type.MAIN);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(apexExecutor, atLeastOnce()).execute();
+    }
+
+    @Test
+    void should_execute_apex_executor_on_project_with_apex_test_files() {
+
+        // given
+        addOneApexFile(Type.TEST);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(apexExecutor, atLeastOnce()).execute();
+    }
+
+    @Test
+    void should_report_apex_violations() {
+
+        // given
+        addOneApexFile(Type.MAIN);
+        final RuleViolation pmdViolation = violation();
+        mockApexExecutorResult(pmdViolation);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder).saveViolation(pmdViolation, sensorContext);
+    }
+
+    @Test
+    void should_not_report_zero_apex_violation() {
+
+        // given
+        mockApexExecutorResult();
+        addOneApexFile(Type.MAIN);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
+        verifyNoMoreInteractions(sensorContext);
+    }
+
+    @Test
+    void should_not_report_invalid_apex_violation() {
+
+        // given
+        mockApexExecutorResult(violation());
+        addOneApexFile(Type.MAIN);
+
+        // when
+        pmdSensor.execute(sensorContext);
+
+        // then
+        verify(pmdViolationRecorder, never()).saveViolation(any(RuleViolation.class), eq(sensorContext));
+        verifyNoMoreInteractions(sensorContext);
+    }
+
+    @Test
+    void pmdSensorShouldNotRethrowApexExecutorExceptions() {
+
+        // given
+        addOneApexFile(Type.MAIN);
+
+        final RuntimeException expectedException = new RuntimeException();
+        when(apexExecutor.execute()).thenThrow(expectedException);
+
+        // when
+        final Throwable thrown = catchThrowable(() -> pmdSensor.execute(sensorContext));
+
+        // then
+        assertThat(thrown)
+                .isInstanceOf(RuntimeException.class)
+                .isEqualTo(expectedException);
+    }
+
+    @Test
     void should_to_string() {
         final String toString = pmdSensor.toString();
         assertThat(toString).isEqualTo("PmdSensor");
@@ -297,6 +392,11 @@ class PmdSensorTest {
 
     private void mockKotlinExecutorResult(RuleViolation... violations) {
         when(kotlinExecutor.execute())
+                .thenReturn(createReport(violations));
+    }
+
+    private void mockApexExecutorResult(RuleViolation... violations) {
+        when(apexExecutor.execute())
                 .thenReturn(createReport(violations));
     }
 
@@ -333,6 +433,20 @@ class PmdSensorTest {
                         file.getName()
                 )
                         .setLanguage("kotlin")
+                        .setType(type)
+                        .build()
+        );
+    }
+
+    private void addOneApexFile(Type type) {
+        mockApexExecutorResult();
+        File file = new File("x.cls");
+        fs.add(
+                TestInputFileBuilder.create(
+                        "sonar-pmd-test",
+                        file.getName()
+                )
+                        .setLanguage("apex")
                         .setType(type)
                         .build()
         );

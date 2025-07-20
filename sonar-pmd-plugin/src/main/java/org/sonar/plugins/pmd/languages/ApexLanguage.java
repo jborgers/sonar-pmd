@@ -21,11 +21,13 @@ package org.sonar.plugins.pmd.languages;
 
 import org.sonar.api.config.Configuration;
 import org.sonar.api.resources.AbstractLanguage;
+import org.sonar.api.server.ServerSide;
 import org.sonar.plugins.pmd.PmdConstants;
 
 /**
  * This class defines the Apex language.
  */
+@ServerSide
 public final class ApexLanguage extends AbstractLanguage {
 
     private final Configuration config;
