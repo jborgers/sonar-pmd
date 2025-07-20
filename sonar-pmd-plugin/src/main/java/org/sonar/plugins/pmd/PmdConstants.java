@@ -31,6 +31,7 @@ public final class PmdConstants {
     public static final String REPOSITORY_NAME = "PMD";
     public static final String REPOSITORY_KOTLIN_NAME = "PMD Kotlin";
     public static final String REPOSITORY_APEX_NAME = "PMD Apex";
+    public static final String LANGUAGE_APEX_NAME = "Apex";
     public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.xpath.XPathRule";
     public static final String XPATH_EXPRESSION_PARAM = "xpath";
     public static final String XPATH_MESSAGE_PARAM = "message";

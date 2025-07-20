@@ -37,7 +37,7 @@ public final class ApexLanguage extends AbstractLanguage {
      * @param config The SonarQube configuration
      */
     public ApexLanguage(Configuration config) {
-        super(PmdConstants.LANGUAGE_APEX_KEY, PmdConstants.REPOSITORY_APEX_NAME);
+        super(PmdConstants.LANGUAGE_APEX_KEY, PmdConstants.LANGUAGE_APEX_NAME);
         this.config = config;
     }
 
