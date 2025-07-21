@@ -30,7 +30,7 @@
 
   <artifactId>integration-test</artifactId>
   <name>SonarQube PMD Plugin Integration Test</name>
-  <packaging>sonar-plugin</packaging>
+  <packaging>jar</packaging>
   <inceptionYear>2013</inceptionYear>
 
   <properties>
@@ -95,17 +95,6 @@
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-        <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
-          <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
-          <!-- This is important. It means that this plugin extends the PMD plugin -->
-          <basePlugin>pmd</basePlugin>
-        </configuration>
       </plugin>
       <plugin>
         <!-- delete the target dirs in the sub projects, not cleaned by default -->

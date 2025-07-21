@@ -1,5 +1,6 @@
 @Grab('net.sourceforge.pmd:pmd-java:7.15.0')
 @Grab('net.sourceforge.pmd:pmd-kotlin:7.15.0')
+@Grab('net.sourceforge.pmd:pmd-apex:7.15.0')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
 import groovy.json.JsonBuilder
@@ -12,8 +13,11 @@ import java.util.regex.Matcher
 def pmdVersion = MdToHtmlConverter.PMD_VERSION
 def pmdJavaJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
 def pmdKotlinJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
+def pmdApexJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-apex/${pmdVersion}/pmd-apex-${pmdVersion}.jar"
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
+def apexCategoriesPropertiesPath = "category/apex/categories.properties"
+
 // Define language-specific rule alternatives paths
 def javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
 def kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
@@ -57,13 +61,16 @@ def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/p
 def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
 def javaOutputFileName = "rules-java.xml"
 def kotlinOutputFileName = "rules-kotlin.xml"
+def apexOutputFileName = "rules-apex.xml"
 def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
 def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
+def apexOutputFilePath = new File(outputDirPath, apexOutputFileName)
 
 println "PMD ${pmdVersion} Rules XML Generator"
 println "=" * 50
 println "Java output file: ${javaOutputFilePath}"
 println "Kotlin output file: ${kotlinOutputFilePath}"
+println "Apex output file: ${apexOutputFilePath}"
 
 /**
  * Groovy translation of MdToHtmlConverter
@@ -1071,6 +1078,12 @@ def kotlinRules = readRulesFromJar(pmdKotlinJarPath, kotlinCategoriesPropertiesP
 println "Found ${kotlinRules.size()} total Kotlin rules"
 println ""
 
+// Read Apex rules
+println "Reading Apex rules from ${pmdApexJarPath}"
+def apexRules = readRulesFromJar(pmdApexJarPath, apexCategoriesPropertiesPath)
+println "Found ${apexRules.size()} total Apex rules"
+println ""
+
 // Helper function to convert priority to severity
 def priorityToSeverity = { priority ->
     switch (priority) {
@@ -1409,9 +1422,15 @@ public class Foo {
     e.printStackTrace()
 }
 
+// Generate Apex rules XML file
 println ""
-if (javaSuccess && kotlinSuccess) {
-    println "XML generation completed successfully for both Java and Kotlin rules!"
+println "Generating Apex rules XML file..."
+println "=" * 30
+def apexSuccess = generateXmlFile(apexOutputFilePath, apexRules, "Apex")
+
+println ""
+if (javaSuccess && kotlinSuccess && apexSuccess) {
+    println "XML generation completed successfully for Java, Kotlin, and Apex rules!"
 } else {
     println "XML generation completed with errors. Please check the logs above."
 }

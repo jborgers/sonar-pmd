@@ -7558,7 +7558,7 @@ We'd like to report a violation each time a declaration of Factory is not declar
 <pre><code class="language-java">
 import io.factories.Factory;
 
-public class a {
+public class Foo {
   Factory f1;
 
   void myMethod() {
