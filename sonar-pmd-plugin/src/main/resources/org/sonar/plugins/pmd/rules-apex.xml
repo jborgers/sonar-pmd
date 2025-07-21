@@ -5,11 +5,12 @@
     <name>Apex assertions should include message</name>
     <internalKey>category/apex/bestpractices.xml/ApexAssertionsShouldIncludeMessage</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>The second parameter of System.assert/third parameter of System.assertEquals/System.assertNotEquals is a message.
+    <description><![CDATA[<h2>Title of issues: Apex test assert statement should make use of the message parameter.</h2>
+<p>The second parameter of System.assert/third parameter of System.assertEquals/System.assertNotEquals is a message.
 Having a second/third parameter provides more information and makes it easier to debug the test failure and
 improves the readability of test output.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest
+<p><pre><code class="language-apex"> @isTest
  public class Foo {
      @isTest
      static void methodATest() {
@@ -19,7 +20,7 @@ improves the readability of test output.</p>
          System.assert(o.isClosed, &#39;Opportunity is not closed.&#39;); // good
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexassertionsshouldincludemessage">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexassertionsshouldincludemessage">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -28,25 +29,27 @@ improves the readability of test output.</p>
     <name>Apex bad crypto</name>
     <internalKey>category/apex/security.xml/ApexBadCrypto</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>The rule makes sure you are using randomly generated IVs and keys for <code>Crypto</code> calls.
+    <description><![CDATA[<h2>Title of issues: Apex classes should use random IV/key</h2>
+<p>The rule makes sure you are using randomly generated IVs and keys for <code>Crypto</code> calls.
 Hard-wiring these values greatly compromises the security of encrypted data.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      Blob hardCodedIV = Blob.valueOf(&#39;Hardcoded IV 123&#39;);
      Blob hardCodedKey = Blob.valueOf(&#39;0000000000000000&#39;);
      Blob data = Blob.valueOf(&#39;Data to be encrypted&#39;);
      Blob encrypted = Crypto.encrypt(&#39;AES128&#39;, hardCodedKey, hardCodedIV, data);
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexbadcrypto">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexbadcrypto">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
   <rule>
     <key>ApexCRUDViolation</key>
-    <name>Apex c r u d violation</name>
+    <name>Apex CRUDViolation</name>
     <internalKey>category/apex/security.xml/ApexCRUDViolation</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>The rule validates you are checking for access permissions before a SOQL/SOSL/DML operation.
+    <description><![CDATA[<h2>Title of issues: Validate CRUD permission before SOQL/DML operation or enforce user mode</h2>
+<p>The rule validates you are checking for access permissions before a SOQL/SOSL/DML operation.
 Since Apex runs by default in system mode not having proper permissions checks results in escalation of
 privilege and may produce runtime errors. This check forces you to handle such scenarios.</p>
 <p>Since Winter '23 (API Version 56) you can enforce user mode for database operations by using
@@ -78,7 +81,7 @@ check happens automatically and is not needed explicitly. However, the rule can'
 whether a getter is a VF getter or not and reports a violation in any case. In such cases, the violation
 should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public Contact foo(String status, String ID) {
  
          // validate you can actually query what you intend to retrieve
@@ -94,16 +97,17 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
          return c;
      }
  }</code></pre></p></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexcrudviolation">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexcrudviolation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
   <rule>
     <key>ApexCSRF</key>
-    <name>Apex c s r f</name>
+    <name>Apex CSRF</name>
     <internalKey>category/apex/errorprone.xml/ApexCSRF</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Having DML operations in Apex class constructor or initializers can have unexpected side effects:
+    <description><![CDATA[<h2>Title of issues: Avoid making DML operations in Apex class constructor or initializers</h2>
+<p>Having DML operations in Apex class constructor or initializers can have unexpected side effects:
       By just accessing a page, the DML statements would be executed and the database would be modified.
       Just querying the database is permitted.</p>
 <p>In addition to constructors and initializers, any method called <code>init</code> is checked as well.</p>
@@ -111,7 +115,7 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
 <p><p><b>Note:</b> This rule has been moved from category "Security" to "Error Prone" with PMD 6.21.0, since
       using DML in constructors is not a security problem, but crashes the application.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      // initializer
      {
          insert data;
@@ -127,7 +131,7 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
          insert data;
      }
  }</code></pre></p></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#apexcsrf">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#apexcsrf">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -136,16 +140,17 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
     <name>Apex dangerous methods</name>
     <internalKey>category/apex/security.xml/ApexDangerousMethods</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Checks against calling dangerous methods.</p>
+    <description><![CDATA[<h2>Title of issues: Calling potentially dangerous method</h2>
+<p>Checks against calling dangerous methods.</p>
 <p>For the time being, it reports:</p>
 <ul><li>Against <code>FinancialForce</code>'s <code>Configuration.disableTriggerCRUDSecurity()</code>. Disabling CRUD security opens the door to several attacks and requires manual validation, which is unreliable.</li><li>Calling <code>System.debug</code> passing sensitive data as parameter, which could lead to exposure of private data.</li></ul>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public Foo() {
          Configuration.disableTriggerCRUDSecurity();
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexdangerousmethods">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexdangerousmethods">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -154,11 +159,12 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
     <name>Apex doc</name>
     <internalKey>category/apex/documentation.xml/ApexDoc</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule validates that:</p>
+    <description><![CDATA[<h2>Title of issues: ApexDoc comment is missing or incorrect</h2>
+<p>This rule validates that:</p>
 <ul><li>ApexDoc comments are present for classes, methods, and properties that are public or global, excluding overrides and test classes (as well as the contents of test classes).</li><li>ApexDoc comments are present for classes, methods, and properties that are protected or private, depending on the properties <code>reportPrivate</code> and <code>reportProtected</code>.</li><li>ApexDoc comments should contain @description depending on the property <code>reportMissingDescription</code>.</li><li>ApexDoc comments on non-void, non-constructor methods should contain @return.</li><li>ApexDoc comments on void or constructor methods should not contain @return.</li><li>ApexDoc comments on methods with parameters should contain @param for each parameter, in the same order as the method signature.</li><li>ApexDoc comments are present on properties is only validated, if the property <code>reportProperty</code> is enabled. By setting <code>reportProperty</code> to false, you can ignore missing comments on properties.</li></ul>
 <p>Method overrides and tests are both exempted from having ApexDoc.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> /**
+<p><pre><code class="language-apex"> /**
   * @description Hello World
   */
  public class HelloWorld {
@@ -168,7 +174,7 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
       */
      public Object bar() { return null; }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_documentation.html#apexdoc">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_documentation.html#apexdoc">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>documentation</tag>
   </rule>
@@ -177,16 +183,17 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
     <name>Apex insecure endpoint</name>
     <internalKey>category/apex/security.xml/ApexInsecureEndpoint</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Checks against accessing endpoints under plain <b>http</b>. You should always use
+    <description><![CDATA[<h2>Title of issues: Apex callouts should use encrypted communication channels</h2>
+<p>Checks against accessing endpoints under plain <b>http</b>. You should always use
 <b>https</b> for security.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      void foo() {
          HttpRequest req = new HttpRequest();
          req.setEndpoint(&#39;http://localhost:com&#39;);
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexinsecureendpoint">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexinsecureendpoint">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -195,32 +202,34 @@ should be <a href="pmd_userdocs_suppressing_warnings.html">suppressed</a>.</p>
     <name>Apex open redirect</name>
     <internalKey>category/apex/security.xml/ApexOpenRedirect</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Checks against redirects to user-controlled locations. This prevents attackers from
+    <description><![CDATA[<h2>Title of issues: Apex classes should safely redirect to a known location</h2>
+<p>Checks against redirects to user-controlled locations. This prevents attackers from
 redirecting users to phishing sites.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      String unsafeLocation = ApexPage.getCurrentPage().getParameters.get(&#39;url_param&#39;);
      PageReference page() {
         return new PageReference(unsafeLocation);
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexopenredirect">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexopenredirect">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
   <rule>
     <key>ApexSOQLInjection</key>
-    <name>Apex s o q l injection</name>
+    <name>Apex SOQLInjection</name>
     <internalKey>category/apex/security.xml/ApexSOQLInjection</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Detects the usage of untrusted / unescaped variables in DML queries.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid untrusted/unescaped variables in DML query</h2>
+<p>Detects the usage of untrusted / unescaped variables in DML queries.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void test1(String t1) {
          Database.query(&#39;SELECT Id FROM Account&#39; + t1);
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsoqlinjection">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsoqlinjection">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -229,13 +238,14 @@ redirecting users to phishing sites.</p>
     <name>Apex sharing violations</name>
     <internalKey>category/apex/security.xml/ApexSharingViolations</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Detect classes declared without explicit sharing mode if DML methods are used. This
+    <description><![CDATA[<h2>Title of issues: Apex classes should declare a sharing model if DML or SOQL/SOSL is used</h2>
+<p>Detect classes declared without explicit sharing mode if DML methods are used. This
 forces the developer to take access restrictions into account before modifying objects.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      // DML operation here
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsharingviolations">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsharingviolations">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -244,20 +254,21 @@ forces the developer to take access restrictions into account before modifying o
     <name>Apex suggest using named cred</name>
     <internalKey>category/apex/security.xml/ApexSuggestUsingNamedCred</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Detects hardcoded credentials used in requests to an endpoint.</p>
+    <description><![CDATA[<h2>Title of issues: Suggest named credentials for authentication</h2>
+<p>Detects hardcoded credentials used in requests to an endpoint.</p>
 <p>You should refrain from hardcoding credentials:</p>
 <ul><li>They are hard to mantain by being mixed in application code</li><li>Particularly hard to update them when used from different classes</li><li>Granting a developer access to the codebase means granting knowledge of credentials, keeping a two-level access is not possible.</li><li>Using different credentials for different environments is troublesome and error-prone.</li></ul>
 <p>Instead, you should use <i>Named Credentials</i> and a callout endpoint.</p>
 <p>For more information, you can check <a href="https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_named_credentials.htm">this</a></p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void foo(String username, String password) {
          Blob headerValue = Blob.valueOf(username + &#39;:&#39; + password);
          String authorizationHeader = &#39;BASIC &#39; + EncodingUtil.base64Encode(headerValue);
          req.setHeader(&#39;Authorization&#39;, authorizationHeader);
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsuggestusingnamedcred">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexsuggestusingnamedcred">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -266,11 +277,12 @@ forces the developer to take access restrictions into account before modifying o
     <name>Apex unit test class should have asserts</name>
     <internalKey>category/apex/bestpractices.xml/ApexUnitTestClassShouldHaveAsserts</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Apex unit tests should include at least one assertion.  This makes the tests more robust, and using assert
+    <description><![CDATA[<h2>Title of issues: Apex unit tests should System.assert() or assertEquals() or assertNotEquals()</h2>
+<p>Apex unit tests should include at least one assertion.  This makes the tests more robust, and using assert
 with messages provide the developer a clearer idea of what the test does.  Custom assert method invocation
 patterns can be specified using the 'additionalAssertMethodPattern' property if required.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest
+<p><pre><code class="language-apex"> @isTest
  public class Foo {
      public static testMethod void testSomething() {
          Account a = null;
@@ -279,7 +291,7 @@ patterns can be specified using the 'additionalAssertMethodPattern' property if 
          a.toString();
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestclassshouldhaveasserts">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestclassshouldhaveasserts">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -288,10 +300,11 @@ patterns can be specified using the 'additionalAssertMethodPattern' property if 
     <name>Apex unit test class should have run as</name>
     <internalKey>category/apex/bestpractices.xml/ApexUnitTestClassShouldHaveRunAs</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Apex unit tests should include at least one runAs method.  This makes the tests more robust, and independent from the 
+    <description><![CDATA[<h2>Title of issues: Apex unit test classes should have at least one System.runAs() call</h2>
+<p>Apex unit tests should include at least one runAs method.  This makes the tests more robust, and independent from the 
 user running it.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest
+<p><pre><code class="language-apex"> @isTest
  private class TestRunAs {
     public static testMethod void testRunAs() {
          // Setup test data
@@ -312,7 +325,7 @@ user running it.</p>
            }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestclassshouldhaverunas">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestclassshouldhaverunas">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -321,12 +334,13 @@ user running it.</p>
     <name>Apex unit test method should have is test annotation</name>
     <internalKey>category/apex/bestpractices.xml/ApexUnitTestMethodShouldHaveIsTestAnnotation</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Apex test methods should have <code>@isTest</code> annotation instead of the <code>testMethod</code> keyword,
+    <description><![CDATA[<h2>Title of issues: Apex test methods should have @isTest annotation.</h2>
+<p>Apex test methods should have <code>@isTest</code> annotation instead of the <code>testMethod</code> keyword,
 as <code>testMethod</code> is deprecated.
 Salesforce advices to use <a href="https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_annotation_isTest.htm">@isTest</a>
 annotation for test classes and methods.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest
+<p><pre><code class="language-apex"> @isTest
  private class ATest {
      @isTest
      static void methodATest() {
@@ -342,7 +356,7 @@ annotation for test classes and methods.</p>
      private void fetchData() {
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestmethodshouldhaveistestannotation">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestmethodshouldhaveistestannotation">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -351,9 +365,10 @@ annotation for test classes and methods.</p>
     <name>Apex unit test should not use see all data true</name>
     <internalKey>category/apex/bestpractices.xml/ApexUnitTestShouldNotUseSeeAllDataTrue</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Apex unit tests should not use @isTest(seeAllData=true) because it opens up the existing database data for unexpected modification by tests.</p>
+    <description><![CDATA[<h2>Title of issues: Apex unit tests should not use @isTest(seeAllData = true)</h2>
+<p>Apex unit tests should not use @isTest(seeAllData=true) because it opens up the existing database data for unexpected modification by tests.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest(seeAllData = true)
+<p><pre><code class="language-apex"> @isTest(seeAllData = true)
  public class Foo {
      public static testMethod void testSomething() {
          Account a = null;
@@ -362,39 +377,41 @@ annotation for test classes and methods.</p>
          a.toString();
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestshouldnotuseseealldatatrue">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#apexunittestshouldnotuseseealldatatrue">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
   <rule>
     <key>ApexXSSFromEscapeFalse</key>
-    <name>Apex x s s from escape false</name>
+    <name>Apex XSSFrom escape false</name>
     <internalKey>category/apex/security.xml/ApexXSSFromEscapeFalse</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Reports on calls to <code>addError</code> with disabled escaping. The message passed to <code>addError</code>
+    <description><![CDATA[<h2>Title of issues: Apex classes should escape Strings in error messages</h2>
+<p>Reports on calls to <code>addError</code> with disabled escaping. The message passed to <code>addError</code>
 will be displayed directly to the user in the UI, making it prime ground for XSS
 attacks if unescaped.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      Trigger.new[0].addError(vulnerableHTMLGoesHere, false);
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexxssfromescapefalse">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexxssfromescapefalse">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
   <rule>
     <key>ApexXSSFromURLParam</key>
-    <name>Apex x s s from u r l param</name>
+    <name>Apex XSSFrom URLParam</name>
     <internalKey>category/apex/security.xml/ApexXSSFromURLParam</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Makes sure that all values obtained from URL parameters are properly escaped / sanitized
+    <description><![CDATA[<h2>Title of issues: Apex classes should escape/sanitize Strings obtained from URL parameters</h2>
+<p>Makes sure that all values obtained from URL parameters are properly escaped / sanitized
 to avoid XSS attacks.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      String unescapedstring = ApexPage.getCurrentPage().getParameters.get(&#39;url_param&#39;);
      String usedLater = unescapedstring;
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexxssfromurlparam">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_security.html#apexxssfromurlparam">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>security</tag>
   </rule>
@@ -403,7 +420,8 @@ to avoid XSS attacks.</p>
     <name>Avoid boolean method parameters</name>
     <internalKey>category/apex/design.xml/AvoidBooleanMethodParameters</internalKey>
     <severity>CRITICAL</severity>
-    <description><![CDATA[<p>Boolean parameters in a system's API can make method calls difficult to understand and
+    <description><![CDATA[<h2>Title of issues: Avoid Boolean method parameters</h2>
+<p>Boolean parameters in a system's API can make method calls difficult to understand and
             maintain. They often indicate that a method is doing more than one thing and
             could benefit from being split into separate methods with more descriptive
             names.</p>
@@ -412,7 +430,7 @@ to avoid XSS attacks.</p>
             separate methods, or configuration objects.</p>
 <h2>Examples</h2>
 <h3>Example 1</h3>
-<p><pre><code class="language-java"> // Violates the rule: Uses a Boolean parameter
+<p><pre><code class="language-apex"> // Violates the rule: Uses a Boolean parameter
  public class MyClass {
    public static void doSomething(Boolean isSomething) {
      if (isSomething == true) {
@@ -434,12 +452,12 @@ to avoid XSS attacks.</p>
    }
  }</code></pre></p>
 <h3>Example 2</h3>
-<p><pre><code class="language-java"> public void setFlag(Boolean strict) { ... } // violation
+<p><pre><code class="language-apex"> public void setFlag(Boolean strict) { ... } // violation
  
  // compliant
  public void enableStrictChecking() { ... }
  public void disableStrictChecking() { ... }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#avoidbooleanmethodparameters">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#avoidbooleanmethodparameters">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -448,11 +466,12 @@ to avoid XSS attacks.</p>
     <name>Avoid debug statements</name>
     <internalKey>category/apex/performance.xml/AvoidDebugStatements</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Debug statements contribute to longer transactions and consume Apex CPU time even when debug logs are not being captured.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid debug statements since they impact on performance</h2>
+<p>Debug statements contribute to longer transactions and consume Apex CPU time even when debug logs are not being captured.</p>
 <p>When possible make use of other debugging techniques such as the Apex Replay Debugger and Checkpoints that could cover <i>most</i> use cases.</p>
 <p>For other valid use cases that the statement is in fact valid make use of the <code>@SuppressWarnings</code> annotation or the <code>//NOPMD</code> comment.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void bar() {
          Account acc = [SELECT Name, Owner.Name FROM Account LIMIT 1];
          System.debug(accs); // will get reported
@@ -467,7 +486,7 @@ to avoid XSS attacks.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#avoiddebugstatements">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#avoiddebugstatements">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -476,9 +495,10 @@ to avoid XSS attacks.</p>
     <name>Avoid deeply nested if stmts</name>
     <internalKey>category/apex/design.xml/AvoidDeeplyNestedIfStmts</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid creating deeply nested if-then statements since they are harder to read and error-prone to maintain.</p>
+    <description><![CDATA[<h2>Title of issues: Deeply nested if..then statements are hard to read</h2>
+<p>Avoid creating deeply nested if-then statements since they are harder to read and error-prone to maintain.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void bar(Integer x, Integer y, Integer z) {
          if (x&gt;y) {
              if (y&gt;z) {
@@ -489,7 +509,7 @@ to avoid XSS attacks.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#avoiddeeplynestedifstmts">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#avoiddeeplynestedifstmts">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -498,16 +518,17 @@ to avoid XSS attacks.</p>
     <name>Avoid direct access trigger map</name>
     <internalKey>category/apex/errorprone.xml/AvoidDirectAccessTriggerMap</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid directly accessing Trigger.old and Trigger.new as it can lead to a bug. Triggers should be bulkified and iterate through the map to handle the actions for each item separately.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid directly accessing Trigger.old and Trigger.new</h2>
+<p>Avoid directly accessing Trigger.old and Trigger.new as it can lead to a bug. Triggers should be bulkified and iterate through the map to handle the actions for each item separately.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> trigger AccountTrigger on Account (before insert, before update) {
+<p><pre><code class="language-apex"> trigger AccountTrigger on Account (before insert, before update) {
     Account a = Trigger.new[0]; //Bad: Accessing the trigger array directly is not recommended.
  
     for ( Account a : Trigger.new ) {
          //Good: Iterate through the trigger.new array instead.
     }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoiddirectaccesstriggermap">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoiddirectaccesstriggermap">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -516,15 +537,16 @@ to avoid XSS attacks.</p>
     <name>Avoid global modifier</name>
     <internalKey>category/apex/bestpractices.xml/AvoidGlobalModifier</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Global classes should be avoided (especially in managed packages) as they can never be deleted or changed in signature. Always check twice if something needs to be global.
+    <description><![CDATA[<h2>Title of issues: Avoid using global modifier</h2>
+<p>Global classes should be avoided (especially in managed packages) as they can never be deleted or changed in signature. Always check twice if something needs to be global.
 Many interfaces (e.g. Batch) required global modifiers in the past but don't require this anymore. Don't lock yourself in.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> global class Unchangeable {
+<p><pre><code class="language-apex"> global class Unchangeable {
      global UndeletableType unchangable(UndeletableType param) {
          // ...
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#avoidglobalmodifier">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#avoidglobalmodifier">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -533,11 +555,12 @@ Many interfaces (e.g. Batch) required global modifiers in the past but don't req
     <name>Avoid hardcoding id</name>
     <internalKey>category/apex/errorprone.xml/AvoidHardcodingId</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>When deploying Apex code between sandbox and production environments, or installing Force.com AppExchange packages,
+    <description><![CDATA[<h2>Title of issues: Hardcoding Id's is bound to break when changing environments.</h2>
+<p>When deploying Apex code between sandbox and production environments, or installing Force.com AppExchange packages,
       it is essential to avoid hardcoding IDs in the Apex code. By doing so, if the record IDs change between environments,
       the logic can dynamically identify the proper data to operate against and not fail.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public without sharing class Foo {
+<p><pre><code class="language-apex"> public without sharing class Foo {
      void foo() {
          //Error - hardcoded the record type id
          if (a.RecordTypeId == &#39;012500000009WAr&#39;) {
@@ -547,7 +570,7 @@ Many interfaces (e.g. Batch) required global modifiers in the past but don't req
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidhardcodingid">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidhardcodingid">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -556,11 +579,12 @@ Many interfaces (e.g. Batch) required global modifiers in the past but don't req
     <name>Avoid logic in trigger</name>
     <internalKey>category/apex/bestpractices.xml/AvoidLogicInTrigger</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>As triggers do not allow methods like regular classes they are less flexible and suited to apply good encapsulation style.
+    <description><![CDATA[<h2>Title of issues: Avoid logic in triggers</h2>
+<p>As triggers do not allow methods like regular classes they are less flexible and suited to apply good encapsulation style.
 Therefore delegate the triggers work to a regular class (often called Trigger handler class).</p>
 <p>See more here: <a href="https://developer.salesforce.com/page/Trigger_Frameworks_and_Apex_Trigger_Best_Practices">https://developer.salesforce.com/page/Trigger_Frameworks_and_Apex_Trigger_Best_Practices</a></p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> trigger Accounts on Account (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
+<p><pre><code class="language-apex"> trigger Accounts on Account (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
      for(Account acc : Trigger.new) {
          if(Trigger.isInsert) {
              // ...
@@ -573,7 +597,7 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#avoidlogicintrigger">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#avoidlogicintrigger">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -582,17 +606,18 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
     <name>Avoid non existent annotations</name>
     <internalKey>category/apex/errorprone.xml/AvoidNonExistentAnnotations</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Apex supported non existent annotations for legacy reasons.
+    <description><![CDATA[<h2>Title of issues: Use of non existent annotations will lead to broken Apex code which will not compile in the future.</h2>
+<p>Apex supported non existent annotations for legacy reasons.
       In the future, use of such non-existent annotations could result in broken apex code that will not compile.
       This will prevent users of garbage annotations from being able to use legitimate annotations added to Apex in the future.
       A full list of supported annotations can be found at https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_annotation.htm</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @NonExistentAnnotation public class ClassWithNonexistentAnnotation {
+<p><pre><code class="language-apex"> @NonExistentAnnotation public class ClassWithNonexistentAnnotation {
      @NonExistentAnnotation public void methodWithNonExistentAnnotation() {
          // ...
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidnonexistentannotations">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidnonexistentannotations">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -601,11 +626,12 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
     <name>Avoid non restrictive queries</name>
     <internalKey>category/apex/performance.xml/AvoidNonRestrictiveQueries</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>When working with very large amounts of data, unfiltered SOQL or SOSL queries can quickly cause
+    <description><![CDATA[<h2>Title of issues: Avoid <code>{0}</code> queries without a where or limit statement</h2>
+<p>When working with very large amounts of data, unfiltered SOQL or SOSL queries can quickly cause
             <a href="https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm">governor limit</a>
             exceptions.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Something {
+<p><pre><code class="language-apex"> public class Something {
      public static void main( String[] as ) {
          Account[] accs1 = [ select id from account ];  // Bad
          Account[] accs2 = [ select id from account limit 10 ];  // better
@@ -613,7 +639,7 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
          List&lt;List&lt;SObject&gt;&gt; searchList = [FIND &#39;map*&#39; IN ALL FIELDS RETURNING Account (Id, Name), Contact, Opportunity, Lead]; // bad
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#avoidnonrestrictivequeries">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#avoidnonrestrictivequeries">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -622,14 +648,15 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
     <name>Avoid stateful database result</name>
     <internalKey>category/apex/errorprone.xml/AvoidStatefulDatabaseResult</internalKey>
     <severity>CRITICAL</severity>
-    <description><![CDATA[<p>Using instance variables of the following types (or collections of these types) within a stateful batch class can cause serialization errors between batch iterations:</p>
+    <description><![CDATA[<h2>Title of issues: Using stateful <code>Database.[x]Result</code> instance variables can cause serialization errors between successive batch iterations.</h2>
+<p>Using instance variables of the following types (or collections of these types) within a stateful batch class can cause serialization errors between batch iterations:</p>
 <ul><li><code>Database.DeleteResult</code></li><li><code>Database.EmptyRecycleBinResult</code></li><li><code>Database.MergeResult</code></li><li><code>Database.SaveResult</code></li><li><code>Database.UndeleteResult</code></li><li><code>Database.UpsertResult</code></li></ul>
 <p>This error occurs inconsistently and asynchronously with an obscure error message - making it particularly challenging to troubleshoot.
       See <a href="https://issues.salesforce.com/issue/a028c00000qPwlqAAC/stateful-batch-job-that-stores-databasesaveresult-failed-after-validation-errors-throws-error-during-deserialization">this issue</a> for more details.</p>
 <p>These errors can be avoided by marking the variable as static, transient, or using a different
       data type that is safe to serialize.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // Violating
+<p><pre><code class="language-apex"> // Violating
  public class Example implements Database.Batchable&lt;SObject&gt;, Database.Stateful {
    List&lt;Database.SaveResult&gt; results = new List&lt;Database.SaveResult&gt;(); // This can cause failures
  
@@ -689,7 +716,7 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
      return errors;
    }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidstatefuldatabaseresult">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#avoidstatefuldatabaseresult">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -698,16 +725,17 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
     <name>Class naming conventions</name>
     <internalKey>category/apex/codestyle.xml/ClassNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for type declarations. This rule reports
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for type declarations. This rule reports
             type declarations which do not match the regex that applies to their
             specific kind (e.g. enum or interface). Each regex can be configured through
             properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Pascal case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class FooClass { } // This is in pascal case, so it&#39;s ok
+<p><pre><code class="language-apex"> public class FooClass { } // This is in pascal case, so it&#39;s ok
  
  public class fooClass { } // This will be reported unless you change the regex</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#classnamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#classnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -716,7 +744,8 @@ Therefore delegate the triggers work to a regular class (often called Trigger ha
     <name>Cognitive complexity</name>
     <internalKey>category/apex/design.xml/CognitiveComplexity</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Methods that are highly complex are difficult to read and more costly to maintain. If you include too much decisional
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> '<code>{1}</code>' has a<code>{2}</code> cognitive complexity of <code>{3}</code>, current threshold is <code>{4}</code></h2>
+<p>Methods that are highly complex are difficult to read and more costly to maintain. If you include too much decisional
 logic within a single method, you make its behavior hard to understand and more difficult to modify.</p>
 <p>Cognitive complexity is a measure of how difficult it is for humans to read and understand a method. Code that contains
 a break in the control flow is more complex, whereas the use of language shorthands doesn't increase the level of
@@ -727,7 +756,7 @@ control flow leading to an increase in cognitive complexity.</p>
 <p>By default, this rule reports methods with a complexity of 15 or more. Reported methods should be broken down into less
 complex components.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      // Has a cognitive complexity of 0
      public void createAccount() {
          Account account = new Account(Name = &#39;PMD&#39;);
@@ -762,7 +791,7 @@ complex components.</p>
          update contactsToUpdate;
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#cognitivecomplexity">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#cognitivecomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -771,7 +800,8 @@ complex components.</p>
     <name>Cyclomatic complexity</name>
     <internalKey>category/apex/design.xml/CyclomaticComplexity</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>The complexity of methods directly affects maintenance costs and readability. Concentrating too much decisional logic
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> '<code>{1}</code>' has a<code>{2}</code> cyclomatic complexity of <code>{3}</code>.</h2>
+<p>The complexity of methods directly affects maintenance costs and readability. Concentrating too much decisional logic
 in a single method makes its behaviour hard to read and change.</p>
 <p>Cyclomatic complexity assesses the complexity of a method by counting the number of decision points in a method,
 plus one for the method entry. Decision points are places where the control flow jumps to another place in the
@@ -783,7 +813,7 @@ methods' complexities reaches 40, even if none of the methods was directly repor
 <p>Reported methods should be broken down into several smaller methods. Reported classes should probably be broken down
 into subcomponents.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Complicated {
+<p><pre><code class="language-apex"> public class Complicated {
    public void example() { // This method has a cyclomatic complexity of 12
      int x = 0, y = 1, z = 2, t = 2;
      boolean a = false, b = true, c = false, d = true;
@@ -806,7 +836,7 @@ into subcomponents.</p>
      }
    }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#cyclomaticcomplexity">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#cyclomaticcomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -815,10 +845,11 @@ into subcomponents.</p>
     <name>Debugs should use logging level</name>
     <internalKey>category/apex/bestpractices.xml/DebugsShouldUseLoggingLevel</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>The first parameter of System.debug, when using the signature with two parameters, is a LoggingLevel enum.</p>
+    <description><![CDATA[<h2>Title of issues: Calls to System.debug should specify a logging level.</h2>
+<p>The first parameter of System.debug, when using the signature with two parameters, is a LoggingLevel enum.</p>
 <p>Having the Logging Level specified provides a cleaner log, and improves readability of it.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> @isTest
+<p><pre><code class="language-apex"> @isTest
  public class Foo {
      @isTest
      static void bar() {
@@ -827,7 +858,7 @@ into subcomponents.</p>
          System.debug(LoggingLevel.DEBUG, &#39;Hey, something happened.&#39;); // not good when on strict mode
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#debugsshoulduselogginglevel">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#debugsshoulduselogginglevel">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <param>
@@ -839,10 +870,11 @@ into subcomponents.</p>
   </rule>
   <rule>
     <key>EagerlyLoadedDescribeSObjectResult</key>
-    <name>Eagerly loaded describe s object result</name>
+    <name>Eagerly loaded describe SObject result</name>
     <internalKey>category/apex/performance.xml/EagerlyLoadedDescribeSObjectResult</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule finds <code>DescribeSObjectResult</code>s which could have been loaded eagerly via <code>SObjectType.getDescribe()</code>.</p>
+    <description><![CDATA[<h2>Title of issues: DescribeSObjectResult could be being loaded eagerly with all child relationships.</h2>
+<p>This rule finds <code>DescribeSObjectResult</code>s which could have been loaded eagerly via <code>SObjectType.getDescribe()</code>.</p>
 <p>When using <code>SObjectType.getDescribe()</code> or <code>Schema.describeSObjects()</code> without supplying a <code>SObjectDescribeOptions</code>,
 implicitly it will be using <code>SObjectDescribeOptions.DEFAULT</code> and then all
 child relationships will be loaded eagerly regardless whether this information is needed or not.
@@ -857,14 +889,14 @@ to be consistent across different contexts and API versions.</p>
 <p>Properties:</p>
 <ul><li><code>noDefault</code>: The behavior of <code>SObjectDescribeOptions.DEFAULT</code> changes from API Version 43 to 44: With API Version 43, the attributes are loaded eagerly. With API Version 44, they are loaded lazily. Simply using <code>SObjectDescribeOptions.DEFAULT</code> doesn't automatically make use of lazy loading. (unless "Use Improved Schema Caching" critical update is applied, <code>SObjectDescribeOptions.DEFAULT</code> does fallback to lazy loading) With this property enabled, such usages are found. You might ignore this, if you can make sure, that you don't run a mix of API Versions.</li></ul>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public static void bar(List&lt;Account&gt; accounts) {
          if (Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFERRED).isCreateable()) {
              insert accounts;
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#eagerlyloadeddescribesobjectresult">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#eagerlyloadeddescribesobjectresult">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
     <param>
@@ -879,11 +911,12 @@ to be consistent across different contexts and API versions.</p>
     <name>Empty catch block</name>
     <internalKey>category/apex/errorprone.xml/EmptyCatchBlock</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Empty Catch Block finds instances where an exception is caught, but nothing is done.
+    <description><![CDATA[<h2>Title of issues: Avoid empty catch blocks</h2>
+<p>Empty Catch Block finds instances where an exception is caught, but nothing is done.
       In most circumstances, this swallows an exception which should either be acted on
       or reported.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public void doSomething() {
+<p><pre><code class="language-apex"> public void doSomething() {
      ...
      try {
          insert accounts;
@@ -891,7 +924,7 @@ to be consistent across different contexts and API versions.</p>
          // not good
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptycatchblock">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptycatchblock">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <param>
@@ -912,16 +945,17 @@ to be consistent across different contexts and API versions.</p>
     <name>Empty if stmt</name>
     <internalKey>category/apex/errorprone.xml/EmptyIfStmt</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Empty If Statement finds instances where a condition is checked but nothing is done about it.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid empty 'if' statements</h2>
+<p>Empty If Statement finds instances where a condition is checked but nothing is done about it.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void bar(Integer x) {
          if (x == 0) {
              // empty!
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptyifstmt">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptyifstmt">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -930,9 +964,10 @@ to be consistent across different contexts and API versions.</p>
     <name>Empty statement block</name>
     <internalKey>category/apex/errorprone.xml/EmptyStatementBlock</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Empty block statements serve no purpose and should be removed.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid empty block statements.</h2>
+<p>Empty block statements serve no purpose and should be removed.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
  
     private Integer _bar;
  
@@ -941,7 +976,7 @@ to be consistent across different contexts and API versions.</p>
     }
  
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptystatementblock">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptystatementblock">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <param>
@@ -962,9 +997,10 @@ to be consistent across different contexts and API versions.</p>
     <name>Empty try or finally block</name>
     <internalKey>category/apex/errorprone.xml/EmptyTryOrFinallyBlock</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid empty try or finally blocks - what's the point?</p>
+    <description><![CDATA[<h2>Title of issues: Avoid empty try or finally blocks</h2>
+<p>Avoid empty try or finally blocks - what's the point?</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void bar() {
          try {
            // empty !
@@ -983,7 +1019,7 @@ to be consistent across different contexts and API versions.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptytryorfinallyblock">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptytryorfinallyblock">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -992,16 +1028,17 @@ to be consistent across different contexts and API versions.</p>
     <name>Empty while stmt</name>
     <internalKey>category/apex/errorprone.xml/EmptyWhileStmt</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Empty While Statement finds all instances where a while statement does nothing.
+    <description><![CDATA[<h2>Title of issues: Avoid empty 'while' statements</h2>
+<p>Empty While Statement finds all instances where a while statement does nothing.
       If it is a timing loop, then you should use Thread.sleep() for it; if it is
       a while loop that does a lot in the exit expression, rewrite it to make it clearer.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public void bar(Integer a, Integer b) {
+<p><pre><code class="language-apex"> public void bar(Integer a, Integer b) {
    while (a == b) {
      // empty!
    }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptywhilestmt">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#emptywhilestmt">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1010,11 +1047,12 @@ to be consistent across different contexts and API versions.</p>
     <name>Excessive class length</name>
     <internalKey>category/apex/design.xml/ExcessiveClassLength</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Excessive class file lengths are usually indications that the class may be burdened with excessive
+    <description><![CDATA[<h2>Title of issues: Avoid really long classes.</h2>
+<p>Excessive class file lengths are usually indications that the class may be burdened with excessive
 responsibilities that could be provided by external classes or functions. In breaking these methods
 apart the code becomes more managable and ripe for reuse.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void bar1() {
          // 1000 lines of code
      }
@@ -1028,7 +1066,7 @@ apart the code becomes more managable and ripe for reuse.</p>
          // 1000 lines of code
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessiveclasslength">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessiveclasslength">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1037,10 +1075,11 @@ apart the code becomes more managable and ripe for reuse.</p>
     <name>Excessive parameter list</name>
     <internalKey>category/apex/design.xml/ExcessiveParameterList</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Methods with numerous parameters are a challenge to maintain, especially if most of them share the
+    <description><![CDATA[<h2>Title of issues: Avoid long parameter lists.</h2>
+<p>Methods with numerous parameters are a challenge to maintain, especially if most of them share the
 same datatype. These situations usually denote the need for new objects to wrap the numerous parameters.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // too many arguments liable to be mixed up
+<p><pre><code class="language-apex"> // too many arguments liable to be mixed up
  public void addPerson(Integer birthYear, Integer birthMonth, Integer birthDate, Integer height, Integer weight, Integer ssn) {
      // ...
  }
@@ -1048,7 +1087,7 @@ same datatype. These situations usually denote the need for new objects to wrap 
  public void addPerson(Date birthdate, BodyMeasurements measurements, int ssn) {
      // ...
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessiveparameterlist">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessiveparameterlist">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1057,12 +1096,13 @@ same datatype. These situations usually denote the need for new objects to wrap 
     <name>Excessive public count</name>
     <internalKey>category/apex/design.xml/ExcessivePublicCount</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Classes with large numbers of public methods, attributes, and properties require disproportionate testing efforts
+    <description><![CDATA[<h2>Title of issues: The class <code>{0}</code> has <code>{1}</code> public methods, attributes, and properties (limit: <code>{2}</code>)</h2>
+<p>Classes with large numbers of public methods, attributes, and properties require disproportionate testing efforts
 since combinatorial side effects grow rapidly and increase risk. Refactoring these classes into
 smaller ones not only increases testability and reliability but also allows new variations to be
 developed easily.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public String value;
      public Bar something;
      public Variable var;
@@ -1076,7 +1116,7 @@ developed easily.</p>
      public String property1 { get; set; }
      // [... more more public properties ...]
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessivepubliccount">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#excessivepubliccount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1085,9 +1125,10 @@ developed easily.</p>
     <name>Field declarations should be at start</name>
     <internalKey>category/apex/codestyle.xml/FieldDeclarationsShouldBeAtStart</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Field declarations should appear before method declarations within a class.</p>
+    <description><![CDATA[<h2>Title of issues: Field declaration for '<code>{0}</code>' should be before method declarations in its class</h2>
+<p>Field declarations should appear before method declarations within a class.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> class Foo {
+<p><pre><code class="language-apex"> class Foo {
      public Integer someField; // good
  
      public void someMethod() {
@@ -1095,7 +1136,7 @@ developed easily.</p>
  
      public Integer anotherField; // bad
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#fielddeclarationsshouldbeatstart">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#fielddeclarationsshouldbeatstart">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1104,17 +1145,18 @@ developed easily.</p>
     <name>Field naming conventions</name>
     <internalKey>category/apex/codestyle.xml/FieldNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for field declarations. This rule reports variable declarations
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for field declarations. This rule reports variable declarations
             which do not match the regex that applies to their specific kind ---e.g. constants (static final),
             static field, final field. Each regex can be configured through properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Camel case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      Integer instanceField; // This is in camel case, so it&#39;s ok
  
      Integer INSTANCE_FIELD; // This will be reported unless you change the regex
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#fieldnamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#fieldnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1123,17 +1165,18 @@ developed easily.</p>
     <name>For loops must use braces</name>
     <internalKey>category/apex/codestyle.xml/ForLoopsMustUseBraces</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid using 'for' statements without using surrounding braces. If the code formatting or
+    <description><![CDATA[<h2>Title of issues: Avoid using 'for' statements without curly braces</h2>
+<p>Avoid using 'for' statements without using surrounding braces. If the code formatting or
 indentation is lost then it becomes difficult to separate the code being controlled
 from the rest.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> for (int i = 0; i &lt; 42; i++) // not recommended
+<p><pre><code class="language-apex"> for (int i = 0; i &lt; 42; i++) // not recommended
      foo();
  
  for (int i = 0; i &lt; 42; i++) { // preferred approach
      foo();
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#forloopsmustusebraces">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#forloopsmustusebraces">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1142,18 +1185,19 @@ from the rest.</p>
     <name>Formal parameter naming conventions</name>
     <internalKey>category/apex/codestyle.xml/FormalParameterNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for formal parameters of methods.
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for formal parameters of methods.
             This rule reports formal parameters which do not match the regex that applies to their
             specific kind (e.g. method parameter, or final method parameter). Each regex can be
             configured through properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Camel case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public bar(Integer methodParameter) { } // This is in camel case, so it&#39;s ok
  
      public baz(Integer METHOD_PARAMETER) { } // This will be reported unless you change the regex
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#formalparameternamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#formalparameternamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1162,11 +1206,12 @@ from the rest.</p>
     <name>If else stmts must use braces</name>
     <internalKey>category/apex/codestyle.xml/IfElseStmtsMustUseBraces</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid using if..else statements without using surrounding braces. If the code formatting
+    <description><![CDATA[<h2>Title of issues: Avoid using 'if...else' statements without curly braces</h2>
+<p>Avoid using if..else statements without using surrounding braces. If the code formatting
 or indentation is lost then it becomes difficult to separate the code being controlled
 from the rest.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // this is OK
+<p><pre><code class="language-apex"> // this is OK
  if (foo) x++;
  
  // but this is not
@@ -1174,7 +1219,7 @@ from the rest.</p>
      x = x+1;
  else
      x = x-1;</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#ifelsestmtsmustusebraces">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#ifelsestmtsmustusebraces">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1183,17 +1228,18 @@ from the rest.</p>
     <name>If stmts must use braces</name>
     <internalKey>category/apex/codestyle.xml/IfStmtsMustUseBraces</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid using if statements without using braces to surround the code block. If the code
+    <description><![CDATA[<h2>Title of issues: Avoid using if statements without curly braces</h2>
+<p>Avoid using if statements without using braces to surround the code block. If the code
 formatting or indentation is lost then it becomes difficult to separate the code being
 controlled from the rest.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> if (foo)    // not recommended
+<p><pre><code class="language-apex"> if (foo)    // not recommended
      x++;
  
  if (foo) {  // preferred approach
      x++;
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#ifstmtsmustusebraces">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#ifstmtsmustusebraces">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1202,12 +1248,13 @@ controlled from the rest.</p>
     <name>Inaccessible aura enabled getter</name>
     <internalKey>category/apex/errorprone.xml/InaccessibleAuraEnabledGetter</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>In the Summer '21 release, a mandatory security update enforces access modifiers on Apex properties in
+    <description><![CDATA[<h2>Title of issues: AuraEnabled getter must be public or global if is referenced in Lightning components</h2>
+<p>In the Summer '21 release, a mandatory security update enforces access modifiers on Apex properties in
       Lightning component markup. The update prevents access to private or protected Apex getters from Aura
       and Lightning Web Components.</p>
 <h2>Examples</h2>
 <h3>Example 1</h3>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      @AuraEnabled
      public Integer counter { private get; set; } // Violating - Private getter is inaccessible to Lightning components
  
@@ -1220,7 +1267,7 @@ controlled from the rest.</p>
      }
  }</code></pre></p>
 <h3>Example 2</h3>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      @AuraEnabled
      public Integer counter { protected get; set; } // Violating - Protected getter is inaccessible to Lightning components
  
@@ -1233,7 +1280,7 @@ controlled from the rest.</p>
      }
  }</code></pre></p>
 <h3>Example 3</h3>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      @AuraEnabled
      public Integer counter { get; set; } // Compliant - Public getter is accessible to Lightning components
  
@@ -1245,7 +1292,7 @@ controlled from the rest.</p>
          return foo;
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#inaccessibleauraenabledgetter">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#inaccessibleauraenabledgetter">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1254,20 +1301,21 @@ controlled from the rest.</p>
     <name>Local variable naming conventions</name>
     <internalKey>category/apex/codestyle.xml/LocalVariableNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for local variable declarations.
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for local variable declarations.
             This rule reports variable declarations which do not match the regex that applies to their
             specific kind (e.g. local variable, or final local variable). Each regex can be configured through
             properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Camel case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public Foo() {
          Integer localVariable; // This is in camel case, so it&#39;s ok
  
          Integer LOCAL_VARIABLE; // This will be reported unless you change the regex
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#localvariablenamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#localvariablenamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1276,17 +1324,18 @@ controlled from the rest.</p>
     <name>Method naming conventions</name>
     <internalKey>category/apex/codestyle.xml/MethodNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for method declarations. This rule reports
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for method declarations. This rule reports
             method declarations which do not match the regex that applies to their
             specific kind (e.g. static method, or test method). Each regex can be
             configured through properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Camel case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public void instanceMethod() { } // This is in camel case, so it&#39;s ok
  
      public void INSTANCE_METHOD() { } // This will be reported unless you change the regex</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#methodnamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#methodnamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1295,15 +1344,16 @@ controlled from the rest.</p>
     <name>Method with same name as enclosing class</name>
     <internalKey>category/apex/errorprone.xml/MethodWithSameNameAsEnclosingClass</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Non-constructor methods should not have the same name as the enclosing class.</p>
+    <description><![CDATA[<h2>Title of issues: Classes should not have non-constructor methods with the same name as the class</h2>
+<p>Non-constructor methods should not have the same name as the enclosing class.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class MyClass {
+<p><pre><code class="language-apex"> public class MyClass {
      // this is OK because it is a constructor
      public MyClass() {}
      // this is bad because it is a method
      public void MyClass() {}
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#methodwithsamenameasenclosingclass">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#methodwithsamenameasenclosingclass">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1312,11 +1362,12 @@ controlled from the rest.</p>
     <name>Ncss constructor count</name>
     <internalKey>category/apex/design.xml/NcssConstructorCount</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
+    <description><![CDATA[<h2>Title of issues: The constructor has an NCSS line count of <code>{0}</code></h2>
+<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
 of code for a given constructor. NCSS ignores comments, and counts actual statements. Using this algorithm,
 lines of code that are split are counted as one.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo extends Bar {
+<p><pre><code class="language-apex"> public class Foo extends Bar {
      //this constructor only has 1 NCSS lines
      public Foo() {
          super();
@@ -1327,7 +1378,7 @@ lines of code that are split are counted as one.</p>
          super.foo();
  }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncssconstructorcount">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncssconstructorcount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1336,11 +1387,12 @@ lines of code that are split are counted as one.</p>
     <name>Ncss method count</name>
     <internalKey>category/apex/design.xml/NcssMethodCount</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
+    <description><![CDATA[<h2>Title of issues: The method '<code>{0}</code>()' has an NCSS line count of <code>{1}</code> (limit: <code>{2}</code>)</h2>
+<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
 of code for a given method. NCSS ignores comments, and counts actual statements. Using this algorithm,
 lines of code that are split are counted as one.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo extends Bar {
+<p><pre><code class="language-apex"> public class Foo extends Bar {
      //this method only has 1 NCSS lines
      public Integer method() {
          super.method();
@@ -1350,7 +1402,7 @@ lines of code that are split are counted as one.</p>
          return 1;
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncssmethodcount">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncssmethodcount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1359,11 +1411,12 @@ lines of code that are split are counted as one.</p>
     <name>Ncss type count</name>
     <internalKey>category/apex/design.xml/NcssTypeCount</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
+    <description><![CDATA[<h2>Title of issues: The type has an NCSS line count of <code>{0}</code></h2>
+<p>This rule uses the NCSS (Non-Commenting Source Statements) algorithm to determine the number of lines
 of code for a given type. NCSS ignores comments, and counts actual statements. Using this algorithm,
 lines of code that are split are counted as one.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> //this class only has 6 NCSS lines
+<p><pre><code class="language-apex"> //this class only has 6 NCSS lines
  public class Foo extends Bar {
      public Foo() {
          super();
@@ -1375,7 +1428,7 @@ lines of code that are split are counted as one.</p>
          super.foo();
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncsstypecount">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#ncsstypecount">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1384,17 +1437,18 @@ lines of code that are split are counted as one.</p>
     <name>One declaration per line</name>
     <internalKey>category/apex/codestyle.xml/OneDeclarationPerLine</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Apex allows the use of several variables declaration of the same type on one line. However, it
+    <description><![CDATA[<h2>Title of issues: Use one statement for each line, it enhances code readability.</h2>
+<p>Apex allows the use of several variables declaration of the same type on one line. However, it
 can lead to quite messy code. This rule looks for several declarations on the same line.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> Integer a, b;   // not recommended
+<p><pre><code class="language-apex"> Integer a, b;   // not recommended
  
  Integer a,
          b;      // ok by default, can be flagged setting the strictMode property
  
  Integer a;      // preferred approach
  Integer b;</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#onedeclarationperline">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#onedeclarationperline">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
@@ -1415,7 +1469,8 @@ can lead to quite messy code. This rule looks for several declarations on the sa
     <name>Operation with high cost in loop</name>
     <internalKey>category/apex/performance.xml/OperationWithHighCostInLoop</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>This rule finds method calls inside loops that are known to be likely a performance issue. These methods should be
+    <description><![CDATA[<h2>Title of issues: Avoid operations in loops that may impact performances</h2>
+<p>This rule finds method calls inside loops that are known to be likely a performance issue. These methods should be
 called only once before the loop.</p>
 <p>Schema class methods like <a href="https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_schema.htm#apex_System_Schema_getGlobalDescribe">Schema.getGlobalDescribe()</a>
 and <a href="https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_schema.htm#apex_System_Schema_describeSObjects">Schema.describeSObjects()</a>
@@ -1423,7 +1478,7 @@ might be slow depending on the size of your organization. Calling these methods 
 a potential performance issue.</p>
 <h2>Examples</h2>
 <h3>Example 1</h3>
-<p><pre><code class="language-java"> public class GlobalDescribeExample {
+<p><pre><code class="language-apex"> public class GlobalDescribeExample {
      // incorrect example
      public void getGlobalDescribeInLoop() {
          Set&lt;String&gt; fieldNameSet = new Set&lt;String&gt; {&#39;Id&#39;};
@@ -1447,7 +1502,7 @@ a potential performance issue.</p>
      }
  }</code></pre></p>
 <h3>Example 2</h3>
-<p><pre><code class="language-java"> public class DescribeSObjectsExample {
+<p><pre><code class="language-apex"> public class DescribeSObjectsExample {
      // incorrect example
      public void describeSObjectsInLoop() {
          Set&lt;String&gt; fieldNameSet = new Set&lt;String&gt; {&#39;Id&#39;};
@@ -1470,7 +1525,7 @@ a potential performance issue.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#operationwithhighcostinloop">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#operationwithhighcostinloop">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -1479,9 +1534,10 @@ a potential performance issue.</p>
     <name>Operation with limits in loop</name>
     <internalKey>category/apex/performance.xml/OperationWithLimitsInLoop</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Database class methods, DML operations, SOQL queries, SOSL queries, Approval class methods, Email sending, async scheduling or queueing within loops can cause governor limit exceptions. Instead, try to batch up the data into a list and invoke the operation once on that list of data outside the loop.</p>
+    <description><![CDATA[<h2>Title of issues: Avoid operations in loops that may hit governor limits</h2>
+<p>Database class methods, DML operations, SOQL queries, SOSL queries, Approval class methods, Email sending, async scheduling or queueing within loops can cause governor limit exceptions. Instead, try to batch up the data into a list and invoke the operation once on that list of data outside the loop.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Something {
+<p><pre><code class="language-apex"> public class Something {
      public void databaseMethodInsideOfLoop(List&lt;Account&gt; accounts) {
          for (Account a : accounts) {
              Database.insert(a);
@@ -1534,7 +1590,7 @@ a potential performance issue.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#operationwithlimitsinloop">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_performance.html#operationwithlimitsinloop">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>performance</tag>
   </rule>
@@ -1543,12 +1599,13 @@ a potential performance issue.</p>
     <name>Override both equals and hashcode</name>
     <internalKey>category/apex/errorprone.xml/OverrideBothEqualsAndHashcode</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Override both <code>public Boolean equals(Object obj)</code>, and <code>public Integer hashCode()</code>, or override neither.
+    <description><![CDATA[<h2>Title of issues: Ensure you override both equals() and hashCode()</h2>
+<p>Override both <code>public Boolean equals(Object obj)</code>, and <code>public Integer hashCode()</code>, or override neither.
       Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly
       delegating to your superclass.</p>
 <p>This is especially important when <a href="https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/langCon_apex_collections_maps_keys_userdefined.htm">Using Custom Types in Map Keys and Sets</a>.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Bar {        // poor, missing a hashCode() method
+<p><pre><code class="language-apex"> public class Bar {        // poor, missing a hashCode() method
      public Boolean equals(Object o) {
        // do some comparison
      }
@@ -1566,7 +1623,7 @@ a potential performance issue.</p>
        // return some hash value
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#overridebothequalsandhashcode">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#overridebothequalsandhashcode">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1575,18 +1632,19 @@ a potential performance issue.</p>
     <name>Property naming conventions</name>
     <internalKey>category/apex/codestyle.xml/PropertyNamingConventions</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>Configurable naming conventions for property declarations. This rule reports
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> name '<code>{1}</code>' doesn't match '<code>{2}</code>'</h2>
+<p>Configurable naming conventions for property declarations. This rule reports
             property declarations which do not match the regex that applies to their
             specific kind (e.g. static property, or instance property). Each regex can be
             configured through properties.</p>
 <p>By default this rule uses the standard Apex naming convention (Camel case).</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Foo {
+<p><pre><code class="language-apex"> public class Foo {
      public Integer instanceProperty { get; set; } // This is in camel case, so it&#39;s ok
  
      public Integer INSTANCE_PROPERTY { get; set; } // This will be reported unless you change the regex
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#propertynamingconventions">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#propertynamingconventions">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
@@ -1595,11 +1653,12 @@ a potential performance issue.</p>
     <name>Queueable without finalizer</name>
     <internalKey>category/apex/bestpractices.xml/QueueableWithoutFinalizer</internalKey>
     <severity>INFO</severity>
-    <description><![CDATA[<p>Detects when the Queueable interface is used but a Finalizer is not attached.
+    <description><![CDATA[<h2>Title of issues: This Queueable doesn't attach a Finalizer</h2>
+<p>Detects when the Queueable interface is used but a Finalizer is not attached.
 It is best practice to call the <code>System.attachFinalizer(Finalizer f)</code> method within the <code>execute</code> method of a class which implements the <code>Queueable</code> interface.
 Without attaching a Finalizer, there is no way of designing error recovery actions should the Queueable action fail.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // Incorrect code, does not attach a finalizer.
+<p><pre><code class="language-apex"> // Incorrect code, does not attach a finalizer.
  public class UserUpdater implements Queueable {
      public List&lt;User&gt; usersToUpdate;
  
@@ -1633,7 +1692,7 @@ Without attaching a Finalizer, there is no way of designing error recovery actio
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#queueablewithoutfinalizer">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#queueablewithoutfinalizer">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -1642,12 +1701,13 @@ Without attaching a Finalizer, there is no way of designing error recovery actio
     <name>Std cyclomatic complexity</name>
     <internalKey>category/apex/design.xml/StdCyclomaticComplexity</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Complexity directly affects maintenance costs is determined by the number of decision points in a method
+    <description><![CDATA[<h2>Title of issues: The <code>{0}</code> '<code>{1}</code>' has a Standard Cyclomatic Complexity of <code>{2}</code>.</h2>
+<p>Complexity directly affects maintenance costs is determined by the number of decision points in a method
 plus one for the method entry.  The decision points include 'if', 'while', 'for', and 'case labels' calls.
 Generally, numbers ranging from 1-4 denote low complexity, 5-7 denote moderate complexity, 8-10 denote
 high complexity, and 11+ is very high complexity.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // This has a Cyclomatic Complexity = 12
+<p><pre><code class="language-apex"> // This has a Cyclomatic Complexity = 12
  public class Foo {
  1   public void example() {
  2   if (a == b || (c == d &amp;&amp; e == f)) {
@@ -1683,7 +1743,7 @@ high complexity, and 11+ is very high complexity.</p>
          }
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#stdcyclomaticcomplexity">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#stdcyclomaticcomplexity">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1692,14 +1752,15 @@ high complexity, and 11+ is very high complexity.</p>
     <name>Test methods must be in test classes</name>
     <internalKey>category/apex/errorprone.xml/TestMethodsMustBeInTestClasses</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Test methods marked as a testMethod or annotated with @IsTest,
+    <description><![CDATA[<h2>Title of issues: Test methods must be in test classes</h2>
+<p>Test methods marked as a testMethod or annotated with @IsTest,
       but not residing in a test class should be moved to a proper
       class or have the @IsTest annotation added to the class.</p>
 <p>Support for tests inside functional classes was removed in Spring-13 (API Version 27.0),
       making classes that violate this rule fail compile-time. This rule is mostly usable when
       dealing with legacy code.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // Violating
+<p><pre><code class="language-apex"> // Violating
  private class TestClass {
    @IsTest static void myTest() {
      // Code here
@@ -1726,7 +1787,7 @@ high complexity, and 11+ is very high complexity.</p>
      // Code here
    }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#testmethodsmustbeintestclasses">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#testmethodsmustbeintestclasses">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1735,11 +1796,12 @@ high complexity, and 11+ is very high complexity.</p>
     <name>Too many fields</name>
     <internalKey>category/apex/design.xml/TooManyFields</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Classes that have too many fields can become unwieldy and could be redesigned to have fewer fields,
+    <description><![CDATA[<h2>Title of issues: Too many fields</h2>
+<p>Classes that have too many fields can become unwieldy and could be redesigned to have fewer fields,
 possibly through grouping related fields in new objects.  For example, a class with individual
 city/state/zip fields could park them within a single Address field.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Person {
+<p><pre><code class="language-apex"> public class Person {
      // too many separate fields
      Integer birthYear;
      Integer birthMonth;
@@ -1753,7 +1815,7 @@ city/state/zip fields could park them within a single Address field.</p>
      Date birthDate;
      BodyMeasurements measurements;
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#toomanyfields">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#toomanyfields">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1762,7 +1824,8 @@ city/state/zip fields could park them within a single Address field.</p>
     <name>Type shadows built in namespace</name>
     <internalKey>category/apex/errorprone.xml/TypeShadowsBuiltInNamespace</internalKey>
     <severity>BLOCKER</severity>
-    <description><![CDATA[<p>This rule finds Apex classes, enums, and interfaces that have the same name as a class, enum, or interface in the <code>System</code>
+    <description><![CDATA[<h2>Title of issues: This name causes a collision with a class, enum, or interface used in the <code>&lt;code&gt;{0}&lt;/code&gt;</code> namespace. Please choose a different name.</h2>
+<p>This rule finds Apex classes, enums, and interfaces that have the same name as a class, enum, or interface in the <code>System</code>
             or <code>Schema</code> namespace.
             Shadowing these namespaces in this way can lead to confusion and unexpected behavior.
             Code that intends to reference a <code>System</code> or <code>Schema</code> class, enum, or interface may inadvertently reference the locally defined type instead.
@@ -1775,13 +1838,13 @@ city/state/zip fields could park them within a single Address field.</p>
             As Salesforce introduces new types into the <code>System</code> and <code>Schema</code> namespaces, the rule might not always recognize
             the new types and produce false-negatives und the standard types are updated.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> // Violation: Causes a collision with the `System.Database` class.
+<p><pre><code class="language-apex"> // Violation: Causes a collision with the `System.Database` class.
  public class Database {
      public static String query() {
          return &#39;Hello World&#39;;
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#typeshadowsbuiltinnamespace">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_errorprone.html#typeshadowsbuiltinnamespace">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>errorprone</tag>
   </rule>
@@ -1790,15 +1853,16 @@ city/state/zip fields could park them within a single Address field.</p>
     <name>Unused local variable</name>
     <internalKey>category/apex/bestpractices.xml/UnusedLocalVariable</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Detects when a local variable is declared and/or assigned but not used.</p>
+    <description><![CDATA[<h2>Title of issues: Variable '<code>{0}</code>' defined but not used</h2>
+<p>Detects when a local variable is declared and/or assigned but not used.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public Boolean bar(String z) {
+<p><pre><code class="language-apex"> public Boolean bar(String z) {
          String x = &#39;some string&#39;; // not used
  
          String y = &#39;some other string&#39;; // used in the next line
          return z.equals(y);
      }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#unusedlocalvariable">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_bestpractices.html#unusedlocalvariable">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
   </rule>
@@ -1807,7 +1871,8 @@ city/state/zip fields could park them within a single Address field.</p>
     <name>Unused method</name>
     <internalKey>category/apex/design.xml/UnusedMethod</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid having unused methods since they make understanding and maintaining code harder.</p>
+    <description><![CDATA[<h2>Title of issues: Unused methods make understanding code harder</h2>
+<p>Avoid having unused methods since they make understanding and maintaining code harder.</p>
 <p>This rule finds not only unused private methods, but public methods as well, as long as
 the class itself is not entirely unused. A class is considered used, if it contains at
 least one other method/variable declaration that is used, as shown in the
@@ -1842,7 +1907,7 @@ well-formed <code>sfdx-project.json</code>:
      }
  }</code></pre></p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> public class Triangle {
+<p><pre><code class="language-apex"> public class Triangle {
      private Double side1;
      private Double side2;
      private Double side3;
@@ -1858,7 +1923,7 @@ well-formed <code>sfdx-project.json</code>:
          return (side1 + side2 + side3)/2;
      }
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#unusedmethod">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_design.html#unusedmethod">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>design</tag>
   </rule>
@@ -1867,17 +1932,18 @@ well-formed <code>sfdx-project.json</code>:
     <name>While loops must use braces</name>
     <internalKey>category/apex/codestyle.xml/WhileLoopsMustUseBraces</internalKey>
     <severity>MAJOR</severity>
-    <description><![CDATA[<p>Avoid using 'while' statements without using braces to surround the code block. If the code
+    <description><![CDATA[<h2>Title of issues: Avoid using 'while' statements without curly braces</h2>
+<p>Avoid using 'while' statements without using braces to surround the code block. If the code
 formatting or indentation is lost then it becomes difficult to separate the code being
 controlled from the rest.</p>
 <h2>Example</h2>
-<p><pre><code class="language-java"> while (true)    // not recommended
+<p><pre><code class="language-apex"> while (true)    // not recommended
      x++;
  
  while (true) {  // preferred approach
      x++;
  }</code></pre></p>
-<p>Full documentation: <a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#whileloopsmustusebraces">PMD rule documentation</a></p>]]></description>
+<p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_apex_codestyle.html#whileloopsmustusebraces">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>codestyle</tag>
   </rule>
