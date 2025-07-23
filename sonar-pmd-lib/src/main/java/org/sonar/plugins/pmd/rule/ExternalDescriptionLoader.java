@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import static java.util.stream.Collectors.joining;
+
 /**
  * Reads the corresponding classpath resource to add HTML descriptions to a given rule.
  * Taken from <code>sslr-squid-bridge:org.sonar.squidbridge.rules.ExternalDescriptionLoader</code>.
@@ -54,15 +56,9 @@ public class ExternalDescriptionLoader {
     }
 
     void addHtmlDescription(RulesDefinition.NewRule rule, URL resource) {
-        final StringBuilder builder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.openStream(), StandardCharsets.UTF_8))) {
-            reader
-                    .lines()
-                    .forEach(l -> {
-                        builder.append(l);
-                        builder.append(System.lineSeparator());
-                    });
-            rule.setHtmlDescription(builder.toString());
+            String description = reader.lines().collect(joining(System.lineSeparator()));
+            rule.setHtmlDescription(description);
         } catch (IOException e) {
             throw new IllegalStateException("Failed to read: " + resource, e);
         }
