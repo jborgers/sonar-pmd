@@ -88,8 +88,14 @@ jobs:
         run: |
           ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean deploy
 
-      - name: Upload jar
+      - name: Upload sonar-pmd-plugin jar
         uses: actions/upload-artifact@v4
         with:
           name: sonar-pmd-plugin-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
           path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
+
+      - name: Upload sonar-pmd-lib jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-pmd-lib-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
+          path: sonar-pmd-lib/target/sonar-pmd-lib-*.jar
