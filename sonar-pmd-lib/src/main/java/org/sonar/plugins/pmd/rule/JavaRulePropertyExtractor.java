@@ -287,7 +287,7 @@ public class JavaRulePropertyExtractor {
                 return Collections.singletonList(defaultValue.toString());
             }
         } catch (Exception e) {
-            LOGGER.debug("Error getting default values", e);
+            LOGGER.error("Error getting default values for {}", propertyDescriptor, e);
         }
         return Collections.emptyList();
     }
@@ -313,7 +313,7 @@ public class JavaRulePropertyExtractor {
             this.name = name;
             this.description = description;
             this.type = type;
-            this.defaultValues = Collections.unmodifiableList(new ArrayList<>(defaultValues));
+            this.defaultValues = List.copyOf(defaultValues);
         }
 
         public String getName() {
