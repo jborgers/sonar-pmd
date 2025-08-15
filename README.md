@@ -1,6 +1,7 @@
 # SonarQube PMD Plugin 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Sonatype Central](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Maven Central](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
 ![Build Status](https://github.com/jborgers/sonar-pmd/actions/workflows/build.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jborgers_sonar-pmd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jborgers_sonar-pmd)
 
