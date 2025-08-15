@@ -23,16 +23,15 @@ import org.junit.jupiter.api.Test;
 import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor.PropertyInfo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class JavaRulePropertyExtractorTest {
 
     @Test
-    void should_extract_properties_from_jar() {
+    void shouldExtractPropertiesFromJar() throws IOException {
         // given
         JavaRulePropertyExtractor extractor = new JavaRulePropertyExtractor();
         String jarPath = getTestJarPath();
@@ -61,7 +60,7 @@ class JavaRulePropertyExtractorTest {
     }
 
     @Test
-    void should_have_empty_default_values() {
+    void shouldHaveEmptyDefaultValues() {
         // given
         List<String> defaultValues = Collections.emptyList();
 
@@ -77,7 +76,7 @@ class JavaRulePropertyExtractorTest {
     }
 
     @Test
-    void property_info_should_handle_default_values() {
+    void propertyInfoShouldHandleDefaultValues() {
         // given
         List<String> defaultValues = Arrays.asList("value1", "value2", "value3");
         
@@ -93,9 +92,9 @@ class JavaRulePropertyExtractorTest {
     }
 
     @Test
-    void property_info_should_handle_empty_default_values() {
+    void propertyInfoShouldHandleEmptyDefaultValues() {
         // given
-        List<String> emptyList = Arrays.asList();
+        List<String> emptyList = List.of();
         
         // when
         PropertyInfo propertyInfo = new PropertyInfo("testName", "Test Description", "BOOLEAN", emptyList);

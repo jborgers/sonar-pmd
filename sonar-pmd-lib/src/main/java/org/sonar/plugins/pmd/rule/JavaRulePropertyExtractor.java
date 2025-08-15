@@ -39,7 +39,7 @@ public class JavaRulePropertyExtractor {
      * @return Map of rule class names to their property information
      */
     @SuppressWarnings("java:S5042") // security warning for ZIP bomb attack: implemented countermeasures
-    public Map<String, List<PropertyInfo>> extractProperties(String jarFilePath) {
+    public Map<String, List<PropertyInfo>> extractProperties(String jarFilePath) throws IOException {
         // Create a map that returns an empty list for any key that's not in the map
         Map<String, List<PropertyInfo>> result = new HashMap<String, List<PropertyInfo>>() {
             @Override
@@ -68,18 +68,19 @@ public class JavaRulePropertyExtractor {
                     if (entry.getSize() > 0 && entry.getCompressedSize() > 0) {
                         double compressionRatio = (double) entry.getSize() / entry.getCompressedSize();
                         if (compressionRatio > THRESHOLD_RATIO) {
-                            LOGGER.warn("Suspicious compression ratio detected in jar file: {}, entry: {}, ratio: {}. Possible ZIP bomb attack. Skipping rule extraction.",
+                            String msg = "Suspicious compression ratio detected in jar file: " + jarFilePath + ", entry: " + entry.getName() + ", ratio: " + compressionRatio + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                            LOGGER.error(msg,
                                     jarFilePath, entry.getName(), compressionRatio);
-                            break;
+                            throw new PossibleZipBombException(msg);
                         }
                     }
 
                     // Track total uncompressed size
                     totalSizeArchive += entry.getSize();
                     if (totalSizeArchive > THRESHOLD_SIZE_BYTES) {
-                        LOGGER.warn("Total uncompressed size exceeds threshold in jar file: {}. Possible ZIP bomb attack. Skipping rule extraction.",
-                                jarFilePath);
-                        break;
+                        String msg = "Total uncompressed size exceeds threshold in jar file: " +jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                        LOGGER.error(msg);
+                        throw new PossibleZipBombException(msg);
                     }
 
                     if (entry.getName().endsWith(".class")) {
@@ -103,12 +104,12 @@ public class JavaRulePropertyExtractor {
                 }
 
                 if (totalEntryArchive >= THRESHOLD_ENTRIES) {
-                    LOGGER.warn("Too many entries in jar file: " + jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.");
+                    String msg = "Too many entries in jar file: " + jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                    LOGGER.error(msg);
+                    throw new PossibleZipBombException(msg);
                 }
                 LOGGER.info("Extracted {} rule properties from jar file: {}", result.size(), jarFilePath);
             }
-        } catch (IOException e) {
-            LOGGER.error("Error processing jar file: {}", jarFilePath, e);
         }
 
         return result;
@@ -476,6 +477,12 @@ public class JavaRulePropertyExtractor {
         @Override
         public int hashCode() {
             return Objects.hash(name, description, type, defaultValues);
+        }
+    }
+
+    public static class PossibleZipBombException extends IOException {
+        public PossibleZipBombException(String msg) {
+            super(msg);
         }
     }
 }
