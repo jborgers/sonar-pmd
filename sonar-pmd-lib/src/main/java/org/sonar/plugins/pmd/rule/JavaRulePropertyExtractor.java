@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import net.sourceforge.pmd.properties.PropertySource;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -186,135 +187,31 @@ public class JavaRulePropertyExtractor {
             // Try to instantiate the rule class
             Object ruleInstance = clazz.getDeclaredConstructor().newInstance();
 
-            // Try to find a method that returns property descriptors
-            // Common method names that might exist in PMD's AbstractRule
-            String[] methodNames = {
-                "getPropertyDescriptors", 
-                "getPropertiesDescriptors", 
-                "getProperties",
-                "getAllPropertyDescriptors"
-            };
+            // Use PMD's PropertySource API directly (PMD 7+)
+            if (!(ruleInstance instanceof PropertySource)) {
+                LOGGER.debug("Rule does not implement PropertySource: {}", clazz.getName());
+                return properties;
+            }
 
-            for (String methodName : methodNames) {
-                try {
-                    java.lang.reflect.Method method = findMethod(clazz, methodName);
-                    if (method != null) {
-                        method.setAccessible(true);
-                        Object result = method.invoke(ruleInstance);
-                        if (result instanceof Collection) {
-                            @SuppressWarnings("unchecked")
-                            Collection<Object> descriptors = (Collection<Object>) result;
-                            for (Object descriptor : descriptors) {
-                                if (descriptor instanceof PropertyDescriptor) {
-                                    PropertyDescriptor<?> propertyDescriptor = (PropertyDescriptor<?>) descriptor;
-                                    PropertyInfo propertyInfo = createPropertyInfo(propertyDescriptor);
-                                    if (propertyInfo != null) {
-                                        properties.add(propertyInfo);
-                                    }
-                                }
-                            }
-                            // If we found and processed property descriptors, return them
-                            if (!properties.isEmpty()) {
-                                return properties;
-                            }
-                        }
+            List<? extends PropertyDescriptor<?>> descriptors =
+                ((PropertySource) ruleInstance).getPropertyDescriptors();
+
+            if (descriptors != null) {
+                for (PropertyDescriptor<?> descriptor : descriptors) {
+                    PropertyInfo propertyInfo = createPropertyInfo(descriptor);
+                    if (propertyInfo != null) {
+                        properties.add(propertyInfo);
                     }
-                } catch (Exception e) {
-                    // Ignore exceptions and try the next method
-                    LOGGER.debug("Error invoking method: {}", methodName);
                 }
             }
 
-            // If we couldn't find a method, try to find a field that might contain property descriptors
-            String[] fieldNames = {
-                "propertyDescriptors",
-                "descriptors",
-                "properties"
-            };
+            return properties;
 
-            for (String fieldName : fieldNames) {
-                try {
-                    java.lang.reflect.Field field = findField(clazz, fieldName);
-                    if (field != null) {
-                        field.setAccessible(true);
-                        Object fieldValue = field.get(ruleInstance);
-                        if (fieldValue instanceof Collection) {
-                            @SuppressWarnings("unchecked")
-                            Collection<Object> descriptors = (Collection<Object>) fieldValue;
-                            for (Object descriptor : descriptors) {
-                                if (descriptor instanceof PropertyDescriptor) {
-                                    PropertyDescriptor<?> propertyDescriptor = (PropertyDescriptor<?>) descriptor;
-                                    PropertyInfo propertyInfo = createPropertyInfo(propertyDescriptor);
-                                    if (propertyInfo != null) {
-                                        properties.add(propertyInfo);
-                                    }
-                                }
-                            }
-                            // If we found and processed property descriptors, return them
-                            if (!properties.isEmpty()) {
-                                return properties;
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    // Ignore exceptions and try the next field
-                    LOGGER.debug("Error accessing field: {}", fieldName);
-                }
-            }
-
-            // If we still haven't found any property descriptors, fall back to the original approach
-            // Get all fields in the class
-            for (Field field : clazz.getFields()) {
-                try {
-                    field.setAccessible(true);
-
-                    // Check if the field is a PropertyDescriptor
-                    if (isPropertyDescriptor(field.getType())) {
-                        PropertyDescriptor<?> propertyDescriptor = (PropertyDescriptor<?>) field.get(null);
-                        if (propertyDescriptor != null) {
-                            PropertyInfo propertyInfo = createPropertyInfo(propertyDescriptor);
-                            if (propertyInfo != null) {
-                                properties.add(propertyInfo);
-                            }
-                        }
-                    }
-                } catch (IllegalAccessException | SecurityException e) {
-                    LOGGER.warn("Error accessing field: {}", field.getName());
-                }
-            }
         } catch (Exception e) {
-            LOGGER.warn("Error instantiating rule class: {}", clazz.getName());
-
-            // If we can't instantiate the class, fall back to the original approach
-            // Get all fields in the class
-            for (Field field : clazz.getFields()) {
-                try {
-                    field.setAccessible(true);
-
-                    // Check if the field is a PropertyDescriptor
-                    if (isPropertyDescriptor(field.getType())) {
-                        PropertyDescriptor<?> propertyDescriptor = (PropertyDescriptor<?>) field.get(null);
-                        if (propertyDescriptor != null) {
-                            PropertyInfo propertyInfo = createPropertyInfo(propertyDescriptor);
-                            if (propertyInfo != null) {
-                                properties.add(propertyInfo);
-                            }
-                        }
-                    }
-                } catch (IllegalAccessException | SecurityException ex) {
-                    LOGGER.warn("Error accessing field: {}", field.getName(), ex);
-                }
-            }
+            LOGGER.error("Error instantiating rule class: {}", clazz.getName());
         }
 
         return properties;
-    }
-
-    /**
-     * Checks if the given class is a PropertyDescriptor.
-     */
-    private boolean isPropertyDescriptor(Class<?> clazz) {
-        return clazz.isAssignableFrom(PropertyDescriptor.class);
     }
 
     /**
@@ -402,51 +299,6 @@ public class JavaRulePropertyExtractor {
         return obj.getClass().getMethod(methodName).invoke(obj);
     }
 
-    /**
-     * Finds a method with the given name in the class hierarchy.
-     */
-    private java.lang.reflect.Method findMethod(Class<?> clazz, String methodName) {
-        Class<?> currentClass = clazz;
-        while (currentClass != null) {
-            try {
-                return currentClass.getDeclaredMethod(methodName);
-            } catch (NoSuchMethodException e) {
-                // Try with parameters
-                try {
-                    java.lang.reflect.Method[] methods = currentClass.getDeclaredMethods();
-                    for (java.lang.reflect.Method method : methods) {
-                        if (method.getName().equals(methodName)) {
-                            return method;
-                        }
-                    }
-                } catch (SecurityException ex) {
-                    // Ignore and continue with superclass
-                }
-                currentClass = currentClass.getSuperclass();
-            } catch (SecurityException e) {
-                // Ignore and continue with superclass
-                currentClass = currentClass.getSuperclass();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Finds a field with the given name in the class hierarchy.
-     */
-    private java.lang.reflect.Field findField(Class<?> clazz, String fieldName) {
-        Class<?> currentClass = clazz;
-        while (currentClass != null) {
-            try {
-                return currentClass.getDeclaredField(fieldName);
-            } catch (NoSuchFieldException e) {
-                currentClass = currentClass.getSuperclass();
-            } catch (SecurityException e) {
-                currentClass = currentClass.getSuperclass();
-            }
-        }
-        return null;
-    }
 
     /**
      * Class to hold property information.

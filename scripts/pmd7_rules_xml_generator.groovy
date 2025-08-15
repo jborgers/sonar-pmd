@@ -374,7 +374,7 @@ def generateXmlFile = { outputFile, rules, language ->
                                                 }
                                                 defaultValue(defVal)
                                                 def propType = propInfo.type
-                                                println "### TYPE: $propType"
+                                                println "### PROP: $propInfo.name TYPE: $propType"
                                                 if (propType == "Integer") {
                                                     type("INTEGER")
                                                 } else if (propType == "Boolean") {
