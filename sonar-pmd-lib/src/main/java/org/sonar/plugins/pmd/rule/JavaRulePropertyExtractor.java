@@ -140,13 +140,35 @@ public class JavaRulePropertyExtractor {
             return false;
         }
 
+        // Non-static inner classes require an outer instance -> warn and skip
+        Class<?> enclosing = clazz.getEnclosingClass();
+        if (enclosing != null && !Modifier.isStatic(clazz.getModifiers())) {
+            LOGGER.error("Skip non-static inner rule class: {}", clazz.getName());
+            return false;
+        }
+
         // Check if class has accessible default constructor
         try {
             Constructor<?> constructor = clazz.getDeclaredConstructor();
-            return !Modifier.isPrivate(constructor.getModifiers());
+            int mods = constructor.getModifiers();
+
+            // private -> not instantiable
+            if (Modifier.isPrivate(mods)) {
+                return false;
+            }
+
+            // package-private (neither public, protected, nor private) -> warn and skip
+            if (!Modifier.isPublic(mods) && !Modifier.isProtected(mods)) {
+                LOGGER.error("Skip rule class with package-private default constructor: {}", clazz.getName());
+                return false;
+            }
+
+            // public or protected -> allowed for now
+            return true;
         } catch (NoSuchMethodException e) {
             return false; // No default constructor
         }
+
     }
 
     /**
