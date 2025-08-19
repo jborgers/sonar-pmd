@@ -2,21 +2,20 @@ package org.sonar.plugins.pmd.rule;
 
 import net.sourceforge.pmd.lang.rule.AbstractRule;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
+import net.sourceforge.pmd.properties.PropertySource;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import net.sourceforge.pmd.properties.PropertySource;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Helper class to extract property information from Java rule classes in PMD jar files.
@@ -36,13 +35,13 @@ public class JavaRulePropertyExtractor {
     /**
      * Extracts property information from Java rule classes in the specified jar file.
      *
-     * @param jarFilePath Path to the PMD jar file
+     * @param file Path to the PMD jar file
      * @return Map of rule class names to their property information
      */
     @SuppressWarnings("java:S5042") // security warning for ZIP bomb attack: implemented countermeasures
-    public Map<String, List<PropertyInfo>> extractProperties(String jarFilePath) throws IOException {
+    public Map<String, List<PropertyInfo>> extractProperties(File file) throws IOException {
         // Create a map that returns an empty list for any key that's not in the map
-        Map<String, List<PropertyInfo>> result = new HashMap<String, List<PropertyInfo>>() {
+        Map<String, List<PropertyInfo>> result = new HashMap<>() {
             @Override
             public List<PropertyInfo> get(Object key) {
                 List<PropertyInfo> value = super.get(key);
@@ -50,9 +49,9 @@ public class JavaRulePropertyExtractor {
             }
         };
 
-        try (JarFile jarFile = new JarFile(new File(jarFilePath))) {
+        try (JarFile jarFile = new JarFile(file)) {
             // Create a class loader for the jar file
-            URL[] urls = { new URL("file:" + jarFilePath) };
+            URL[] urls = { new URL("file:" + file) };
             try (URLClassLoader classLoader = new URLClassLoader(urls, getClass().getClassLoader())) {
                 // Find all class files in the jar
                 Enumeration<JarEntry> entries = jarFile.entries();
@@ -69,9 +68,8 @@ public class JavaRulePropertyExtractor {
                     if (entry.getSize() > 0 && entry.getCompressedSize() > 0) {
                         double compressionRatio = (double) entry.getSize() / entry.getCompressedSize();
                         if (compressionRatio > THRESHOLD_RATIO) {
-                            String msg = "Suspicious compression ratio detected in jar file: " + jarFilePath + ", entry: " + entry.getName() + ", ratio: " + compressionRatio + ". Possible ZIP bomb attack. Skipping rule extraction.";
-                            LOGGER.error(msg,
-                                    jarFilePath, entry.getName(), compressionRatio);
+                            String msg = "Suspicious compression ratio detected in jar file: " + file + ", entry: " + entry.getName() + ", ratio: " + compressionRatio + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                            LOGGER.error(msg);
                             throw new PossibleZipBombException(msg);
                         }
                     }
@@ -79,7 +77,7 @@ public class JavaRulePropertyExtractor {
                     // Track total uncompressed size
                     totalSizeArchive += entry.getSize();
                     if (totalSizeArchive > THRESHOLD_SIZE_BYTES) {
-                        String msg = "Total uncompressed size exceeds threshold in jar file: " +jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                        String msg = "Total uncompressed size exceeds threshold in jar file: " + file + ". Possible ZIP bomb attack. Skipping rule extraction.";
                         LOGGER.error(msg);
                         throw new PossibleZipBombException(msg);
                     }
@@ -105,11 +103,11 @@ public class JavaRulePropertyExtractor {
                 }
 
                 if (totalEntryArchive >= THRESHOLD_ENTRIES) {
-                    String msg = "Too many entries in jar file: " + jarFilePath + ". Possible ZIP bomb attack. Skipping rule extraction.";
+                    String msg = "Too many entries in jar file: " + file + ". Possible ZIP bomb attack. Skipping rule extraction.";
                     LOGGER.error(msg);
                     throw new PossibleZipBombException(msg);
                 }
-                LOGGER.info("Extracted {} rule properties from jar file: {}", result.size(), jarFilePath);
+                LOGGER.info("Extracted {} rule properties from jar file: {}", result.size(), file);
             }
         }
 

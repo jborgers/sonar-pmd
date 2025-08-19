@@ -27,23 +27,64 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JavaRulePropertyExtractorTest {
 
     @Test
-    void shouldExtractPropertiesFromJar() throws IOException {
+    void shouldThrowOnHighlyCompressedJar() throws IOException {
         // given
         JavaRulePropertyExtractor extractor = new JavaRulePropertyExtractor();
-        String jarPath = getTestJarPath();
-        
-        // Skip test if jar file doesn't exist (this is just a placeholder test)
-        File jarFile = new File(jarPath);
+        File jarFile = getHighlyCompressedJarPath();
         if (!jarFile.exists()) {
-            return;
+            throw new IOException("Jar file " + jarFile + " does not exist.");
+        }
+        assertThatThrownBy(() -> extractor.extractProperties(jarFile))
+                .isInstanceOf(org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor.PossibleZipBombException.class);
+    }
+
+    @Test
+    void shouldExtractPropertiesFromTestJar() throws IOException {
+        // given
+        JavaRulePropertyExtractor extractor = new JavaRulePropertyExtractor();
+        File jarFile = getTestJarPath();
+
+        if (!jarFile.exists()) {
+            throw new IOException("Jar file " + jarFile + " does not exist.");
         }
 
         // when
-        Map<String, List<PropertyInfo>> properties = extractor.extractProperties(jarPath);
+        Map<String, List<PropertyInfo>> properties = extractor.extractProperties(jarFile);
+
+        // then
+        assertThat(properties.size()).isEqualTo(2);
+
+        List<PropertyInfo> propertyInfos = properties.get("com.example.rules.WithPropsRule");
+        assertThat(propertyInfos.size()).isEqualTo(6);
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("strProp")).findFirst().get().getType()).isEqualTo("String");
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("intProp")).findFirst().get().getType()).isEqualTo("Integer");
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("boolProp")).findFirst().get().getType()).isEqualTo("Boolean");
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("listStrProp")).findFirst().get().getType()).isEqualTo("ArrayList");
+
+        propertyInfos = properties.get("com.example.rules.WithoutPropsRule");
+        // there are always 2 default properties, equal to type Optional
+        assertThat(propertyInfos.size()).isEqualTo(2);
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("violationSuppressRegex")).findFirst().get().getType()).isEqualTo("Optional");
+        assertThat(propertyInfos.stream().filter(p -> p.getName().equals("violationSuppressXPath")).findFirst().get().getType()).isEqualTo("Optional");
+    }
+
+    @Test
+    void shouldExtractPropertiesFromRealJar() throws IOException {
+        // given
+        JavaRulePropertyExtractor extractor = new JavaRulePropertyExtractor();
+        File jarFile = getRealJarPath();
+
+        if (!jarFile.exists()) {
+            throw new IOException("Jar file " + jarFile + " does not exist.");
+        }
+
+        // when
+        Map<String, List<PropertyInfo>> properties = extractor.extractProperties(jarFile);
 
         // then
         assertThat(properties.size()).isGreaterThan(100);
@@ -107,9 +148,15 @@ class JavaRulePropertyExtractorTest {
         assertThat(propertyInfo.getDefaultValuesAsString()).isEmpty();
     }
 
-    private String getTestJarPath() {
-        // This would be the path to a test jar file
-        // In a real test, you might want to create a small test jar with known content
-        return System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/7.15.0/pmd-java-7.15.0.jar";
+    private File getTestJarPath() {
+        return new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource("test-java-rule-extractor.jar")).getPath());
+    }
+
+    private File getHighlyCompressedJarPath() {
+        return new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource("test-highly-compressed.jar")).getPath());
+    }
+
+    private File getRealJarPath() {
+        return new File(System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/7.15.0/pmd-java-7.15.0.jar");
     }
 }
