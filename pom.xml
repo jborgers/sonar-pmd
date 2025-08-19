@@ -70,8 +70,8 @@
     <license.mailto>mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl</license.mailto>
     <pmd.version>7.15.0</pmd.version>
     <junit.jupiter.version>5.13.4</junit.jupiter.version>
-    <mockito.version>5.18.0</mockito.version>
-    <assertj.version>3.27.3</assertj.version>
+    <mockito.version>5.19.0</mockito.version>
+    <assertj.version>3.27.4</assertj.version>
     <commons-lang3.version>3.18.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
     <java.frontend.version>8.18.0.40025</java.frontend.version>
@@ -80,7 +80,7 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>25.7.0.110598</sonar-plugin-api-impl.version>
+    <sonar-plugin-api-impl.version>25.8.0.112029</sonar-plugin-api-impl.version>
     <sonar-plugin-api.version>13.0.0.3026</sonar-plugin-api.version>
     <sonar-orchestrator.version>5.6.2.2625</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
@@ -93,12 +93,12 @@
     <maven.failsafe.plugin.version>3.5.3</maven.failsafe.plugin.version>
     <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
     <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
-    <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
+    <maven.javadoc.plugin.version>3.11.3</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
     <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
-    <flatten.maven.plugin.version>1.7.1</flatten.maven.plugin.version>
+    <flatten.maven.plugin.version>1.7.2</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
