@@ -80,7 +80,7 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>25.7.0.110598</sonar-plugin-api-impl.version>
+    <sonar-plugin-api-impl.version>25.8.0.112029</sonar-plugin-api-impl.version>
     <sonar-plugin-api.version>13.0.0.3026</sonar-plugin-api.version>
     <sonar-orchestrator.version>5.6.2.2625</sonar-orchestrator.version>
     <sonar-ws-client.version>5.1</sonar-ws-client.version>
