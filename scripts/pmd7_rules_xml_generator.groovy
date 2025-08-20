@@ -1,20 +1,18 @@
 @Grab('net.sourceforge.pmd:pmd-java:7.15.0')
 @Grab('net.sourceforge.pmd:pmd-kotlin:7.15.0')
-@Grab('org.sonarsource.pmd:sonar-pmd-lib:4.1.0-SNAPSHOT')
+@Grab('org.sonarsource.pmd:sonar-pmd-lib:4.2.0-SNAPSHOT')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
-import java.util.regex.Pattern
-import java.util.regex.Matcher
 import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor
 import org.sonar.plugins.pmd.rule.MarkdownToHtmlConverter
 
 // Configuration
 def pmdVersion = MarkdownToHtmlConverter.PMD_VERSION
-def pmdJavaJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar"
-def pmdKotlinJarPath = "${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar"
+def pmdJavaJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar")
+def pmdKotlinJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar")
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 // Define language-specific rule alternatives paths
@@ -87,10 +85,9 @@ println "Kotlin output file: ${kotlinOutputFilePath}"
 // We no longer need to check for replacement placeholders since we're using camelCase for all rules
 
 // Function to read rules from a PMD JAR
-def readRulesFromJar = { jarPath, categoriesPath ->
-    def jarFile = new File(jarPath)
+def readRulesFromJar = { jarFile, categoriesPath ->
     if (!jarFile.exists()) {
-        println "ERROR: PMD JAR not found at: ${jarPath}"
+        println "ERROR: PMD JAR not found at: ${jarFile}"
         return []
     }
 
@@ -106,9 +103,9 @@ def readRulesFromJar = { jarPath, categoriesPath ->
             def categoriesProps = new Properties()
             categoriesProps.load(zipFile.getInputStream(categoriesEntry))
             categoryFiles = categoriesProps.getProperty("rulesets.filenames", "").split(",").collect { it.trim() }
-            println "Found ${categoryFiles.size()} category files in PMD JAR: ${jarPath}"
+            println "Found ${categoryFiles.size()} category files in PMD JAR: ${jarFile}"
         } else {
-            println "WARNING: ${categoriesPath} not found in PMD JAR: ${jarPath}"
+            println "WARNING: ${categoriesPath} not found in PMD JAR: ${jarFile}"
         }
 
         // Process each category file
