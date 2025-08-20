@@ -1,16 +1,37 @@
-@Grab('net.sourceforge.pmd:pmd-java:7.15.0')
-@Grab('net.sourceforge.pmd:pmd-kotlin:7.15.0')
-@Grab('org.sonarsource.pmd:sonar-pmd-lib:4.2.0-SNAPSHOT')
 import groovy.xml.XmlSlurper
 import groovy.xml.MarkupBuilder
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
+import groovy.grape.Grape
+
+// Resolve versions from pom.xml to have a single source of truth
+def pomFile = new File('pom.xml')
+if (!pomFile.exists()) {
+    pomFile = new File('../pom.xml') // allow running from scripts/ directory
+}
+if (!pomFile.exists()) {
+    throw new RuntimeException('pom.xml not found to determine versions')
+}
+
+def pom = new XmlSlurper().parse(pomFile)
+def pmdVersion = (pom.properties.'pmd.version'.text() ?: '').trim()
+if (!pmdVersion) {
+    throw new RuntimeException('pmd.version not found in pom.xml')
+}
+
+// Dynamically grab required dependencies matching pom-defined versions
+Grape.grab([group: 'net.sourceforge.pmd', module: 'pmd-java', version: pmdVersion])
+Grape.grab([group: 'net.sourceforge.pmd', module: 'pmd-kotlin', version: pmdVersion])
+// Note: sonar-pmd-lib is provided on the classpath by the groovy-maven-plugin configuration; no Grape needed.
+
 import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor
 import org.sonar.plugins.pmd.rule.MarkdownToHtmlConverter
 
+// Configure PMD version for MarkdownToHtmlConverter to avoid lib dependency on PMD
+MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
+
 // Configuration
-def pmdVersion = MarkdownToHtmlConverter.PMD_VERSION
 def pmdJavaJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar")
 def pmdKotlinJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar")
 def javaCategoriesPropertiesPath = "category/java/categories.properties"

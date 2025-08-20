@@ -1,8 +1,5 @@
 package org.sonar.plugins.pmd.rule;
 
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +12,32 @@ import java.util.regex.Pattern;
  * methods for formatting rule descriptions and converting camelCase to readable text.
  */
 public class MarkdownToHtmlConverter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkdownToHtmlConverter.class);
 
-    // PMD version used for documentation links
-    private static final String PMD_VERSION = "7.15.0";
+    // PMD version used for documentation links; configurable from outside to avoid dependency on PMD
+    private static volatile String PMD_VERSION = System.getProperty("pmd.version", "7.16.0");
+
+    /**
+     * Allows external configuration of the PMD version used when building links (e.g., from build scripts).
+     */
+    public static void setPmdVersion(String version) {
+        if (version != null && !version.trim().isEmpty()) {
+            PMD_VERSION = version.trim();
+        }
+    }
+
+    /**
+     * Returns the currently configured PMD version for documentation links.
+     */
+    public static String getPmdVersion() {
+        return PMD_VERSION;
+    }
+
+    /**
+     * Computes the base URL for PMD Javadoc based on the configured PMD version.
+     */
+    private static String jdocBase() {
+        return "https://docs.pmd-code.org/apidocs/pmd-java/" + PMD_VERSION + "/net/sourceforge/pmd/";
+    }
 
     // Splits paragraphs on double newlines
     private static final Pattern PARAGRAPH_SPLITTER_PATTERN = Pattern.compile("\n\\s*\n");
@@ -51,7 +70,6 @@ public class MarkdownToHtmlConverter {
     private static final Pattern URL_TAG_PATTERN = Pattern.compile("<(https?:\\/\\/[^>]+)>");
     // Matches Javadoc references like {% jdoc java::method %}
     private static final Pattern JDOC_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*jdoc\\s+([\\w-]+)::([\\.\\w#]+)\\s*\\%\\}");
-    private static final String JDOC_LINK = "https://docs.pmd-code.org/apidocs/pmd-java/" + PMD_VERSION + "/net/sourceforge/pmd/";
 
     // Pattern to split camelCase words like "camelCase" into "camel Case"
     private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("([a-z])([A-Z])");
@@ -869,7 +887,7 @@ public class MarkdownToHtmlConverter {
 
         // Build URL and determine display text
         String urlPath = className.replace('.', '/');
-        String url = JDOC_LINK + urlPath + ".html" + (memberName.isEmpty() ? "" : "#" + memberName);
+        String url = jdocBase() + urlPath + ".html" + (memberName.isEmpty() ? "" : "#" + memberName);
         String displayText = memberName.isEmpty() ? className.substring(className.lastIndexOf('.') + 1) : memberName;
 
         return escapeReplacement("<a href=\"" + url + "\"><code>" + displayText + "</code></a>");
