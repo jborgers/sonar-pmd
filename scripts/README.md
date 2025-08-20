@@ -17,8 +17,11 @@ Usage: This script is typically executed during the build process to generate up
 From the project root directory:
 
 ```commandline
-./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
+./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
 ```
+
+Notes:
+- The -am (also-make) flag is the Maven-native way to ensure dependent modules (like sonar-pmd-lib) are built in the reactor when you build only sonar-pmd-plugin with -pl.
 
 ### generate_release_notes.groovy
 
