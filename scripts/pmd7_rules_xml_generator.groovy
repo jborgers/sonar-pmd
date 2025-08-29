@@ -418,12 +418,13 @@ def generateXmlFile = { outputFile, rules, language ->
                             }
                         }
 
-                        // Ensure standard suppression parameters exist for every rule
-                        if (!existingParamKeys.contains("violationSuppressRegex")) {
+                        // Ensure suppression parameter exists only for rules whose messages contain variable placeholders like {0}
+                        def hasVariablePlaceholders = (ruleData.message ?: "").find(/\{\d+\}/) != null
+                        if (hasVariablePlaceholders && !existingParamKeys.contains("violationSuppressRegex")) {
                             param {
                                 key("violationSuppressRegex")
                                 description {
-                                    mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression]]>")
+                                    mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]>")
                                 }
                                 defaultValue("")
                                 type("STRING")
