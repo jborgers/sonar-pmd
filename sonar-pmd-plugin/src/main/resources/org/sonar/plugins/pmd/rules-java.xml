@@ -783,7 +783,7 @@ Smalltalk often prefer this approach as the methods denote accessor methods.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5139,7 +5139,7 @@ Developers Perceive Them</a>.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5424,7 +5424,7 @@ Either the check is useless (the variable will never be <code>null</code>) or it
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6446,7 +6446,7 @@ inadvertent NullPointerExceptions.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6508,7 +6508,7 @@ inadvertent NullPointerExceptions.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7959,7 +7959,7 @@ instructions follow anyway.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8903,7 +8903,7 @@ preserved.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>

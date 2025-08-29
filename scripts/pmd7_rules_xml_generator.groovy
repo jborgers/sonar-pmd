@@ -360,11 +360,14 @@ def generateXmlFile = { outputFile, rules, language ->
                                     }
                                     if (prop.value) defaultValue(prop.value)
                                     if (prop.type) {
-                                        // Map LIST[STRING] and REGEX to STRING
-                                        if (prop.type.toUpperCase() == "LIST[STRING]" || prop.type.toUpperCase() == "REGEX") {
+                                        // Normalize PMD property types to RuleParamType-friendly ones
+                                        def t = prop.type.toUpperCase()
+                                        // Treat any LIST[...] and regex-like types as STRING (free text)
+                                        if (t.startsWith("LIST[") || t.contains("REGEX") || t == "REGULAR_EXPRESSION") {
                                             type("STRING")
                                         } else {
-                                            type(prop.type.toUpperCase())
+                                            // Keep simple scalar types uppercased (e.g., INTEGER, BOOLEAN, FLOAT, STRING, TEXT)
+                                            type(t)
                                         }
                                     }
                                 }
@@ -400,13 +403,18 @@ def generateXmlFile = { outputFile, rules, language ->
                                                     defaultValue(defVal)
                                                     def propType = propInfo.type
                                                     println "### PROP: $propInfo.name TYPE: $propType"
-                                                    if (propType == "Integer") {
+                                                    // Normalize common numeric and regex-like types to RuleParamType
+                                                    if (propType in ["Integer", "Long", "Short", "Byte", "BigInteger"]) {
                                                         type("INTEGER")
-                                                    } else if (propType == "Boolean") {
-                                                        type("BOOLEAN")
-                                                    } else if (propType == "Double") {
+                                                    } else if (propType in ["Double", "Float", "BigDecimal"]) {
                                                         type("FLOAT")
+                                                    } else if (propType.equalsIgnoreCase("Boolean")) {
+                                                        type("BOOLEAN")
+                                                    } else if (propType.toLowerCase().contains("pattern") || propType.toLowerCase().contains("regex")) {
+                                                        // java.util.regex.Pattern and similar
+                                                        type("STRING")
                                                     } else {
+                                                        // Default to string for everything else (including lists/sets)
                                                         type("STRING")
                                                     }
                                                 }
