@@ -14,6 +14,18 @@
 <p><a href="https://docs.pmd-code.org/pmd-doc-7.15.0/pmd_rules_kotlin_bestpractices.html#functionnametooshort">Full documentation</a></p>]]></description>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressXPath</key>
+      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>OverrideBothEqualsAndHashcode</key>

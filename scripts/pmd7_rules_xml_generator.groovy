@@ -345,6 +345,9 @@ def generateXmlFile = { outputFile, rules, language ->
                             tag("has-sonar-alternative")
                         }
 
+                        // Collect existing parameter keys to avoid duplicates
+                        def existingParamKeys = new HashSet<String>(ruleData.properties.findAll { it.name }.collect { it.name })
+
                         // Add parameters from XML rule definition
                         if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
                                 ruleData.properties.findAll { prop ->
@@ -365,6 +368,7 @@ def generateXmlFile = { outputFile, rules, language ->
                                         }
                                     }
                                 }
+                                existingParamKeys.add(prop.name)
                             }
                         }
                         else {
@@ -403,9 +407,32 @@ def generateXmlFile = { outputFile, rules, language ->
                                                     type("STRING")
                                                 }
                                             }
+                                            existingParamKeys.add(propInfo.name)
                                         }
                                     }
                                 }
+                            }
+                        }
+
+                        // Ensure standard suppression parameters exist for every rule
+                        if (!existingParamKeys.contains("violationSuppressRegex")) {
+                            param {
+                                key("violationSuppressRegex")
+                                description {
+                                    mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression]]>")
+                                }
+                                defaultValue("")
+                                type("STRING")
+                            }
+                        }
+                        if (!existingParamKeys.contains("violationSuppressXPath")) {
+                            param {
+                                key("violationSuppressXPath")
+                                description {
+                                    mkp.yieldUnescaped("<![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]>")
+                                }
+                                defaultValue("")
+                                type("STRING")
                             }
                         }
                     }
@@ -535,6 +562,14 @@ try {
     <param key="message" type="STRING">
       <defaultValue></defaultValue>
       <description>The message for issues created by this rule.</description>
+    </param>
+    <param key="violationSuppressRegex" type="STRING">
+      <defaultValue></defaultValue>
+      <description>Suppress violations with messages matching a regular expression</description>
+    </param>
+    <param key="violationSuppressXPath" type="STRING">
+      <defaultValue></defaultValue>
+      <description>Suppress violations on nodes which match a given relative XPath expression.</description>
     </param>
     <description><![CDATA[<p>PMD provides a very handy method for creating new rules by writing an XPath query. When the XPath query finds a match, a violation is created.</p>
 <p>Let's take a simple example: assume we have a Factory class that must be always declared final.
