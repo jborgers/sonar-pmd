@@ -351,7 +351,7 @@ def generateXmlFile = { outputFile, rules, language ->
                         // Add parameters from XML rule definition
                         if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
                                 ruleData.properties.findAll { prop ->
-                                    prop.name && prop.description
+                                    prop.name && prop.description && prop.name != "violationSuppressXPath"
                             }.each { prop ->
                                 param {
                                     key(prop.name)
@@ -381,33 +381,37 @@ def generateXmlFile = { outputFile, rules, language ->
                                 if (ruleProperties.size()) {
                                     println "  - Found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})"
                                     ruleProperties.each { propInfo ->
-                                        // Check if this property is already defined in the XML
-                                        def existingProp = ruleData.properties.find { it.name == propInfo.name }
-                                        if (!existingProp) {
-                                            param {
-                                                key(propInfo.name)
-                                                description {
-                                                    mkp.yieldUnescaped("<![CDATA[${escapeForCdata(propInfo.description)}]]>")
-                                                }
+                                        if (propInfo.name == "violationSuppressXPath") {
+                                            // Skip adding this parameter as it's too complex/error-prone for users
+                                        } else {
+                                            // Check if this property is already defined in the XML
+                                            def existingProp = ruleData.properties.find { it.name == propInfo.name }
+                                            if (!existingProp) {
+                                                param {
+                                                    key(propInfo.name)
+                                                    description {
+                                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(propInfo.description)}]]>")
+                                                    }
 
-                                                def defVal = propInfo.defaultValuesAsString
-                                                if (defVal == "[]") {
-                                                    println("WRONG $defVal for $propInfo")
+                                                    def defVal = propInfo.defaultValuesAsString
+                                                    if (defVal == "[]") {
+                                                        println("WRONG $defVal for $propInfo")
+                                                    }
+                                                    defaultValue(defVal)
+                                                    def propType = propInfo.type
+                                                    println "### PROP: $propInfo.name TYPE: $propType"
+                                                    if (propType == "Integer") {
+                                                        type("INTEGER")
+                                                    } else if (propType == "Boolean") {
+                                                        type("BOOLEAN")
+                                                    } else if (propType == "Double") {
+                                                        type("FLOAT")
+                                                    } else {
+                                                        type("STRING")
+                                                    }
                                                 }
-                                                defaultValue(defVal)
-                                                def propType = propInfo.type
-                                                println "### PROP: $propInfo.name TYPE: $propType"
-                                                if (propType == "Integer") {
-                                                    type("INTEGER")
-                                                } else if (propType == "Boolean") {
-                                                    type("BOOLEAN")
-                                                } else if (propType == "Double") {
-                                                    type("FLOAT")
-                                                } else {
-                                                    type("STRING")
-                                                }
+                                                existingParamKeys.add(propInfo.name)
                                             }
-                                            existingParamKeys.add(propInfo.name)
                                         }
                                     }
                                 }
@@ -420,16 +424,6 @@ def generateXmlFile = { outputFile, rules, language ->
                                 key("violationSuppressRegex")
                                 description {
                                     mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression]]>")
-                                }
-                                defaultValue("")
-                                type("STRING")
-                            }
-                        }
-                        if (!existingParamKeys.contains("violationSuppressXPath")) {
-                            param {
-                                key("violationSuppressXPath")
-                                description {
-                                    mkp.yieldUnescaped("<![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]>")
                                 }
                                 defaultValue("")
                                 type("STRING")

@@ -28,12 +28,6 @@ directly) a protected constructor can be provided to prevent direct instantiatio
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AbstractClassWithoutAnyMethod</key>
@@ -57,12 +51,6 @@ protected constructor in order to prevent instantiation than make the class misl
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -96,12 +84,6 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -142,12 +124,6 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AddEmptyString</key>
@@ -166,12 +142,6 @@ It is much better to use one of the type-specific <code>toString()</code> method
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -195,12 +165,6 @@ It is much better to use one of the type-specific <code>toString()</code> method
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -233,12 +197,6 @@ This prevents future changes from the user from affecting the original array.</p
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>allowPrivate</key>
       <description><![CDATA[If true, allow private methods/constructors to store arrays directly]]></description>
       <defaultValue>true</defaultValue>
@@ -267,12 +225,6 @@ This prevents future changes from the user from affecting the original array.</p
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -324,12 +276,6 @@ This prevents future changes from the user from affecting the original array.</p
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AtLeastOneConstructor</key>
@@ -353,12 +299,6 @@ Classes with solely static members are ignored, refer to <a href="https://pmd.gi
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -426,12 +366,6 @@ suppression methods (e.g. by using <code>@SuppressWarnings</code> annotation).</
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidArrayLoops</key>
@@ -490,12 +424,6 @@ or <code>System.arraycopy</code> method instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidAssertAsIdentifier</key>
@@ -521,12 +449,6 @@ for old Java code before Java 1.4. It can be used to identify problematic code p
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -560,12 +482,6 @@ Ensure that the usage is not a bug, or consider using another approach.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -628,12 +544,6 @@ calendar calculations are needed.</p></p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidCallingFinalize</key>
@@ -655,12 +565,6 @@ that there are no more references to the object. It should not be invoked by app
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -700,12 +604,6 @@ that there are no more references to the object. It should not be invoked by app
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidCatchingNPE</key>
@@ -735,12 +633,6 @@ original error, causing other, more subtle problems later on.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidCatchingThrowable</key>
@@ -766,12 +658,6 @@ OutOfMemoryError that should be exposed and managed separately.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -807,12 +693,6 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidDeeplyNestedIfStmts</key>
@@ -845,12 +725,6 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>problemDepth</key>
       <description><![CDATA[The if statement depth reporting threshold]]></description>
       <defaultValue>3</defaultValue>
@@ -878,12 +752,6 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidDuplicateLiterals</key>
@@ -908,12 +776,6 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -969,12 +831,6 @@ for old Java code before Java 1.5. It can be used to identify problematic code p
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidFieldNameMatchingMethodName</key>
@@ -1003,12 +859,6 @@ Smalltalk often prefer this approach as the methods denote accessor methods.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidFieldNameMatchingTypeName</key>
@@ -1033,12 +883,6 @@ This probably means that type and/or field names should be chosen more carefully
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1086,12 +930,6 @@ that one covers both.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidInstanceofChecksInCatchClause</key>
@@ -1125,12 +963,6 @@ that one covers both.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidInstantiatingObjectsInLoops</key>
@@ -1153,12 +985,6 @@ that one covers both.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1222,12 +1048,6 @@ the property ignoreMagicNumbers is not taken into account, if there are multiple
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidLosingExceptionInformation</key>
@@ -1253,12 +1073,6 @@ only add to code size.  Either remove the invocation, or use the return result.<
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1305,12 +1119,6 @@ only add to code size.  Either remove the invocation, or use the return result.<
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidMultipleUnaryOperators</key>
@@ -1349,12 +1157,6 @@ Ensure that the intended usage is not a bug, or consider simplifying the express
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidPrintStackTrace</key>
@@ -1384,12 +1186,6 @@ Ensure that the intended usage is not a bug, or consider simplifying the express
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidProtectedFieldInFinalClass</key>
@@ -1416,12 +1212,6 @@ Clarify your intent by using private or package access modifiers instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidProtectedMethodInFinalClassNotExtending</key>
@@ -1445,12 +1235,6 @@ visibility cannot be reduced). Clarify your intent by using private or package a
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1487,12 +1271,6 @@ is always the one thrown in a try block.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1536,12 +1314,6 @@ is always the one thrown in a try block.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1595,12 +1367,6 @@ parameter, then only the first assignment is reported.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidRethrowingException</key>
@@ -1628,12 +1394,6 @@ parameter, then only the first assignment is reported.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidStringBufferField</key>
@@ -1655,12 +1415,6 @@ if held within objects with long lifetimes.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1734,12 +1488,6 @@ needs mutual exclusion will be locked.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidSynchronizedStatement</key>
@@ -1781,12 +1529,6 @@ needs mutual exclusion will be locked.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidThreadGroup</key>
@@ -1811,12 +1553,6 @@ it contains methods that are not thread-safe.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1846,12 +1582,6 @@ code size and runtime complexity.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1901,12 +1631,6 @@ validation in methods and constructors with multiple parameters.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidThrowingRawExceptionTypes</key>
@@ -1933,12 +1657,6 @@ Exception, or Error, use a subclassed exception or error instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidUncheckedExceptionsInSignatures</key>
@@ -1959,12 +1677,6 @@ exceptional cases with a <code>@throws</code> Javadoc tag, which allows being mo
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1989,12 +1701,6 @@ Externalizing IP adresses is preferable.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2037,12 +1743,6 @@ and increases the maintenance burden.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>AvoidUsingOctalValues</key>
@@ -2064,12 +1764,6 @@ interpreted as an octal value.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2103,12 +1797,6 @@ the volatile keyword should not be used for maintenance purpose and portability.
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>BigIntegerInstantiation</key>
@@ -2134,12 +1822,6 @@ for Java 9 onwards <code>BigInteger.TWO</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2173,12 +1855,6 @@ for Java 9 onwards <code>BigInteger.TWO</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>BrokenNullCheck</key>
@@ -2208,12 +1884,6 @@ It is likely that you used || instead of && or vice versa.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CallSuperFirst</key>
@@ -2238,12 +1908,6 @@ It is likely that you used || instead of && or vice versa.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2277,12 +1941,6 @@ another constructor (such as an overloaded constructor) is called, this rule wil
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CallSuperLast</key>
@@ -2306,12 +1964,6 @@ another constructor (such as an overloaded constructor) is called, this rule wil
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2343,12 +1995,6 @@ If the value return is 'false', it should be handled properly.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2388,12 +2034,6 @@ If the value return is 'false', it should be handled properly.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ClassCastExceptionWithToArray</key>
@@ -2420,12 +2060,6 @@ in a <code>ClassCastException</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2472,12 +2106,6 @@ in a <code>ClassCastException</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2548,12 +2176,6 @@ so a subclass could not call the super constructor.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CloneMethodMustBePublic</key>
@@ -2589,12 +2211,6 @@ Object.clone (which is protected) with a public method."</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CloneMethodMustImplementCloneable</key>
@@ -2617,12 +2233,6 @@ a final method that only throws CloneNotSupportedException.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2654,12 +2264,6 @@ of the clone method doesn't need to cast the returned clone to the correct type.
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2712,12 +2316,6 @@ just remove "AutoCloseable" from the types.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2812,12 +2410,6 @@ just remove "AutoCloseable" from the types.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>reportLevel</key>
       <description><![CDATA[Cognitive Complexity reporting threshold]]></description>
       <defaultValue>15</defaultValue>
@@ -2860,12 +2452,6 @@ conditions with a boolean <code>&amp;&amp;</code> operator in between.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CommentContent</key>
@@ -2882,12 +2468,6 @@ conditions with a boolean <code>&amp;&amp;</code> operator in between.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2940,12 +2520,6 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>android.support.annotation.VisibleForTesting,co.elastic.clients.util.VisibleForTesting,com.google.common.annotations.VisibleForTesting,org.junit.jupiter.api.AfterAll,org.junit.jupiter.api.AfterEach,org.junit.jupiter.api.BeforeAll,org.junit.jupiter.api.BeforeEach,org.junit.jupiter.api.RepeatedTest,org.junit.jupiter.api.Test,org.junit.jupiter.api.TestFactory,org.junit.jupiter.api.TestTemplate,org.junit.jupiter.api.extension.RegisterExtension,org.junit.jupiter.params.ParameterizedTest,org.testng.annotations.AfterClass,org.testng.annotations.AfterGroups,org.testng.annotations.AfterMethod,org.testng.annotations.AfterSuite,org.testng.annotations.AfterTest,org.testng.annotations.BeforeClass,org.testng.annotations.BeforeGroups,org.testng.annotations.BeforeMethod,org.testng.annotations.BeforeSuite,org.testng.annotations.BeforeTest,org.testng.annotations.Test</defaultValue>
@@ -2983,12 +2557,6 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3081,12 +2649,6 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>maxLines</key>
       <description><![CDATA[Maximum lines]]></description>
       <defaultValue>6</defaultValue>
@@ -3134,12 +2696,6 @@ in the <code>typesThatCompareByReference</code> property.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ComparisonWithNaN</key>
@@ -3165,12 +2721,6 @@ in the <code>typesThatCompareByReference</code> property.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3225,12 +2775,6 @@ in the <code>typesThatCompareByReference</code> property.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ConfusingTernary</key>
@@ -3253,12 +2797,6 @@ as "does the error case go first?" or "does the common case go first?".</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3296,12 +2834,6 @@ by producing a smaller bytecode, reducing overhead and improving inlining. A com
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ConsecutiveLiteralAppends</key>
@@ -3328,12 +2860,6 @@ can be appended in a single method call.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3388,12 +2914,6 @@ For other scenarios, consider using a utility class. See Effective Java's 'Use i
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ConstructorCallsOverridableMethod</key>
@@ -3436,12 +2956,6 @@ Note that those methods also must not call overridable methods transitively to b
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3516,12 +3030,6 @@ Note that those methods also must not call overridable methods transitively to b
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>CouplingBetweenObjects</key>
@@ -3556,12 +3064,6 @@ A number higher than the specified threshold can indicate a high degree of coupl
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3623,12 +3125,6 @@ into subcomponents.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3696,12 +3192,6 @@ into the former client classes.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DefaultLabelNotLastInSwitch</key>
@@ -3730,12 +3220,6 @@ into the former client classes.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3768,12 +3252,6 @@ should be annotated with @Test and @Ignore.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3822,12 +3300,6 @@ leaks develop within an application, it should be dealt with JVM options rather 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DoNotExtendJavaLangError</key>
@@ -3849,12 +3321,6 @@ leaks develop within an application, it should be dealt with JVM options rather 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DoNotExtendJavaLangThrowable</key>
@@ -3871,12 +3337,6 @@ leaks develop within an application, it should be dealt with JVM options rather 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3905,12 +3365,6 @@ leaks develop within an application, it should be dealt with JVM options rather 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DoNotTerminateVM</key>
@@ -3936,12 +3390,6 @@ running on the same application server.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3976,12 +3424,6 @@ or code defects.
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4035,12 +3477,6 @@ Also, EJBs might be moved between machines in a cluster and only managed resourc
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DontCallThreadRun</key>
@@ -4061,12 +3497,6 @@ Also, EJBs might be moved between machines in a cluster and only managed resourc
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4093,12 +3523,6 @@ the unstable API. You can then suppress this rule in the implementation of the w
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4130,12 +3554,6 @@ performance need (space or time).</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4175,12 +3593,6 @@ performance need (space or time).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>DoubleCheckedLocking</key>
@@ -4214,12 +3626,6 @@ or <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.ht
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4264,12 +3670,6 @@ or reported.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>EmptyControlStatement</key>
@@ -4305,12 +3705,6 @@ or reported.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>allowCommentedBlocks</key>
       <description><![CDATA[Option for allowing empty but commented blocks. This is useful where a developer wants to have the code structure and explain why a condition does not require logic or to hold TODO comments for future work.]]></description>
       <defaultValue>false</defaultValue>
@@ -4336,12 +3730,6 @@ or reported.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4373,12 +3761,6 @@ usage by developers who should be implementing their own versions in the concret
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>EqualsNull</key>
@@ -4405,12 +3787,6 @@ usage by developers who should be implementing their own versions in the concret
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4448,12 +3824,6 @@ To fix a violation, add the necessary validation or use an alternate control str
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ExcessiveImports</key>
@@ -4479,12 +3849,6 @@ user-specified threshold.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4523,12 +3887,6 @@ same datatype. These situations usually denote the need for new objects to wrap 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4573,12 +3931,6 @@ developed easily.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>minimum</key>
       <description><![CDATA[Threshold above which a node is reported]]></description>
       <defaultValue>45</defaultValue>
@@ -4619,12 +3971,6 @@ rather than at runtime (if at all).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ExtendsObject</key>
@@ -4644,12 +3990,6 @@ rather than at runtime (if at all).</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4682,12 +4022,6 @@ rather than at runtime (if at all).</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4744,12 +4078,6 @@ rather than at runtime (if at all).</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4819,12 +4147,6 @@ in each object at runtime.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>FinalParameterInAbstractMethod</key>
@@ -4843,12 +4165,6 @@ in each object at runtime.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4874,12 +4190,6 @@ in each object at runtime.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>FinalizeOnlyCallsSuperFinalize</key>
@@ -4900,12 +4210,6 @@ in each object at runtime.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4936,12 +4240,6 @@ overload Object.finalize(). It will not be called by the VM.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>FinalizeShouldBeProtected</key>
@@ -4964,12 +4262,6 @@ other classes may invoke it at inappropriate times.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5005,12 +4297,6 @@ element of the list or array left to right.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ForLoopShouldBeWhileLoop</key>
@@ -5033,12 +4319,6 @@ element of the list or array left to right.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5067,12 +4347,6 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5114,12 +4388,6 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5182,12 +4450,6 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>GodClass</key>
@@ -5213,12 +4475,6 @@ of Object-Oriented Systems.</i> Springer, Berlin, 1 edition, October 2006. Page 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5263,12 +4519,6 @@ with lambdas. The available alternatives depend on the actual logging framework.
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>logLevels</key>
       <description><![CDATA[LogLevels to guard]]></description>
       <defaultValue>trace,debug,info,warn,error,log,finest,finer,fine,info,warning,severe</defaultValue>
@@ -5307,12 +4557,6 @@ with lambdas. The available alternatives depend on the actual logging framework.
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>IdempotentOperations</key>
@@ -5336,12 +4580,6 @@ with lambdas. The available alternatives depend on the actual logging framework.
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5378,12 +4616,6 @@ with lambdas. The available alternatives depend on the actual logging framework.
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ImmutableField</key>
@@ -5414,12 +4646,6 @@ see <i>Effective Java, 3rd Edition, Item 17: Minimize mutability</i>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5457,12 +4683,6 @@ see <i>Effective Java, 3rd Edition, Item 17: Minimize mutability</i>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5507,12 +4727,6 @@ which is reached by fallthrough, or with <code>@SuppressWarnings(&quot;fallthrou
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>InefficientEmptyStringCheck</key>
@@ -5552,12 +4766,6 @@ include the check for != null).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>InefficientStringBuffering</key>
@@ -5580,12 +4788,6 @@ need to be be created and destroyed by the JVM.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5622,12 +4824,6 @@ need to be be created and destroyed by the JVM.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>InstantiationToGetClass</key>
@@ -5650,12 +4846,6 @@ need to be be created and destroyed by the JVM.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5683,12 +4873,6 @@ is assumed if the length of the constructor can not be determined.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5724,12 +4908,6 @@ enabled by configuring the property <code>packages</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5770,12 +4948,6 @@ messages are supported (<code>%s</code>).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>JUnit4SuitesShouldUseSuiteAnnotation</key>
@@ -5803,12 +4975,6 @@ through the @RunWith(Suite.class) annotation.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5848,12 +5014,6 @@ is a good practice to limit their visibility.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>JUnitSpelling</key>
@@ -5877,12 +5037,6 @@ is a good practice to limit their visibility.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5913,12 +5067,6 @@ is a good practice to limit their visibility.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5955,12 +5103,6 @@ is a good practice to limit their visibility.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>JumbledIncrementer</key>
@@ -5987,12 +5129,6 @@ is a good practice to limit their visibility.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6030,12 +5166,6 @@ is a good practice to limit their visibility.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6098,12 +5228,6 @@ to break a boundary of abstraction.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6174,12 +5298,6 @@ Developers Perceive Them</a>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6293,12 +5411,6 @@ Developers Perceive Them</a>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>LocalHomeNamingConvention</key>
@@ -6317,12 +5429,6 @@ Developers Perceive Them</a>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6347,12 +5453,6 @@ Developers Perceive Them</a>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>LocalVariableCouldBeFinal</key>
@@ -6374,12 +5474,6 @@ Developers Perceive Them</a>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6423,12 +5517,6 @@ Developers Perceive Them</a>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6482,12 +5570,6 @@ Developers Perceive Them</a>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>LongVariable</key>
@@ -6520,12 +5602,6 @@ Developers Perceive Them</a>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6570,12 +5646,6 @@ the same as interfaces can be configured with the property <code>allowedTypes</c
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>allowedTypes</key>
       <description><![CDATA[Exceptions to the rule]]></description>
       <defaultValue>java.util.Properties</defaultValue>
@@ -6604,12 +5674,6 @@ except when using one of the configured allowed classes.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6643,12 +5707,6 @@ except when using one of the configured allowed classes.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6688,12 +5746,6 @@ except when using one of the configured allowed classes.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>MethodNamingConventions</key>
@@ -6719,12 +5771,6 @@ except when using one of the configured allowed classes.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6792,12 +5838,6 @@ removed or replaced outside of the object that owns it. It is safer to return a 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>MethodWithSameNameAsEnclosingClass</key>
@@ -6822,12 +5862,6 @@ This would be confusing as it would look like a constructor.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6868,12 +5902,6 @@ Either the check is useless (the variable will never be <code>null</code>) or it
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>MissingOverride</key>
@@ -6896,12 +5924,6 @@ Either the check is useless (the variable will never be <code>null</code>) or it
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6929,12 +5951,6 @@ chain needs an own serialVersionUID field. See also <a href="https://stackoverfl
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6973,12 +5989,6 @@ See the property <code>annotations</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>MoreThanOneLogger</key>
@@ -7003,12 +6013,6 @@ log4j2 (since 6.19.0).</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7037,12 +6041,6 @@ rule {% rule java/errorprone/AssignmentToNonFinalStatic %}.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7105,12 +6103,6 @@ complexity and increase readability.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>reportLevel</key>
       <description><![CDATA[N-Path Complexity reporting threshold]]></description>
       <defaultValue>200</defaultValue>
@@ -7163,12 +6155,6 @@ statements. For more details on the calculation, see the documentation
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>methodReportLevel</key>
       <description><![CDATA[NCSS reporting threshold for methods]]></description>
       <defaultValue>60</defaultValue>
@@ -7209,12 +6195,6 @@ statements. For more details on the calculation, see the documentation
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>NonCaseLabelInSwitch</key>
@@ -7247,12 +6227,6 @@ This is legal, but confusing. It is easy to mix up the case labels and the non-c
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>NonExhaustiveSwitch</key>
@@ -7282,12 +6256,6 @@ This is legal, but confusing. It is easy to mix up the case labels and the non-c
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7332,12 +6300,6 @@ serializable regardless of the name.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>checkAbstractTypes</key>
       <description><![CDATA[Enable to verify fields with abstract types like abstract classes, interfaces, generic types or java.lang.Object. Enabling this might lead to more false positives, since the concrete runtime type can actually be serializable.]]></description>
       <defaultValue>false</defaultValue>
@@ -7368,12 +6330,6 @@ confusing.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7411,12 +6367,6 @@ performance penalty. <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/Doubl
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7459,12 +6409,6 @@ of assignment is an indication that the programmer doesn't completely understand
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>OneDeclarationPerLine</key>
@@ -7500,12 +6444,6 @@ However, it can lead to quite messy code. This rule looks for several declaratio
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>OnlyOneReturn</key>
@@ -7531,12 +6469,6 @@ However, it can lead to quite messy code. This rule looks for several declaratio
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7570,12 +6502,6 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7619,12 +6545,6 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>PackageCase</key>
@@ -7646,12 +6566,6 @@ is faster, but returns only an array of type <code>Object[]</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7712,12 +6626,6 @@ can reorder code.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>PreserveStackTrace</key>
@@ -7771,12 +6679,6 @@ whose name starts with <code>ignored</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>PrimitiveWrapperInstantiation</key>
@@ -7807,12 +6709,6 @@ whose name starts with <code>ignored</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ProperCloneImplementation</key>
@@ -7835,12 +6731,6 @@ whose name starts with <code>ignored</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7890,12 +6780,6 @@ with the restriction that the logger needs to be passed into the constructor.</p
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>RedundantFieldInitializer</key>
@@ -7934,12 +6818,6 @@ is redundant and results in a larger class file (approximately three additional 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>RemoteInterfaceNamingConvention</key>
@@ -7966,12 +6844,6 @@ is redundant and results in a larger class file (approximately three additional 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>RemoteSessionInterfaceNamingConvention</key>
@@ -7990,12 +6862,6 @@ is redundant and results in a larger class file (approximately three additional 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8028,12 +6894,6 @@ is redundant and results in a larger class file (approximately three additional 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ReplaceHashtableWithMap</key>
@@ -8056,12 +6916,6 @@ is redundant and results in a larger class file (approximately three additional 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8088,12 +6942,6 @@ is redundant and results in a larger class file (approximately three additional 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8131,12 +6979,6 @@ inadvertent NullPointerExceptions.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ReturnFromFinallyBlock</key>
@@ -8168,12 +7010,6 @@ inadvertent NullPointerExceptions.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>ShortClassName</key>
@@ -8199,12 +7035,6 @@ inadvertent NullPointerExceptions.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8235,12 +7065,6 @@ inadvertent NullPointerExceptions.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8282,12 +7106,6 @@ inadvertent NullPointerExceptions.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>SignatureDeclareThrowsException</key>
@@ -8310,12 +7128,6 @@ derived from RuntimeException or a checked exception.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8345,12 +7157,6 @@ formatting is used.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8391,12 +7197,6 @@ formatting is used.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8442,12 +7242,6 @@ or <code>condition ? foo : literalBoolean</code>.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>SimplifyBooleanExpressions</key>
@@ -8472,12 +7266,6 @@ or <code>condition ? foo : literalBoolean</code>.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8513,12 +7301,6 @@ the conditional test can be returned instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>SimplifyConditional</key>
@@ -8541,12 +7323,6 @@ the conditional test can be returned instead.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8585,12 +7361,6 @@ for each call and new objects will be created for every invocation.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>SingletonClassReturningNewInstance</key>
@@ -8616,12 +7386,6 @@ for each call and new objects will be created for every invocation.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8662,12 +7426,6 @@ so it might as well not be stored in the enclosing object.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>java.lang.Deprecated,javafx.fxml.FXML,lombok.Getter,lombok.Setter,lombok.experimental.Delegate</defaultValue>
@@ -8696,12 +7454,6 @@ behavior especially when instances are distributed by the container on several J
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8745,12 +7497,6 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>StringInstantiation</key>
@@ -8767,12 +7513,6 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8797,12 +7537,6 @@ This can lead to internal buffer sizes that are larger than expected. Some examp
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8842,12 +7576,6 @@ Item 10: Obey the general contract when overriding equals.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>SuspiciousHashcodeMethodName</key>
@@ -8870,12 +7598,6 @@ to override the hashCode() method.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8905,12 +7627,6 @@ the literal character "8".</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8950,12 +7666,6 @@ on the switch variable.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>minimum</key>
       <description><![CDATA[Threshold above which a switch statement or expression is reported]]></description>
       <defaultValue>10</defaultValue>
@@ -8991,12 +7701,6 @@ will (and by priority) and avoid clogging the Standard out log.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>TestClassWithoutTestCases</key>
@@ -9024,12 +7728,6 @@ by name, set this property to an empty string.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9078,12 +7776,6 @@ if-else statement to increase code readability.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>TooManyFields</key>
@@ -9122,12 +7814,6 @@ city/state/zip fields could park them within a single Address field.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>TooManyMethods</key>
@@ -9151,12 +7837,6 @@ complexity and find a way to have more fine grained objects.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9192,12 +7872,6 @@ which class a static member comes from (Sun 1.5 Language Guide).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UncommentedEmptyConstructor</key>
@@ -9230,12 +7904,6 @@ and unintentional empty constructors.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UncommentedEmptyMethodBody</key>
@@ -9258,12 +7926,6 @@ empty methods.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9294,12 +7956,6 @@ empty methods.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnitTestAssertionsShouldIncludeMessage</key>
@@ -9327,12 +7983,6 @@ empty methods.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9371,12 +8021,6 @@ empty methods.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9423,12 +8067,6 @@ empty methods.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>extraAssertMethodNames</key>
       <description><![CDATA[Extra valid assertion methods names]]></description>
       <defaultValue></defaultValue>
@@ -9467,12 +8105,6 @@ as long as you are following this convention to name the methods.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnitTestShouldUseBeforeAnnotation</key>
@@ -9503,12 +8135,6 @@ as long as you are following this convention to name the methods.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9547,12 +8173,6 @@ as long as you are following this convention to name the methods.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9607,12 +8227,6 @@ as long as you are following this convention to name the methods.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryBooleanAssertion</key>
@@ -9636,12 +8250,6 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9681,12 +8289,6 @@ an error, use the <code>fail()</code> method and provide an indication message o
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryCaseChange</key>
@@ -9707,12 +8309,6 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9782,12 +8378,6 @@ The literal would be autoboxed to <code>Integer</code> anyway.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryConstructor</key>
@@ -9810,12 +8400,6 @@ modifier as the declaring class. In an enum type, the default constructor is imp
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9851,12 +8435,6 @@ on the wrapper classes instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryFullyQualifiedName</key>
@@ -9879,12 +8457,6 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -9935,12 +8507,6 @@ which is covered by an import statement is redundant.  Consider using the non-fu
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryLocalBeforeReturn</key>
@@ -9964,12 +8530,6 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10025,12 +8585,6 @@ For historical reasons, modifiers which are implied by the context are accepted 
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryReturn</key>
@@ -10053,12 +8607,6 @@ instructions follow anyway.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10088,12 +8636,6 @@ instructions follow anyway.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10128,12 +8670,6 @@ instructions follow anyway.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnnecessaryWarningSuppression</key>
@@ -10156,12 +8692,6 @@ instructions follow anyway.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10194,12 +8724,6 @@ synchronized on block level.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10319,12 +8843,6 @@ synchronized on block level.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>checkUnusedPrefixIncrement</key>
       <description><![CDATA[Report expressions like ++i that may be replaced with (i + 1)]]></description>
       <defaultValue>false</defaultValue>
@@ -10366,12 +8884,6 @@ Hence, by default, this rule only considers private methods. To include non-priv
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>checkAll</key>
       <description><![CDATA[Check all methods, including non-private ones]]></description>
       <defaultValue>false</defaultValue>
@@ -10400,12 +8912,6 @@ Variables whose name starts with <code>ignored</code> or <code>unused</code> are
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10463,12 +8969,6 @@ it to another object's equals() method.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UnusedPrivateField</key>
@@ -10499,12 +8999,6 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10542,12 +9036,6 @@ Previously these frameworks where explicitly allowed by listing their annotation
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>java.lang.Deprecated,jakarta.annotation.PostConstruct,jakarta.annotation.PreDestroy,lombok.EqualsAndHashCode.Include</defaultValue>
@@ -10577,12 +9065,6 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10624,12 +9106,6 @@ You must use <code>new ArrayList&lt;&gt;(Arrays.asList(...))</code> if that is i
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseCollectionIsEmpty</key>
@@ -10666,12 +9142,6 @@ Comparing the value of size() to 0 does not convey intent as well as the isEmpty
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseConcurrentHashMap</key>
@@ -10697,12 +9167,6 @@ perform efficient map reads without blocking other threads.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10735,12 +9199,6 @@ perform efficient map reads without blocking other threads.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10783,12 +9241,6 @@ was made possible for anonymous class constructors.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseEnumCollections</key>
@@ -10824,12 +9276,6 @@ was made possible for anonymous class constructors.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseEqualsToCompareStrings</key>
@@ -10854,12 +9300,6 @@ is used on both sides.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -10902,12 +9342,6 @@ is completely optional).</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseIOStreamsWithApacheCommonsFileItem</key>
@@ -10941,12 +9375,6 @@ and buffering.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseIndexOfChar</key>
@@ -10967,12 +9395,6 @@ and buffering.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11020,12 +9442,6 @@ behaviour down the line, and communicate your intent to future readers.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseNotifyAllInsteadOfNotify</key>
@@ -11050,12 +9466,6 @@ one is chosen.  The thread chosen is arbitrary; thus it's usually safer to call 
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11097,12 +9507,6 @@ your API.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseProperClassLoader</key>
@@ -11125,12 +9529,6 @@ Thread.currentThread().getContextClassLoader() instead.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseShortArrayInitializer</key>
@@ -11150,12 +9548,6 @@ using <code>new</code>. Instead one can simply define the initial content of the
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11190,12 +9582,6 @@ since no scan across the internal <code>Charset</code> caches is needed.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11238,12 +9624,6 @@ threadsafe StringBuffer is recommended to avoid this.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseStringBufferLength</key>
@@ -11265,12 +9645,6 @@ or StringBuffer.toString().length() == ...</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11319,12 +9693,6 @@ preserved.</p>
       <type>STRING</type>
     </param>
     <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>closeMethods</key>
       <description><![CDATA[Method names in finally block, which trigger this rule]]></description>
       <defaultValue>close,closeQuietly</defaultValue>
@@ -11361,12 +9729,6 @@ preserved.</p>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UseUtilityClass</key>
@@ -11392,12 +9754,6 @@ remember to add a private constructor to prevent instantiation.
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11428,12 +9784,6 @@ having to deal with the creation of an array.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11469,12 +9819,6 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UselessOverridingMethod</key>
@@ -11504,12 +9848,6 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11550,12 +9888,6 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11613,12 +9945,6 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
   </rule>
   <rule>
     <key>UselessStringValueOf</key>
@@ -11642,12 +9968,6 @@ Therefore, ignoring the result of such an operation is likely a mistake. The ope
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -11680,12 +10000,6 @@ a block <code>{}</code> is sufficient.</p>
     <param>
       <key>violationSuppressRegex</key>
       <description><![CDATA[Suppress violations with messages matching a regular expression]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
-      <key>violationSuppressXPath</key>
-      <description><![CDATA[Suppress violations on nodes which match a given relative XPath expression.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
