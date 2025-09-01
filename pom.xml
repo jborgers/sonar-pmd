@@ -96,7 +96,7 @@
     <maven.javadoc.plugin.version>3.11.3</maven.javadoc.plugin.version>
     <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
     <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
-    <sonar.maven.plugin.version>5.1.0.4751</sonar.maven.plugin.version>
+    <sonar.maven.plugin.version>5.2.0.4988</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
     <flatten.maven.plugin.version>1.7.2</flatten.maven.plugin.version>
     <!-- Code Coverage -->
