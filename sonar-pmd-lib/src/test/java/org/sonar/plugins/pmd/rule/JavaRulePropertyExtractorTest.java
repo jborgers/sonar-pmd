@@ -40,7 +40,7 @@ class JavaRulePropertyExtractorTest {
             throw new IOException("Jar file " + jarFile + " does not exist.");
         }
         assertThatThrownBy(() -> extractor.extractProperties(jarFile))
-                .isInstanceOf(org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor.PossibleZipBombException.class);
+                .isInstanceOf(org.sonar.plugins.pmd.rule.ZipBombProtection.PossibleZipBombException.class);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package org.sonar.plugins.pmd.rule;
 
 import net.sourceforge.pmd.lang.rule.AbstractRule;
+import net.sourceforge.pmd.properties.PropertyConstraint;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertySource;
 import org.jetbrains.annotations.NotNull;
@@ -27,10 +28,6 @@ public class JavaRulePropertyExtractor {
 
     static final String ABSTRACT_RULE_CLASS_NAME = AbstractRule.class.getName();
 
-    // Security thresholds to prevent ZIP bomb attacks
-    private static final int THRESHOLD_ENTRIES = 10_000;
-    private static final int THRESHOLD_SIZE_BYTES = 10_000_000; // 10 MB
-    private static final double THRESHOLD_RATIO = 15; // Increased to accommodate legitimate JAR files
 
     /**
      * Extracts property information from Java rule classes in the specified jar file.
@@ -53,35 +50,13 @@ public class JavaRulePropertyExtractor {
             // Create a class loader for the jar file
             URL[] urls = { new URL("file:" + file) };
             try (URLClassLoader classLoader = new URLClassLoader(urls, getClass().getClassLoader())) {
-                // Find all class files in the jar
+                // First, scan the JAR for potential ZIP bomb characteristics
+                ZipBombProtection.scanJar(jarFile, file);
+
+                // After validation, iterate through entries to find class files
                 Enumeration<JarEntry> entries = jarFile.entries();
-
-                // Variables to track security thresholds for preventing ZIP bomb attacks
-                int totalEntryArchive = 0;
-                long totalSizeArchive = 0;
-
-                while (entries.hasMoreElements() && totalEntryArchive < THRESHOLD_ENTRIES) {
-                    totalEntryArchive++;
+                while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
-
-                    // Check for ZIP bomb based on compression ratio
-                    if (entry.getSize() > 0 && entry.getCompressedSize() > 0) {
-                        double compressionRatio = (double) entry.getSize() / entry.getCompressedSize();
-                        if (compressionRatio > THRESHOLD_RATIO) {
-                            String msg = "Suspicious compression ratio detected in jar file: " + file + ", entry: " + entry.getName() + ", ratio: " + compressionRatio + ". Possible ZIP bomb attack. Skipping rule extraction.";
-                            LOGGER.error(msg);
-                            throw new PossibleZipBombException(msg);
-                        }
-                    }
-
-                    // Track total uncompressed size
-                    totalSizeArchive += entry.getSize();
-                    if (totalSizeArchive > THRESHOLD_SIZE_BYTES) {
-                        String msg = "Total uncompressed size exceeds threshold in jar file: " + file + ". Possible ZIP bomb attack. Skipping rule extraction.";
-                        LOGGER.error(msg);
-                        throw new PossibleZipBombException(msg);
-                    }
-
                     if (entry.getName().endsWith(".class")) {
                         String className = entry.getName().replace('/', '.').replace(".class", "");
                         try {
@@ -100,12 +75,6 @@ public class JavaRulePropertyExtractor {
                             LOGGER.debug("Could not load class: {}", className, e);
                         }
                     }
-                }
-
-                if (totalEntryArchive >= THRESHOLD_ENTRIES) {
-                    String msg = "Too many entries in jar file: " + file + ". Possible ZIP bomb attack. Skipping rule extraction.";
-                    LOGGER.error(msg);
-                    throw new PossibleZipBombException(msg);
                 }
                 LOGGER.info("Extracted {} rule properties from jar file: {}", result.size(), file);
             }
@@ -185,6 +154,8 @@ public class JavaRulePropertyExtractor {
             // Try to instantiate the rule class
             Object ruleInstance = clazz.getDeclaredConstructor().newInstance();
 
+            LOGGER.info("Extracting properties for rule class: {}", clazz.getName());
+
             // Use PMD's PropertySource API directly (PMD 7+)
             if (!(ruleInstance instanceof PropertySource)) {
                 LOGGER.debug("Rule does not implement PropertySource: {}", clazz.getName());
@@ -218,11 +189,14 @@ public class JavaRulePropertyExtractor {
     private PropertyInfo createPropertyInfo(PropertyDescriptor<?> propertyDescriptor) {
         try {
             // Use reflection to get property information
-            String name = (String) invokeMethod(propertyDescriptor, "name");
-            String description = (String) invokeMethod(propertyDescriptor, "description");
-            String type = getPropertyType(propertyDescriptor);
+            String name = propertyDescriptor.name();
+            String description = propertyDescriptor.description();
+            String type = resolvePropertyType(propertyDescriptor);
             List<String> defaultValues = getDefaultValues(propertyDescriptor);
-            return new PropertyInfo(name, description, type, defaultValues);
+            List<String> acceptedValues = determineAcceptedValues(propertyDescriptor, defaultValues);
+            boolean multiple = determineMultiple(propertyDescriptor);
+            String wrappedType = determineWrappedType(propertyDescriptor, type, defaultValues);
+            return new PropertyInfo(name, description, type, defaultValues, acceptedValues, multiple, wrappedType);
         } catch (Exception e) {
             LOGGER.warn("Error creating property info", e);
             return null;
@@ -232,14 +206,16 @@ public class JavaRulePropertyExtractor {
     /**
      * Gets the property type from the given PropertyDescriptor object.
      */
-    private String getPropertyType(PropertyDescriptor<?> propertyDescriptor) {
+    private String resolvePropertyType(PropertyDescriptor<?> propertyDescriptor) {
         Object o = propertyDescriptor.defaultValue();
         return o == null ? "null" : convertKnownTypes(o);
     }
 
     private static @NotNull String convertKnownTypes(Object o) {
         String simpleName = o.getClass().getSimpleName();
+        // is this needed? there is only: %%% found simplename with Empty: EmptySet
         if (simpleName.startsWith("Empty")) {
+            LOGGER.info("%%% found simplename with Empty: {}", simpleName);
             simpleName = simpleName.substring("Empty".length());
         }
         return simpleName;
@@ -252,9 +228,22 @@ public class JavaRulePropertyExtractor {
         try {
             // Get the default values from the PropertyDescriptor
             Object defaultValue = propertyDescriptor.defaultValue();
+            @SuppressWarnings("unchecked")
+            List<PropertyConstraint<?>> constraints = (List<PropertyConstraint<?>>) propertyDescriptor.serializer().getConstraints();
+            if (!constraints.isEmpty()) {
+                LOGGER.info("%%% found constraints: {} for {} (default value: {})", constraints.get(0).getConstraintDescription(), propertyDescriptor.name(), defaultValue);
+            }
             if (defaultValue instanceof List) {
                 @SuppressWarnings("unchecked")
                 List<Object> defaultValueList = (List<Object>) defaultValue;
+                if (!defaultValueList.isEmpty()) {
+                    Object value = defaultValueList.get(0);
+                    Class<?> aClass = value.getClass();
+                    LOGGER.info("%%% found list with wrapped class: {} for {} (default value: {})", aClass.getSimpleName(), propertyDescriptor.name(), defaultValue);
+                }
+                else {
+                    LOGGER.info("%%% found empty list, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
+                }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueList) {
                     String x = value.toString();
@@ -268,6 +257,12 @@ public class JavaRulePropertyExtractor {
             } else if (defaultValue instanceof Set) {
                 @SuppressWarnings("unchecked")
                 Set<Object> defaultValueSet = (Set<Object>) defaultValue;
+                if (!defaultValueSet.isEmpty()) {
+                    LOGGER.info("%%% found set with wrapped class: {} for {} (default value: {})", defaultValueSet.iterator().next().getClass().getSimpleName(), propertyDescriptor.name(), defaultValue);
+                }
+                else {
+                    LOGGER.info("%%% found empty set, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
+                }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueSet) {
                     String x = value.toString();
@@ -277,11 +272,17 @@ public class JavaRulePropertyExtractor {
             } else if (defaultValue instanceof Optional) {
                 Optional<?> optional = (Optional<?>) defaultValue;
                 if (optional.isPresent()) {
-                    return Collections.singletonList(optional.get().toString());
+                    Object wrappedInOptional = optional.get();
+                    LOGGER.info("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
+                    return Collections.singletonList(wrappedInOptional.toString());
                 } else {
+                    if (!(propertyDescriptor.name().equals("violationSuppressRegex") || propertyDescriptor.name().equals("violationSuppressXPath"))) {
+                        LOGGER.info("%%% found empty optional for {}", propertyDescriptor);
+                    }
                     return Collections.emptyList();
                 }
             } else if (defaultValue != null) {
+                LOGGER.info("%%% found default value: {} for {} (type: {})", defaultValue, propertyDescriptor.name(), defaultValue.getClass().getSimpleName());
                 return Collections.singletonList(defaultValue.toString());
             }
         } catch (Exception e) {
@@ -290,13 +291,143 @@ public class JavaRulePropertyExtractor {
         return Collections.emptyList();
     }
 
-    /**
-     * Invokes a method on the given object.
-     */
-    private Object invokeMethod(Object obj, String methodName) throws Exception {
-        return obj.getClass().getMethod(methodName).invoke(obj);
+    private boolean determineMultiple(PropertyDescriptor<?> propertyDescriptor) {
+        try {
+            Object defaultValue = propertyDescriptor.defaultValue();
+            return (defaultValue instanceof List) || (defaultValue instanceof Set);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
+    private List<String> determineAcceptedValues(PropertyDescriptor<?> propertyDescriptor, List<String> defaultValues) {
+        List<String> result = new ArrayList<>();
+        try {
+            Object defaultValue = propertyDescriptor.defaultValue();
+
+            // 1) If enum type is discoverable from default values, use enum constants
+            Class<?> enumClass = null;
+            if (defaultValue instanceof List) {
+                List<?> list = (List<?>) defaultValue;
+                if (!list.isEmpty()) {
+                    Object first = list.get(0);
+                    if (first != null && first.getClass().isEnum()) {
+                        enumClass = first.getClass();
+                    }
+                }
+            } else if (defaultValue instanceof Set) {
+                Set<?> set = (Set<?>) defaultValue;
+                if (!set.isEmpty()) {
+                    Object first = set.iterator().next();
+                    if (first != null && first.getClass().isEnum()) {
+                        enumClass = first.getClass();
+                    }
+                }
+            } else if (defaultValue instanceof Optional) {
+                Optional<?> opt = (Optional<?>) defaultValue;
+                if (opt.isPresent()) {
+                    Object inner = opt.get();
+                    if (inner != null && inner.getClass().isEnum()) {
+                        enumClass = inner.getClass();
+                    }
+                }
+            } else if (defaultValue != null && defaultValue.getClass().isEnum()) {
+                enumClass = defaultValue.getClass();
+            }
+
+            if (enumClass != null) {
+                Object[] constants = enumClass.getEnumConstants();
+                if (constants != null) {
+                    for (Object c : constants) {
+                        result.add(normalizeLabel(c.toString()));
+                    }
+                }
+            }
+
+            // 2) Otherwise, parse constraints description: "Possible values: [...]" or "Allowed values: [...]"
+            if (result.isEmpty()) {
+                @SuppressWarnings("unchecked")
+                List<PropertyConstraint<?>> constraints = (List<PropertyConstraint<?>>) propertyDescriptor.serializer().getConstraints();
+                for (PropertyConstraint<?> c : constraints) {
+                    String desc = String.valueOf(c.getConstraintDescription());
+                    List<String> fromDesc = parseValuesFromConstraintDescription(desc);
+                    if (!fromDesc.isEmpty()) {
+                        result.addAll(fromDesc);
+                        break;
+                    }
+                }
+            }
+
+            return List.copyOf(result);
+        } catch (Exception e) {
+            LOGGER.debug("Could not determine accepted values for {}", propertyDescriptor.name(), e);
+            return Collections.emptyList();
+        }
+    }
+
+    private String determineWrappedType(PropertyDescriptor<?> propertyDescriptor, String fallbackType, List<String> defaultValues) {
+        try {
+            Object defaultValue = propertyDescriptor.defaultValue();
+            if (defaultValue instanceof List) {
+                List<?> list = (List<?>) defaultValue;
+                if (!list.isEmpty() && list.get(0) != null) {
+                    return list.get(0).getClass().getSimpleName();
+                } else {
+                    return "Object"; // unknown element type
+                }
+            } else if (defaultValue instanceof Set) {
+                Set<?> set = (Set<?>) defaultValue;
+                if (!set.isEmpty()) {
+                    Object first = set.iterator().next();
+                    if (first != null) return first.getClass().getSimpleName();
+                }
+                return "Object";
+            } else if (defaultValue instanceof Optional) {
+                Optional<?> opt = (Optional<?>) defaultValue;
+                if (opt.isPresent() && opt.get() != null) {
+                    return opt.get().getClass().getSimpleName();
+                } else {
+                    return fallbackType;
+                }
+            } else if (defaultValue != null) {
+                return defaultValue.getClass().getSimpleName();
+            }
+        } catch (Exception ignored) {
+        }
+        return fallbackType;
+    }
+
+    private List<String> parseValuesFromConstraintDescription(String desc) {
+        if (desc == null || desc.isEmpty()) return Collections.emptyList();
+        // Look for "Possible values: [a, b, c]" or "Allowed values: [a, b]"
+        String lower = desc.toLowerCase(Locale.ROOT);
+        int idx = lower.indexOf("possible values:");
+        if (idx < 0) idx = lower.indexOf("allowed values:");
+        if (idx >= 0) {
+            int open = desc.indexOf('[', idx);
+            int close = desc.indexOf(']', open + 1);
+            if (open > 0 && close > open) {
+                String inner = desc.substring(open + 1, close);
+                String[] parts = inner.split(",");
+                List<String> values = new ArrayList<>();
+                for (String p : parts) {
+                    String v = normalizeLabel(p.trim());
+                    if (!v.isEmpty()) values.add(v);
+                }
+                return values;
+            }
+        }
+        return Collections.emptyList();
+    }
+
+    private String normalizeLabel(String x) {
+        if (x == null) return "";
+        // reuse special mappings used for defaults
+        if ("IPV4".equals(x)) return "IPv4";
+        if ("IPV6".equals(x)) return "IPv6";
+        if ("IPV4_MAPPED_IPV6".equals(x)) return "IPv4 mapped IPv6";
+        return x;
+    }
 
     /**
      * Class to hold property information.
@@ -306,12 +437,26 @@ public class JavaRulePropertyExtractor {
         private final String description;
         private final String type;
         private final List<String> defaultValues;
+        private final List<String> acceptedValues;
+        private final boolean multiple;
+        private final String wrappedType;
 
         public PropertyInfo(String name, String description, String type, List<String> defaultValues) {
+            this(name, description, type, defaultValues, Collections.emptyList(), false, type);
+        }
+
+        public PropertyInfo(String name, String description, String type, List<String> defaultValues, List<String> acceptedValues, boolean multiple) {
+            this(name, description, type, defaultValues, acceptedValues, multiple, type);
+        }
+
+        public PropertyInfo(String name, String description, String type, List<String> defaultValues, List<String> acceptedValues, boolean multiple, String wrappedType) {
             this.name = name;
             this.description = description;
             this.type = type;
             this.defaultValues = List.copyOf(defaultValues);
+            this.acceptedValues = acceptedValues == null ? Collections.emptyList() : List.copyOf(acceptedValues);
+            this.multiple = multiple;
+            this.wrappedType = wrappedType == null ? type : wrappedType;
         }
 
         public String getName() {
@@ -334,27 +479,34 @@ public class JavaRulePropertyExtractor {
             return String.join(",", defaultValues);
         }
 
+        public List<String> getAcceptedValues() {
+            return acceptedValues;
+        }
+
+        public boolean isMultiple() {
+            return multiple;
+        }
+
+        public String getWrappedType() {
+            return wrappedType;
+        }
+
         @Override
         public String toString() {
-            return "PropertyInfo [name=" + name + ", description=" + description + ", type=" + type + ", defaultValues=" + defaultValues + "]";
+            return "PropertyInfo [name=" + name + ", description=" + description + ", type=" + type + ", defaultValues=" + defaultValues + ", acceptedValues=" + acceptedValues + ", multiple=" + multiple + ", wrappedType=" + wrappedType + "]";
         }
 
         @Override
         public boolean equals(Object o) {
             if (o == null || getClass() != o.getClass()) return false;
             PropertyInfo that = (PropertyInfo) o;
-            return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(type, that.type) && Objects.equals(defaultValues, that.defaultValues);
+            return multiple == that.multiple && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(type, that.type) && Objects.equals(defaultValues, that.defaultValues) && Objects.equals(acceptedValues, that.acceptedValues) && Objects.equals(wrappedType, that.wrappedType);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(name, description, type, defaultValues);
+            return Objects.hash(name, description, type, defaultValues, acceptedValues, multiple, wrappedType);
         }
     }
 
-    public static class PossibleZipBombException extends IOException {
-        public PossibleZipBombException(String msg) {
-            super(msg);
-        }
-    }
 }
