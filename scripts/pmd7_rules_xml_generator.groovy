@@ -27,6 +27,7 @@ Grape.grab([group: 'net.sourceforge.pmd', module: 'pmd-kotlin', version: pmdVers
 
 import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor
 import org.sonar.plugins.pmd.rule.MarkdownToHtmlConverter
+import org.sonar.plugins.pmd.rule.PmdSeverityMapper
 
 // Configure PMD version for MarkdownToHtmlConverter to avoid lib dependency on PMD
 MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
@@ -195,17 +196,8 @@ def kotlinRules = readRulesFromJar(pmdKotlinJarPath, kotlinCategoriesPropertiesP
 println "Found ${kotlinRules.size()} total Kotlin rules"
 println ""
 
-// Helper function to convert priority to severity
-def priorityToSeverity = { priority ->
-    switch (priority) {
-        case "1": return "BLOCKER"
-        case "2": return "CRITICAL"
-        case "3": return "MAJOR"
-        case "4": return "MINOR"
-        case "5": return "INFO"
-        default: return "MAJOR"
-    }
-}
+// Priority-to-severity mapping is provided by sonar-pmd-lib
+// Use: PmdSeverityMapper.priorityToSeverity(priority)
 
 // Helper function to escape XML content for CDATA
 def escapeForCdata = { text ->
@@ -321,7 +313,7 @@ def generateXmlFile = { outputFile, rules, language ->
                         key(ruleData.name)
                         name(MarkdownToHtmlConverter.camelCaseToReadable(ruleData.name))
                         internalKey("${ruleData.categoryFile}/${ruleData.name}")
-                        severity(priorityToSeverity(ruleData.priority))
+                        severity(PmdSeverityMapper.priorityToSeverity(ruleData.priority))
 
                         // Determine whether the rule message contains variable placeholders like {0}, {1}, ...
                         def hasVariablePlaceholders = (ruleData.message ?: "").find(/\{\d+\}/) != null
