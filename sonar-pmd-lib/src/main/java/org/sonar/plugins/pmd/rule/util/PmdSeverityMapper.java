@@ -1,4 +1,4 @@
-package org.sonar.plugins.pmd.rule;
+package org.sonar.plugins.pmd.rule.util;
 
 /**
  * Utility to map PMD priority levels (1..5 as strings) to Sonar severity labels.

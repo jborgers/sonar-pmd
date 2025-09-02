@@ -7,6 +7,7 @@ import net.sourceforge.pmd.properties.PropertySource;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.plugins.pmd.rule.util.ZipBombProtection;
 
 import java.io.File;
 import java.io.IOException;

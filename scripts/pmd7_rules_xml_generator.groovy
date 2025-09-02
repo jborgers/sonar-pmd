@@ -27,7 +27,8 @@ Grape.grab([group: 'net.sourceforge.pmd', module: 'pmd-kotlin', version: pmdVers
 
 import org.sonar.plugins.pmd.rule.JavaRulePropertyExtractor
 import org.sonar.plugins.pmd.rule.MarkdownToHtmlConverter
-import org.sonar.plugins.pmd.rule.PmdSeverityMapper
+import org.sonar.plugins.pmd.rule.util.PmdSeverityMapper
+import org.sonar.plugins.pmd.rule.util.RuleParamFormatter
 
 // Configure PMD version for MarkdownToHtmlConverter to avoid lib dependency on PMD
 MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
@@ -425,17 +426,13 @@ def generateXmlFile = { outputFile, rules, language ->
                                                     try { isMultiple = propInfo.isMultiple() } catch (MissingMethodException ignore) { isMultiple = false }
                                                     boolean useSelect = accepted && !accepted.isEmpty()
                                                     
-                                                    // Normalize whitespace in description to single spaces
-                                                    baseDesc = (baseDesc ?: "").replaceAll(/\s+/, ' ').trim()
-                                                    if (useSelect) {
-                                                        // Remove any existing "Possible values: [...]" or "Allowed values: [...]" fragments to avoid duplication
-                                                        baseDesc = baseDesc.replaceAll(/(?i)\s*(?:Possible|Allowed)\s+values:\s*\[[^\]]*]\.?\s*/, ' ').trim()
-                                                        // Build standardized Allowed values list without spaces between items
-                                                        def suffix = isMultiple ? " Select one or more values." : " Select one of the values."
-                                                        def needsDot = baseDesc && !(baseDesc.endsWith('.') || baseDesc.endsWith('!') || baseDesc.endsWith('?'))
-                                                        def sep = baseDesc ? (needsDot ? ". " : " ") : ""
-                                                        baseDesc = baseDesc + sep + "Allowed values: [${accepted.join(',')}]." + suffix
-                                                    }
+                                                    // Build description via reusable formatter (moved to sonar-pmd-lib)
+                                                    baseDesc = RuleParamFormatter.buildDescription(
+                                                        existingProp?.description,
+                                                        propInfo.description,
+                                                        accepted,
+                                                        isMultiple
+                                                    )
                                                     description {
                                                         mkp.yieldUnescaped("<![CDATA[${escapeForCdata(baseDesc)}]]>")
                                                     }
@@ -449,19 +446,8 @@ def generateXmlFile = { outputFile, rules, language ->
 
                                                     // Determine type
                                                     if (useSelect) {
-                                                        // Build RuleParamType-like definition for select list
-                                                        // Build values as a single CSV token after values= to comply with RuleParamType.parse
-                                                        // Inner CSV: items separated by commas, with embedded quotes doubled
-                                                        def innerCsv = accepted.collect { v ->
-                                                            (v?.replace('"','""') ?: '')
-                                                        }.join(",")
-                                                        // Wrap the entire inner CSV in double quotes so it remains one option token
-                                                        def valuesToken = '"' + innerCsv + '"'
-                                                        if (isMultiple) {
-                                                            type("SINGLE_SELECT_LIST,multiple=true,values=${valuesToken}")
-                                                        } else {
-                                                            type("SINGLE_SELECT_LIST,values=${valuesToken}")
-                                                        }
+                                                        // Build RuleParamType-like definition for select list via reusable formatter
+                                                        type(RuleParamFormatter.buildSelectTypeToken(accepted, isMultiple))
                                                     } else {
                                                         // Prefer PMD XML type if present; else deduce from propInfo.type
                                                         def xmlType = existingProp?.type?.toUpperCase()

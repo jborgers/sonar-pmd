@@ -1,4 +1,4 @@
-package org.sonar.plugins.pmd.rule;
+package org.sonar.plugins.pmd.rule.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
