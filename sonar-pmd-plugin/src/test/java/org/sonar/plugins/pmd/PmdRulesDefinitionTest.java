@@ -43,7 +43,7 @@ class PmdRulesDefinitionTest {
 
         List<Rule> rules = repository.rules();
 
-        assertThat(rules).isNotEmpty();
+        assertThat(rules).hasSize(282);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -60,9 +60,9 @@ class PmdRulesDefinitionTest {
 
             for (Param param : rule.params()) {
                 assertThat(param.name()).isNotNull();
-                // Some generated parameters may intentionally have no description (e.g., internal suppress params)
-                // so only assert that description is present if provided in XML
-                // i.e., don't fail the test if it's missing
+                assertThat(param.description())
+                        .overridingErrorMessage("Description is not set for parameter '" + param.name() + "' of rule '" + rule.key())
+                        .isNotNull();
             }
         }
     }
