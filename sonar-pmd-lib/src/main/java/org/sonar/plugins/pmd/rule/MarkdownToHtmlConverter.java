@@ -400,8 +400,12 @@ public class MarkdownToHtmlConverter {
             return "Is NaN";
         }
 
+        // Protect well-known acronyms that shouldn't be split or lowercased
+        final String NAN_PLACEHOLDER = "N_a_N"; // avoid [a][A] split between a and N
+        String protectedName = ruleName.replace("NaN", NAN_PLACEHOLDER);
+
         // Split the rule name into words
-        String[] words = CAMEL_CASE_SPLIT_PATTERN.matcher(ruleName).replaceAll("$1 $2").trim().split(" ");
+        String[] words = CAMEL_CASE_SPLIT_PATTERN.matcher(protectedName).replaceAll("$1 $2").trim().split(" ");
         List<String> processedWords = new ArrayList<>();
 
         for (String word : words) {
@@ -409,8 +413,8 @@ public class MarkdownToHtmlConverter {
                 continue;
             }
 
-            // Special case for NaN
-            if (word.equals("NaN")) {
+            // Special case for NaN (may be present as placeholder)
+            if (word.equals("NaN") || word.equals("N_a_N")) {
                 processedWords.add("NaN");
                 continue;
             }

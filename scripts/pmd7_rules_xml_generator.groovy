@@ -4,9 +4,10 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import java.util.zip.ZipFile
 import groovy.grape.Grape
+import groovy.transform.Field
 
 // Resolve versions from pom.xml to have a single source of truth
-def pomFile = new File('pom.xml')
+@Field def pomFile = new File('pom.xml')
 if (!pomFile.exists()) {
     pomFile = new File('../pom.xml') // allow running from scripts/ directory
 }
@@ -14,8 +15,8 @@ if (!pomFile.exists()) {
     throw new RuntimeException('pom.xml not found to determine versions')
 }
 
-def pom = new XmlSlurper().parse(pomFile)
-def pmdVersion = (pom.properties.'pmd.version'.text() ?: '').trim()
+@Field def pom = new XmlSlurper().parse(pomFile)
+@Field def pmdVersion = (pom.properties.'pmd.version'.text() ?: '').trim()
 if (!pmdVersion) {
     throw new RuntimeException('pmd.version not found in pom.xml')
 }
@@ -34,28 +35,28 @@ import org.sonar.plugins.pmd.rule.util.RuleParamFormatter
 MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
 
 // Configuration
-def pmdJavaJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar")
-def pmdKotlinJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar")
+@Field def pmdJavaJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar")
+@Field def pmdKotlinJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar")
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 // Define language-specific rule alternatives paths
-def javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
-def kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
+@Field String javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
+@Field String kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
 
 // Extract Java rule properties from the jar file
 println "Extracting Java rule properties from ${pmdJavaJarPath}"
-def javaRulePropertyExtractor = new JavaRulePropertyExtractor()
-def javaRuleProperties = javaRulePropertyExtractor.extractProperties(pmdJavaJarPath)
+@Field def javaRulePropertyExtractor = new JavaRulePropertyExtractor()
+@Field def javaRuleProperties = javaRulePropertyExtractor.extractProperties(pmdJavaJarPath)
 println "Found properties for ${javaRuleProperties.size()} Java rule classes"
 
 // Extract Kotlin rule properties from the jar file
 println "Extracting Kotlin rule properties from ${pmdKotlinJarPath}"
-def kotlinRulePropertyExtractor = new JavaRulePropertyExtractor()
-def kotlinRuleProperties = kotlinRulePropertyExtractor.extractProperties(pmdKotlinJarPath)
+@Field def kotlinRulePropertyExtractor = new JavaRulePropertyExtractor()
+@Field def kotlinRuleProperties = kotlinRulePropertyExtractor.extractProperties(pmdKotlinJarPath)
 println "Found properties for ${kotlinRuleProperties.size()} Kotlin rule classes"
 
 // Function to read rule alternatives from a JSON file
-def readRuleAlternatives = { filePath ->
+def readRuleAlternatives(String filePath) {
     def alternatives = [:]
     try {
         def alternativesFile = new File(filePath)
@@ -74,10 +75,10 @@ def readRuleAlternatives = { filePath ->
 }
 
 // Read Java rule alternatives
-def javaRuleAlternatives = readRuleAlternatives(javaRuleAlternativesPath)
+@Field Map javaRuleAlternatives = readRuleAlternatives(javaRuleAlternativesPath)
 
 // Read Kotlin rule alternatives (for future use)
-def kotlinRuleAlternatives = readRuleAlternatives(kotlinRuleAlternativesPath)
+@Field Map kotlinRuleAlternatives = readRuleAlternatives(kotlinRuleAlternativesPath)
 
 // If we're in test mode, make the MarkdownToHtmlConverter available but don't run the main code
 if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
@@ -88,13 +89,13 @@ if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
 
 // Get output directory from binding variable (set by Maven) or use a default directory
 // The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
-def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
+@Field def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
     "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd" : "."
-def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
-def javaOutputFileName = "rules-java.xml"
-def kotlinOutputFileName = "rules-kotlin.xml"
-def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
-def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
+@Field def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
+@Field def javaOutputFileName = "rules-java.xml"
+@Field def kotlinOutputFileName = "rules-kotlin.xml"
+@Field def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
+@Field def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
 
 println "PMD ${pmdVersion} Rules XML Generator"
 println "=" * 50
@@ -201,89 +202,45 @@ println ""
 // Use: PmdSeverityMapper.priorityToSeverity(priority)
 
 // Helper function to escape XML content for CDATA
-def escapeForCdata = { text ->
+String escapeForCdata(String text) {
     if (!text) return ""
+    // Split any occurrence of the CDATA closing sequence so the CDATA remains valid
     return text.replaceAll(/\]\]>/, "]]]]><![CDATA[>")
 }
 
 
 // Helper function to format description with examples using MdToHtmlConverter
-def formatDescription = { ruleData, language ->
+// Refactored to use helper methods for readability
+// - appendTitleSection
+// - appendExamplesSection
+// - enrichWithAlternatives
+// - appendExternalInfoLink
+def formatDescription(ruleData, String language) {
     def description = ruleData.description ?: ""
     def examples = ruleData.examples ?: []
     def externalInfoUrl = ruleData.externalInfoUrl ?: ""
     def message = ruleData.message ?: ""
     def ruleName = ruleData.name
 
-    // If no description exists, log warning, do not add rule
-    if (!description || description.trim().isEmpty()) {
-        // report with println and skip processing
-    }
-
     // Build markdown content
     def markdownContent = new StringBuilder()
 
-    // Add the message as a title at the top of the description
-    if (message && !message.trim().isEmpty()) {
-        // Process message: replace placeholders with code tags and fix double quotes
-        def processedMessage = message
-            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')  // Wrap {0}, {1}, etc. in code tags
-            .replaceAll(/''/,"\'")  // Replace two subsequent single quotes with a single single quote
+    // Title and base description
+    appendTitleSection(markdownContent, message)
+    markdownContent.append(description ?: "")
 
-        markdownContent.append("## Title of issues: ").append(processedMessage).append("\n\n")
-    }
+    // Examples
+    appendExamplesSection(markdownContent, examples, language)
 
-    // Add the main description
-    markdownContent.append(description)
-
-    // Add examples section if available
-    if (examples && !examples.isEmpty()) {
-        markdownContent.append(examples.size() > 1 ? "\n\n## Examples\n\n" : "\n\n## Example\n\n")
-        examples.eachWithIndex { example, index ->
-            if (examples.size() > 1) {
-                markdownContent.append("### Example ${index + 1}\n\n")
-            }
-            // Ensure the code example is properly formatted with proper line breaks
-            // and no paragraph tags inside code blocks
-            markdownContent.append("```${language.toLowerCase()}\n")
-            markdownContent.append(example)
-            markdownContent.append("\n```\n\n")
-        }
-    }
-
-    // Convert markdown to HTML using MarkdownToHtmlConverter
+    // Convert to HTML and enrich
     def htmlContent = MarkdownToHtmlConverter.convertToHtml(markdownContent.toString())
-
-    // Add Sonar alternative rules if available, based on language
-    def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
-    if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleName)) {
-        def alternatives = ruleAlternativesForLanguage[ruleName]
-        if (alternatives && !alternatives.isEmpty()) {
-            def alternativesHtml = new StringBuilder("<p><b>Alternative " + (alternatives.size() == 1 ? "rule" : "rules") + ":</b> ")
-            alternatives.eachWithIndex { alt, index ->
-                if (index > 0) {
-                    alternativesHtml.append(", ")
-                }
-
-                def internalLink = "./coding_rules?rule_key=${URLEncoder.encode(alt.key, 'UTF-8')}&open=${URLEncoder.encode(alt.key, 'UTF-8')}"
-                alternativesHtml.append("<a href=\"${internalLink}\">${alt.key}</a>")
-            }
-            alternativesHtml.append("</p>")
-            htmlContent += "\n" + alternativesHtml.toString()
-        }
-    }
-
-    // Add external info URL as the last paragraph if available
-    if (externalInfoUrl) {
-        // Same a in IntelliJ PMD Plugin
-        def linkText = "Full documentation"
-        htmlContent += "\n<p><a href=\"${externalInfoUrl}\">${linkText}</a></p>"
-    }
+    htmlContent = enrichWithAlternatives(htmlContent, ruleName, language)
+    htmlContent = appendExternalInfoLink(htmlContent, externalInfoUrl)
 
     return htmlContent
 }
 
-// Function to generate XML file
+// Function to generate XML file (refactored to use helper methods for readability)
 def generateXmlFile = { outputFile, rules, language ->
     def rulesWithoutDescription = 0
     def renamedRules = 0
@@ -312,187 +269,38 @@ def generateXmlFile = { outputFile, rules, language ->
 
                     rule {
                         key(ruleData.name)
-                        name(MarkdownToHtmlConverter.camelCaseToReadable(ruleData.name))
+                        def readableName = MarkdownToHtmlConverter.camelCaseToReadable(ruleData.name)
+                        // Fix known acronym splitting like NaN
+                        if (ruleData.name?.contains("NaN")) {
+                            readableName = readableName.replaceAll(/(?i)\bna\s+n\b/, "NaN")
+                        }
+                        name(readableName)
                         internalKey("${ruleData.categoryFile}/${ruleData.name}")
                         severity(PmdSeverityMapper.priorityToSeverity(ruleData.priority))
 
                         // Determine whether the rule message contains variable placeholders like {0}, {1}, ...
                         def hasVariablePlaceholders = (ruleData.message ?: "").find(/\{\d+\}/) != null
 
-                        // Add description with CDATA
-                        description {
-                            def descContent = formatDescription(ruleData, language)
-                            if (!descContent || descContent.trim().isEmpty()) {
-                                descContent = MarkdownToHtmlConverter.convertToHtml("THIS SHOULD NOT HAPPEN")
-                                rulesWithoutDescription++
-                            }
-                            mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
+                        // Description
+                        boolean usedFallback = writeDescription(xml, ruleData, language)
+                        if (usedFallback) {
+                            rulesWithoutDescription++
                         }
 
-                        // Add status if deprecated
+                        // Status if deprecated
                         if (ruleData.deprecated) {
                             status("DEPRECATED")
                         }
 
-                        // Add tags
+                        // Tags
                         tag("pmd")
                         tag(ruleData.category)
+                        addAlternativeTagIfAny(xml, language, ruleData.name)
 
-                        // Add has-sonar-alternative tag if the rule has alternatives
-                        def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
-                        if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleData.name)) {
-                            tag("has-sonar-alternative")
-                        }
-
-                        // Collect existing parameter keys to avoid duplicates
+                        // Parameters
                         def existingParamKeys = new HashSet<String>(ruleData.properties.findAll { it.name }.collect { it.name })
-
-                        // Add parameters from XML rule definition
-                        if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
-                                ruleData.properties.findAll { prop ->
-                                    prop.name && prop.description && prop.name != "violationSuppressXPath"
-                            }.each { prop ->
-                                param {
-                                    key(prop.name)
-                                    description {
-                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(prop.description)}]]>")
-                                    }
-                                    if (prop.value) defaultValue(prop.value)
-                                    if (prop.type) {
-                                        // Normalize PMD property types to RuleParamType-friendly ones
-                                        def t = prop.type.toUpperCase()
-                                        // Treat any LIST[...] and regex-like types as STRING (free text)
-                                        if (t.startsWith("LIST[") || t.contains("REGEX") || t == "REGULAR_EXPRESSION") {
-                                            type("STRING")
-                                        } else {
-                                            // Keep simple scalar types uppercased (e.g., INTEGER, BOOLEAN, FLOAT, STRING, TEXT)
-                                            type(t)
-                                        }
-                                    }
-                                }
-                                existingParamKeys.add(prop.name)
-                            }
-                        }
-                        else {
-                            // Add parameters from Java rule classes
-                            def ruleClass = ruleData.class
-
-                            if (ruleClass) {
-                                def rulePropertiesMap = language == "Java" ? javaRuleProperties : kotlinRuleProperties
-                                def ruleProperties = rulePropertiesMap.get(ruleClass)
-                                if (ruleProperties.size()) {
-                                    println "  - Found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})"
-                                    ruleProperties.each { propInfo ->
-                                        def propType = propInfo.type
-                                        // Use extractor-provided wrappedType directly; avoid custom inference here
-                                        def unwrappedType = null
-                                        try { unwrappedType = propInfo.getWrappedType() } catch (MissingMethodException ignore) { unwrappedType = propType }
-                                        def suppressPropLog = (propInfo.name == "violationSuppressRegex" || propInfo.name == "violationSuppressXPath")
-                                        if (!suppressPropLog) {
-                                            println "### PROP: $propInfo.name TYPE: $propType (wrapped: ${unwrappedType})"
-                                        }
-                                        if (propInfo.name == "violationSuppressXPath") {
-                                            // Skip adding this parameter as it's too complex/error-prone for users
-                                        } else if (propInfo.name == "violationSuppressRegex") {
-                                            if (hasVariablePlaceholders) {
-                                                param {
-                                                    key(propInfo.name)
-                                                    description {
-                                                        mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]>")
-                                                    }
-                                                    defaultValue("")
-                                                    type("STRING")
-                                                }
-                                                existingParamKeys.add(propInfo.name)
-                                            } // else: skip when no placeholders
-                                        } else {
-                                            // Check if this property is already defined in the XML
-                                                param {
-                                                    key(propInfo.name)
-
-                                                    // Merge base description: prefer PMD XML description if present
-                                                    def existingProp = ruleData.properties.find { it.name == propInfo.name }
-                                                    def baseDesc = (existingProp?.description ?: propInfo.description) ?: ""
-                                                    // Use extractor-provided accepted values and multiplicity
-                                                    def accepted = []
-                                                    try {
-                                                        accepted = (propInfo.getAcceptedValues() ?: []) as List
-                                                    } catch (MissingMethodException ignore) {
-                                                        accepted = []
-                                                    } catch (MissingPropertyException ignore) {
-                                                        accepted = []
-                                                    }
-                                                    def isMultiple = false
-                                                    try { isMultiple = propInfo.isMultiple() } catch (MissingMethodException ignore) { isMultiple = false }
-                                                    boolean useSelect = accepted && !accepted.isEmpty()
-                                                    
-                                                    // Build description via reusable formatter (moved to sonar-pmd-lib)
-                                                    baseDesc = RuleParamFormatter.buildDescription(
-                                                        existingProp?.description,
-                                                        propInfo.description,
-                                                        accepted,
-                                                        isMultiple
-                                                    )
-                                                    description {
-                                                        mkp.yieldUnescaped("<![CDATA[${escapeForCdata(baseDesc)}]]>")
-                                                    }
-
-                                                    // Default value: prefer PMD XML value when present
-                                                    def defVal = (existingProp?.value ?: propInfo.defaultValuesAsString) ?: ""
-                                                    if (defVal == "[]") {
-                                                        println("WRONG $defVal for $propInfo")
-                                                    }
-                                                    defaultValue(defVal)
-
-                                                    // Determine type
-                                                    if (useSelect) {
-                                                        // Build RuleParamType-like definition for select list via reusable formatter
-                                                        type(RuleParamFormatter.buildSelectTypeToken(accepted, isMultiple))
-                                                    } else {
-                                                        // Prefer PMD XML type if present; else deduce from propInfo.type
-                                                        def xmlType = existingProp?.type?.toUpperCase()
-                                                        if (xmlType) {
-                                                            if (xmlType.startsWith("LIST[") || xmlType.contains("REGEX") || xmlType == "REGULAR_EXPRESSION") {
-                                                                type("STRING")
-                                                            } else {
-                                                                type(xmlType)
-                                                            }
-                                                        } else {
-                                                            // Normalize common numeric and regex-like types to RuleParamType
-                                                            if (unwrappedType in ["Integer", "Long", "Short", "Byte", "BigInteger"]) {
-                                                                type("INTEGER")
-                                                            } else if (unwrappedType in ["Double", "Float", "BigDecimal"]) {
-                                                                type("FLOAT")
-                                                            } else if (unwrappedType?.equalsIgnoreCase("Boolean")) {
-                                                                type("BOOLEAN")
-                                                            } else if (unwrappedType?.toLowerCase()?.contains("pattern") || unwrappedType?.toLowerCase()?.contains("regex")) {
-                                                                // java.util.regex.Pattern and similar
-                                                                type("STRING")
-                                                            } else {
-                                                                // Default to string for everything else (including lists/sets)
-                                                                type("STRING")
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                existingParamKeys.add(propInfo.name)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // Ensure suppression parameter exists only for rules whose messages contain variable placeholders like {0}
-                        if (hasVariablePlaceholders && !existingParamKeys.contains("violationSuppressRegex")) {
-                            param {
-                                key("violationSuppressRegex")
-                                description {
-                                    mkp.yieldUnescaped("<![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]>")
-                                }
-                                defaultValue("")
-                                type("STRING")
-                            }
-                        }
+                        addRuleParams(xml, ruleData, language, existingParamKeys, hasVariablePlaceholders)
+                        addSuppressionParamIfNeeded(xml, hasVariablePlaceholders, existingParamKeys)
                     }
                 }
             }
@@ -527,46 +335,11 @@ ${language} rules by category:"""
         }
 
         // Verify no empty descriptions
-        def outputXml = new XmlSlurper().parse(outputFile)
-        def emptyDescriptions = outputXml.rule.findAll { 
-            !it.description.text() || it.description.text().trim().isEmpty() 
-        }
+        reportEmptyDescriptions(outputFile, language)
 
-        if (emptyDescriptions.size() > 0) {
-            println "\nWARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
-            emptyDescriptions.each { rule ->
-                println "  - ${rule.key.text()}"
-            }
-        } else {
-            println "\n✓ All ${language} rules have descriptions"
-        }
-
-        // Print warnings for renamed rules with deprecated=true and ref attribute
+        // Print warnings for renamed rules with deprecated=true and ref attribute and write JSON
         if (renamedRules > 0) {
-            println "\nWARNING: Renamed ${renamedRules} ${language} rules with deprecated=true and ref attribute:"
-            rulesWithDeprecatedAndRef.each { rule ->
-                println "  - ${rule.name} (ref: ${rule.ref})"
-            }
-
-            // Generate JSON file with renamed rules information
-            // Use simplified structure (name, ref, category only) for all languages
-            def renamedRulesData = [
-                language: language,
-                count: renamedRules,
-                rules: rulesWithDeprecatedAndRef.collect { rule ->
-                    [
-                        name: rule.name,
-                        ref: rule.ref,
-                        category: rule.category
-                    ]
-                }
-            ]
-
-            def jsonBuilder = new JsonBuilder(renamedRulesData)
-            // Use consistent naming convention for all languages
-            def renamedRulesFile = new File("scripts/renamed-${language.toLowerCase()}-rules.json")
-            renamedRulesFile.write(jsonBuilder.toPrettyString())
-            println "Generated renamed rules information in ${renamedRulesFile.absolutePath}"
+            handleRenamedRules(language, renamedRules, rulesWithDeprecatedAndRef)
         }
 
         return true
@@ -590,84 +363,346 @@ println "=" * 30
 def kotlinSuccess = generateXmlFile(kotlinOutputFilePath, kotlinRules, "Kotlin")
 
 // Add XPathRule as a special case to the Java rules XML file
-println ""
-println "Adding XPathRule to Java rules XML file..."
-println "=" * 30
-
-try {
-    // Read the existing XML file
-    def xmlFile = javaOutputFilePath
-    def xmlContent = xmlFile.text
-
-    // Check if XPathRule already exists
-    if (xmlContent.contains("<key>XPathRule</key>")) {
-        println "XPathRule already exists in the Java rules XML file."
-    } else {
-        // Find the closing </rules> tag
-        def closingTagIndex = xmlContent.lastIndexOf("</rules>")
-        if (closingTagIndex != -1) {
-            // Insert the XPathRule before the closing tag
-            def xpathRuleXml = """  <rule>
-    <key>XPathRule</key>
-    <name>PMD XPath Template Rule</name>
-    <priority>MAJOR</priority>
-    <configKey>net.sourceforge.pmd.lang.rule.xpath.XPathRule</configKey>
-    <cardinality>MULTIPLE</cardinality>
-    <param key="xpath" type="TEXT">
-      <defaultValue></defaultValue>
-      <description>The PMD 7 compatible XPath expression for Java.</description>
-    </param>
-    <param key="message" type="STRING">
-      <defaultValue></defaultValue>
-      <description>The message for issues created by this rule.</description>
-    </param>
-    <param key="violationSuppressXPath" type="STRING">
-      <defaultValue></defaultValue>
-      <description>Suppress violations on nodes which match a given relative XPath expression.</description>
-    </param>
-    <description><![CDATA[<p>PMD provides a very handy method for creating new rules by writing an XPath query. When the XPath query finds a match, a violation is created.</p>
-<p>Let's take a simple example: assume we have a Factory class that must be always declared final.
-We'd like to report a violation each time a declaration of Factory is not declared final. Consider the following class:</p>
-<pre><code class="language-java">
-import io.factories.Factory;
-
-public class Foo {
-  Factory f1;
-
-  void myMethod() {
-    Factory f2;
-    int a;
-  }
-}
-</code></pre>
-<p>The following expression does the magic we need:</p>
-<pre><code class="language-xpath">
-//(FieldDeclaration|LocalVariableDeclaration)[
-      not (pmd-java:modifiers() = 'final')
-   ]/ClassType[pmd-java:typeIs('io.factories.Factory')]
-</code></pre>
-<p>See the <a href="https://docs.pmd-code.org/latest/pmd_userdocs_extending_writing_xpath_rules.html" target="_blank">XPath rule tutorial</a> for more information.</p>
-<p>Tip: use the PMD Designer application to create the XPath expressions.</p>
-]]></description>
-    <tag>pmd</tag>
-    <tag>xpath</tag>
-  </rule>
-"""
-            def newXmlContent = xmlContent.substring(0, closingTagIndex) + xpathRuleXml + xmlContent.substring(closingTagIndex)
-            xmlFile.text = newXmlContent
-            println "Successfully added XPathRule to Java rules XML file."
-        } else {
-            println "ERROR: Could not find closing </rules> tag in Java rules XML file."
-        }
-    }
-} catch (Exception e) {
-    println "ERROR adding XPathRule to Java rules XML file: ${e.message}"
-    e.printStackTrace()
-}
+addXPathRuleToJavaFile()
 
 println ""
 if (javaSuccess && kotlinSuccess) {
     println "XML generation completed successfully for both Java and Kotlin rules!"
 } else {
     println "XML generation completed with errors. Please check the logs above."
+}
+
+
+// === Helper methods extracted for readability ===
+
+def appendTitleSection(StringBuilder sb, String message) {
+    if (message && !message.trim().isEmpty()) {
+        def processedMessage = message
+            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')
+            .replaceAll(/''/, "'")
+        sb.append("## Title of issues: ").append(processedMessage).append("\n\n")
+    }
+}
+
+def appendExamplesSection(StringBuilder sb, List examples, String language) {
+    if (examples && !examples.isEmpty()) {
+        sb.append(examples.size() > 1 ? "\n\n## Examples\n\n" : "\n\n## Example\n\n")
+        examples.eachWithIndex { example, index ->
+            if (examples.size() > 1) {
+                sb.append("### Example ${index + 1}\n\n")
+            }
+            sb.append("```" + language.toLowerCase() + "\n")
+            sb.append(example)
+            sb.append("\n```\n\n")
+        }
+    }
+}
+
+def enrichWithAlternatives(String htmlContent, String ruleName, String language) {
+    def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+    if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleName)) {
+        def alternatives = ruleAlternativesForLanguage[ruleName]
+        if (alternatives && !alternatives.isEmpty()) {
+            def alternativesHtml = new StringBuilder("<p><b>Alternative " + (alternatives.size() == 1 ? "rule" : "rules") + ":</b> ")
+            alternatives.eachWithIndex { alt, index ->
+                if (index > 0) alternativesHtml.append(", ")
+                def internalLink = "./coding_rules?rule_key=${URLEncoder.encode(alt.key, 'UTF-8')}&open=${URLEncoder.encode(alt.key, 'UTF-8')}"
+                alternativesHtml.append("<a href=\"${internalLink}\">${alt.key}</a>")
+            }
+            alternativesHtml.append("</p>")
+            htmlContent += "\n" + alternativesHtml.toString()
+        }
+    }
+    return htmlContent
+}
+
+def appendExternalInfoLink(String htmlContent, String externalInfoUrl) {
+    if (externalInfoUrl) {
+        def linkText = "Full documentation"
+        htmlContent += "\n<p><a href=\"${externalInfoUrl}\">${linkText}</a></p>"
+    }
+    return htmlContent
+}
+
+def writeDescription(xml, Map ruleData, String language) {
+    def descContent = formatDescription(ruleData, language)
+    boolean usedFallback = false
+    if (!descContent || descContent.trim().isEmpty()) {
+        descContent = MarkdownToHtmlConverter.convertToHtml("THIS SHOULD NOT HAPPEN")
+        usedFallback = true
+    }
+    xml.description {
+        xml.mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descContent)}]]>")
+    }
+    return usedFallback
+}
+
+def addAlternativeTagIfAny(xml, String language, String ruleName) {
+    def ruleAlternativesForLanguage = language == "Java" ? javaRuleAlternatives : kotlinRuleAlternatives
+    if (ruleAlternativesForLanguage && ruleAlternativesForLanguage.containsKey(ruleName)) {
+        xml.tag("has-sonar-alternative")
+    }
+}
+
+def addParam(xml, String keyName, String descText, String defaultVal, String typeToken) {
+    xml.param {
+        key(keyName)
+        description {
+            xml.mkp.yieldUnescaped("<![CDATA[${escapeForCdata(descText ?: "")}]]>")
+        }
+        // Always emit an explicit empty default when the default is missing
+        def effectiveDefault = defaultVal
+        if (effectiveDefault == null) {
+            effectiveDefault = ""
+        }
+        if (effectiveDefault != null) defaultValue(effectiveDefault)
+        if (typeToken) type(typeToken)
+    }
+}
+
+def addXmlDefinedRuleParams(xml, Map ruleData, Set existingParamKeys) {
+    ruleData.properties.findAll { prop ->
+        prop.name && prop.description && prop.name != "violationSuppressXPath"
+    }.each { prop ->
+        String typeToken = null
+        if (prop.type) {
+            def t = prop.type.toUpperCase()
+            if (t.startsWith("LIST[") || t.contains("REGEX") || t == "REGULAR_EXPRESSION") {
+                typeToken = "STRING"
+            } else {
+                typeToken = t
+            }
+        }
+        addParam(xml, prop.name, prop.description, prop.value, typeToken)
+        existingParamKeys.add(prop.name)
+    }
+}
+
+// --- Helpers for addClassDefinedRuleParams ---
+def getRulePropertiesForClass(Map rulePropertiesMap, String ruleClass) {
+    rulePropertiesMap.get(ruleClass)
+}
+
+def getUnwrappedType(propInfo) {
+    def propType = propInfo.type
+    try {
+        return propInfo.getWrappedType()
+    } catch (MissingMethodException ignore) {
+        return propType
+    }
+}
+
+def shouldLogProperty(String propName) {
+    !(propName == "violationSuppressRegex" || propName == "violationSuppressXPath")
+}
+
+def handleSuppressionSpecialCases(xml, propInfo, boolean hasVariablePlaceholders, Set existingParamKeys) {
+    if (propInfo.name == "violationSuppressXPath") {
+        // Skip adding this parameter as it's too complex/error-prone for users
+        return true
+    }
+    if (propInfo.name == "violationSuppressRegex") {
+        if (hasVariablePlaceholders) {
+            addParam(xml,
+                propInfo.name,
+                "Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.",
+                "",
+                "STRING"
+            )
+            existingParamKeys.add(propInfo.name)
+        }
+        return true
+    }
+    return false
+}
+
+def findExistingXmlProp(Map ruleData, String propName) {
+    ruleData.properties.find { it.name == propName }
+}
+
+def getAcceptedValues(propInfo) {
+    try {
+        return (propInfo.getAcceptedValues() ?: []) as List
+    } catch (MissingMethodException ignore) {
+        return []
+    } catch (MissingPropertyException ignore) {
+        return []
+    }
+}
+
+def isMultiple(propInfo) {
+    try {
+        return propInfo.isMultiple()
+    } catch (MissingMethodException ignore) {
+        return false
+    }
+}
+
+def computeBaseDescription(existingProp, propInfo, List accepted, boolean multiple) {
+    RuleParamFormatter.buildDescription(
+        existingProp?.description,
+        propInfo.description,
+        accepted,
+        multiple
+    )
+}
+
+def determineTypeToken(existingProp, List accepted, boolean multiple, String unwrappedType) {
+    if (accepted && !accepted.isEmpty()) {
+        return RuleParamFormatter.buildSelectTypeToken(accepted, multiple)
+    }
+    def xmlType = existingProp?.type?.toUpperCase()
+    if (xmlType) {
+        if (xmlType.startsWith("LIST[") || xmlType.contains("REGEX") || xmlType == "REGULAR_EXPRESSION") {
+            return "STRING"
+        }
+        return xmlType
+    }
+    if (unwrappedType in ["Integer", "Long", "Short", "Byte", "BigInteger"]) {
+        return "INTEGER"
+    }
+    if (unwrappedType in ["Double", "Float", "BigDecimal"]) {
+        return "FLOAT"
+    }
+    if (unwrappedType?.equalsIgnoreCase("Boolean")) {
+        return "BOOLEAN"
+    }
+    if (unwrappedType?.toLowerCase()?.contains("pattern") || unwrappedType?.toLowerCase()?.contains("regex")) {
+        return "STRING"
+    }
+    return "STRING"
+}
+
+def computeDefaultValue(existingProp, propInfo) {
+    def defVal = (existingProp?.value ?: propInfo.defaultValuesAsString) ?: ""
+    if (defVal == "[]") {
+        println("WRONG $defVal for $propInfo")
+    }
+    return defVal
+}
+
+def addParamAndTrack(xml, String name, String desc, String defVal, String typeToken, Set existingParamKeys) {
+    addParam(xml, name, desc, defVal, typeToken)
+    existingParamKeys.add(name)
+}
+
+def processStandardProperty(xml, Map ruleData, propInfo, boolean hasVariablePlaceholders, Set existingParamKeys) {
+    def existingProp = findExistingXmlProp(ruleData, propInfo.name)
+    def accepted = getAcceptedValues(propInfo)
+    def multiple = isMultiple(propInfo)
+    def baseDesc = computeBaseDescription(existingProp, propInfo, accepted, multiple)
+    def unwrappedType = getUnwrappedType(propInfo)
+    def typeToken = determineTypeToken(existingProp, accepted, multiple, unwrappedType)
+    def defVal = computeDefaultValue(existingProp, propInfo)
+    addParamAndTrack(xml, propInfo.name, baseDesc, defVal, typeToken, existingParamKeys)
+}
+
+// Main orchestrator
+
+def addClassDefinedRuleParams(xml, Map ruleData, String language, Set existingParamKeys, boolean hasVariablePlaceholders) {
+    def ruleClass = ruleData.class
+    if (!ruleClass) return
+    def rulePropertiesMap = language == "Java" ? javaRuleProperties : kotlinRuleProperties
+    def ruleProperties = getRulePropertiesForClass(rulePropertiesMap, ruleClass)
+    if (ruleProperties.size()) {
+        println "  - Found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})"
+        ruleProperties.each { propInfo ->
+            def propType = propInfo.type
+            def unwrappedType = getUnwrappedType(propInfo)
+            if (shouldLogProperty(propInfo.name)) {
+                println "### PROP: $propInfo.name TYPE: $propType (wrapped: ${unwrappedType})"
+            }
+            if (handleSuppressionSpecialCases(xml, propInfo, hasVariablePlaceholders, existingParamKeys)) {
+                return
+            }
+            processStandardProperty(xml, ruleData, propInfo, hasVariablePlaceholders, existingParamKeys)
+        }
+    }
+}
+
+def addRuleParams(xml, Map ruleData, String language, Set existingParamKeys, boolean hasVariablePlaceholders) {
+    if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
+        addXmlDefinedRuleParams(xml, ruleData, existingParamKeys)
+    } else {
+        addClassDefinedRuleParams(xml, ruleData, language, existingParamKeys, hasVariablePlaceholders)
+    }
+}
+
+def addSuppressionParamIfNeeded(xml, boolean hasVariablePlaceholders, Set existingParamKeys) {
+    if (hasVariablePlaceholders && !existingParamKeys.contains("violationSuppressRegex")) {
+        addParam(xml,
+            "violationSuppressRegex",
+            "Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.",
+            "",
+            "STRING"
+        )
+    }
+}
+
+def reportEmptyDescriptions(File outputFile, String language) {
+    def outputXml = new XmlSlurper().parse(outputFile)
+    def emptyDescriptions = outputXml.rule.findAll {
+        !it.description.text() || it.description.text().trim().isEmpty()
+    }
+    if (emptyDescriptions.size() > 0) {
+        println "\nWARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
+        emptyDescriptions.each { rule ->
+            println "  - ${rule.key.text()}"
+        }
+    } else {
+        println "\n✓ All ${language} rules have descriptions"
+    }
+}
+
+def handleRenamedRules(String language, int renamedRules, List rulesWithDeprecatedAndRef) {
+    println "\nWARNING: Renamed ${renamedRules} ${language} rules with deprecated=true and ref attribute:"
+    rulesWithDeprecatedAndRef.each { rule ->
+        println "  - ${rule.name} (ref: ${rule.ref})"
+    }
+    def renamedRulesData = [
+        language: language,
+        count: renamedRules,
+        rules: rulesWithDeprecatedAndRef.collect { rule -> [name: rule.name, ref: rule.ref, category: rule.category] }
+    ]
+    def jsonBuilder = new JsonBuilder(renamedRulesData)
+    def renamedRulesFile = new File("scripts/renamed-${language.toLowerCase()}-rules.json")
+    renamedRulesFile.write(jsonBuilder.toPrettyString())
+    println "Generated renamed rules information in ${renamedRulesFile.absolutePath}"
+}
+
+def addXPathRuleToJavaFile() {
+    addXPathRuleToJavaFile(javaOutputFilePath as File)
+}
+
+def addXPathRuleToJavaFile(File outFile) {
+    println ""
+    println "Adding XPathRule to Java rules XML file..."
+    println "=" * 30
+    try {
+        def xmlFile = outFile
+        def xmlContent = xmlFile.text
+        if (xmlContent.contains("<key>XPathRule</key>")) {
+            println "XPathRule already exists in the Java rules XML file."
+        } else {
+            def closingTagIndex = xmlContent.lastIndexOf("</rules>")
+            if (closingTagIndex != -1) {
+                // Load XPathRule XML snippet from file; fail if missing
+                def snippetPath = (binding?.hasVariable('xpathRuleSnippetPath') && binding.getVariable('xpathRuleSnippetPath')) ? binding.getVariable('xpathRuleSnippetPath').toString() : "scripts/xpath-rule-snippet.xml"
+                def snippetFile = new File(snippetPath)
+                if (!snippetFile.exists()) {
+                    throw new FileNotFoundException("XPathRule snippet file not found at ${snippetFile.absolutePath}. Provide the file via 'xpathRuleSnippetPath' binding or create scripts/xpath-rule-snippet.xml")
+                }
+                println "Loading XPathRule snippet from ${snippetFile.absolutePath}"
+                String xpathRuleXml = snippetFile.getText('UTF-8')
+                def newXmlContent = xmlContent.substring(0, closingTagIndex) + xpathRuleXml + xmlContent.substring(closingTagIndex)
+                xmlFile.text = newXmlContent
+                println "Successfully added XPathRule to Java rules XML file."
+            } else {
+                println "ERROR: Could not find closing </rules> tag in Java rules XML file."
+            }
+        }
+    } catch (Exception e) {
+        println "ERROR adding XPathRule to Java rules XML file: ${e.message}"
+        throw e
+    }
 }
