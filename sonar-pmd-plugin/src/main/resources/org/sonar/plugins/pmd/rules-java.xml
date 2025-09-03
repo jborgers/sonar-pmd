@@ -103,7 +103,7 @@ means that in Java 11 and above accessor classes are not generated anymore.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -162,16 +162,16 @@ This prevents future changes from the user from affecting the original array.</p
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>allowPrivate</key>
       <description><![CDATA[If true, allow private methods/constructors to store arrays directly]]></description>
       <defaultValue>true</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -237,7 +237,7 @@ This prevents future changes from the user from affecting the original array.</p
     <tag>errorprone</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -661,12 +661,6 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>maxDuplicateLiterals</key>
       <description><![CDATA[Max duplicate literals]]></description>
       <defaultValue>4</defaultValue>
@@ -687,6 +681,12 @@ exactly equal to 0.1, as one would expect.  Therefore, it is generally recommend
     <param>
       <key>exceptionList</key>
       <description><![CDATA[List of literals to ignore. A literal is ignored if its image can be found in this list. Components of this list should not be surrounded by double quotes.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -736,7 +736,7 @@ Smalltalk often prefer this approach as the methods denote accessor methods.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1085,7 +1085,7 @@ is always the one thrown in a try block.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1127,12 +1127,6 @@ is always the one thrown in a try block.</p>
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>foreachReassign</key>
       <description><![CDATA[how/if foreach control variables may be reassigned. Allowed values: [deny,firstOnly,allow]. Select one of the values.]]></description>
       <defaultValue>deny</defaultValue>
@@ -1143,6 +1137,12 @@ is always the one thrown in a try block.</p>
       <description><![CDATA[how/if for control variables may be reassigned. Allowed values: [deny,skip,allow]. Select one of the values.]]></description>
       <defaultValue>deny</defaultValue>
       <type>SINGLE_SELECT_LIST,values="deny,skip,allow"</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -1178,7 +1178,7 @@ parameter, then only the first assignment is reported.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -1787,12 +1787,6 @@ in a <code>ClassCastException</code>.</p>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>classPattern</key>
       <description><![CDATA[Regex which applies to concrete class names]]></description>
       <defaultValue>[A-Z][a-zA-Z0-9]*</defaultValue>
@@ -1832,6 +1826,12 @@ in a <code>ClassCastException</code>.</p>
       <key>testClassPattern</key>
       <description><![CDATA[Regex which applies to test class names. Since PMD 6.52.0.]]></description>
       <defaultValue>^Test.*$|^[A-Z][a-zA-Z0-9]*Test(s|Case)?$</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -1973,12 +1973,6 @@ just remove "AutoCloseable" from the types.</p>
     <tag>errorprone</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>closeTargets</key>
       <description><![CDATA[Methods which may close this resource]]></description>
       <defaultValue></defaultValue>
@@ -2007,6 +2001,12 @@ just remove "AutoCloseable" from the types.</p>
       <description><![CDATA[Detect if 'close' (or other closeTargets) is called outside of a finally-block]]></description>
       <defaultValue>false</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2063,16 +2063,16 @@ just remove "AutoCloseable" from the types.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>reportLevel</key>
       <description><![CDATA[Cognitive Complexity reporting threshold]]></description>
       <defaultValue>15</defaultValue>
       <type>INTEGER</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2161,12 +2161,6 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>android.support.annotation.VisibleForTesting,co.elastic.clients.util.VisibleForTesting,com.google.common.annotations.VisibleForTesting,org.junit.jupiter.api.AfterAll,org.junit.jupiter.api.AfterEach,org.junit.jupiter.api.BeforeAll,org.junit.jupiter.api.BeforeEach,org.junit.jupiter.api.RepeatedTest,org.junit.jupiter.api.Test,org.junit.jupiter.api.TestFactory,org.junit.jupiter.api.TestTemplate,org.junit.jupiter.api.extension.RegisterExtension,org.junit.jupiter.params.ParameterizedTest,org.testng.annotations.AfterClass,org.testng.annotations.AfterGroups,org.testng.annotations.AfterMethod,org.testng.annotations.AfterSuite,org.testng.annotations.AfterTest,org.testng.annotations.BeforeClass,org.testng.annotations.BeforeGroups,org.testng.annotations.BeforeMethod,org.testng.annotations.BeforeSuite,org.testng.annotations.BeforeTest,org.testng.annotations.Test</defaultValue>
@@ -2183,6 +2177,12 @@ property "ignoredAnnotations" to customize the recognized annotations.</p>
       <description><![CDATA[Check for default access modifier in top-level classes, annotations, and enums]]></description>
       <defaultValue>false</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2395,7 +2395,7 @@ in the <code>typesThatCompareByReference</code> property.</p>
     <tag>errorprone</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2470,16 +2470,16 @@ can be appended in a single method call.</p>
     <tag>pmd</tag>
     <tag>performance</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>threshold</key>
       <description><![CDATA[Max consecutive appends]]></description>
       <defaultValue>1</defaultValue>
       <type>INTEGER</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2561,7 +2561,7 @@ Note that those methods also must not call overridable methods transitively to b
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2662,16 +2662,16 @@ A number higher than the specified threshold can indicate a high degree of coupl
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>threshold</key>
       <description><![CDATA[Unique type reporting threshold]]></description>
       <defaultValue>20</defaultValue>
       <type>INTEGER</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -2723,12 +2723,6 @@ into subcomponents.</p>
     <tag>design</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>classReportLevel</key>
       <description><![CDATA[Total class complexity reporting threshold]]></description>
       <defaultValue>80</defaultValue>
@@ -2743,6 +2737,12 @@ into subcomponents.</p>
     <param>
       <key>cycloOptions</key>
       <description><![CDATA[Choose options for the computation of Cyclo]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -2788,7 +2788,7 @@ into the former client classes.</p>
     <tag>design</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3306,7 +3306,7 @@ To fix a violation, add the necessary validation or use an alternate control str
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3526,12 +3526,6 @@ rather than at runtime (if at all).</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>publicConstantPattern</key>
       <description><![CDATA[Regex which applies to public constant names]]></description>
       <defaultValue>[A-Z][A-Z_0-9]*</defaultValue>
@@ -3571,6 +3565,12 @@ rather than at runtime (if at all).</p>
       <key>exclusions</key>
       <description><![CDATA[Names of fields to whitelist.]]></description>
       <defaultValue>serialVersionUID,serialPersistentFields</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -3782,12 +3782,6 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>methodParameterPattern</key>
       <description><![CDATA[Regex which applies to formal parameter names]]></description>
       <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
@@ -3809,6 +3803,12 @@ the loop iterates over. By default this rule allows a regular 'for' loop with on
       <key>explicitLambdaParameterPattern</key>
       <description><![CDATA[Regex which applies to explicitly-typed lambda parameter names]]></description>
       <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -3864,7 +3864,7 @@ of Object-Oriented Systems.</i> Springer, Berlin, 1 edition, October 2006. Page 
     <tag>design</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -3984,7 +3984,7 @@ with lambdas. The available alternatives depend on the actual logging framework.
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4017,7 +4017,7 @@ see <i>Effective Java, 3rd Edition, Item 17: Minimize mutability</i>.</p>
     <tag>design</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4208,7 +4208,7 @@ is assumed if the length of the constructor can not be determined.</p>
     <tag>performance</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4242,12 +4242,6 @@ enabled by configuring the property <code>packages</code>.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ensureSerialization</key>
       <description><![CDATA[Require that beans implement java.io.Serializable.]]></description>
       <defaultValue>false</defaultValue>
@@ -4257,6 +4251,12 @@ enabled by configuring the property <code>packages</code>.</p>
       <key>packages</key>
       <description><![CDATA[Consider classes in only these package to be beans. Set to an empty value to check all classes.]]></description>
       <defaultValue>org.example.beans</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -4458,12 +4458,6 @@ is a good practice to limit their visibility.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoreIfMayNPE</key>
       <description><![CDATA[Ignore lambdas that may throw a null pointer exception (NPE) when converted to a method reference. Those expressions will NPE at mref creation time, while the equivalent lambda would NPE only when invoked (which may be never).]]></description>
       <defaultValue>false</defaultValue>
@@ -4474,6 +4468,12 @@ is a good practice to limit their visibility.</p>
       <description><![CDATA[Ignore if the receiver of the method reference is a method call. These may cause side effects that often should prevent the conversion to a method reference.]]></description>
       <defaultValue>true</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -4520,16 +4520,16 @@ to break a boundary of abstraction.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>trustRadius</key>
       <description><![CDATA[Maximum degree of trusted data. The default of 1 is the most restrictive.]]></description>
       <defaultValue>1</defaultValue>
       <type>INTEGER</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -4742,16 +4742,16 @@ Developers Perceive Them</a>.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoreForEachDecl</key>
       <description><![CDATA[Ignore non-final loop variables in a for-each statement.]]></description>
       <defaultValue>false</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -4785,12 +4785,6 @@ Developers Perceive Them</a>.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>localVarPattern</key>
       <description><![CDATA[Regex which applies to non-final local variable names]]></description>
       <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
@@ -4806,6 +4800,12 @@ Developers Perceive Them</a>.</p>
       <key>catchParameterPattern</key>
       <description><![CDATA[Regex which applies to exception block parameter names]]></description>
       <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -4865,7 +4865,7 @@ Developers Perceive Them</a>.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -4904,15 +4904,15 @@ the same as interfaces can be configured with the property <code>allowedTypes</c
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>allowedTypes</key>
       <description><![CDATA[Exceptions to the rule]]></description>
       <defaultValue>java.util.Properties</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -4936,12 +4936,6 @@ except when using one of the configured allowed classes.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>packages</key>
       <description><![CDATA[Restricted packages]]></description>
       <defaultValue></defaultValue>
@@ -4950,6 +4944,12 @@ except when using one of the configured allowed classes.</p>
     <param>
       <key>classes</key>
       <description><![CDATA[Allowed classes]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5000,7 +5000,7 @@ except when using one of the configured allowed classes.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5026,12 +5026,6 @@ except when using one of the configured allowed classes.</p>
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
-    <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
     <param>
       <key>methodPattern</key>
       <description><![CDATA[Regex which applies to instance method names]]></description>
@@ -5068,6 +5062,12 @@ except when using one of the configured allowed classes.</p>
       <defaultValue>[a-z][a-zA-Z0-9]*</defaultValue>
       <type>STRING</type>
     </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
   </rule>
   <rule>
     <key>MethodReturnsInternalArray</key>
@@ -5092,7 +5092,7 @@ removed or replaced outside of the object that owns it. It is safer to return a 
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5150,7 +5150,7 @@ Either the check is useless (the variable will never be <code>null</code>) or it
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5175,7 +5175,7 @@ Either the check is useless (the variable will never be <code>null</code>) or it
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5325,16 +5325,16 @@ complexity and increase readability.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>reportLevel</key>
       <description><![CDATA[N-Path Complexity reporting threshold]]></description>
       <defaultValue>200</defaultValue>
       <type>INTEGER</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -5377,12 +5377,6 @@ statements. For more details on the calculation, see the documentation
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>methodReportLevel</key>
       <description><![CDATA[NCSS reporting threshold for methods]]></description>
       <defaultValue>60</defaultValue>
@@ -5397,6 +5391,12 @@ statements. For more details on the calculation, see the documentation
     <param>
       <key>ncssOptions</key>
       <description><![CDATA[Choose options for the computation of Ncss]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5504,16 +5504,16 @@ serializable regardless of the name.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>checkAbstractTypes</key>
       <description><![CDATA[Enable to verify fields with abstract types like abstract classes, interfaces, generic types or java.lang.Object. Enabling this might lead to more false positives, since the concrete runtime type can actually be serializable.]]></description>
       <defaultValue>false</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -5784,7 +5784,7 @@ can reorder code.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5837,7 +5837,7 @@ whose name starts with <code>ignored</code>.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -5867,7 +5867,7 @@ whose name starts with <code>ignored</code>.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6136,7 +6136,7 @@ inadvertent NullPointerExceptions.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6198,7 +6198,7 @@ inadvertent NullPointerExceptions.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6280,7 +6280,7 @@ formatting is used.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6369,7 +6369,7 @@ the conditional test can be returned instead.</p>
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6474,15 +6474,15 @@ so it might as well not be stored in the enclosing object.</p>
     <tag>pmd</tag>
     <tag>design</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>java.lang.Deprecated,javafx.fxml.FXML,lombok.Getter,lombok.Setter,lombok.experimental.Delegate</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -6644,7 +6644,7 @@ the literal character "8".</p>
     <tag>errorprone</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -6732,15 +6732,15 @@ by name, set this property to an empty string.</p>
     <tag>pmd</tag>
     <tag>errorprone</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>testClassPattern</key>
       <description><![CDATA[Test class name pattern to identify test classes by their fully qualified name. An empty pattern disables test class detection by name. Since PMD 6.51.0.]]></description>
       <defaultValue>^(?:.*\.)?Test[^\.]*$|^(?:.*\.)?.*Tests?$|^(?:.*\.)?.*TestCase$</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -7201,7 +7201,7 @@ an error, use the <code>fail()</code> method and provide an indication message o
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7284,7 +7284,7 @@ The literal would be autoboxed to <code>Integer</code> anyway.</p>
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7353,12 +7353,6 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <tag>pmd</tag>
     <tag>codestyle</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>reportStaticMethods</key>
       <description><![CDATA[Report unnecessary static method qualifiers like in `Collections.emptyList()`, if the method is imported or inherited.]]></description>
       <defaultValue>true</defaultValue>
@@ -7369,6 +7363,12 @@ which is covered by an import statement is redundant.  Consider using the non-fu
       <description><![CDATA[Report unnecessary static field qualifiers like in `Math.PI`, if the field is imported or inherited.]]></description>
       <defaultValue>true</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -7401,7 +7401,7 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7426,16 +7426,16 @@ which is covered by an import statement is redundant.  Consider using the non-fu
     <tag>codestyle</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>statementOrderMatters</key>
       <description><![CDATA[If set to false this rule no longer requires the variable declaration and return statement to be on consecutive lines. Any variable that is used solely in a return statement will be reported.]]></description>
       <defaultValue>true</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -7479,7 +7479,7 @@ For historical reasons, modifiers which are implied by the context are accepted 
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7571,7 +7571,7 @@ instructions follow anyway.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7746,16 +7746,16 @@ Hence, by default, this rule only considers private methods. To include non-priv
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>checkAll</key>
       <description><![CDATA[Check all methods, including non-private ones]]></description>
       <defaultValue>false</defaultValue>
       <type>BOOLEAN</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
     </param>
   </rule>
   <rule>
@@ -7779,7 +7779,7 @@ Variables whose name starts with <code>ignored</code> or <code>unused</code> are
     <tag>has-sonar-alternative</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7859,12 +7859,6 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <tag>bestpractices</tag>
     <tag>has-sonar-alternative</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredFieldNames</key>
       <description><![CDATA[Field Names that are ignored from the unused check]]></description>
       <defaultValue>serialVersionUID,serialPersistentFields</defaultValue>
@@ -7873,6 +7867,12 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <param>
       <key>reportForAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be reported anyway. If an unused field has any of these annotations, then it is reported. If it has any other annotation, then it is still considered to used and is not reported.]]></description>
+      <defaultValue></defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -7892,15 +7892,15 @@ Previously these frameworks where explicitly allowed by listing their annotation
     <tag>pmd</tag>
     <tag>bestpractices</tag>
     <param>
-      <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
-      <defaultValue></defaultValue>
-      <type>STRING</type>
-    </param>
-    <param>
       <key>ignoredAnnotations</key>
       <description><![CDATA[Fully qualified names of the annotation types that should be ignored by this rule]]></description>
       <defaultValue>java.lang.Deprecated,jakarta.annotation.PostConstruct,jakarta.annotation.PreDestroy,lombok.EqualsAndHashCode.Include</defaultValue>
+      <type>STRING</type>
+    </param>
+    <param>
+      <key>violationSuppressRegex</key>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
+      <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
   </rule>
@@ -8069,7 +8069,7 @@ was made possible for anonymous class constructors.</p>
     <tag>codestyle</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8104,7 +8104,7 @@ was made possible for anonymous class constructors.</p>
     <tag>bestpractices</tag>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>
@@ -8479,7 +8479,7 @@ preserved.</p>
     </param>
     <param>
       <key>violationSuppressRegex</key>
-      <description><![CDATA[Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.]]></description>
+      <description><![CDATA[Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.]]></description>
       <defaultValue></defaultValue>
       <type>STRING</type>
     </param>

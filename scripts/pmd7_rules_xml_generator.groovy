@@ -487,15 +487,10 @@ def handleSuppressionSpecialCases(xml, propInfo, boolean hasVariablePlaceholders
         return true
     }
     if (propInfo.name == "violationSuppressRegex") {
-        if (hasVariablePlaceholders) {
-            addParam(xml,
-                propInfo.name,
-                "Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.",
-                "",
-                "STRING"
-            )
-            existingParamKeys.add(propInfo.name)
-        }
+        // Do not emit this parameter here. It will be added later by addSuppressionParamIfNeeded
+        // only when the rule message contains variable placeholders. This keeps
+        // keep the suppression regex description centralized and ensure the param
+        // is only present when appropriate.
         return true
     }
     return false
@@ -543,7 +538,6 @@ def determineTypeToken(List accepted, boolean multiple, String unwrappedType) {
         return "BOOLEAN"
     }
     if (unwrappedType?.equalsIgnoreCase("Pattern")) {
-        println "##### found unwrappedtype: $unwrappedType"
         return "STRING"
     }
     return "STRING"
@@ -607,7 +601,7 @@ def addSuppressionParamIfNeeded(xml, boolean hasVariablePlaceholders, Set existi
     if (hasVariablePlaceholders && !existingParamKeys.contains("violationSuppressRegex")) {
         addParam(xml,
             "violationSuppressRegex",
-            "Suppress violations with messages matching a regular expression. Warning: make sure the regular expression is correct, otherwise analysis can fail with XML validation errors in the pmd.xml file.",
+            "Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.",
             "",
             "STRING"
         )
@@ -681,3 +675,4 @@ def addXPathRuleToJavaFile(File outFile) {
         throw e
     }
 }
+
