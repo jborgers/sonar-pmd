@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +34,15 @@ public final class RuleParamFormatter {
     private RuleParamFormatter() {
         // utility
     }
+
+    // Precompiled, safe regex:
+    // - Possessive quantifiers (*+, ++) avoid backtracking on whitespace/content.
+    // - Atomic alternation (?>...) avoids backtracking between "Possible" and "Allowed".
+    // - Character class [^]]*+ guarantees linear scan inside brackets.
+    private static final Pattern VALUES_FRAGMENT_PATTERN = Pattern.compile(
+            "\\s*+(?:(?>Possible|Allowed))\\s++values:\\s*+\\[[^]]*+]\\.?+\\s*+",
+            Pattern.CASE_INSENSITIVE
+    );
 
     /**
      * Build a parameter description based on an existing XML description and/or a description
@@ -48,23 +58,36 @@ public final class RuleParamFormatter {
                                           @Nullable String propInfoDescription,
                                           @Nullable List<String> acceptedValues,
                                           boolean multiple) {
-        String baseDesc = firstNonBlank(existingPropDescription, propInfoDescription, "");
-        baseDesc = normalizeWhitespace(baseDesc);
+        String baseDesc = normalizeWhitespace(firstNonBlank(existingPropDescription, propInfoDescription, ""));
 
         boolean useSelect = acceptedValues != null && !acceptedValues.isEmpty();
         if (useSelect) {
             // Remove any pre-existing Allowed/Possible values fragments to avoid duplication
-            baseDesc = baseDesc.replaceAll("(?i)\\s*(?:Possible|Allowed)\\s+values:\\s*\\[[^\\]]*]\\.?\\s*", " ").trim();
+            baseDesc = VALUES_FRAGMENT_PATTERN.matcher(baseDesc).replaceAll(" ").trim();
 
             String suffix = multiple ? " Select one or more values." : " Select one of the values.";
-            boolean needsDot = !baseDesc.isEmpty() && !(baseDesc.endsWith(".") || baseDesc.endsWith("!") || baseDesc.endsWith("?"));
-            String sep = baseDesc.isEmpty() ? "" : (needsDot ? ". " : " ");
-            String joined = acceptedValues.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
-            baseDesc = baseDesc + sep + "Allowed values: [" + joined + "]." + suffix;
+            String joinedValues = acceptedValues.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
+            baseDesc = baseDesc + sentenceSeparator(baseDesc) + "Allowed values: [" + joinedValues + "]." + suffix;
         }
 
         return baseDesc;
     }
+
+    /**
+     * Determines the sentence separator to append after the given text:
+     * - Returns "" if the text is empty
+     * - Returns " " if the text already ends with terminal punctuation (., !, ?)
+     * - Returns ". " otherwise
+     */
+    private static String sentenceSeparator(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+        char last = text.charAt(text.length() - 1);
+        boolean endsWithTerminal = last == '.' || last == '!' || last == '?';
+        return endsWithTerminal ? " " : ". ";
+    }
+
 
     /**
      * Construct the RuleParamType token for a select list.
