@@ -619,7 +619,7 @@ def reportEmptyDescriptions(File outputFile, String language) {
             println "  - ${rule.key.text()}"
         }
     } else {
-        println "\n✓ All ${language} rules have descriptions"
+        println "\nAll ${language} rules have descriptions"
     }
 }
 
