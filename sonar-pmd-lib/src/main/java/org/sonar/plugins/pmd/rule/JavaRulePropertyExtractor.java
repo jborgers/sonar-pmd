@@ -212,6 +212,13 @@ public class JavaRulePropertyExtractor {
         return o == null ? "null" : convertKnownTypes(o);
     }
 
+    /**
+     * Converts class types into simple names, handling empty collection cases.
+     * If the class name starts with "Empty", it removes this prefix.
+     *
+     * @param o The object to get the simplified type name from
+     * @return The simplified class name as a String
+     */
     private static @NotNull String convertKnownTypes(Object o) {
         String simpleName = o.getClass().getSimpleName();
         // is this needed? there is only: %%% found simplename with Empty: EmptySet
