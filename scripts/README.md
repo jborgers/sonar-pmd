@@ -17,8 +17,11 @@ Usage: This script is typically executed during the build process to generate up
 From the project root directory:
 
 ```commandline
-./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
+./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
 ```
+
+Notes:
+- The -am (also-make) flag is the Maven-native way to ensure dependent modules (like sonar-pmd-lib) are built in the reactor when you build only sonar-pmd-plugin with -pl.
 
 ### generate_release_notes.groovy
 
@@ -62,3 +65,15 @@ This file contains a mapping of PMD Java rules to their equivalent SonarQube rul
 These files contain XML definitions of PMD rules from specific versions. They are used as reference files for the generate_release_notes.groovy script to compare with newer rule definitions.
 
 **Warning:** These files should not be modified manually as they are copied from previous versions of the plugin.
+
+## Scripts for Testing
+
+### create_highly_compressed_jar.groovy
+
+This script creates a highly compressed Jar file to test zip bomb detection.
+The generated jar is moved to `../sonar-pmd-lib/src/test/resources/`
+
+### create_java_rule_extractor_test_jar.groovy
+
+This script creates a Jar file containing two test classes for the Java rule extractor.
+The generated jar is moved to `../sonar-pmd-lib/src/test/resources/`

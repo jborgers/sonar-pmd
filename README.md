@@ -1,6 +1,7 @@
 # SonarQube PMD Plugin 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Sonatype Central](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Maven Central](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
 ![Build Status](https://github.com/jborgers/sonar-pmd/actions/workflows/build.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jborgers_sonar-pmd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jborgers_sonar-pmd)
 
@@ -82,4 +83,13 @@ Parts of the rule descriptions displayed in SonarQube have been extracted from [
 To build the plugin and run the integration tests (use java 17 to build the plugin):
 
     ./mvnw clean verify
+
+## Generate PMD rules XML (Java and Kotlin)
+To regenerate the rules-java.xml and rules-kotlin.xml from PMD 7 using the provided Groovy script, run from the project root:
+
+    ./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
+
+Notes:
+- The -am (also-make) flag ensures dependent modules (e.g., sonar-pmd-lib) are built in the reactor even when building only sonar-pmd-plugin with -pl.
+
    
