@@ -220,18 +220,25 @@
   <profiles>
     <!--
       Profile to generate the rules-java.xml and rules-kotlin.xml files from PMD 7 rules.
-      Usage: mvn generate-resources -Pgenerate-pmd-rules
+      Usage (from project root): mvn clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
+      The -am flag ensures dependent modules (e.g., sonar-pmd-lib) are built when only building sonar-pmd-plugin with -pl.
       This will run the Groovy script that extracts rules from PMD 7 and generates the rules-java.xml and rules-kotlin.xml files.
     -->
     <profile>
       <id>generate-pmd-rules</id>
       <build>
         <plugins>
+
           <plugin>
             <groupId>org.codehaus.gmaven</groupId>
             <artifactId>groovy-maven-plugin</artifactId>
             <version>2.1.1</version>
             <dependencies>
+              <dependency>
+                <groupId>org.sonarsource.pmd</groupId>
+                <artifactId>sonar-pmd-lib</artifactId>
+                <version>${revision}</version>
+              </dependency>
               <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>

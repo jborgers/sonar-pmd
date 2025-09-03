@@ -83,4 +83,13 @@ Parts of the rule descriptions displayed in SonarQube have been extracted from [
 To build the plugin and run the integration tests (use java 17 to build the plugin):
 
     ./mvnw clean verify
+
+## Generate PMD rules XML (Java and Kotlin)
+To regenerate the rules-java.xml and rules-kotlin.xml from PMD 7 using the provided Groovy script, run from the project root:
+
+    ./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
+
+Notes:
+- The -am (also-make) flag ensures dependent modules (e.g., sonar-pmd-lib) are built in the reactor even when building only sonar-pmd-plugin with -pl.
+
    
