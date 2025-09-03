@@ -270,10 +270,6 @@ def generateXmlFile = { outputFile, rules, language ->
                     rule {
                         key(ruleData.name)
                         def readableName = MarkdownToHtmlConverter.camelCaseToReadable(ruleData.name)
-                        // Fix known acronym splitting like NaN
-                        if (ruleData.name?.contains("NaN")) {
-                            readableName = readableName.replaceAll(/(?i)\bna\s+n\b/, "NaN")
-                        }
                         name(readableName)
                         internalKey("${ruleData.categoryFile}/${ruleData.name}")
                         severity(PmdSeverityMapper.priorityToSeverity(ruleData.priority))
@@ -301,11 +297,11 @@ def generateXmlFile = { outputFile, rules, language ->
                         def existingParamKeys = new HashSet<String>(ruleData.properties.findAll { it.name }.collect { it.name })
                         addRuleParams(xml, ruleData, language, existingParamKeys, hasVariablePlaceholders)
                         addSuppressionParamIfNeeded(xml, hasVariablePlaceholders, existingParamKeys)
-                    }
                 }
             }
         }
-
+        }
+        
         // Print summary information
         def activeRules = rules.count { !it.deprecated }
         def deprecatedRules = rules.count { it.deprecated }

@@ -444,6 +444,107 @@ public class MarkdownToHtmlConverter {
             result = Character.toUpperCase(result.charAt(0)) + (result.length() > 1 ? result.substring(1) : "");
         }
 
+        // Apply well-known Java name fixes so callers don't need a separate call
+        result = fixWellKnownJavaNames(ruleName, result);
+
+        return result;
+    }
+
+    /**
+     * Applies a set of well-known Java name fixes to a readable rule name.
+     * This encapsulates all special cases previously implemented in the Groovy generator
+     * so it can be reused across the project.
+     *
+     * Note: camelCaseToReadable already applies these fixes internally. This method remains
+     * public for backward compatibility and potential reuse in other contexts.
+     *
+     * @param ruleKey The original rule key/name (camelCase), used for conditional fixes
+     * @param readableName The readable name produced by camelCaseToReadable
+     * @return The normalized readable name with Java-specific fixes
+     */
+    public static String fixWellKnownJavaNames(String ruleKey, String readableName) {
+        if (readableName == null) {
+            return null;
+        }
+        String result = readableName;
+
+        // Fix known acronym splitting like NaN
+        if (ruleKey != null && ruleKey.contains("NaN")) {
+            result = result.replaceAll("(?i)\\bna\\s+n\\b", "NaN");
+        }
+
+        // Fix well-known Java type names that should not be split or lowercased
+        if (ruleKey != null && ruleKey.contains("BigDecimal")) {
+            result = result.replaceAll("(?i)\\bbig\\s+decimal\\b", "BigDecimal");
+        }
+        if (ruleKey != null && ruleKey.contains("BigInteger")) {
+            result = result.replaceAll("(?i)\\bbig\\s+integer\\b", "BigInteger");
+        }
+        if (ruleKey != null && ruleKey.contains("Throwable")) {
+            result = result.replaceAll("(?i)\\bthrowable\\b", "Throwable");
+        }
+        if (ruleKey != null && ruleKey.contains("StringBuilder")) {
+            result = result.replaceAll("(?i)\\bstring\\s+builder\\b", "StringBuilder");
+        }
+        if (ruleKey != null && ruleKey.contains("StringBuffer")) {
+            result = result.replaceAll("(?i)\\bstring\\s+buffer\\b", "StringBuffer");
+        }
+        if (ruleKey != null && ruleKey.contains("StringTokenizer")) {
+            result = result.replaceAll("(?i)\\bstring\\s+tokenizer\\b", "StringTokenizer");
+        }
+
+        // Special casing for MDBAnd… rules: split into words correctly
+        if (ruleKey != null && ruleKey.contains("MDBAnd")) {
+            result = result.replace("MDBAnd", "MDB and");
+        }
+
+        // Additional normalizations for Java class names, acronyms, and method names
+        result = result
+            // Class and type names
+            .replaceAll("(?i)\\bthread\\s+group\\b", "ThreadGroup")
+            .replaceAll("(?i)\\bnull\\s+pointer\\s+exception\\b", "NullPointerException")
+            .replaceAll("(?i)\\bclass\\s+cast\\s+exception\\b", "ClassCastException")
+            .replaceAll("(?i)\\bcloneable\\b", "Cloneable")
+            .replaceAll("(?i)\\bclass\\s*loader\\b", "ClassLoader")
+            .replaceAll("(?i)\\bconcurrent\\s*hash\\s*map\\b", "ConcurrentHashMap")
+            .replaceAll("(?i)\\bfile\\s*item\\b", "FileItem")
+            // Java packages
+            .replaceAll("(?i)\\bjava\\s*\\.\\s*lang\\s*\\.\\s*error\\b|\\bjava\\s+lang\\s+error\\b", "java.lang.Error")
+            .replaceAll("(?i)\\bjava\\s*\\.\\s*lang\\s*\\.\\s*throwable\\b|\\bjava\\s+lang\\s+throwable\\b", "java.lang.Throwable")
+            // Acronyms and constants
+            .replaceAll("(?i)\\bcrypto\\s*iv\\b", "crypto IV")
+            .replaceAll("(?i)\\bncss\\b", "NCSS")
+            .replaceAll("(?i)\\bserial\\s*version\\s*uid\\b", "serialVersionUID")
+            .replaceAll("(?i)\\bcharsets\\b", "Charsets")
+            // Java word capitalization
+            .replaceAll("(?i)\\bjava\\s+bean\\b", "Java bean")
+            // Collections / class names
+            .replaceAll("(?i)\\benumeration\\b", "Enumeration")
+            .replaceAll("(?i)\\biterator\\b", "Iterator")
+            .replaceAll("(?i)\\bhashtable\\b", "Hashtable")
+            .replaceAll("(?i)\\bmap\\b", "Map")
+            .replaceAll("(?i)\\bvector\\b", "Vector")
+            .replaceAll("(?i)\\blist\\b", "List")
+            // Methods and API references
+            .replaceAll("(?i)\\bto\\s*array\\b", "toArray")
+            .replaceAll("(?i)\\bcollection\\s*\\.\\s*is\\s*empty\\b|\\bcollection\\s+is\\s+empty\\b", "Collection.isEmpty")
+            .replaceAll("(?i)\\bnotify\\s*all\\b", "notifyAll")
+            .replaceAll("(?i)\\bstandard\\s+charsets\\b", "standard Charsets")
+            .replaceAll("(?i)\\bshort\\s+array\\s+initializer\\b", "short Array initializer")
+            // Exceptions capitalization
+            .replaceAll("(?i)\\bthrows\\s+exception\\b", "throws Exception")
+            // Date/Locale APIs
+            .replaceAll("(?i)\\bsimple\\s*date\\s*format\\b", "SimpleDateFormat")
+            .replaceAll("(?i)\\blocale\\b", "Locale");
+
+        // Special cases based on exact rule keys
+        if ("UseArrayListInsteadOfVector".equals(ruleKey)) {
+            result = "Use Arrays.asList";
+        }
+        if ("UselessStringValueOf".equals(ruleKey)) {
+            result = "Useless String.valueOf";
+        }
+
         return result;
     }
 
