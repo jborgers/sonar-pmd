@@ -106,12 +106,6 @@ println "=" * 50
 println "Java output file: ${javaOutputFilePath}"
 println "Kotlin output file: ${kotlinOutputFilePath}"
 
-// The MdToHtmlConverter class has been moved to sonar-pmd-lib as MarkdownToHtmlConverter
-
-// The camelCaseToReadable function has been moved to sonar-pmd-lib as MarkdownToHtmlConverter.camelCaseToReadable
-
-// We no longer need to check for replacement placeholders since we're using camelCase for all rules
-
 // Function to read rules from a PMD JAR
 def readRulesFromJar = { jarFile, categoriesPath ->
     if (!jarFile.exists()) {
@@ -453,7 +447,7 @@ def addParam(xml, String keyName, String descText, String defaultVal, String typ
 
 def addXmlDefinedRuleParams(xml, Map ruleData, Set existingParamKeys) {
     ruleData.properties.findAll { prop ->
-        prop.name && prop.description && prop.name != "violationSuppressXPath"
+        prop.name && prop.description
     }.each { prop ->
         String typeToken = null
         if (prop.type) {
@@ -507,9 +501,6 @@ def handleSuppressionSpecialCases(xml, propInfo, boolean hasVariablePlaceholders
     return false
 }
 
-def findExistingXmlProp(Map ruleData, String propName) {
-    ruleData.properties.find { it.name == propName }
-}
 
 def getAcceptedValues(propInfo) {
     try {
@@ -529,25 +520,18 @@ def isMultiple(propInfo) {
     }
 }
 
-def computeBaseDescription(existingProp, propInfo, List accepted, boolean multiple) {
+def computeBaseDescription(propInfo, List accepted, boolean multiple) {
     RuleParamFormatter.buildDescription(
-        existingProp?.description,
+        null,
         propInfo.description,
         accepted,
         multiple
     )
 }
 
-def determineTypeToken(existingProp, List accepted, boolean multiple, String unwrappedType) {
+def determineTypeToken(List accepted, boolean multiple, String unwrappedType) {
     if (accepted && !accepted.isEmpty()) {
         return RuleParamFormatter.buildSelectTypeToken(accepted, multiple)
-    }
-    def xmlType = existingProp?.type?.toUpperCase()
-    if (xmlType) {
-        if (xmlType.startsWith("LIST[") || xmlType.contains("REGEX") || xmlType == "REGULAR_EXPRESSION") {
-            return "STRING"
-        }
-        return xmlType
     }
     if (unwrappedType in ["Integer", "Long", "Short", "Byte", "BigInteger"]) {
         return "INTEGER"
@@ -558,14 +542,15 @@ def determineTypeToken(existingProp, List accepted, boolean multiple, String unw
     if (unwrappedType?.equalsIgnoreCase("Boolean")) {
         return "BOOLEAN"
     }
-    if (unwrappedType?.toLowerCase()?.contains("pattern") || unwrappedType?.toLowerCase()?.contains("regex")) {
+    if (unwrappedType?.equalsIgnoreCase("Pattern")) {
+        println "##### found unwrappedtype: $unwrappedType"
         return "STRING"
     }
     return "STRING"
 }
 
-def computeDefaultValue(existingProp, propInfo) {
-    def defVal = (existingProp?.value ?: propInfo.defaultValuesAsString) ?: ""
+def computeDefaultValue(propInfo) {
+    def defVal = (propInfo.defaultValuesAsString) ?: ""
     if (defVal == "[]") {
         println("WRONG $defVal for $propInfo")
     }
@@ -578,13 +563,12 @@ def addParamAndTrack(xml, String name, String desc, String defVal, String typeTo
 }
 
 def processStandardProperty(xml, Map ruleData, propInfo, boolean hasVariablePlaceholders, Set existingParamKeys) {
-    def existingProp = findExistingXmlProp(ruleData, propInfo.name)
     def accepted = getAcceptedValues(propInfo)
     def multiple = isMultiple(propInfo)
-    def baseDesc = computeBaseDescription(existingProp, propInfo, accepted, multiple)
+    def baseDesc = computeBaseDescription(propInfo, accepted, multiple)
     def unwrappedType = getUnwrappedType(propInfo)
-    def typeToken = determineTypeToken(existingProp, accepted, multiple, unwrappedType)
-    def defVal = computeDefaultValue(existingProp, propInfo)
+    def typeToken = determineTypeToken(accepted, multiple, unwrappedType)
+    def defVal = computeDefaultValue(propInfo)
     addParamAndTrack(xml, propInfo.name, baseDesc, defVal, typeToken, existingParamKeys)
 }
 
