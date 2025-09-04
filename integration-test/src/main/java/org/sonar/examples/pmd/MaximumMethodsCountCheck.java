@@ -35,6 +35,9 @@ import org.slf4j.LoggerFactory;
 
 public class MaximumMethodsCountCheck extends AbstractJavaRule {
 
+    static {
+        System.err.println("MaximumMethodsCountCheck loaded");
+    }
     private static final Logger LOG = LoggerFactory.getLogger(MaximumMethodsCountCheck.class);
 
     private static final PropertyDescriptor<Integer> propertyDescriptor = PropertyFactory.intProperty("maxAuthorisedMethodsCount")
@@ -43,27 +46,19 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
             .defaultValue(2)
             .build();
 
-
     public MaximumMethodsCountCheck() {
         definePropertyDescriptor(propertyDescriptor);
     }
 
     @Override
-    public void start(RuleContext ctx) {
-        LOG.info("Start " + getName());
-    }
-
-    @Override
-    public void end(RuleContext ctx) {
-        LOG.info("End " + getName());
-    }
-
-    @Override
     public Object visit(ASTClassBody node, Object data) {
-        List<ASTMethodDeclaration> methods = node.descendants(ASTMethodDeclaration.class).toList();
-        if (methods.size() > getProperty(propertyDescriptor)) {
-            asCtx(data).addViolation(node);
-        }
-        return super.visit(node, data);
+        LOG.info("Start {}", getName());
+        throw new IllegalStateException("This rule should not be executed");
+//        List<ASTMethodDeclaration> methods = node.descendants(ASTMethodDeclaration.class).toList();
+//        if (methods.size() > getProperty(propertyDescriptor)) {
+//            asCtx(data).addViolation(node);
+//        }
+//        LOG.info("End {}", getName());
+//        return super.visit(node, data);
     }
 }

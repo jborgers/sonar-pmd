@@ -48,11 +48,14 @@ class PmdKotlinIT {
     void testKotlinRules() {
         // given
         final String projectName = "pmd-kotlin-rules";
+        final String suffix = ".kt";
+        final String srcDir = "src/main/kotlin";
+
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals()
-                .setProperty("sonar.kotlin.file.suffixes", ".kt")
-                .setProperty("sonar.sources", "src/main/kotlin")
+                .setProperty("sonar.kotlin.file.suffixes", suffix)
+                .setProperty("sonar.sources", srcDir)
                 .setProperty("sonar.java.binaries", "target/classes")
                 .setProperty("sonar.log.level", "DEBUG")
                 .setProperty("sonar.verbose", "true");
@@ -69,12 +72,12 @@ class PmdKotlinIT {
 
             System.out.println("[DEBUG_LOG] Build log: " + log);
 
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "com/example/", "KotlinErrors"));
-            System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
+            // being this specific yields no results... what can be wrong? component -> com.sonarsource.it.projects:pmd-kotlin-rules:src/main/kotlin/com/example/KotlinErrors.kt
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, srcDir, "com/example", "KotlinErrors", suffix));
 
-            // Also check for issues on EqualsOnly class specifically
-            final List<Issue> equalsOnlyIssues = retrieveIssues(keyFor(projectName, "com/example/", "EqualsOnly"));
-            System.out.println("[DEBUG_LOG] EqualsOnly issues found: " + equalsOnlyIssues.size());
+            // on project name only the 2 expected issues are found
+            //final List<Issue> issues = retrieveIssues(keyFor(projectName));
+            System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
 
             final List<String> messages = issues
                     .stream()
@@ -83,7 +86,7 @@ class PmdKotlinIT {
 
             System.out.println("[DEBUG_LOG] Messages: " + messages);
 
-            assertThat(issues).isNotEmpty();
+            assertThat(issues).hasSize(2);
 
             assertThat(messages)
                     .contains(
@@ -121,11 +124,11 @@ class PmdKotlinIT {
             final String log = buildResult.getLogs();
             System.out.println("[DEBUG_LOG] Build log: " + log);
 
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "com/example/", "KotlinErrors"));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "com/example/", "KotlinErrors", ".java"));
             System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
 
             // Also check for issues on EqualsOnly class specifically
-            final List<Issue> equalsOnlyIssues = retrieveIssues(keyFor(projectName, "com/example/", "EqualsOnly"));
+            final List<Issue> equalsOnlyIssues = retrieveIssues(keyFor(projectName, "com/example/", "EqualsOnly", ".java"));
             System.out.println("[DEBUG_LOG] EqualsOnly issues found: " + equalsOnlyIssues.size());
 
             assertThat(issues).isNotEmpty();
