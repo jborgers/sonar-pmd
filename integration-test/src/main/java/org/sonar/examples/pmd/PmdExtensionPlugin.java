@@ -19,14 +19,19 @@
  */
 package org.sonar.examples.pmd;
 
-import java.util.Collections;
-
 import org.sonar.api.Plugin;
+import org.sonar.plugins.pmd.DefaultClasspathProvider;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PmdExtensionPlugin implements Plugin {
 
     @Override
     public void define(Context context) {
-        context.addExtensions(Collections.singleton(PmdExtensionRepository.class));
+
+        context.addExtensions(
+                List.of(PmdExtensionRepository.class)
+        );
     }
 }

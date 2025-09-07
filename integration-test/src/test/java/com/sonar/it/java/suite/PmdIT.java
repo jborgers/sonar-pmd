@@ -52,12 +52,27 @@ class PmdIT {
 
         // given
         final String projectName = "pmd-extensions";
+//        // Arrange: copy the integration-test jar into the project under analysis
+//        final Path projectBase = TestUtils.projectPom(projectName).toPath().getParent();
+//        final Path destDir = projectBase.resolve("lib");
+//        final Path destJar = destDir.resolve("integration-test-4.2.0-SNAPSHOT.jar");
+//        try {
+//            Files.createDirectories(destDir);
+//            final Path srcJar = Paths.get("/Users/pp/alpha/git/sonar-pmd/integration-test/target/integration-test-4.2.0-SNAPSHOT.jar");
+//            Files.copy(srcJar, destJar, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {
+//            throw new UncheckedIOException("Failed to prepare integration-test jar for PMD runtime classpath", e);
+//        }
+
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals()
                 .setProperty("maven.compiler.source", version.toString())
                 .setProperty("maven.compiler.target", version.toString())
                 .setProperty("sonar.java.binaries", ".");
+                // Put the jar on the runtime classpath used by PMD
+                //.setProperty("sonar.java.libraries", destJar.toAbsolutePath().toString());
+
 
         try {
             ORCHESTRATOR.associateProjectToQualityProfile("pmd-extensions-profile", projectName);

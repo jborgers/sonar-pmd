@@ -113,6 +113,7 @@ public class PmdTestOrchestrator {
                             determineKotlinPluginVersion()
                     ))
                     .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
+                    .addPlugin(byWildcardMavenFilename(new File("../integration-test/target"), "integration-test-*.jar"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
@@ -143,6 +144,6 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]"); // use SQ 9.9.4 to test with old version
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.9]"); // use SQ 9.9.4 to test with old version
     }
 }

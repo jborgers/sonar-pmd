@@ -59,19 +59,20 @@
         class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
         language="java">
     <description>
-      IOException should never be extended. Either use it, or extend Exception for your own business exceptions.
+      IOException should never be extended. Either use it or extend Exception for your own business exceptions.
     </description>
     <properties>
       <property name="xpath">
         <value>
           <![CDATA[
-            //ClassOrInterfaceType[pmd-java:typeIs('java.io.IOException')]
+            //ClassDeclaration/ExtendsList/ClassType[pmd-java:typeIs('java.io.IOException')]
         ]]>
         </value>
       </property>
     </properties>
     <example>
       <![CDATA[
+       import java.io.IOException;
        // don't do this!
        class MyOwnIOException extends IOException {
        }
