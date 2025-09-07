@@ -27,6 +27,7 @@ import org.sonar.plugins.pmd.profile.PmdApexSonarWayProfile;
 import org.sonar.plugins.pmd.rule.PmdApexRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
+import org.sonar.plugins.pmd.util.PluginExtensions;
 
 /**
  * The {@link PmdPlugin} is the main entry-point of Sonar-PMD.
@@ -35,13 +36,11 @@ public class PmdPlugin implements Plugin {
 
     @Override
     public void define(Context context) {
-        context.addExtensions(
-                PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
-                        .defaultValue("false")
-                        .name("Generate XML Report")
-                        .hidden()
-                        .build(),
-
+        // Add common property via shared helper
+        PropertyDefinition xmlReport = PluginExtensions.xmlReportProperty(PmdConfiguration.PROPERTY_GENERATE_XML);
+        // Add main plugin extensions via shared helper for clarity
+        PluginExtensions.addExtensions(context,
+                xmlReport,
                 PmdSensor.class,
                 PmdConfiguration.class,
                 PmdJavaExecutor.class,

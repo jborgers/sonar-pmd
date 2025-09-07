@@ -102,15 +102,7 @@ public class ExtJavaExecutor {
 
     private URLClassLoader createClassloader() {
         Collection<File> classpathElements = classpathProvider.classpath();
-        List<URL> urls = new ArrayList<>();
-        for (File file : classpathElements) {
-            try {
-                urls.add(file.toURI().toURL());
-            } catch (MalformedURLException e) {
-                throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
-            }
-        }
-        return new URLClassLoader(urls.toArray(new URL[0]));
+        return org.sonar.plugins.pmd.util.ClassLoaderUtils.fromClasspath(classpathElements);
     }
 
     private RuleSet createRuleSet() {
