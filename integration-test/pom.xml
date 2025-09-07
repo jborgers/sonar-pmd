@@ -41,10 +41,12 @@
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator-junit4</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
@@ -59,7 +61,6 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.pmd</groupId>
@@ -67,10 +68,14 @@
       <version>${revision}</version>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.pmd</groupId>
-      <artifactId>sonar-pmd-plugin</artifactId>
-      <version>4.2.0-SNAPSHOT</version>
-      <scope>compile</scope>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>java-frontend</artifactId>
+      <version>${sonar-java.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
     </dependency>
   </dependencies>
 
@@ -107,10 +112,10 @@
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
-          <pluginKey>pmd-extensions-it</pluginKey>
-          <pluginName>PMD Extensions IT</pluginName>
+          <pluginKey>pmd-extensions</pluginKey>
+          <pluginName>PMD Extensions</pluginName>
           <pluginClass>org.sonar.examples.pmd.PmdExtensionPlugin</pluginClass>
-          <pluginDescription>Integration-test plugin providing PMD extension rules.</pluginDescription>
+          <pluginDescription>Standalone plugin providing PMD extension rules and Java execution.</pluginDescription>
           <requiredForLanguages>java</requiredForLanguages>
         </configuration>
       </plugin>

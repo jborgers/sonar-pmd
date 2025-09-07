@@ -117,6 +117,7 @@
     <module>integration-test</module>
   </modules>
 
+
   <dependencyManagement>
     <dependencies>
       <!-- SonarQube API -->
@@ -486,6 +487,15 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>with-integration-tests</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <modules>
+        <module>integration-test</module>
+      </modules>
     </profile>
   </profiles>
 

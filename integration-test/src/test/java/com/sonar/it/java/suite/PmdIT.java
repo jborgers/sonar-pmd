@@ -52,17 +52,6 @@ class PmdIT {
 
         // given
         final String projectName = "pmd-extensions";
-//        // Arrange: copy the integration-test jar into the project under analysis
-//        final Path projectBase = TestUtils.projectPom(projectName).toPath().getParent();
-//        final Path destDir = projectBase.resolve("lib");
-//        final Path destJar = destDir.resolve("integration-test-4.2.0-SNAPSHOT.jar");
-//        try {
-//            Files.createDirectories(destDir);
-//            final Path srcJar = Paths.get("/Users/pp/alpha/git/sonar-pmd/integration-test/target/integration-test-4.2.0-SNAPSHOT.jar");
-//            Files.copy(srcJar, destJar, StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            throw new UncheckedIOException("Failed to prepare integration-test jar for PMD runtime classpath", e);
-//        }
 
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
@@ -86,8 +75,8 @@ class PmdIT {
                     .contains("Start MaximumMethodsCountCheck")
                     .contains("End MaximumMethodsCountCheck");
 
-            //final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors", ".java"));
-            final List<Issue> issues = retrieveIssues(keyFor(projectName));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java", "pmd", "Errors", ".java"));
+            //final List<Issue> issues = retrieveIssues(keyFor(projectName));
 
             final List<String> messages = issues
                     .stream()
@@ -214,7 +203,7 @@ class PmdIT {
             //final List<Issue> issues = retrieveIssues(keyFor(projectName)); // component -> com.sonarsource.it.projects:pmd-extensions:src/main/java/pmd/Errors.java
 
             assertThat(issues)
-                    .hasSize(1);
+                    .hasSize(3);
 
         } catch (HttpException e) {
             System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
