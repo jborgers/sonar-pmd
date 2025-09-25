@@ -36,12 +36,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdKotlinIT {
 
-    private static PmdTestOrchestrator ORCHESTRATOR;
+    private static PmdTestOrchestrator orchestrator;
 
     @BeforeAll
     static void startSonar() {
-        ORCHESTRATOR = PmdTestOrchestrator.init();
-        ORCHESTRATOR.start();
+        orchestrator = PmdTestOrchestrator.init();
+        orchestrator.start();
     }
 
     @Test
@@ -61,10 +61,10 @@ class PmdKotlinIT {
                 .setProperty("sonar.verbose", "true");
 
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-kotlin-profile", projectName, "kotlin");
+            orchestrator.associateProjectToQualityProfile("pmd-kotlin-profile", projectName, "kotlin");
 
             // when
-            final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
+            final BuildResult buildResult = orchestrator.executeBuild(build);
 
             // then
             final String log = buildResult.getLogs();
@@ -92,7 +92,7 @@ class PmdKotlinIT {
             throw e;
         } finally {
             // Cleanup
-            ORCHESTRATOR.resetData(projectName);
+            orchestrator.resetData(projectName);
         }
     }
 
@@ -109,10 +109,10 @@ class PmdKotlinIT {
                 .setProperty("sonar.log.level", "DEBUG")
                 .setProperty("sonar.verbose", "true");
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-kotlin-all-rules", projectName, "kotlin");
+            orchestrator.associateProjectToQualityProfile("pmd-kotlin-all-rules", projectName, "kotlin");
 
             // when
-            final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
+            final BuildResult buildResult = orchestrator.executeBuild(build);
 
             // then
             final String log = buildResult.getLogs();
@@ -132,13 +132,13 @@ class PmdKotlinIT {
             throw e;
         } finally {
             // Cleanup
-            ORCHESTRATOR.resetData(projectName);
+            orchestrator.resetData(projectName);
         }
     }
 
     private List<Issue> retrieveIssues(String componentKey) {
         final IssueQuery issueQuery = IssueQuery.create();
         issueQuery.urlParams().put("componentKeys", componentKey);
-        return ORCHESTRATOR.retrieveIssues(issueQuery);
+        return orchestrator.retrieveIssues(issueQuery);
     }
 }

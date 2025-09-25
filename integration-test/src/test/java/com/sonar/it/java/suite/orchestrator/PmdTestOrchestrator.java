@@ -77,12 +77,12 @@ public class PmdTestOrchestrator {
     }
 
     public BuildResult executeBuild(MavenBuild build) {
-        // build.setDebugLogs(true);
+        // use this to enable debug: build.setDebugLogs(true)
         // avoid this: [DEBUG] Plugins not loaded because they are optional: [java, pmd]
         //   and the following: Cannot invoke "org.sonar.core.platform.ExplodedPlugin.getPluginInfo()" because the return value of "java.util.Map.get(Object)" is null
         // sonar.plugins.downloadOnlyRequired turned to default "true" in SonarQube 10.5": https://sonarsource.atlassian.net/browse/SONAR-22074
         // update: fixed by specifying required plugins in the plugin manifests!
-        //build.setProperty("sonar.plugins.downloadOnlyRequired", "false");
+        // use this to override: build.setProperty("sonar.plugins.downloadOnlyRequired", "false")
         return delegate.executeBuild(build);
     }
 
