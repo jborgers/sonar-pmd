@@ -41,6 +41,7 @@ import static com.sonar.orchestrator.locator.FileLocation.ofClasspath;
 public class PmdTestOrchestrator {
 
     private static final String SONAR_JAVA_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.java";
+    private static final String SONAR_KOTLIN_PLUGIN_VERSION_KEY = "test.sonar.plugin.version.kotlin";
     private static final String SONAR_VERSION_KEY = "test.sonar.version";
     private static final String LANGUAGE_KEY = "java";
     private static final String CENTRAL_MAVEN = "https://repo1.maven.org/maven2";
@@ -76,6 +77,12 @@ public class PmdTestOrchestrator {
     }
 
     public BuildResult executeBuild(MavenBuild build) {
+        // build.setDebugLogs(true);
+        // avoid this: [DEBUG] Plugins not loaded because they are optional: [java, pmd]
+        //   and the following: Cannot invoke "org.sonar.core.platform.ExplodedPlugin.getPluginInfo()" because the return value of "java.util.Map.get(Object)" is null
+        // sonar.plugins.downloadOnlyRequired turned to default "true" in SonarQube 10.5": https://sonarsource.atlassian.net/browse/SONAR-22074
+        // update: fixed by specifying required plugins in the plugin manifests!
+        //build.setProperty("sonar.plugins.downloadOnlyRequired", "false");
         return delegate.executeBuild(build);
     }
 
@@ -87,20 +94,30 @@ public class PmdTestOrchestrator {
     }
 
     public void associateProjectToQualityProfile(String profile, String project) {
+        associateProjectToQualityProfile(profile, project, LANGUAGE_KEY);
+    }
+
+    public void associateProjectToQualityProfile(String profile, String project, String language) {
         final String projectKey = deriveProjectKey(project);
         delegate.getServer().provisionProject(projectKey, project);
-        delegate.getServer().associateProjectToQualityProfile(projectKey, LANGUAGE_KEY, profile);
+        delegate.getServer().associateProjectToQualityProfile(projectKey, language, profile);
     }
 
     public static PmdTestOrchestrator init() {
         try {
             final OrchestratorRule orchestrator = OrchestratorRule
-                    .builderEnv().useDefaultAdminCredentialsForBuilds(true)
+                    .builderEnv()
+                    .useDefaultAdminCredentialsForBuilds(true)
                     .setSonarVersion(determineSonarqubeVersion())
                     .addPlugin(MavenLocation.create(
                             "org.sonarsource.java",
                             "sonar-java-plugin",
                             determineJavaPluginVersion()
+                    ))
+                    .addPlugin(MavenLocation.create(
+                            "org.sonarsource.kotlin",
+                            "sonar-kotlin-plugin",
+                            determineKotlinPluginVersion()
                     ))
                     .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
                     .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
@@ -108,6 +125,8 @@ public class PmdTestOrchestrator {
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-test-rule.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-profile.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-all-rules.xml"))
                     .build();
 
             return new PmdTestOrchestrator(orchestrator);
@@ -123,10 +142,14 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.15]"); // use 8.9 to test with SQ 9.9
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.9]"); // use 8.9 to test with SQ 9.9
+    }
+
+    private static String determineKotlinPluginVersion() {
+        return System.getProperty(SONAR_KOTLIN_PLUGIN_VERSION_KEY, "LATEST_RELEASE[2.23]");
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.6]"); // use SQ 9.9.4 to test with old version
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.3]"); // use SQ 9.9.4 to test with old version
     }
 }

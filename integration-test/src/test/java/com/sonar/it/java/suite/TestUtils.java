@@ -22,6 +22,7 @@ package com.sonar.it.java.suite;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NotNull;
 
 class TestUtils {
 
@@ -40,12 +41,28 @@ class TestUtils {
         return new File(HOME, "projects/" + projectName + "/pom.xml");
     }
 
-    static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {
-        return "com.sonarsource.it.projects:" + projectKey + ":" + srcDir + pkgDir + cls;
+    static String keyFor(String projectKey) {
+        return "com.sonarsource.it.projects:" + projectKey;
     }
 
-    static String keyFor(String projectKey, String pkgDir, String cls) {
-        return keyFor(projectKey, "src/main/java/", pkgDir, cls + ".java");
+    static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {
+        srcDir = makeSureEndsWithSlash(srcDir);
+        pkgDir = makeSureEndsWithSlash(pkgDir);
+        return keyFor(projectKey) + ":" + srcDir + pkgDir + cls;
+    }
+
+    private static @NotNull String makeSureEndsWithSlash(String srcDir) {
+        if (!srcDir.isEmpty() && !srcDir.endsWith("/")) {
+            srcDir = srcDir + "/";
+        }
+        return srcDir;
+    }
+
+    static String keyFor(String projectKey, String srcDir, String pkgDir, String cls, String suffix) {
+        if (!suffix.isEmpty() && !suffix.startsWith(".")) {
+            suffix = "." + suffix;
+        }
+        return keyFor(projectKey, srcDir, pkgDir, cls + suffix);
     }
 
 }

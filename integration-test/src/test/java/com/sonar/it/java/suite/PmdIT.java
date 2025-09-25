@@ -71,7 +71,8 @@ class PmdIT {
                     .contains("Start MaximumMethodsCountCheck")
                     .contains("End MaximumMethodsCountCheck");
 
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Errors"));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java", "pmd", "Errors", ".java"));
+            //final List<Issue> issues = retrieveIssues(keyFor(projectName));
 
             final List<String> messages = issues
                     .stream()
@@ -116,13 +117,15 @@ class PmdIT {
         ORCHESTRATOR.executeBuild(build);
 
         // then
-        String testComponentKey = keyFor("pmd-junit-rules", "src/test/java/", "", "ProductionCodeTest" + ".java");
+        // (component -> com.sonarsource.it.projects:pmd-junit-rules:src/test/java/ProductionCodeTest.java)
+        String testComponentKey = keyFor("pmd-junit-rules", "src/test/java", "", "ProductionCodeTest", ".java");
         final List<Issue> testIssues = retrieveIssues(testComponentKey);
         assertThat(testIssues).hasSize(1);
         assertThat(testIssues.get(0).message()).isEqualTo("Unit tests should not contain more than 1 assert(s).");
         assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd:UnitTestContainsTooManyAsserts");
 
-        final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "", "ProductionCode"));
+        // component -> com.sonarsource.it.projects:pmd-junit-rules:src/main/java/ProductionCode.java
+        final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "src/main/java", "", "ProductionCode", ".java"));
         assertThat(prodIssues).hasSize(1);
         assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
         assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd:UnusedPrivateField");
@@ -153,7 +156,8 @@ class PmdIT {
             final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
                     IssueQuery.create()
                             .rules("pmd:AvoidDuplicateLiterals")
-                            .components(keyFor(projectName, "", "AvoidDuplicateLiterals")
+                            //.components(keyFor(projectName, "src/main/java", "", "AvoidDuplicateLiterals", ".java")
+                            .components(keyFor(projectName)
                             )
             );
 
@@ -191,9 +195,11 @@ class PmdIT {
 
             // then
             // PMD7-MIGRATION: added to force one violation in pmdShouldHaveAccessToExternalLibrariesInItsClasspath: is this testing the correct thing?
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java/", "pmd/", "Errors", ".java"));
+            //final List<Issue> issues = retrieveIssues(keyFor(projectName)); // component -> com.sonarsource.it.projects:pmd-extensions:src/main/java/pmd/Errors.java
+
             assertThat(issues)
-                    .hasSize(1);
+                    .hasSize(3);
 
         } catch (HttpException e) {
             System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
@@ -219,7 +225,8 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar"));
+            //final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar", ".java"));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName));
             assertThat(issues)
                     .isNotEmpty();
 
