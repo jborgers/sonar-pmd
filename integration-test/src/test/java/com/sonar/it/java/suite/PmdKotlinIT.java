@@ -70,9 +70,6 @@ class PmdKotlinIT {
             final String log = buildResult.getLogs();
             assertThat(log).contains("Kotlin");
 
-            System.out.println("[DEBUG_LOG] Build log: " + log);
-
-            // being this specific yields no results... what can be wrong? component -> com.sonarsource.it.projects:pmd-kotlin-rules:src/main/kotlin/com/example/KotlinErrors.kt
             final List<Issue> issues = retrieveIssues(keyFor(projectName, srcDir, "com/example", "KotlinErrors", suffix));
 
             final List<String> messages = issues
@@ -116,19 +113,16 @@ class PmdKotlinIT {
 
             // then
             final String log = buildResult.getLogs();
-            System.out.println("[DEBUG_LOG] Build log: " + log);
+            assertThat(log).contains("Kotlin");
 
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/kotlin", "com/example", "KotlinErrors", ".kt"));
-            System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
 
-            // Also check for issues on EqualsOnly class specifically
-            final List<Issue> equalsOnlyIssues = retrieveIssues(keyFor(projectName, "src/main/kotlin","com/example", "EqualsOnly", ".kt"));
-            System.out.println("[DEBUG_LOG] EqualsOnly issues found: " + equalsOnlyIssues.size());
-
-            assertThat(issues).isNotEmpty();
+            assertThat(issues).hasSize(2);
+            Issue functionNameTooShort = issues.stream().filter(i -> i.ruleKey().equals("pmd-kotlin:FunctionNameTooShort")).findFirst().orElseThrow();
+            assertThat(functionNameTooShort.severity()).isEqualTo("MAJOR");
 
         } catch (HttpException e) {
-            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            System.err.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
             throw e;
         } finally {
             // Cleanup
