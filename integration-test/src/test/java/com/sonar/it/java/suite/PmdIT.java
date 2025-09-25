@@ -72,7 +72,6 @@ class PmdIT {
                     .contains("End MaximumMethodsCountCheck");
 
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java", "pmd", "Errors", ".java"));
-            //final List<Issue> issues = retrieveIssues(keyFor(projectName));
 
             final List<String> messages = issues
                     .stream()
@@ -153,12 +152,11 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
+            String avoidDuplicateLiteralsKey = keyFor(projectName, "src/main/java", "", "AvoidDuplicateLiterals", ".java");
             final List<Issue> issues = ORCHESTRATOR.retrieveIssues(
                     IssueQuery.create()
                             .rules("pmd:AvoidDuplicateLiterals")
-                            //.components(keyFor(projectName, "src/main/java", "", "AvoidDuplicateLiterals", ".java")
-                            .components(keyFor(projectName)
-                            )
+                            .components(avoidDuplicateLiteralsKey)
             );
 
             assertThat(issues)
@@ -196,7 +194,6 @@ class PmdIT {
             // then
             // PMD7-MIGRATION: added to force one violation in pmdShouldHaveAccessToExternalLibrariesInItsClasspath: is this testing the correct thing?
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java/", "pmd/", "Errors", ".java"));
-            //final List<Issue> issues = retrieveIssues(keyFor(projectName)); // component -> com.sonarsource.it.projects:pmd-extensions:src/main/java/pmd/Errors.java
 
             assertThat(issues)
                     .hasSize(3);
@@ -225,8 +222,8 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
-            //final List<Issue> issues = retrieveIssues(keyFor(projectName, "pmd/", "Bar", ".java"));
-            final List<Issue> issues = retrieveIssues(keyFor(projectName));
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java", "pmd", "Bar", ".java"));
+
             assertThat(issues)
                     .isNotEmpty();
 
