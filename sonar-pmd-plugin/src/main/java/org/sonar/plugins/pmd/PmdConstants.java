@@ -42,17 +42,17 @@ public final class PmdConstants {
     /**
      * Default value for property {@link #JAVA_SOURCE_VERSION}.
      */
-    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "24";
+    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "25";
 
     /**
-     * Maximum supported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 7 this is 24-preview.
+     * Maximum supported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 7 this is 25-preview.
      */
-    public static final String JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE = "24-preview";
+    public static final String JAVA_SOURCE_MAXIMUM_SUPPORTED_VALUE = "25-preview";
 
     /**
-     * Minimum UNsupported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 7 this is 25.
+     * Minimum UNsupported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 7 this is 26.
      */
-    public static final String JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE = "25";
+    public static final String JAVA_SOURCE_MINIMUM_UNSUPPORTED_VALUE = "26";
     /**
      * The Java Language key.
      */
