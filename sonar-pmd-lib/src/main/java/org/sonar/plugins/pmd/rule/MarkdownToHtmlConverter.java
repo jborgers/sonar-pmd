@@ -371,9 +371,6 @@ public class MarkdownToHtmlConverter {
         html = html.replace("PRE_TAG_START", "<pre>");
         html = html.replace("PRE_TAG_END", "</pre>");
 
-        // Fix the order of paragraphs and lists
-        html = fixParagraphListOrder(html);
-
         return html;
     }
 
@@ -486,8 +483,8 @@ public class MarkdownToHtmlConverter {
         if (ruleKey != null && ruleKey.contains("StringBuilder")) {
             result = result.replaceAll("(?i)\\bstring\\s+builder\\b", "StringBuilder");
         }
-        if (ruleKey != null && ruleKey.contains("StringBuilder")) {
-            result = result.replaceAll("(?i)\\bstring\\s+buffer\\b", "StringBuilder");
+        if (ruleKey != null && ruleKey.contains("StringBuffer")) {
+            result = result.replaceAll("(?i)\\bstring\\s+buffer\\b", "StringBuffer");
         }
         if (ruleKey != null && ruleKey.contains("StringTokenizer")) {
             result = result.replaceAll("(?i)\\bstring\\s+tokenizer\\b", "StringTokenizer");
@@ -1094,39 +1091,6 @@ public class MarkdownToHtmlConverter {
                 .replace("'", "&#39;");
     }
 
-    /**
-     * Fixes the order of paragraphs and lists in the HTML output.
-     */
-    private static String fixParagraphListOrder(String html) {
-        // Split the HTML into paragraphs and lists
-        String[] parts = html.split("\n");
-
-        // If we have fewer than 3 parts, there's nothing to fix
-        if (parts.length < 3) {
-            return html;
-        }
-
-        // Look for the pattern: <p>...</p>\n<p>...</p>\n<ul>...</ul>
-        for (int i = 0; i < parts.length - 2; i++) {
-            if (parts[i].startsWith("<p>") && parts[i].endsWith("</p>") &&
-                parts[i+1].startsWith("<p>") && parts[i+1].endsWith("</p>") &&
-                parts[i+2].startsWith("<ul>") && parts[i+2].endsWith("</ul>")) {
-
-                // Check if the first paragraph ends with a colon, which indicates
-                // it should be followed by a list
-                if (parts[i].contains("metrics:")) {
-                    // Swap the order of the second paragraph and the list
-                    String temp = parts[i+1];
-                    parts[i+1] = parts[i+2];
-                    parts[i+2] = temp;
-                    break;
-                }
-            }
-        }
-
-        // Join the parts back together
-        return String.join("\n", parts);
-    }
 
     /**
      * Extract <pre> blocks and replace them with placeholders.
