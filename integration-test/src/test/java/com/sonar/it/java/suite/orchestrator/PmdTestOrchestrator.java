@@ -76,6 +76,16 @@ public class PmdTestOrchestrator {
         delegate.start();
     }
 
+    public void stop() {
+        try {
+            // OrchestratorRule typically exposes stop(); if not, close() will be called by JUnit rule, but here we drive it manually.
+            delegate.stop();
+        } catch (Throwable t) {
+            // ignore stop failures to avoid masking test results
+            System.out.println("WARN: Failed to stop orchestrator cleanly: " + t.getMessage());
+        }
+    }
+
     public BuildResult executeBuild(MavenBuild build) {
         // use this to enable debug: build.setDebugLogs(true)
         // avoid this: [DEBUG] Plugins not loaded because they are optional: [java, pmd]
