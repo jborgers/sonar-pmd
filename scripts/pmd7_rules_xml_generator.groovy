@@ -35,6 +35,27 @@ import org.sonar.plugins.pmd.rule.MarkdownToHtmlConverter
 import org.sonar.plugins.pmd.rule.util.PmdSeverityMapper
 import org.sonar.plugins.pmd.rule.util.RuleParamFormatter
 
+// Simple logging utilities
+@Field boolean DEBUG_LOG = Boolean.parseBoolean(System.getProperty('pmd7.rules.gen.debug', 'false'))
+
+def logInfo(Object msg) {
+    println String.valueOf(msg)
+}
+
+def logDebug(Object msg) {
+    if (DEBUG_LOG) {
+        println "DEBUG:  " + String.valueOf(msg)
+    }
+}
+
+def logWarn(Object msg) {
+    System.err.println "WARN:   " + String.valueOf(msg)
+}
+
+def logError(Object msg) {
+    System.err.println "ERROR:  " + String.valueOf(msg)
+}
+
 // Configure PMD version for MarkdownToHtmlConverter to avoid lib dependency on PMD
 MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
 
@@ -48,16 +69,16 @@ def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
 @Field String kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
 
 // Extract Java rule properties from the jar file
-println "Extracting Java rule properties from ${pmdJavaJarPath}"
+logInfo("extracting Java rule properties from ${pmdJavaJarPath}")
 @Field def javaRulePropertyExtractor = new JavaRulePropertyExtractor()
 @Field def javaRuleProperties = javaRulePropertyExtractor.extractProperties(pmdJavaJarPath)
-println "Found properties for ${javaRuleProperties.size()} Java rule classes"
+logInfo("found properties for ${javaRuleProperties.size()} Java rule classes")
 
 // Extract Kotlin rule properties from the jar file
-println "Extracting Kotlin rule properties from ${pmdKotlinJarPath}"
+logInfo("extracting Kotlin rule properties from ${pmdKotlinJarPath}")
 @Field def kotlinRulePropertyExtractor = new JavaRulePropertyExtractor()
 @Field def kotlinRuleProperties = kotlinRulePropertyExtractor.extractProperties(pmdKotlinJarPath)
-println "Found properties for ${kotlinRuleProperties.size()} Kotlin rule classes"
+logInfo("found properties for ${kotlinRuleProperties.size()} Kotlin rule classes")
 
 // Function to read rule alternatives from a JSON file
 def readRuleAlternatives(String filePath) {
@@ -68,12 +89,12 @@ def readRuleAlternatives(String filePath) {
             def jsonSlurper = new JsonSlurper()
             def alternativesData = jsonSlurper.parse(alternativesFile)
             alternatives = alternativesData.ruleAlternatives
-            println "Loaded ${alternatives.size()} rule alternatives from ${filePath}"
+            logInfo("loaded ${alternatives.size()} rule alternatives from ${filePath}")
         } else {
-            println "WARNING: Rule alternatives file not found at ${filePath}"
+            logWarn("rule alternatives file not found at ${filePath}")
         }
     } catch (Exception e) {
-        println "ERROR reading rule alternatives: ${e.message}"
+        logError("reading rule alternatives: ${e.message}")
     }
     return alternatives
 }
@@ -101,15 +122,15 @@ if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
 @Field def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
 @Field def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
 
-println "PMD ${pmdVersion} Rules XML Generator"
-println "=" * 50
-println "Java output file: ${javaOutputFilePath}"
-println "Kotlin output file: ${kotlinOutputFilePath}"
+logInfo("PMD ${pmdVersion} Rules XML Generator")
+logInfo("=" * 50)
+logInfo("Java output file: ${javaOutputFilePath}")
+logInfo("Kotlin output file: ${kotlinOutputFilePath}")
 
 // Function to read rules from a PMD JAR
 def readRulesFromJar = { jarFile, categoriesPath ->
     if (!jarFile.exists()) {
-        println "ERROR: PMD JAR not found at: ${jarFile}"
+        logError("PMD JAR not found at: ${jarFile}")
         return []
     }
 
@@ -125,16 +146,16 @@ def readRulesFromJar = { jarFile, categoriesPath ->
             def categoriesProps = new Properties()
             categoriesProps.load(zipFile.getInputStream(categoriesEntry))
             categoryFiles = categoriesProps.getProperty("rulesets.filenames", "").split(",").collect { it.trim() }
-            println "Found ${categoryFiles.size()} category files in PMD JAR: ${jarFile}"
+            logInfo("found ${categoryFiles.size()} category files in PMD JAR: ${jarFile}")
         } else {
-            println "WARNING: ${categoriesPath} not found in PMD JAR: ${jarFile}"
+            logWarn("${categoriesPath} not found in PMD JAR: ${jarFile}")
         }
 
         // Process each category file
         categoryFiles.each { categoryFile ->
             def entry = zipFile.getEntry(categoryFile)
             if (!entry) {
-                println "  - WARNING: Category file not found: ${categoryFile}"
+                logWarn("  - category file not found: ${categoryFile}")
                 return
             }
 
@@ -170,31 +191,29 @@ def readRulesFromJar = { jarFile, categoriesPath ->
                         ]}
                     ]
                 }
-                println "  - Processed ${categoryFile}: found ${categoryXml.rule.size()} rules"
+                logInfo("  - processed ${categoryFile}: found ${categoryXml.rule.size()} rules")
             } catch (Exception e) {
-                println "  - ERROR processing ${categoryFile}: ${e.message}"
+                logError("  - processing ${categoryFile}: ${e.message}")
             }
         }
 
         zipFile.close()
         return rules
     } catch (Exception e) {
-        println "ERROR reading PMD JAR: ${e.message}"
+        logError("reading PMD JAR: ${e.message}")
         return []
     }
 }
 
 // Read Java rules
-println "Reading Java rules from ${pmdJavaJarPath}"
+logInfo("reading Java rules from ${pmdJavaJarPath}")
 def javaRules = readRulesFromJar(pmdJavaJarPath, javaCategoriesPropertiesPath)
-println "Found ${javaRules.size()} total Java rules"
-println ""
+logInfo("found ${javaRules.size()} total Java rules\n")
 
 // Read Kotlin rules
-println "Reading Kotlin rules from ${pmdKotlinJarPath}"
+logInfo("reading Kotlin rules from ${pmdKotlinJarPath}")
 def kotlinRules = readRulesFromJar(pmdKotlinJarPath, kotlinCategoriesPropertiesPath)
-println "Found ${kotlinRules.size()} total Kotlin rules"
-println ""
+logInfo("found ${kotlinRules.size()} total Kotlin rules\n")
 
 // Helper function to escape XML content for CDATA
 String escapeForCdata(String text) {
@@ -296,27 +315,27 @@ def generateXmlFile = { outputFile, rules, language ->
         def deprecatedRules = rules.count { it.deprecated }
         def categoryStats = rules.groupBy { it.category }
 
-        println """
-Successfully generated ${outputFile.name}
-Total ${language} rules: ${rules.size()}
-Active ${language} rules: ${activeRules}
-Deprecated ${language} rules: ${deprecatedRules}
-${renamedRules > 0 ? "Renamed ${language} rules (deprecated with ref): ${renamedRules}" : ""}
+        logInfo("""
+successfully generated ${outputFile.name}
+total ${language} rules: ${rules.size()}
+active ${language} rules: ${activeRules}
+deprecated ${language} rules: ${deprecatedRules}
+${renamedRules > 0 ? "renamed ${language} rules (deprecated with ref): ${renamedRules}" : ""}
 ${rulesWithoutDescription > 0 ? "${language} rules with generated fallback descriptions: ${rulesWithoutDescription}" : ""}
-Using camelCase transformation for all rule names
+using camelCase transformation for all rule names
 
-${language} rules by category:"""
+${language} rules by category:""")
 
         categoryStats.sort { it.key }.each { category, categoryRules ->
             def activeCount = categoryRules.count { !it.deprecated }
             def deprecatedCount = categoryRules.count { it.deprecated }
-            println "  - ${category}: ${categoryRules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)"
+            logInfo("  - ${category}: ${categoryRules.size()} total (${activeCount} active, ${deprecatedCount} deprecated)")
         }
 
-        println "\nTags that will be applied for ${language} rules:"
-        println "  - pmd: ${rules.size()} rules"
+        logInfo("tags that will be applied for ${language} rules:")
+        logInfo("  - pmd: ${rules.size()} rules")
         categoryStats.sort { it.key }.each { category, categoryRules ->
-            println "  - ${category}: ${categoryRules.size()} rules"
+            logInfo("  - ${category}: ${categoryRules.size()} rules")
         }
 
         // Verify no empty descriptions
@@ -329,32 +348,32 @@ ${language} rules by category:"""
 
         return true
     } catch (Exception e) {
-        println "ERROR generating ${language} XML file: ${e.message}"
+        logError("generating ${language} XML file: ${e.message}")
         e.printStackTrace()
         return false
     }
 }
 
 // Generate Java rules XML file
-println ""
-println "Generating Java rules XML file..."
-println "=" * 30
+logInfo("")
+logInfo("Generating Java rules XML file...")
+logInfo("=" * 30)
 def javaSuccess = generateXmlFile(javaOutputFilePath, javaRules, "Java")
 
 // Generate Kotlin rules XML file
-println ""
-println "Generating Kotlin rules XML file..."
-println "=" * 30
+logInfo("")
+logInfo("Generating Kotlin rules XML file...")
+logInfo("=" * 30)
 def kotlinSuccess = generateXmlFile(kotlinOutputFilePath, kotlinRules, "Kotlin")
 
 // Add XPathRule as a special case to the Java rules XML file
 addXPathRuleToJavaFile()
 
-println ""
+logInfo("")
 if (javaSuccess && kotlinSuccess) {
-    println "XML generation completed successfully for both Java and Kotlin rules!"
+    logInfo("XML generation completed successfully for both Java and Kotlin rules!")
 } else {
-    println "XML generation completed with errors. Please check the logs above."
+    logInfo("XML generation completed with errors. Please check the logs above.")
 }
 
 
@@ -571,7 +590,7 @@ def determineTypeToken(List accepted, boolean multiple, String unwrappedType) {
 def computeDefaultValue(propInfo) {
     def defVal = (propInfo.defaultValuesAsString) ?: ""
     if (defVal == "[]") {
-        println("WRONG $defVal for $propInfo")
+        logWarn("wrong $defVal for $propInfo")
     }
     return defVal
 }
@@ -599,12 +618,12 @@ def addClassDefinedRuleParams(xml, Map ruleData, String language, Set existingPa
     def rulePropertiesMap = language == "Java" ? javaRuleProperties : kotlinRuleProperties
     def ruleProperties = getRulePropertiesForClass(rulePropertiesMap, ruleClass)
     if (ruleProperties.size()) {
-        println "  - Found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})"
+        logDebug("  - found ${ruleProperties.size()} properties for rule ${ruleData.name} (${ruleClass})")
         ruleProperties.each { propInfo ->
             def propType = propInfo.type
             def unwrappedType = getUnwrappedType(propInfo)
             if (shouldLogProperty(propInfo.name)) {
-                println "### PROP: $propInfo.name TYPE: $propType (wrapped: ${unwrappedType})"
+                logDebug("### PROP: ${propInfo.name} TYPE: ${propType} (wrapped: ${unwrappedType})")
             }
             if (handleSuppressionSpecialCases(xml, propInfo)) {
                 return
@@ -639,19 +658,19 @@ def reportEmptyDescriptions(File outputFile, String language) {
         !it.description.text() || it.description.text().trim().isEmpty()
     }
     if (emptyDescriptions.size() > 0) {
-        println "\nWARNING: Found ${emptyDescriptions.size()} ${language} rules with empty descriptions:"
+        logWarn("found ${emptyDescriptions.size()} ${language} rules with empty descriptions:")
         emptyDescriptions.each { rule ->
-            println "  - ${rule.key.text()}"
+            logInfo("  - ${rule.key.text()}")
         }
     } else {
-        println "\nAll ${language} rules have descriptions"
+        logInfo("all ${language} rules have descriptions")
     }
 }
 
 def handleRenamedRules(String language, int renamedRules, List rulesWithDeprecatedAndRef) {
-    println "\nWARNING: Renamed ${renamedRules} ${language} rules with deprecated=true and ref attribute:"
+    logWarn("renamed ${renamedRules} ${language} rules with deprecated=true and ref attribute:")
     rulesWithDeprecatedAndRef.each { rule ->
-        println "  - ${rule.name} (ref: ${rule.ref})"
+        logInfo("  - ${rule.name} (ref: ${rule.ref})")
     }
     def renamedRulesData = [
         language: language,
@@ -661,7 +680,7 @@ def handleRenamedRules(String language, int renamedRules, List rulesWithDeprecat
     def jsonBuilder = new JsonBuilder(renamedRulesData)
     def renamedRulesFile = new File("scripts/renamed-${language.toLowerCase()}-rules.json")
     renamedRulesFile.write(jsonBuilder.toPrettyString())
-    println "Generated renamed rules information in ${renamedRulesFile.absolutePath}"
+    logInfo("generated renamed rules information in ${renamedRulesFile.absolutePath}")
 }
 
 def addXPathRuleToJavaFile() {
@@ -669,14 +688,14 @@ def addXPathRuleToJavaFile() {
 }
 
 def addXPathRuleToJavaFile(File outFile) {
-    println ""
-    println "Adding XPathRule to Java rules XML file..."
-    println "=" * 30
+    logInfo("")
+    logInfo("adding XPathRule to Java rules XML file...")
+    logInfo("=" * 30)
     try {
         def xmlFile = outFile
         def xmlContent = xmlFile.text
         if (xmlContent.contains("<key>XPathRule</key>")) {
-            println "XPathRule already exists in the Java rules XML file."
+            logInfo("XPathRule already exists in the Java rules XML file.")
         } else {
             def closingTagIndex = xmlContent.lastIndexOf("</rules>")
             if (closingTagIndex != -1) {
@@ -686,17 +705,17 @@ def addXPathRuleToJavaFile(File outFile) {
                 if (!snippetFile.exists()) {
                     throw new FileNotFoundException("XPathRule snippet file not found at ${snippetFile.absolutePath}. Provide the file via 'xpathRuleSnippetPath' binding or create scripts/xpath-rule-snippet.xml")
                 }
-                println "Loading XPathRule snippet from ${snippetFile.absolutePath}"
+                logInfo("loading XPathRule snippet from ${snippetFile.absolutePath}")
                 String xpathRuleXml = snippetFile.getText('UTF-8')
                 def newXmlContent = xmlContent.substring(0, closingTagIndex) + xpathRuleXml + xmlContent.substring(closingTagIndex)
                 xmlFile.text = newXmlContent
-                println "Successfully added XPathRule to Java rules XML file."
+                logInfo("successfully added XPathRule to Java rules XML file.")
             } else {
-                println "ERROR: Could not find closing </rules> tag in Java rules XML file."
+                logError("could not find closing </rules> tag in Java rules XML file.")
             }
         }
     } catch (Exception e) {
-        println "ERROR adding XPathRule to Java rules XML file: ${e.message}"
+        logError("adding XPathRule to Java rules XML file: ${e.message}")
         throw e
     }
 }
