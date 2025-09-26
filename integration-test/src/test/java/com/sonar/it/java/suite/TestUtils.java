@@ -46,12 +46,12 @@ class TestUtils {
     }
 
     static String keyFor(String projectKey, String srcDir, String pkgDir, String cls) {
-        srcDir = makeSureEndsWithSlash(srcDir);
-        pkgDir = makeSureEndsWithSlash(pkgDir);
+        srcDir = ensureEndsWithSlash(srcDir);
+        pkgDir = ensureEndsWithSlash(pkgDir);
         return keyFor(projectKey) + ":" + srcDir + pkgDir + cls;
     }
 
-    private static @NotNull String makeSureEndsWithSlash(String srcDir) {
+    private static @NotNull String ensureEndsWithSlash(String srcDir) {
         if (!srcDir.isEmpty() && !srcDir.endsWith("/")) {
             srcDir = srcDir + "/";
         }
