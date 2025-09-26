@@ -83,8 +83,6 @@ public class MarkdownToHtmlConverter {
     private static final Pattern TRAILING_WHITESPACE_PATTERN = Pattern.compile("[ \t\n\r]+$");
     // Pattern to match content inside <pre> tags. DOTALL flag makes dot match newlines too.
     private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
-    // Pattern to match placeholders for pre blocks. DOTALL lets dot match newlines.
-    private static final Pattern PRE_BLOCK_PLACEHOLDER_PATTERN = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL);
     // Pattern to match content inside <code> tags.
     private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(<code>[\\s\\S]*?</code>)", Pattern.DOTALL);
     // Pattern to match markdown italics like *text*
@@ -826,96 +824,18 @@ public class MarkdownToHtmlConverter {
      */
     private static String formatInlineElements(String text) {
         if (text == null || text.isEmpty()) return "";
-
-        // Skip formatting for content inside <pre> tags
-        if (text.contains("<pre>")) {
-            return processTextWithPreBlocks(text);
-        }
-
+        // Pre blocks are handled elsewhere (globally extracted or via processPreBlockParagraph),
+        // so we can directly format the text here.
         return formatTextWithoutPre(text);
     }
 
-    /**
-     * Process text that contains <pre> blocks by extracting them,
-     * formatting the parts outside the blocks, and then restoring the blocks.
-     */
-    private static String processTextWithPreBlocks(String text) {
-        // Extract pre blocks and replace with placeholders
-        PreProcessingResult result = extractPreBlocksWithPlaceholders(text);
 
-        // Format text between pre blocks
-        String processedText = formatTextBetweenPreBlocks(result.processedText);
 
-        // Restore pre blocks
-        return restorePreBlocks(processedText);
-    }
 
-    /**
-     * Extracts <pre> blocks from text and replaces them with placeholders.
-     */
-    private static PreProcessingResult extractPreBlocksWithPlaceholders(String text) {
-        Matcher matcher = PRE_BLOCK_PATTERN.matcher(text);
-        StringBuilder sb = new StringBuilder();
-
-        while (matcher.find()) {
-            // Get the <pre> block (including tags)
-            String preBlock = matcher.group(1);
-
-            // Replace the <pre> block with a placeholder
-            matcher.appendReplacement(sb, escapeReplacement("PRE_BLOCK_PLACEHOLDER"));
-
-            // Store the <pre> block
-            sb.append("PRE_BLOCK_START");
-            sb.append(preBlock);
-            sb.append("PRE_BLOCK_END");
-        }
-        matcher.appendTail(sb);
-
-        return new PreProcessingResult(sb.toString());
-    }
-
-    /**
-     * Formats text between <pre> blocks, ignoring the content inside <pre> blocks.
-     */
-    private static String formatTextBetweenPreBlocks(String processedText) {
-        String[] parts = processedText.split("PRE_BLOCK_PLACEHOLDER");
-
-        // Format each part outside <pre> tags
-        for (int i = 0; i < parts.length; i++) {
-            if (!parts[i].contains("PRE_BLOCK_START")) {
-                parts[i] = formatTextWithoutPre(parts[i]);
-            }
-        }
-
-        return String.join("", parts);
-    }
-
-    /**
-     * Restores <pre> blocks from placeholder markers.
-     */
-    private static String restorePreBlocks(String processedText) {
-        Matcher blockMatcher = PRE_BLOCK_PLACEHOLDER_PATTERN.matcher(processedText);
-        StringBuilder result = new StringBuilder();
-
-        while (blockMatcher.find()) {
-            String preBlock = blockMatcher.group(1);
-            blockMatcher.appendReplacement(result, escapeReplacement(preBlock));
-        }
-        blockMatcher.appendTail(result);
-
-        return result.toString();
-    }
 
     /**
      * Simple class to hold the result of pre-processing text with <pre> blocks.
      */
-    private static class PreProcessingResult {
-        final String processedText;
-
-        PreProcessingResult(String processedText) {
-            this.processedText = processedText;
-        }
-    }
 
     /**
      * Formats text without <pre> blocks.
