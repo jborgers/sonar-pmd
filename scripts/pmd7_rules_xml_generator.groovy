@@ -284,7 +284,7 @@ def generateXmlFile = { outputFile, rules, language ->
 
                         // Parameters
                         def existingParamKeys = new HashSet<String>(ruleData.properties.findAll { it.name }.collect { it.name })
-                        addRuleParams(xml, ruleData, language, existingParamKeys, hasVariablePlaceholders)
+                        addRuleParams(xml, ruleData, language, existingParamKeys)
                         addSuppressionParamIfNeeded(xml, hasVariablePlaceholders, existingParamKeys)
                 }
             }
@@ -362,12 +362,37 @@ if (javaSuccess && kotlinSuccess) {
 
 def appendTitleSection(StringBuilder sb, String message) {
     if (message && !message.trim().isEmpty()) {
-        def processedMessage = message
-            .replaceAll(/\{(\d+)\}/, '<code>{$1}</code>')
-            .replaceAll(/''/, "'")
+        def processedMessage =
+                wrapPlaceholdersOutsideBackticks(message)
+                .replaceAll(/''/, "'")
         sb.append("## Title of issues: ").append(processedMessage).append("\n\n")
     }
 }
+
+def wrapPlaceholdersOutsideBackticks(String text) {
+    def parts = text.split('`', -1)  // -1 to keep empty trailing parts
+    def result = new StringBuilder()
+
+    for (int i = 0; i < parts.length; i++) {
+        if (i % 2 == 0) {
+            // Outside backticks - process placeholders
+            def processed = parts[i].replaceAll(/\{(\d+)\}/, '`{$1}`')
+            result.append(processed)
+        } else {
+            // Inside backticks - don't process
+            result.append(parts[i])
+        }
+
+        // Add back the backtick separator (except for the last part)
+        if (i < parts.length - 1) {
+            result.append('`')
+        }
+    }
+
+    return result.toString()
+}
+
+
 
 def appendExamplesSection(StringBuilder sb, List examples, String language) {
     if (examples && !examples.isEmpty()) {
@@ -481,7 +506,7 @@ def shouldLogProperty(String propName) {
     !(propName == "violationSuppressRegex" || propName == "violationSuppressXPath")
 }
 
-def handleSuppressionSpecialCases(xml, propInfo, boolean hasVariablePlaceholders, Set existingParamKeys) {
+def handleSuppressionSpecialCases(xml, propInfo) {
     if (propInfo.name == "violationSuppressXPath") {
         // Skip adding this parameter as it's too complex/error-prone for users
         return true
@@ -556,7 +581,7 @@ def addParamAndTrack(xml, String name, String desc, String defVal, String typeTo
     existingParamKeys.add(name)
 }
 
-def processStandardProperty(xml, Map ruleData, propInfo, boolean hasVariablePlaceholders, Set existingParamKeys) {
+def processStandardProperty(xml, propInfo, Set existingParamKeys) {
     def accepted = getAcceptedValues(propInfo)
     def multiple = isMultiple(propInfo)
     def baseDesc = computeBaseDescription(propInfo, accepted, multiple)
@@ -568,7 +593,7 @@ def processStandardProperty(xml, Map ruleData, propInfo, boolean hasVariablePlac
 
 // Main orchestrator
 
-def addClassDefinedRuleParams(xml, Map ruleData, String language, Set existingParamKeys, boolean hasVariablePlaceholders) {
+def addClassDefinedRuleParams(xml, Map ruleData, String language, Set existingParamKeys) {
     def ruleClass = ruleData.class
     if (!ruleClass) return
     def rulePropertiesMap = language == "Java" ? javaRuleProperties : kotlinRuleProperties
@@ -581,19 +606,19 @@ def addClassDefinedRuleParams(xml, Map ruleData, String language, Set existingPa
             if (shouldLogProperty(propInfo.name)) {
                 println "### PROP: $propInfo.name TYPE: $propType (wrapped: ${unwrappedType})"
             }
-            if (handleSuppressionSpecialCases(xml, propInfo, hasVariablePlaceholders, existingParamKeys)) {
+            if (handleSuppressionSpecialCases(xml, propInfo)) {
                 return
             }
-            processStandardProperty(xml, ruleData, propInfo, hasVariablePlaceholders, existingParamKeys)
+            processStandardProperty(xml, propInfo, existingParamKeys)
         }
     }
 }
 
-def addRuleParams(xml, Map ruleData, String language, Set existingParamKeys, boolean hasVariablePlaceholders) {
+def addRuleParams(xml, Map ruleData, String language, Set existingParamKeys) {
     if (ruleData.class.equals("net.sourceforge.pmd.lang.rule.xpath.XPathRule")) {
         addXmlDefinedRuleParams(xml, ruleData, existingParamKeys)
     } else {
-        addClassDefinedRuleParams(xml, ruleData, language, existingParamKeys, hasVariablePlaceholders)
+        addClassDefinedRuleParams(xml, ruleData, language, existingParamKeys)
     }
 }
 
