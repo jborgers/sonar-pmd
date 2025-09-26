@@ -5,8 +5,11 @@ package com.sonar.it.java.suite;
 
 import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.MavenBuild;
+import com.sonar.orchestrator.build.BuildResult;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Sanity check that our integration test suite can start and run against both
@@ -40,7 +43,8 @@ class SanitySonarVersionsIT {
                     .setProperty("sonar.java.binaries", ".");
 
             orchestrator.associateProjectToQualityProfile("pmd-extensions-profile", projectName);
-            orchestrator.executeBuild(build); // will throw if analysis fails
+            final BuildResult result = orchestrator.executeBuild(build); // will throw if analysis fails
+            assertThat(result.getLogs()).contains("[INFO] Sensor PmdSensor [pmd]");
 
             // Additionally run a minimal Kotlin project analysis to ensure Kotlin support works
             final String kotlinProject = "pmd-kotlin-rules";
@@ -48,7 +52,8 @@ class SanitySonarVersionsIT {
                     .create(TestUtils.projectPom(kotlinProject))
                     .setCleanSonarGoals();
             orchestrator.associateProjectToQualityProfile("pmd-kotlin-profile", kotlinProject, "kotlin");
-            orchestrator.executeBuild(kotlinBuild);
+            final BuildResult kotlinResult = orchestrator.executeBuild(kotlinBuild);
+            assertThat(kotlinResult.getLogs()).contains("[INFO] Sensor PmdSensor [pmd]");
         }
         finally {
             // restore previous property to not affect other tests
