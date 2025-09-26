@@ -85,11 +85,11 @@ To build the plugin and run the integration tests (use java 17 to build the plug
     ./mvnw clean verify
 
 ## Generate PMD rules XML (Java and Kotlin)
-To regenerate the rules-java.xml and rules-kotlin.xml from PMD 7 using the provided Groovy script, run from the project root:
+To regenerate the `rules-java.xml` and `rules-kotlin.xml` from PMD 7 using the provided Groovy script, run from the project root:
 
     ./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
 
 Notes:
-- The -am (also-make) flag ensures dependent modules (e.g., sonar-pmd-lib) are built in the reactor even when building only sonar-pmd-plugin with -pl.
-
+- The `-am` (also-make) flag ensures dependent modules (e.g., `sonar-pmd-lib`) are built in the reactor even when building only `sonar-pmd-plugin` with `-pl`.
+- If `sonar-pmd-lib` fails to build so new changes are not reflected in the rules, try running `mvn clean package` in the `sonar-pmd-lib` module.
    

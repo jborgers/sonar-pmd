@@ -155,7 +155,7 @@ public class JavaRulePropertyExtractor {
             // Try to instantiate the rule class
             Object ruleInstance = clazz.getDeclaredConstructor().newInstance();
 
-            LOGGER.info("Extracting properties for rule class: {}", clazz.getName());
+            LOGGER.debug("Extracting properties for rule class: {}", clazz.getName());
 
             // Use PMD's PropertySource API directly (PMD 7+)
             if (!(ruleInstance instanceof PropertySource)) {
@@ -223,7 +223,7 @@ public class JavaRulePropertyExtractor {
         String simpleName = o.getClass().getSimpleName();
         // is this needed? there is only: %%% found simplename with Empty: EmptySet
         if (simpleName.startsWith("Empty")) {
-            LOGGER.info("%%% found simplename with Empty: {}", simpleName);
+            LOGGER.debug("%%% found simplename with Empty: {}", simpleName);
             simpleName = simpleName.substring("Empty".length());
         }
         return simpleName;
@@ -239,7 +239,7 @@ public class JavaRulePropertyExtractor {
             @SuppressWarnings("unchecked")
             List<PropertyConstraint<?>> constraints = (List<PropertyConstraint<?>>) propertyDescriptor.serializer().getConstraints();
             if (!constraints.isEmpty()) {
-                LOGGER.info("%%% found constraints: {} for {} (default value: {})", constraints.get(0).getConstraintDescription(), propertyDescriptor.name(), defaultValue);
+                LOGGER.debug("%%% found constraints: {} for {} (default value: {})", constraints.get(0).getConstraintDescription(), propertyDescriptor.name(), defaultValue);
             }
             if (defaultValue instanceof List) {
                 @SuppressWarnings("unchecked")
@@ -247,10 +247,10 @@ public class JavaRulePropertyExtractor {
                 if (!defaultValueList.isEmpty()) {
                     Object value = defaultValueList.get(0);
                     Class<?> aClass = value.getClass();
-                    LOGGER.info("%%% found list with wrapped class: {} for {} (default value: {})", aClass.getSimpleName(), propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found list with wrapped class: {} for {} (default value: {})", aClass.getSimpleName(), propertyDescriptor.name(), defaultValue);
                 }
                 else {
-                    LOGGER.info("%%% found empty list, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found empty list, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueList) {
@@ -266,10 +266,10 @@ public class JavaRulePropertyExtractor {
                 @SuppressWarnings("unchecked")
                 Set<Object> defaultValueSet = (Set<Object>) defaultValue;
                 if (!defaultValueSet.isEmpty()) {
-                    LOGGER.info("%%% found set with wrapped class: {} for {} (default value: {})", defaultValueSet.iterator().next().getClass().getSimpleName(), propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found set with wrapped class: {} for {} (default value: {})", defaultValueSet.iterator().next().getClass().getSimpleName(), propertyDescriptor.name(), defaultValue);
                 }
                 else {
-                    LOGGER.info("%%% found empty set, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found empty set, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueSet) {
@@ -281,16 +281,16 @@ public class JavaRulePropertyExtractor {
                 Optional<?> optional = (Optional<?>) defaultValue;
                 if (optional.isPresent()) {
                     Object wrappedInOptional = optional.get();
-                    LOGGER.info("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
+                    LOGGER.debug("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
                     return Collections.singletonList(wrappedInOptional.toString());
                 } else {
                     if (!(propertyDescriptor.name().equals("violationSuppressRegex") || propertyDescriptor.name().equals("violationSuppressXPath"))) {
-                        LOGGER.info("%%% found empty optional for {}", propertyDescriptor);
+                        LOGGER.debug("%%% found empty optional for {}", propertyDescriptor);
                     }
                     return Collections.emptyList();
                 }
             } else if (defaultValue != null) {
-                LOGGER.info("%%% found default value: {} for {} (type: {})", defaultValue, propertyDescriptor.name(), defaultValue.getClass().getSimpleName());
+                LOGGER.debug("%%% found default value: {} for {} (type: {})", defaultValue, propertyDescriptor.name(), defaultValue.getClass().getSimpleName());
                 return Collections.singletonList(defaultValue.toString());
             }
         } catch (Exception e) {
