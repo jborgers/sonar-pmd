@@ -105,6 +105,8 @@
           <pluginDescription>Integration Test PmdExtensionPlugin</pluginDescription>
           <!-- This is important. It means that this plugin extends the PMD plugin -->
           <basePlugin>pmd</basePlugin>
+          <requirePlugins>java:8.0.0.0,kotlin:2.0.0.0</requirePlugins>
+          <requiredForLanguages>java,kotlin</requiredForLanguages>
         </configuration>
       </plugin>
       <plugin>

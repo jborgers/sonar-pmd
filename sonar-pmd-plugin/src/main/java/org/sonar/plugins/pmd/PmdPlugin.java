@@ -37,7 +37,6 @@ public class PmdPlugin implements Plugin {
                         .name("Generate XML Report")
                         .hidden()
                         .build(),
-
                 PmdSensor.class,
                 PmdConfiguration.class,
                 PmdJavaExecutor.class,
