@@ -83,8 +83,8 @@ public class MarkdownToHtmlConverter {
     private static final Pattern TRAILING_WHITESPACE_PATTERN = Pattern.compile("[ \t\n\r]+$");
     // Pattern to match content inside <pre> tags. DOTALL flag makes dot match newlines too.
     private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
-    // Pattern to match content inside <code> tags.
-    private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(<code>[\\s\\S]*?</code>)", Pattern.DOTALL);
+    // Pattern to match content inside <code> tags, optionally with attributes like class="language-...".
+    private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(<code(?:\\s+[^>]*?)?>[\\s\\S]*?</code>)", Pattern.DOTALL);
     // Pattern to match markdown italics like *text*
     private static final Pattern MARKDOWN_ITALICS_PATTERN = Pattern.compile("\\*([^*]+)\\*");
     // Pattern to match markdown bold like **text**
@@ -947,11 +947,14 @@ public class MarkdownToHtmlConverter {
         int i = 0;
         while (i < result.length()) {
             // Detect start/end of real HTML <code> blocks to avoid processing inside them
-            if (!inBacktick && result.startsWith("<code>", i)) {
-                inHtmlCode = true;
-                out.append("<code>");
-                i += 6;
-                continue;
+            if (!inBacktick && result.startsWith("<code", i)) {
+                int gt = result.indexOf('>', i);
+                if (gt != -1) {
+                    inHtmlCode = true;
+                    out.append(result, i, gt + 1);
+                    i = gt + 1;
+                    continue;
+                }
             }
             if (!inBacktick && inHtmlCode && result.startsWith("</code>", i)) {
                 inHtmlCode = false;

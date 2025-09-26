@@ -26,6 +26,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MarkdownToHtmlConverterTest {
 
     @Test
+    void codeTagWithLanguageAttribute_isProtectedFromFormatting() {
+        String input = "See <code class=\"language-java\">/*volatile */</code> example";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("<code class=\"language-java\">/*volatile */</code>")
+                .doesNotContain("<i>volatile </i>");
+    }
+
+    @Test
     void camelCaseToReadable_preserves_NaN() {
         assertThat(MarkdownToHtmlConverter.camelCaseToReadable("ComparisonWithNaN"))
                 .isEqualTo("Comparison with NaN");
