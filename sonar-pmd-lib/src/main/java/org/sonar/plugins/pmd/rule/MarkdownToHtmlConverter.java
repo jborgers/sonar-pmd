@@ -84,7 +84,10 @@ public class MarkdownToHtmlConverter {
     // Pattern to match content inside <pre> tags. DOTALL flag makes dot match newlines too.
     private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
     // Pattern to match content inside <code> tags, optionally with attributes like class="language-...".
-    private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(<code(?:\\s+[^>]*?)?>[\\s\\S]*?</code>)", Pattern.DOTALL);
+    // Use a tempered dot with possessive quantifiers to avoid catastrophic backtracking
+    // See: https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+    // (?is) enables case-insensitive and DOTALL for the subpattern only
+    private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(?is)(<code(?:\\s+[^>]*+)?>(?:[^<]*+|<(?!/code>))*+</code>)");
     // Pattern to match markdown italics like *text*
     private static final Pattern MARKDOWN_ITALICS_PATTERN = Pattern.compile("\\*([^*]+)\\*");
     // Pattern to match markdown bold like **text**
