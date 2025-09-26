@@ -99,7 +99,7 @@
     <maven.cleanup.plugin.version>3.5.0</maven.cleanup.plugin.version>
     <sonar.maven.plugin.version>5.2.0.4988</sonar.maven.plugin.version>
     <jacoco.maven.plugin.version>0.8.13</jacoco.maven.plugin.version>
-    <flatten.maven.plugin.version>1.7.2</flatten.maven.plugin.version>
+    <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
     <!-- Code Coverage -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>sonar-pmd-plugin/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
