@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class MarkdownToHtmlConverter {
 
     // PMD version used for documentation links; configurable from outside to avoid dependency on PMD
-    private static volatile String PMD_VERSION = System.getProperty("pmd.version", "7.16.0");
+    private static volatile String PMD_VERSION = System.getProperty("pmd.version", "7.17.0");
 
     /**
      * Allows external configuration of the PMD version used when building links (e.g., from build scripts).
