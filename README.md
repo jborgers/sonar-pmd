@@ -28,15 +28,15 @@ Use version 4.0+ for child plugins with custom rules written in PMD 7, such as [
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-Possible values: 8 to 24 and 24-preview
+Possible values: 8 to 25 and 25-preview
 
 ## Table of supported versions
-| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       |  
-|------------------------|-----------------|-----------------|---------|------------|-------------| 
-| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | 
-| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  |  
-| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 
-| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 
+| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       | 4.2.0      |  
+|------------------------|-----------------|-----------------|---------|------------|-------------|------------| 
+| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | 7.17.0     | 
+| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  | 25-preview |  
+| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 9.9.6      | 
+| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 25.8+      | 
 
 (*1) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks.   
 (*2) Note: Does not support Java 20-preview nor Java 21.

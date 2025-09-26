@@ -29,7 +29,8 @@ public enum DefinedJavaVersion {
     JAVA_22(22.0F, "22"),
     JAVA_23(23.0F, "23"),
     JAVA_24(24.0F, "24"),
-    JAVA_24_PREVIEW(24.5F, "24-preview"),
+    JAVA_25(25.0F, "25"),
+    JAVA_25_PREVIEW(25.5F, "25-preview"),
     JAVA_RECENT(maxVersion(), Float.toString(maxVersion()));
 
     private final float value;
@@ -74,8 +75,10 @@ public enum DefinedJavaVersion {
                     return JAVA_23;
                 case "24":
                     return JAVA_24;
-                case "24-preview":
-                    return JAVA_24_PREVIEW;
+                case "25":
+                    return JAVA_25;
+                case "25-preview":
+                    return JAVA_25_PREVIEW;
                 default:
                     float v = toFloatVersion(versionStr);
                     if ((double)v - (double)1.0F < (double)1.0F) {
