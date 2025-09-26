@@ -72,7 +72,7 @@
     <junit.jupiter.version>5.13.4</junit.jupiter.version>
     <mockito.version>5.20.0</mockito.version>
     <assertj.version>3.27.6</assertj.version>
-    <commons-lang3.version>3.18.0</commons-lang3.version>
+    <commons-lang3.version>3.19.0</commons-lang3.version>
     <staxmate.version>2.0.1</staxmate.version>
     <guava.version>33.5.0-jre</guava.version>
     <jdom2.version>2.0.6.1</jdom2.version>
