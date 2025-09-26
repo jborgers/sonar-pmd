@@ -49,8 +49,6 @@ public class MarkdownToHtmlConverter {
     private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]++)([^\r\n]*)");
     // Matches indented lines, from 2 up to 100 spaces or tabs, that are continuations of list items
     private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,100}([^*\\-][^\r\n]*)$");
-    // Matches inline code blocks between backticks
-    private static final Pattern CODE_BLOCK_PATTERN = Pattern.compile("`([^`]+)`");
     // Matches rule references like {% rule "rulename" %}
     private static final Pattern RULE_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*rule\\s*\"([^\"]+)\"\\s*\\%\\}");
     // Matches document sections like "Problem:", "Solution:" etc
@@ -85,8 +83,11 @@ public class MarkdownToHtmlConverter {
     private static final Pattern TRAILING_WHITESPACE_PATTERN = Pattern.compile("[ \t\n\r]+$");
     // Pattern to match content inside <pre> tags. DOTALL flag makes dot match newlines too.
     private static final Pattern PRE_BLOCK_PATTERN = Pattern.compile("(<pre>[\\s\\S]*?</pre>)", Pattern.DOTALL);
-    // Pattern to match placeholders for pre blocks. DOTALL lets dot match newlines.
-    private static final Pattern PRE_BLOCK_PLACEHOLDER_PATTERN = Pattern.compile("PRE_BLOCK_START(.*?)PRE_BLOCK_END", Pattern.DOTALL);
+    // Pattern to match content inside <code> tags, optionally with attributes like class="language-...".
+    // Use a tempered dot with possessive quantifiers to avoid catastrophic backtracking
+    // See: https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+    // (?is) enables case-insensitive and DOTALL for the subpattern only
+    private static final Pattern CODE_TAG_PATTERN = Pattern.compile("(?is)(<code(?:\\s++[^>]++)?>(?:[^<]++|<(?!/code>))++</code>)");
     // Pattern to match markdown italics like *text*
     private static final Pattern MARKDOWN_ITALICS_PATTERN = Pattern.compile("\\*([^*]+)\\*");
     // Pattern to match markdown bold like **text**
@@ -172,6 +173,17 @@ public class MarkdownToHtmlConverter {
                         } else {
                             break;
                         }
+                    }
+                    // If we were in the middle of a previous list, flush it before starting a new paragraph
+                    if (inList) {
+                        StringBuilder listHtml = new StringBuilder("<ul>");
+                        for (String item : currentListItems) {
+                            listHtml.append("<li>").append(item).append("</li>");
+                        }
+                        listHtml.append("</ul>");
+                        processedParagraphs.add(listHtml.toString());
+                        inList = false;
+                        currentListItems = new ArrayList<>();
                     }
                     currentParagraphText = textPart.toString();
                     processedParagraphs.add(currentParagraphText);
@@ -302,6 +314,7 @@ public class MarkdownToHtmlConverter {
         // First, let's fix the order of paragraphs and lists
         List<String> fixedParagraphs = new ArrayList<>();
         String currentParagraph = null;
+        String bufferedList = null; // holds a list seen before its preceding paragraph
 
         for (String paragraph : processedParagraphs) {
             if (!paragraph.isEmpty()) {
@@ -313,23 +326,40 @@ public class MarkdownToHtmlConverter {
                         fixedParagraphs.add(paragraph);
                         currentParagraph = null;
                     } else {
-                        // No current paragraph, just add the list
-                        fixedParagraphs.add(paragraph);
+                        // No current paragraph: buffer the list so that a subsequent paragraph can precede it
+                        if (bufferedList == null) {
+                            bufferedList = paragraph;
+                        } else {
+                            // Multiple lists in a row without paragraph: flush previous buffered list
+                            fixedParagraphs.add(bufferedList);
+                            bufferedList = paragraph;
+                        }
                     }
                 } else {
                     // This is a regular paragraph
                     if (currentParagraph != null) {
                         // Add the previous paragraph
                         fixedParagraphs.add(currentParagraph);
+                        currentParagraph = null;
                     }
-                    currentParagraph = paragraph;
+                    if (bufferedList != null) {
+                        // We previously saw a list before its paragraph -> emit paragraph then the buffered list
+                        fixedParagraphs.add(paragraph);
+                        fixedParagraphs.add(bufferedList);
+                        bufferedList = null;
+                    } else {
+                        currentParagraph = paragraph;
+                    }
                 }
             }
         }
 
-        // Add the last paragraph if there is one
+        // Add the last paragraph or buffered list if there is one
         if (currentParagraph != null) {
             fixedParagraphs.add(currentParagraph);
+        }
+        if (bufferedList != null) {
+            fixedParagraphs.add(bufferedList);
         }
 
         // Now process the fixed paragraphs
@@ -370,9 +400,6 @@ public class MarkdownToHtmlConverter {
         // Restore any remaining <pre> tags
         html = html.replace("PRE_TAG_START", "<pre>");
         html = html.replace("PRE_TAG_END", "</pre>");
-
-        // Fix the order of paragraphs and lists
-        html = fixParagraphListOrder(html);
 
         return html;
     }
@@ -560,7 +587,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleMultiLineCodeBlocks(String markdownText, Pattern pattern) {
         Matcher matcher = pattern.matcher(markdownText);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         while (matcher.find()) {
             String language = matcher.group(1) != null ? matcher.group(1) : "";
@@ -600,7 +627,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleUrlTagPattern(String result) {
         Matcher urlTagMatcher = URL_TAG_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (urlTagMatcher.find()) {
             String url = urlTagMatcher.group(1);
             String replacement = "<a href=\"" + url + "\">" + url + "</a>";
@@ -615,7 +642,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleMarkdownLinkPattern(String result) {
         Matcher markdownLinkMatcher = MARKDOWN_LINK_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (markdownLinkMatcher.find()) {
             String replacement = "<a href=\"" + markdownLinkMatcher.group(2) + "\">" + markdownLinkMatcher.group(1) + "</a>";
             markdownLinkMatcher.appendReplacement(sb, escapeReplacement(replacement));
@@ -629,7 +656,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handlePmdRuleLinkPattern(String result) {
         Matcher ruleLinkMatcher = PMD_RULE_LINK_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (ruleLinkMatcher.find()) {
             String linkText = ruleLinkMatcher.group(1);
             String href = ruleLinkMatcher.group(2);
@@ -653,7 +680,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleSections(String text) {
         Matcher matcher = SECTION_PATTERN.matcher(text);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         while (matcher.find()) {
             String sectionType = matcher.group(1);
@@ -829,96 +856,18 @@ public class MarkdownToHtmlConverter {
      */
     private static String formatInlineElements(String text) {
         if (text == null || text.isEmpty()) return "";
-
-        // Skip formatting for content inside <pre> tags
-        if (text.contains("<pre>")) {
-            return processTextWithPreBlocks(text);
-        }
-
+        // Pre blocks are handled elsewhere (globally extracted or via processPreBlockParagraph),
+        // so we can directly format the text here.
         return formatTextWithoutPre(text);
     }
 
-    /**
-     * Process text that contains <pre> blocks by extracting them,
-     * formatting the parts outside the blocks, and then restoring the blocks.
-     */
-    private static String processTextWithPreBlocks(String text) {
-        // Extract pre blocks and replace with placeholders
-        PreProcessingResult result = extractPreBlocksWithPlaceholders(text);
 
-        // Format text between pre blocks
-        String processedText = formatTextBetweenPreBlocks(result.processedText);
 
-        // Restore pre blocks
-        return restorePreBlocks(processedText);
-    }
 
-    /**
-     * Extracts <pre> blocks from text and replaces them with placeholders.
-     */
-    private static PreProcessingResult extractPreBlocksWithPlaceholders(String text) {
-        Matcher matcher = PRE_BLOCK_PATTERN.matcher(text);
-        StringBuffer sb = new StringBuffer();
-
-        while (matcher.find()) {
-            // Get the <pre> block (including tags)
-            String preBlock = matcher.group(1);
-
-            // Replace the <pre> block with a placeholder
-            matcher.appendReplacement(sb, escapeReplacement("PRE_BLOCK_PLACEHOLDER"));
-
-            // Store the <pre> block
-            sb.append("PRE_BLOCK_START");
-            sb.append(preBlock);
-            sb.append("PRE_BLOCK_END");
-        }
-        matcher.appendTail(sb);
-
-        return new PreProcessingResult(sb.toString());
-    }
-
-    /**
-     * Formats text between <pre> blocks, ignoring the content inside <pre> blocks.
-     */
-    private static String formatTextBetweenPreBlocks(String processedText) {
-        String[] parts = processedText.split("PRE_BLOCK_PLACEHOLDER");
-
-        // Format each part outside <pre> tags
-        for (int i = 0; i < parts.length; i++) {
-            if (!parts[i].contains("PRE_BLOCK_START")) {
-                parts[i] = formatTextWithoutPre(parts[i]);
-            }
-        }
-
-        return String.join("", parts);
-    }
-
-    /**
-     * Restores <pre> blocks from placeholder markers.
-     */
-    private static String restorePreBlocks(String processedText) {
-        Matcher blockMatcher = PRE_BLOCK_PLACEHOLDER_PATTERN.matcher(processedText);
-        StringBuffer result = new StringBuffer();
-
-        while (blockMatcher.find()) {
-            String preBlock = blockMatcher.group(1);
-            blockMatcher.appendReplacement(result, escapeReplacement(preBlock));
-        }
-        blockMatcher.appendTail(result);
-
-        return result.toString();
-    }
 
     /**
      * Simple class to hold the result of pre-processing text with <pre> blocks.
      */
-    private static class PreProcessingResult {
-        final String processedText;
-
-        PreProcessingResult(String processedText) {
-            this.processedText = processedText;
-        }
-    }
 
     /**
      * Formats text without <pre> blocks.
@@ -928,9 +877,28 @@ public class MarkdownToHtmlConverter {
 
         String result = text;
 
+        // First convert backticks to <code>...</code>
         result = handleCodeBlockPattern(result);
-        result = handleRuleReferencePattern(result);
-        result = handleJdocPattern(result);
+
+        // Apply rule and jdoc references only outside of <code>...</code> blocks
+        Matcher codeTagMatcher = CODE_TAG_PATTERN.matcher(result);
+        StringBuilder assembled = new StringBuilder();
+        int lastEnd = 0;
+        while (codeTagMatcher.find()) {
+            String before = result.substring(lastEnd, codeTagMatcher.start());
+            before = handleRuleReferencePattern(before);
+            before = handleJdocPattern(before);
+            assembled.append(before);
+            assembled.append(codeTagMatcher.group(1));
+            lastEnd = codeTagMatcher.end();
+        }
+        String tail = result.substring(lastEnd);
+        tail = handleRuleReferencePattern(tail);
+        tail = handleJdocPattern(tail);
+        assembled.append(tail);
+        result = assembled.toString();
+
+        // Bold/Italics already avoid <code> blocks
         result = handleMarkdownBoldPattern(result);
         result = handleMarkdownItalicsPattern(result);
 
@@ -941,28 +909,14 @@ public class MarkdownToHtmlConverter {
      * Handles markdown italics pattern.
      */
     private static String handleMarkdownItalicsPattern(String result) {
-        Matcher italicMatcher = MARKDOWN_ITALICS_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
-        while (italicMatcher.find()) {
-            String replacement = "<i>" + escapeHtml(italicMatcher.group(1)) + "</i>";
-            italicMatcher.appendReplacement(sb, escapeReplacement(replacement));
-        }
-        italicMatcher.appendTail(sb);
-        return sb.toString();
+        return applyOutsideCodeTags(result, MARKDOWN_ITALICS_PATTERN, "<i>", "</i>");
     }
 
     /**
      * Handles markdown bold pattern.
      */
     private static String handleMarkdownBoldPattern(String result) {
-        Matcher boldMatcher = MARKDOWN_BOLD_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
-        while (boldMatcher.find()) {
-            String replacement = "<b>" + escapeHtml(boldMatcher.group(1)) + "</b>";
-            boldMatcher.appendReplacement(sb, escapeReplacement(replacement));
-        }
-        boldMatcher.appendTail(sb);
-        return sb.toString();
+        return applyOutsideCodeTags(result, MARKDOWN_BOLD_PATTERN, "<b>", "</b>");
     }
 
     /**
@@ -970,7 +924,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleJdocPattern(String result) {
         Matcher jdocMatcher = JDOC_REFERENCE_PATTERN.matcher(result);
-        StringBuffer sbJdoc = new StringBuffer();
+        StringBuilder sbJdoc = new StringBuilder();
         while (jdocMatcher.find()) {
             String replacement = createJdocReference(jdocMatcher);
             jdocMatcher.appendReplacement(sbJdoc, escapeReplacement(replacement));
@@ -1003,7 +957,7 @@ public class MarkdownToHtmlConverter {
      */
     private static String handleRuleReferencePattern(String result) {
         Matcher ruleRefMatcher = RULE_REFERENCE_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (ruleRefMatcher.find()) {
             String replacement = "<code>" + escapeHtml(ruleRefMatcher.group(1)) + "</code>";
             ruleRefMatcher.appendReplacement(sb, escapeReplacement(replacement));
@@ -1016,14 +970,68 @@ public class MarkdownToHtmlConverter {
      * Handles code blocks.
      */
     private static String handleCodeBlockPattern(String result) {
-        Matcher codeBlockMatcher = CODE_BLOCK_PATTERN.matcher(result);
-        StringBuffer sb = new StringBuffer();
-        while (codeBlockMatcher.find()) {
-            String replacement = "<code>" + escapeHtml(codeBlockMatcher.group(1)) + "</code>";
-            codeBlockMatcher.appendReplacement(sb, escapeReplacement(replacement));
+        if (result == null || result.isEmpty()) return "";
+
+        StringBuilder out = new StringBuilder();
+        boolean inHtmlCode = false;
+        boolean inBacktick = false;
+        StringBuilder backtickBuf = new StringBuilder();
+        int i = 0;
+        while (i < result.length()) {
+            // Detect start/end of real HTML <code> blocks to avoid processing inside them
+            if (!inBacktick && result.startsWith("<code", i)) {
+                int gt = result.indexOf('>', i);
+                if (gt != -1) {
+                    inHtmlCode = true;
+                    out.append(result, i, gt + 1);
+                    i = gt + 1;
+                    continue;
+                }
+            }
+            if (!inBacktick && inHtmlCode && result.startsWith("</code>", i)) {
+                inHtmlCode = false;
+                out.append("</code>");
+                i += 7;
+                continue;
+            }
+
+            if (!inHtmlCode) {
+                char ch = result.charAt(i);
+                if (ch == '`') {
+                    if (!inBacktick) {
+                        inBacktick = true;
+                        backtickBuf.setLength(0);
+                    } else {
+                        // closing backtick -> emit code
+                        String codeContent = backtickBuf.toString();
+                        // strip literal <code> tags inside backticks
+                        codeContent = codeContent.replaceAll("(?i)</?code>", "");
+                        out.append("<code>").append(escapeHtml(codeContent)).append("</code>");
+                        inBacktick = false;
+                    }
+                    i++;
+                    continue;
+                }
+
+                if (inBacktick) {
+                    backtickBuf.append(ch);
+                } else {
+                    out.append(ch);
+                }
+                i++;
+            } else {
+                // inside existing HTML <code> block: copy as-is
+                out.append(result.charAt(i));
+                i++;
+            }
         }
-        codeBlockMatcher.appendTail(sb);
-        return sb.toString();
+
+        // If we ended while still in backticks, treat as literal text (put back the opening backtick)
+        if (inBacktick) {
+            out.append('`').append(backtickBuf);
+        }
+
+        return out.toString();
     }
 
     /**
@@ -1038,46 +1046,13 @@ public class MarkdownToHtmlConverter {
                 .replace("'", "&#39;");
     }
 
-    /**
-     * Fixes the order of paragraphs and lists in the HTML output.
-     */
-    private static String fixParagraphListOrder(String html) {
-        // Split the HTML into paragraphs and lists
-        String[] parts = html.split("\n");
-
-        // If we have fewer than 3 parts, there's nothing to fix
-        if (parts.length < 3) {
-            return html;
-        }
-
-        // Look for the pattern: <p>...</p>\n<p>...</p>\n<ul>...</ul>
-        for (int i = 0; i < parts.length - 2; i++) {
-            if (parts[i].startsWith("<p>") && parts[i].endsWith("</p>") &&
-                parts[i+1].startsWith("<p>") && parts[i+1].endsWith("</p>") &&
-                parts[i+2].startsWith("<ul>") && parts[i+2].endsWith("</ul>")) {
-
-                // Check if the first paragraph ends with a colon, which indicates
-                // it should be followed by a list
-                if (parts[i].contains("metrics:")) {
-                    // Swap the order of the second paragraph and the list
-                    String temp = parts[i+1];
-                    parts[i+1] = parts[i+2];
-                    parts[i+2] = temp;
-                    break;
-                }
-            }
-        }
-
-        // Join the parts back together
-        return String.join("\n", parts);
-    }
 
     /**
      * Extract <pre> blocks and replace them with placeholders.
      */
     private static String extractPreBlocks(String text, List<String> preBlocks) {
         Matcher matcher = PRE_BLOCK_PATTERN.matcher(text);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         while (matcher.find()) {
             preBlocks.add(matcher.group(0));
@@ -1094,7 +1069,7 @@ public class MarkdownToHtmlConverter {
         // Extract all <pre> blocks from the paragraph
         List<String> preBlocks = new ArrayList<>();
         Matcher matcher = PRE_BLOCK_PATTERN.matcher(paragraph);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         // Replace <pre> blocks with placeholders
         int index = 0;
@@ -1120,4 +1095,43 @@ public class MarkdownToHtmlConverter {
 
         return processedText;
     }
+
+    /**
+     * Applies a markdown pattern replacement only outside of <code>...</code> blocks.
+     * The replacement wraps the matched group(1) with the provided tags after escaping HTML.
+     */
+    private static String applyOutsideCodeTags(String text, Pattern markdownPattern, String openTag, String closeTag) {
+        if (text == null || text.isEmpty()) return "";
+        Matcher codeTagMatcher = CODE_TAG_PATTERN.matcher(text);
+        StringBuilder out = new StringBuilder();
+        int lastEnd = 0;
+        while (codeTagMatcher.find()) {
+            // Process text before the <code> block
+            String before = text.substring(lastEnd, codeTagMatcher.start());
+            out.append(applyMarkdownPattern(before, markdownPattern, openTag, closeTag));
+            // Append the <code> block unchanged
+            out.append(codeTagMatcher.group(1));
+            lastEnd = codeTagMatcher.end();
+        }
+        // Process the remaining text after the last <code> block
+        String after = text.substring(lastEnd);
+        out.append(applyMarkdownPattern(after, markdownPattern, openTag, closeTag));
+        return out.toString();
+    }
+
+    /**
+     * Applies a single markdown regex replacement to the given text.
+     */
+    private static String applyMarkdownPattern(String text, Pattern markdownPattern, String openTag, String closeTag) {
+        if (text == null || text.isEmpty()) return "";
+        Matcher m = markdownPattern.matcher(text);
+        StringBuilder sb = new StringBuilder();
+        while (m.find()) {
+            String replacement = openTag + escapeHtml(m.group(1)) + closeTag;
+            m.appendReplacement(sb, escapeReplacement(replacement));
+        }
+        m.appendTail(sb);
+        return sb.toString();
+    }
+
 }
