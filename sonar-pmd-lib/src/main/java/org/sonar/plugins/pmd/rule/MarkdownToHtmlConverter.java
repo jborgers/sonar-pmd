@@ -171,6 +171,17 @@ public class MarkdownToHtmlConverter {
                             break;
                         }
                     }
+                    // If we were in the middle of a previous list, flush it before starting a new paragraph
+                    if (inList) {
+                        StringBuilder listHtml = new StringBuilder("<ul>");
+                        for (String item : currentListItems) {
+                            listHtml.append("<li>").append(item).append("</li>");
+                        }
+                        listHtml.append("</ul>");
+                        processedParagraphs.add(listHtml.toString());
+                        inList = false;
+                        currentListItems = new ArrayList<>();
+                    }
                     currentParagraphText = textPart.toString();
                     processedParagraphs.add(currentParagraphText);
 
@@ -300,6 +311,7 @@ public class MarkdownToHtmlConverter {
         // First, let's fix the order of paragraphs and lists
         List<String> fixedParagraphs = new ArrayList<>();
         String currentParagraph = null;
+        String bufferedList = null; // holds a list seen before its preceding paragraph
 
         for (String paragraph : processedParagraphs) {
             if (!paragraph.isEmpty()) {
@@ -311,23 +323,40 @@ public class MarkdownToHtmlConverter {
                         fixedParagraphs.add(paragraph);
                         currentParagraph = null;
                     } else {
-                        // No current paragraph, just add the list
-                        fixedParagraphs.add(paragraph);
+                        // No current paragraph: buffer the list so that a subsequent paragraph can precede it
+                        if (bufferedList == null) {
+                            bufferedList = paragraph;
+                        } else {
+                            // Multiple lists in a row without paragraph: flush previous buffered list
+                            fixedParagraphs.add(bufferedList);
+                            bufferedList = paragraph;
+                        }
                     }
                 } else {
                     // This is a regular paragraph
                     if (currentParagraph != null) {
                         // Add the previous paragraph
                         fixedParagraphs.add(currentParagraph);
+                        currentParagraph = null;
                     }
-                    currentParagraph = paragraph;
+                    if (bufferedList != null) {
+                        // We previously saw a list before its paragraph -> emit paragraph then the buffered list
+                        fixedParagraphs.add(paragraph);
+                        fixedParagraphs.add(bufferedList);
+                        bufferedList = null;
+                    } else {
+                        currentParagraph = paragraph;
+                    }
                 }
             }
         }
 
-        // Add the last paragraph if there is one
+        // Add the last paragraph or buffered list if there is one
         if (currentParagraph != null) {
             fixedParagraphs.add(currentParagraph);
+        }
+        if (bufferedList != null) {
+            fixedParagraphs.add(bufferedList);
         }
 
         // Now process the fixed paragraphs
