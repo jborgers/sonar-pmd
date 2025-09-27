@@ -359,7 +359,7 @@ public class RulesDefinitionXmlLoader {
                     .setSeverity(severity)
                     .setName(name)
                     .setInternalKey(internalKey)
-                    .setTags(tags.toArray(new String[tags.size()]))
+                    .setTags(tags.toArray(new String[0]))
                     .setTemplate(template)
                     .setStatus(status)
                     .setGapDescription(gapDescription);
