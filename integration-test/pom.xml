@@ -68,6 +68,12 @@
       <artifactId>sonar-pmd-lib</artifactId>
       <version>${revision}</version>
     </dependency>
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>java-frontend</artifactId>
+      <version>${sonar-java.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
