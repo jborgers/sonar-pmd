@@ -36,12 +36,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PmdKotlinIT {
 
-    private static PmdTestOrchestrator ORCHESTRATOR;
+    private static PmdTestOrchestrator orchestrator;
 
     @BeforeAll
     static void startSonar() {
-        ORCHESTRATOR = PmdTestOrchestrator.init();
-        ORCHESTRATOR.start();
+        orchestrator = PmdTestOrchestrator.init();
+        orchestrator.start();
     }
 
     @Test
@@ -53,38 +53,24 @@ class PmdKotlinIT {
 
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
-                .setCleanSonarGoals()
-                .setProperty("sonar.kotlin.file.suffixes", suffix)
-                .setProperty("sonar.sources", srcDir)
-                .setProperty("sonar.java.binaries", "target/classes")
-                .setProperty("sonar.log.level", "DEBUG")
-                .setProperty("sonar.verbose", "true");
+                .setCleanSonarGoals();
 
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-kotlin-profile", projectName, "kotlin");
+            orchestrator.associateProjectToQualityProfile("pmd-kotlin-profile", projectName, "kotlin");
 
             // when
-            final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
+            final BuildResult buildResult = orchestrator.executeBuild(build);
 
             // then
             final String log = buildResult.getLogs();
             assertThat(log).contains("Kotlin");
 
-            System.out.println("[DEBUG_LOG] Build log: " + log);
-
-            // being this specific yields no results... what can be wrong? component -> com.sonarsource.it.projects:pmd-kotlin-rules:src/main/kotlin/com/example/KotlinErrors.kt
             final List<Issue> issues = retrieveIssues(keyFor(projectName, srcDir, "com/example", "KotlinErrors", suffix));
-
-            // on project name only the 2 expected issues are found
-            //final List<Issue> issues = retrieveIssues(keyFor(projectName));
-            System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
 
             final List<String> messages = issues
                     .stream()
                     .map(Issue::message)
                     .collect(Collectors.toList());
-
-            System.out.println("[DEBUG_LOG] Messages: " + messages);
 
             assertThat(issues).hasSize(2);
 
@@ -98,7 +84,7 @@ class PmdKotlinIT {
             throw e;
         } finally {
             // Cleanup
-            ORCHESTRATOR.resetData(projectName);
+            orchestrator.resetData(projectName);
         }
     }
 
@@ -108,43 +94,35 @@ class PmdKotlinIT {
         final String projectName = "pmd-kotlin-rules";
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
-                .setCleanPackageSonarGoals()
-                .setProperty("sonar.kotlin.file.suffixes", ".kt")
-                .setProperty("sonar.sources", "src/main/kotlin")
-                .setProperty("sonar.java.binaries", "target/classes")
-                .setProperty("sonar.log.level", "DEBUG")
-                .setProperty("sonar.verbose", "true");
+                .setCleanPackageSonarGoals();
         try {
-            ORCHESTRATOR.associateProjectToQualityProfile("pmd-kotlin-all-rules", projectName, "kotlin");
+            orchestrator.associateProjectToQualityProfile("pmd-kotlin-all-rules", projectName, "kotlin");
 
             // when
-            final BuildResult buildResult = ORCHESTRATOR.executeBuild(build);
+            final BuildResult buildResult = orchestrator.executeBuild(build);
 
             // then
             final String log = buildResult.getLogs();
-            System.out.println("[DEBUG_LOG] Build log: " + log);
+            assertThat(log).contains("Kotlin");
 
-            final List<Issue> issues = retrieveIssues(keyFor(projectName, "com/example/", "KotlinErrors", ".java"));
-            System.out.println("[DEBUG_LOG] Issues found: " + issues.size());
+            final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/kotlin", "com/example", "KotlinErrors", ".kt"));
 
-            // Also check for issues on EqualsOnly class specifically
-            final List<Issue> equalsOnlyIssues = retrieveIssues(keyFor(projectName, "com/example/", "EqualsOnly", ".java"));
-            System.out.println("[DEBUG_LOG] EqualsOnly issues found: " + equalsOnlyIssues.size());
-
-            assertThat(issues).isNotEmpty();
+            assertThat(issues).hasSize(2);
+            Issue functionNameTooShort = issues.stream().filter(i -> i.ruleKey().equals("pmd-kotlin:FunctionNameTooShort")).findFirst().orElseThrow();
+            assertThat(functionNameTooShort.severity()).isEqualTo("MAJOR");
 
         } catch (HttpException e) {
-            System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
+            System.err.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
             throw e;
         } finally {
             // Cleanup
-            ORCHESTRATOR.resetData(projectName);
+            orchestrator.resetData(projectName);
         }
     }
 
     private List<Issue> retrieveIssues(String componentKey) {
         final IssueQuery issueQuery = IssueQuery.create();
         issueQuery.urlParams().put("componentKeys", componentKey);
-        return ORCHESTRATOR.retrieveIssues(issueQuery);
+        return orchestrator.retrieveIssues(issueQuery);
     }
 }

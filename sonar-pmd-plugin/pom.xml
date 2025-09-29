@@ -186,8 +186,9 @@
           <pluginKey>pmd</pluginKey>
           <pluginName>PMD</pluginName>
           <pluginClass>org.sonar.plugins.pmd.PmdPlugin</pluginClass>
-          <pluginDescription>Analyze Java, Kotlin, and Apex code with PMD.</pluginDescription>
-          <requiredForLanguages>java,kotlin,apex</requiredForLanguages>
+          <pluginDescription>Analyze Java and Kotlin code with PMD.</pluginDescription>
+          <requiredForLanguages>java,kotlin</requiredForLanguages>
+          <requirePlugins>java:8.0.0.0,kotlin:2.0.0.0</requirePlugins>
         </configuration>
       </plugin>
       <plugin>
@@ -203,7 +204,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>90000000</maxsize>
+                  <maxsize>30000000</maxsize>
                   <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
@@ -220,7 +221,8 @@
   <profiles>
     <!--
       Profile to generate the rules-java.xml and rules-kotlin.xml files from PMD 7 rules.
-      Usage: mvn generate-resources -Pgenerate-pmd-rules
+      Usage (from project root): mvn clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
+      The -am flag ensures dependent modules (e.g., sonar-pmd-lib) are built when only building sonar-pmd-plugin with -pl.
       This will run the Groovy script that extracts rules from PMD 7 and generates the rules-java.xml and rules-kotlin.xml files.
     -->
     <profile>
@@ -232,6 +234,11 @@
             <artifactId>groovy-maven-plugin</artifactId>
             <version>2.1.1</version>
             <dependencies>
+              <dependency>
+                <groupId>org.sonarsource.pmd</groupId>
+                <artifactId>sonar-pmd-lib</artifactId>
+                <version>${revision}</version>
+              </dependency>
               <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>

@@ -76,7 +76,23 @@ public class PmdTestOrchestrator {
         delegate.start();
     }
 
+    public void stop() {
+        try {
+            // OrchestratorRule typically exposes stop(); if not, close() will be called by JUnit rule, but here we drive it manually.
+            delegate.stop();
+        } catch (Throwable t) {
+            // ignore stop failures to avoid masking test results
+            System.out.println("WARN: Failed to stop orchestrator cleanly: " + t.getMessage());
+        }
+    }
+
     public BuildResult executeBuild(MavenBuild build) {
+        // use this to enable debug: build.setDebugLogs(true)
+        // avoid this: [DEBUG] Plugins not loaded because they are optional: [java, pmd]
+        //   and the following: Cannot invoke "org.sonar.core.platform.ExplodedPlugin.getPluginInfo()" because the return value of "java.util.Map.get(Object)" is null
+        // sonar.plugins.downloadOnlyRequired turned to default "true" in SonarQube 10.5": https://sonarsource.atlassian.net/browse/SONAR-22074
+        // update: fixed by specifying required plugins in the plugin manifests!
+        // use this to override: build.setProperty("sonar.plugins.downloadOnlyRequired", "false")
         return delegate.executeBuild(build);
     }
 
@@ -100,7 +116,8 @@ public class PmdTestOrchestrator {
     public static PmdTestOrchestrator init() {
         try {
             final OrchestratorRule orchestrator = OrchestratorRule
-                    .builderEnv().useDefaultAdminCredentialsForBuilds(true)
+                    .builderEnv()
+                    .useDefaultAdminCredentialsForBuilds(true)
                     .setSonarVersion(determineSonarqubeVersion())
                     .addPlugin(MavenLocation.create(
                             "org.sonarsource.java",
@@ -113,11 +130,13 @@ public class PmdTestOrchestrator {
                             determineKotlinPluginVersion()
                     ))
                     .addPlugin(byWildcardMavenFilename(new File("../sonar-pmd-plugin/target"), "sonar-pmd-plugin-*.jar"))
-                    .addPlugin(byWildcardMavenFilename(new File("../integration-test/target"), "integration-test-*.jar"))
+                    .addPlugin(byWildcardMavenFilename(new File("./target"), "integration-test-*.jar"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-extensions-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-backup.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-all-rules.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-test-rule.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-profile.xml"))
+                    .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-all-rules.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-profile.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-kotlin-all-rules.xml"))
                     .restoreProfileAtStartup(ofClasspath("/com/sonar/it/java/PmdTest/pmd-apex-profile.xml"))
@@ -136,14 +155,14 @@ public class PmdTestOrchestrator {
     }
 
     private static String determineJavaPluginVersion() {
-        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.15]"); // use 8.9 to test with SQ 9.9
+        return System.getProperty(SONAR_JAVA_PLUGIN_VERSION_KEY, "LATEST_RELEASE[8.9]"); // use 8.9 to test with SQ 9.9
     }
 
     private static String determineKotlinPluginVersion() {
-        return System.getProperty(SONAR_KOTLIN_PLUGIN_VERSION_KEY, "LATEST_RELEASE[2.15]");
+        return System.getProperty(SONAR_KOTLIN_PLUGIN_VERSION_KEY, "LATEST_RELEASE[2.23]");
     }
 
     private static String determineSonarqubeVersion() {
-        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.9]"); // use SQ 9.9.4 to test with old version
+        return System.getProperty(SONAR_VERSION_KEY, "LATEST_RELEASE[25.3]"); // use SQ 9.9.4 to test with old version
     }
 }

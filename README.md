@@ -1,6 +1,7 @@
 # SonarQube PMD Plugin 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Sonatype Central](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/sonatype-central/org.sonarsource.pmd/sonar-pmd-plugin)
+[![Maven Central](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin/badge.svg)](https://maven-badges.sml.io/maven-central/org.sonarsource.pmd/sonar-pmd-plugin)
 ![Build Status](https://github.com/jborgers/sonar-pmd/actions/workflows/build.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jborgers_sonar-pmd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jborgers_sonar-pmd)
 
@@ -27,15 +28,15 @@ Use version 4.0+ for child plugins with custom rules written in PMD 7, such as [
 Sonar-PMD analyzes the given source code with the Java source version defined in your Gradle or Maven project.
 In case you are not using one of these build tools, or if that does not match the version you are using, set the `sonar.java.source` property to tell PMD which version of Java your source code complies to. 
 
-Possible values: 8 to 24 and 24-preview
+Possible values: 8 to 25 and 25-preview
 
 ## Table of supported versions
-| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       |  
-|------------------------|-----------------|-----------------|---------|------------|-------------| 
-| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | 
-| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  |  
-| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 
-| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 
+| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       | 4.2.0                                                                   |  
+|------------------------|-----------------|-----------------|---------|------------|-------------|-------------------------------------------------------------------------| 
+| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | [7.17.0](https://github.com/pmd/pmd/releases/tag/pmd_releases%2F7.17.0) | 
+| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  | 25-preview                                                              |  
+| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 9.9.6                                                                   | 
+| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 25.9+                                                                   | 
 
 (*1) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks.   
 (*2) Note: Does not support Java 20-preview nor Java 21.
@@ -60,15 +61,15 @@ If you find missing alternative rules please create a Github issue.
 
 ## Java PMD rules summary
 
-- Total rules in previous version (4.0.3): 206
-- Total rules in new version (4.1.0): 282
-- Rules added: 80
-- Rules removed: 4
-- Rules unchanged: 46
-- Rules updated: 155
-- Rules renamed: 11
+- Total rules in old version (4.1.0): 282
+- Total rules in new version (4.2.0): 292
+- Rules added: 10
+- Rules removed: 0
+- Rules unchanged: 233
+- Rules updated: 49
+- Rules renamed: 10
 
-See details: [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md)
+See details: [pmd_release_notes_4.2.0.md](docs/pmd_release_notes_4.2.0.md)
 
 ## Support for other languages
 Support for Kotlin and Apex PMD rules is work in progress. 
@@ -82,4 +83,13 @@ Parts of the rule descriptions displayed in SonarQube have been extracted from [
 To build the plugin and run the integration tests (use java 17 to build the plugin):
 
     ./mvnw clean verify
+
+## Generate PMD rules XML (Java and Kotlin)
+To regenerate the `rules-java.xml` and `rules-kotlin.xml` from PMD 7 using the provided Groovy script, run from the project root:
+
+    ./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
+
+Notes:
+- The `-am` (also-make) flag ensures dependent modules (e.g., `sonar-pmd-lib`) are built in the reactor even when building only `sonar-pmd-plugin` with `-pl`.
+- If `sonar-pmd-lib` fails to build so new changes are not reflected in the rules, try running `mvn clean package` in the `sonar-pmd-lib` module.
    

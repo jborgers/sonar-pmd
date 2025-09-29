@@ -24,8 +24,6 @@
 import groovy.xml.XmlSlurper
 import groovy.cli.commons.CliBuilder
 import groovy.json.JsonSlurper
-import java.util.regex.Pattern
-import java.util.regex.Matcher
 
 // Parse command line arguments
 def cli = new CliBuilder(usage: 'generate_release_notes.groovy [options]')
@@ -96,29 +94,28 @@ try {
     System.exit(1)
 }
 
-// Extract rule keys from old rules (they are attributes)
+// Extract rule keys from old rules (same format as new rules: elements)
 def oldRules = []
 oldRulesXml.rule.each { rule ->
-    // Skip commented out rules
-    if (rule.@key.toString()) {
-        // Extract category from configKey if available
-        def configKey = rule.configKey.text()
-        def category = ""
-        if (configKey) {
-            def parts = configKey.split('/')
-            if (parts.length >= 3) {
-                category = parts[2].split('\\.')[0]
-            }
+    // Extract category from internalKey if available
+    def internalKey = rule.internalKey.text()
+    def category = ""
+    if (internalKey) {
+        def parts = internalKey.split('/')
+        if (parts.length >= 3) {
+            category = parts[2].split('\\.')[0]
         }
-
-        oldRules << [
-            key: rule.@key.toString(),
-            configKey: configKey,
-            priority: rule.priority.text(),
-            status: rule.status.text(),
-            category: category
-        ]
     }
+
+    // Keep field names compatible with downstream logic:
+    // - configKey used later for old vs new internal key comparison -> set to internalKey
+    oldRules << [
+        key: rule.key.text(),
+        configKey: internalKey,
+        severity: rule.severity.text(),
+        status: rule.status.text(),
+        category: category
+    ]
 }
 
 // Extract rule keys from new rules (they are elements)
@@ -144,7 +141,7 @@ newRulesXml.rule.each { rule ->
     ]
 }
 
-// Function to map priority/severity to SonarQube display values
+// Function to map severity to SonarQube display values
 def mapSeverity(severity) {
     switch (severity) {
         case "BLOCKER": return "Blocker"
@@ -210,14 +207,14 @@ def commonRules = commonRuleKeys.collect { key ->
         key: key,
         oldConfigKey: oldRule.configKey,
         newInternalKey: newRule.internalKey,
-        oldPriority: oldRule.priority,
+        oldSeverity: oldRule.severity,
         newSeverity: newRule.severity,
         name: newRule.name,
         oldStatus: oldRule.status,
         newStatus: newRule.status,
         alternative: alternative,
         category: newRule.category, // Use the category from the new rule
-        isUpdated: mapSeverity(oldRule.priority) != mapSeverity(newRule.severity) || 
+        isUpdated: mapSeverity(oldRule.severity) != mapSeverity(newRule.severity) ||
                   (oldRule.status ?: 'Active') != (newRule.status ?: 'Active')
     ]
 }
@@ -307,12 +304,13 @@ if (updatedRules.isEmpty()) {
     writer.writeLine("No rules have been updated between versions.")
 } else {
     writer.writeLine("The following rules have been updated in the new version:\n")
-    writer.writeLine("| Rule Key | Name | Old Priority | New Severity | Old Status | New Status | Alternatives | Category |")
+    writer.writeLine("| Rule Key | Name | Old Severity | New Severity | Old Status | New Status | Alternatives | Category |")
     writer.writeLine("|----------|------|--------------|--------------|------------|------------|--------------|----------|")
     updatedRules.sort { it.key }.each { rule ->
-        def oldPriorityDisplay = mapSeverity(rule.oldPriority) == mapSeverity(rule.newSeverity) ? "" : mapSeverity(rule.oldPriority)
+        def oldSeverityDisplay = mapSeverity(rule.oldSeverity) == mapSeverity(rule.newSeverity) ? "" : mapSeverity(rule.oldSeverity)
+        def newSeverityDisplay = mapSeverity(rule.oldSeverity) == mapSeverity(rule.newSeverity) ? "" : mapSeverity(rule.newSeverity)
         def oldStatusDisplay = mapStatus(rule.oldStatus ?: 'Active') == mapStatus(rule.newStatus ?: 'Active') ? "" : mapStatus(rule.oldStatus ?: 'Active')
-        writer.writeLine("| ${rule.key} | ${rule.name} | ${oldPriorityDisplay} | ${mapSeverity(rule.newSeverity)} | ${oldStatusDisplay} | ${mapStatus(rule.newStatus) ?: 'Active'} | ${rule.alternative} | ${rule.category ?: ''} |")
+        writer.writeLine("| ${rule.key} | ${rule.name} | ${oldSeverityDisplay} | ${newSeverityDisplay} | ${oldStatusDisplay} | ${mapStatus(rule.newStatus) ?: 'Active'} | ${rule.alternative} | ${rule.category ?: ''} |")
     }
 }
 
@@ -350,7 +348,7 @@ if (removedRules.isEmpty()) {
     writer.writeLine("\n| Rule Key | Priority | Status | Category |")
     writer.writeLine("|----------|----------|--------|----------|")
     removedRules.sort { it.key }.each { rule ->
-        writer.writeLine("| ${rule.key} | ${mapSeverity(rule.priority)} | ${mapStatus(rule.status) ?: 'Active'} | ${rule.category ?: ''} |")
+        writer.writeLine("| ${rule.key} | ${mapSeverity(rule.severity)} | ${mapStatus(rule.status) ?: 'Active'} | ${rule.category ?: ''} |")
     }
 }
 
