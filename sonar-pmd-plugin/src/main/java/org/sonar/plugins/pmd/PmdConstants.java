@@ -42,7 +42,7 @@ public final class PmdConstants {
     /**
      * Default value for property {@link #JAVA_SOURCE_VERSION}.
      */
-    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "25";
+    public static final String JAVA_SOURCE_VERSION_DEFAULT_VALUE = "21";
 
     /**
      * Maximum supported value for property {@link #JAVA_SOURCE_VERSION}. For PMD 7 this is 25-preview.
