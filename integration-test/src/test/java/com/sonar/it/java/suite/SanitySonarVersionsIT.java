@@ -24,7 +24,7 @@ class SanitySonarVersionsIT {
             // Lowest supported SonarQube LTS line
             "LATEST_RELEASE[9.9]",
             // Highest supported SonarQube current line (see README table)
-            "LATEST_RELEASE[25.6]"
+            "LATEST_RELEASE[25.9]"
     })
     void sanity_runs_on_lowest_and_highest_supported_versions(String sonarqubeVersion) {
         final String previous = System.getProperty(SONAR_VERSION_KEY);

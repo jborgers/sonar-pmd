@@ -280,7 +280,7 @@ def generateXmlFile = { outputFile, rules, language ->
                         def readableName = MarkdownToHtmlConverter.camelCaseToReadable(ruleData.name)
                         name(readableName)
                         internalKey("${ruleData.categoryFile}/${ruleData.name}")
-                        severity(PmdSeverityMapper.priorityToSeverity(ruleData.priority))
+                        severity(PmdSeverityMapper.priorityToSeverity(ruleData.priority, ruleData.category))
 
                         // Determine whether the rule message contains variable placeholders like {0}, {1}, ...
                         def hasVariablePlaceholders = (ruleData.message ?: "").find(/\{\d+\}/) != null
