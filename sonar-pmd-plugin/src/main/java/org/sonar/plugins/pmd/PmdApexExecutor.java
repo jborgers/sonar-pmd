@@ -27,56 +27,48 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * PMD executor for Java files.
+ * PMD executor for Apex files.
  */
 @ScannerSide
-public class PmdJavaExecutor extends AbstractPmdExecutor {
+public class PmdApexExecutor extends AbstractPmdExecutor {
 
-    private final ClasspathProvider classpathProvider;
-
-    public PmdJavaExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
-                       PmdConfiguration pmdConfiguration, ClasspathProvider classpathProvider, Configuration settings) {
+    public PmdApexExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
+                       PmdConfiguration pmdConfiguration, Configuration settings) {
         super(fileSystem, rulesProfile, pmdConfiguration, settings);
-        this.classpathProvider = classpathProvider;
     }
 
     @Override
     protected String getStartMessage() {
-        return "Execute PMD {}";
+        return "Execute PMD {} for Apex";
     }
 
     @Override
     protected String getEndMessage() {
-        return "Execute PMD {} (done) | time={}ms";
+        return "Execute PMD {} for Apex (done) | time={}ms";
     }
 
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
+        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
 
         if (LOGGER.isDebugEnabled()) {
-            javaMainReport.ifPresent(this::writeDebugLine);
-            javaTestReport.ifPresent(this::writeDebugLine);
+            apexMainReport.ifPresent(this::writeDebugLine);
+            apexTestReport.ifPresent(this::writeDebugLine);
         }
 
         Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
 
         Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
-        unionReport = javaMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = javaTestReport.map(unionReport::union).orElse(unionReport);
+        unionReport = apexMainReport.map(unionReport::union).orElse(unionReport);
+        unionReport = apexTestReport.map(unionReport::union).orElse(unionReport);
 
         pmdConfiguration.dumpXmlReport(unionReport);
 
@@ -84,11 +76,12 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
     }
 
     /**
-     * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
+     * @return A classloader for PMD that contains no additional dependencies.
+     * For Apex projects, we don't need the project's classpath.
      */
     @Override
     protected URLClassLoader createClassloader() {
-        Collection<File> classpathElements = classpathProvider.classpath();
-        return org.sonar.plugins.pmd.util.ClassLoaderUtils.fromClasspath(classpathElements);
+        // Create an empty URLClassLoader
+        return new URLClassLoader(new URL[0]);
     }
 }

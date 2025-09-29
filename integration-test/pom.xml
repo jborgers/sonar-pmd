@@ -41,10 +41,12 @@
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
       <artifactId>sonar-orchestrator-junit4</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
@@ -65,6 +67,12 @@
       <groupId>org.sonarsource.pmd</groupId>
       <artifactId>sonar-pmd-lib</artifactId>
       <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>java-frontend</artifactId>
+      <version>${sonar-java.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

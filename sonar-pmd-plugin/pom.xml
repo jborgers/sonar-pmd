@@ -62,6 +62,7 @@
       <groupId>org.sonarsource.java</groupId>
       <artifactId>java-frontend</artifactId>
       <version>${sonar-java.version}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.pmd</groupId>
@@ -119,6 +120,11 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-kotlin</artifactId>
+      <version>${pmd.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-apex</artifactId>
       <version>${pmd.version}</version>
     </dependency>
     <dependency>
@@ -199,7 +205,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>30000000</maxsize>
+                  <maxsize>60000000</maxsize>
                   <minsize>12000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>
@@ -224,7 +230,6 @@
       <id>generate-pmd-rules</id>
       <build>
         <plugins>
-
           <plugin>
             <groupId>org.codehaus.gmaven</groupId>
             <artifactId>groovy-maven-plugin</artifactId>

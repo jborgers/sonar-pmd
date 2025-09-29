@@ -19,14 +19,20 @@
  */
 package org.sonar.examples.pmd;
 
-import java.util.Collections;
-
 import org.sonar.api.Plugin;
+import org.sonar.plugins.pmd.util.PluginExtensions;
 
 public class PmdExtensionPlugin implements Plugin {
 
     @Override
     public void define(Context context) {
-        context.addExtensions(Collections.singleton(PmdExtensionRepository.class));
+        PluginExtensions.addExtensions(context,
+                PmdExtensionRepository.class,
+                org.sonar.examples.pmd.ext.ExtPmdSensor.class,
+                org.sonar.examples.pmd.ext.ExtPmdConfiguration.class,
+                org.sonar.examples.pmd.ext.ExtJavaExecutor.class,
+                org.sonar.examples.pmd.ext.ExtViolationRecorder.class,
+                org.sonar.examples.pmd.ext.ExtClasspathProvider.class
+        );
     }
 }

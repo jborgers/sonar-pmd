@@ -83,6 +83,6 @@ public class PmdKotlinExecutor extends AbstractPmdExecutor {
     @Override
     protected URLClassLoader createClassloader() {
         // Create an empty URLClassLoader
-        return new URLClassLoader(new URL[0]);
+        return org.sonar.plugins.pmd.util.ClassLoaderUtils.empty();
     }
 }
