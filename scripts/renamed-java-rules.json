@@ -1,56 +1,6 @@
 {
     "language": "Java",
-    "count": 10,
+    "count": 0,
     "rules": [
-        {
-            "name": "DefaultLabelNotLastInSwitchStmt",
-            "ref": "DefaultLabelNotLastInSwitch",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnit4TestShouldUseAfterAnnotation",
-            "ref": "UnitTestShouldUseAfterAnnotation",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnit4TestShouldUseBeforeAnnotation",
-            "ref": "UnitTestShouldUseBeforeAnnotation",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnit4TestShouldUseTestAnnotation",
-            "ref": "UnitTestShouldUseTestAnnotation",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnitAssertionsShouldIncludeMessage",
-            "ref": "UnitTestAssertionsShouldIncludeMessage",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnitTestContainsTooManyAsserts",
-            "ref": "UnitTestContainsTooManyAsserts",
-            "category": "bestpractices"
-        },
-        {
-            "name": "JUnitTestsShouldIncludeAssert",
-            "ref": "UnitTestShouldIncludeAssert",
-            "category": "bestpractices"
-        },
-        {
-            "name": "NonCaseLabelInSwitchStatement",
-            "ref": "NonCaseLabelInSwitch",
-            "category": "errorprone"
-        },
-        {
-            "name": "SwitchStmtsShouldHaveDefault",
-            "ref": "NonExhaustiveSwitch",
-            "category": "bestpractices"
-        },
-        {
-            "name": "TooFewBranchesForASwitchStatement",
-            "ref": "TooFewBranchesForSwitch",
-            "category": "performance"
-        }
     ]
 }

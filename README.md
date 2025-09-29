@@ -31,12 +31,12 @@ In case you are not using one of these build tools, or if that does not match th
 Possible values: 8 to 24 and 24-preview
 
 ## Table of supported versions
-| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       |  
-|------------------------|-----------------|-----------------|---------|------------|-------------| 
-| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | 
-| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  |  
-| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 
-| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 
+| Sonar-PMD Plugin       | 3.5.0           | 3.5.1           | 4.0.0   | 4.0.3      | 4.1.0       | 4.2.0      |  
+|------------------------|-----------------|-----------------|---------|------------|-------------|------------| 
+| PMD                    | 6.55.0          | 6.55.0          | 7.10.0  | 7.14.0     | 7.15.0      | [7.17.0](https://github.com/pmd/pmd/releases/tag/pmd_releases%2F7.17.0) | 
+| Max. Java Version      | 20-preview (*1) | 20-preview (*1) | 20 (*2) | 24-preview | 24-preview  | 24-preview |  
+| Min. SonarQube Version | 9.8             | 9.9.4           | 9.9.4   | 9.9.4      | 9.9.6       | 9.9.6      | 
+| Max. SonarQube Version | 10.4            | 10.5+           | 10.8+   | 25.6+      | 25.6+       | 25.9+      | 
 
 (*1) Note: Supports all tested Java 21 features; on parsing errors, warns instead of breaks.   
 (*2) Note: Does not support Java 20-preview nor Java 21.
@@ -61,15 +61,15 @@ If you find missing alternative rules please create a Github issue.
 
 ## Java PMD rules summary
 
-- Total rules in previous version (4.0.3): 206
-- Total rules in new version (4.1.0): 282
-- Rules added: 80
-- Rules removed: 4
-- Rules unchanged: 46
-- Rules updated: 155
-- Rules renamed: 11
+- Total rules in previous version (4.1.0): 282
+- Total rules in current version (4.2.0): 292
+- Rules added: 10
+- Rules removed: 0
+- Rules unchanged: 278
+- Rules updated: 4
+- Rules renamed: 10
 
-See details: [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md)
+See details: [pmd_release_notes_4.2.0.md](docs/pmd_release_notes_4.2.0.md)
 
 ## Support for other languages
 Support for Kotlin and Apex PMD rules is work in progress. 
