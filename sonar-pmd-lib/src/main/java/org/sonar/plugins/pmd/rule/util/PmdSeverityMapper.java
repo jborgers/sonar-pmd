@@ -23,17 +23,17 @@ public final class PmdSeverityMapper {
      * For standard PMD rules, priorities are mapped as follows:
      * <ul>
      *   <li>1 &rarr; BLOCKER</li>
-     *   <li>2 &rarr; CRITICAL</li>
-     *   <li>3 &rarr; MAJOR</li>
-     *   <li>4 &rarr; MINOR</li>
-     *   <li>5 &rarr; MINOR</li>
+     *   <li>2 &rarr; CRITICAL (aka HIGH)</li>
+     *   <li>3 &rarr; MAJOR (aka MEDIUM)</li>
+     *   <li>4 &rarr; MINOR (aka LOW)</li>
+     *   <li>5 &rarr; MINOR (aka LOW)</li>
      * </ul>
      * <p>
      * Code Style Priority Mapping:
      * For PMD rules in the code style category, severities are reduced using this mapping:
      * <ul>
-     *   <li>1, 2 &rarr; MAJOR</li>
-     *   <li>3, 4, 5 &rarr; MINOR</li>
+     *   <li>1, 2 &rarr; MAJOR (aka MEDIUM)</li>
+     *   <li>3, 4, 5 &rarr; MINOR (aka LOW)</li>
      * </ul>
      * <p>
      * Notes:
