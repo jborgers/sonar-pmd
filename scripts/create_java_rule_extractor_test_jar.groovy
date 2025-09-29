@@ -17,7 +17,7 @@ import java.nio.file.StandardOpenOption
 
 // 1) Resolve PMD Java + transitives to ensure AbstractJavaRule is available at compile time
 // Pin to a PMD 7.x version. Adjust if needed to match your environment.
-final Map coords = [group: 'net.sourceforge.pmd', module: 'pmd-java', version: '7.15.0']
+final Map coords = [group: 'net.sourceforge.pmd', module: 'pmd-java', version: '7.17.0']
 final List<URI> resolvedUris = (List<URI>) Grape.resolve(
         [autoDownload: true, transitive: true, classLoader: this.class.classLoader],
         coords

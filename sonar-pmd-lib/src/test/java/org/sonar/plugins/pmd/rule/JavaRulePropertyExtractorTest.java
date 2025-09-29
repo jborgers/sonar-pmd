@@ -158,6 +158,6 @@ class JavaRulePropertyExtractorTest {
     }
 
     private File getRealJarPath() {
-        return new File(System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/7.15.0/pmd-java-7.15.0.jar");
+        return new File(System.getProperty("user.home") + "/.m2/repository/net/sourceforge/pmd/pmd-java/7.17.0/pmd-java-7.17.0.jar");
     }
 }
