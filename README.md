@@ -61,12 +61,12 @@ If you find missing alternative rules please create a Github issue.
 
 ## Java PMD rules summary
 
-- Total rules in previous version (4.1.0): 282
-- Total rules in current version (4.2.0): 292
+- Total rules in old version (4.1.0): 282
+- Total rules in new version (4.2.0): 292
 - Rules added: 10
 - Rules removed: 0
-- Rules unchanged: 278
-- Rules updated: 4
+- Rules unchanged: 233
+- Rules updated: 49
 - Rules renamed: 10
 
 See details: [pmd_release_notes_4.2.0.md](docs/pmd_release_notes_4.2.0.md)

@@ -6,9 +6,9 @@ _Do not edit this generated file._
 - Total rules in new version (4.2.0): 292
 - Rules added: 10
 - Rules removed: 0
-- Rules unchanged: 278
-- Rules updated: 4
-- Rules renamed: 0
+- Rules unchanged: 233
+- Rules updated: 49
+- Rules renamed: 10
 
 ## Added Rules
 The following rules have been added in the new version:
@@ -17,24 +17,69 @@ The following rules have been added in the new version:
 |----------|------|----------|----------|
 | CollectionTypeMismatch | Collection type mismatch | Medium | errorprone |
 | DanglingJavadoc | Dangling javadoc | Medium | documentation |
-| ModifierOrder | Modifier order | Blocker | codestyle |
+| ModifierOrder | Modifier order | Medium | codestyle |
 | OverrideBothEqualsAndHashCodeOnComparable | Override both equals and hash code on comparable | Medium | errorprone |
 | RelianceOnDefaultCharset | Reliance on default charset | Medium | bestpractices |
 | ReplaceJavaUtilCalendar | Replace java util calendar | Medium | errorprone |
 | ReplaceJavaUtilDate | Replace java util date | Medium | errorprone |
 | TypeParameterNamingConventions | Type parameter naming conventions | Low | codestyle |
 | UselessPureMethodCall | Useless pure method call | Medium | errorprone |
-| VariableCanBeInlined | Variable can be inlined | Medium | codestyle |
+| VariableCanBeInlined | Variable can be inlined | Low | codestyle |
 
 ## Updated Rules
 The following rules have been updated in the new version:
 
 | Rule Key | Name | Old Severity | New Severity | Old Status | New Status | Alternatives | Category |
 |----------|------|--------------|--------------|------------|------------|--------------|----------|
+| AtLeastOneConstructor | At least one constructor | Medium | Low |  | Active |  | codestyle |
+| AvoidDollarSigns | Avoid dollar signs | Medium | Low |  | Active |  | codestyle |
 | AvoidLosingExceptionInformation | Avoid losing exception information |  |  | Active | Deprecated |  | errorprone |
+| AvoidProtectedFieldInFinalClass | Avoid protected field in final class | Medium | Low |  | Active |  | codestyle |
+| AvoidProtectedMethodInFinalClassNotExtending | Avoid protected method in final class not extending | Medium | Low |  | Active |  | codestyle |
+| AvoidUsingNativeCode | Avoid using native code | High | Medium |  | Active |  | codestyle |
+| CallSuperInConstructor | Call super in constructor | Medium | Low |  | Active |  | codestyle |
+| ClassNamingConventions | Class naming conventions | Blocker | Medium |  | Active |  | codestyle |
+| CommentDefaultAccessModifier | Comment default access modifier | Medium | Low |  | Active |  | codestyle |
+| ConfusingTernary | Confusing ternary | Medium | Low |  | Active |  | codestyle |
+| ControlStatementBraces | Control statement braces | Medium | Low |  | Active |  | codestyle |
+| EmptyControlStatement | Empty control statement | Medium | Low |  | Active |  | codestyle |
+| EmptyMethodInAbstractClassShouldBeAbstract | Empty method in abstract class should be abstract | Blocker | Medium |  | Active |  | codestyle |
+| FieldDeclarationsShouldBeAtStartOfClass | Field declarations should be at start of class | Medium | Low |  | Active |  | codestyle |
+| FieldNamingConventions | Field naming conventions | Blocker | Medium |  | Active |  | codestyle |
+| FinalParameterInAbstractMethod | Final parameter in abstract method | Blocker | Medium |  | Active |  | codestyle |
+| ForLoopShouldBeWhileLoop | For loop should be while loop | Medium | Low |  | Active |  | codestyle |
+| FormalParameterNamingConventions | Formal parameter naming conventions | Blocker | Medium |  | Active |  | codestyle |
 | GenericsNaming | Generics naming |  |  | Active | Deprecated |  | codestyle |
-| UnnecessaryLocalBeforeReturn | Unnecessary local before return |  |  | Active | Deprecated |  | codestyle |
+| IdenticalCatchBranches | Identical catch branches | Medium | Low |  | Active |  | codestyle |
+| InvalidLogMessageFormat | Invalid log message format | Info | Low |  | Active |  | errorprone |
+| LambdaCanBeMethodReference | Lambda can be method reference | Medium | Low |  | Active |  | codestyle |
+| LinguisticNaming | Linguistic naming | Medium | Low |  | Active |  | codestyle |
+| LocalVariableCouldBeFinal | Local variable could be final | Medium | Low |  | Active |  | codestyle |
+| LocalVariableNamingConventions | Local variable naming conventions | Blocker | Medium |  | Active |  | codestyle |
+| LongVariable | Long variable | Medium | Low |  | Active |  | codestyle |
+| MethodArgumentCouldBeFinal | Method argument could be final | Medium | Low |  | Active |  | codestyle |
+| MethodNamingConventions | Method naming conventions | Blocker | Medium |  | Active |  | codestyle |
+| NoPackage | No package | Medium | Low |  | Active |  | codestyle |
+| OnlyOneReturn | Only one return | Medium | Low |  | Active |  | codestyle |
+| PackageCase | Package case | Medium | Low |  | Active |  | codestyle |
+| PrematureDeclaration | Premature declaration | Medium | Low |  | Active |  | codestyle |
+| ShortMethodName | Short method name | Medium | Low |  | Active |  | codestyle |
+| ShortVariable | Short variable | Medium | Low |  | Active |  | codestyle |
+| TooManyStaticImports | Too many static imports | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryAnnotationValueElement | Unnecessary annotation value element | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryBoxing | Unnecessary boxing | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryCast | Unnecessary cast | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryConstructor | Unnecessary constructor | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryLocalBeforeReturn | Unnecessary local before return | Medium | Low | Active | Deprecated |  | codestyle |
+| UnnecessaryModifier | Unnecessary modifier | Medium | Low |  | Active |  | codestyle |
+| UnnecessaryReturn | Unnecessary return | Medium | Low |  | Active |  | codestyle |
+| UnnecessarySemicolon | Unnecessary semicolon | Medium | Low |  | Active |  | codestyle |
+| UseDiamondOperator | Use diamond operator | Medium | Low |  | Active |  | codestyle |
+| UseExplicitTypes | Use explicit types | Medium | Low |  | Active |  | codestyle |
+| UseShortArrayInitializer | Use short Array initializer | Medium | Low |  | Active |  | codestyle |
+| UseUnderscoresInNumericLiterals | Use underscores in numeric literals | Medium | Low |  | Active |  | codestyle |
 | UselessOperationOnImmutable | Useless operation on immutable |  |  | Active | Deprecated |  | errorprone |
+| UselessQualifiedThis | Useless qualified this | Medium | Low |  | Active |  | codestyle |
 
 ## Unchanged Rules
 The following rules exist in both versions with no changes:
@@ -50,7 +95,6 @@ The following rules exist in both versions with no changes:
 | ArrayIsStoredDirectly | Array is stored directly | Medium | Active |  | bestpractices |
 | AssignmentInOperand | Assignment in operand | Medium | Active |  | errorprone |
 | AssignmentToNonFinalStatic | Assignment to non final static | Medium | Active |  | errorprone |
-| AtLeastOneConstructor | At least one constructor | Medium | Active |  | codestyle |
 | AvoidAccessibilityAlteration | Avoid accessibility alteration | Medium | Active |  | errorprone |
 | AvoidArrayLoops | Avoid array loops | Medium | Active |  | performance |
 | AvoidAssertAsIdentifier | Avoid assert as identifier | High | Active |  | errorprone |
@@ -62,7 +106,6 @@ The following rules exist in both versions with no changes:
 | AvoidCatchingThrowable | Avoid catching Throwable | Medium | Active |  | errorprone |
 | AvoidDecimalLiteralsInBigDecimalConstructor | Avoid decimal literals in BigDecimal constructor | Medium | Active |  | errorprone |
 | AvoidDeeplyNestedIfStmts | Avoid deeply nested if stmts | Medium | Active |  | design |
-| AvoidDollarSigns | Avoid dollar signs | Medium | Active |  | codestyle |
 | AvoidDuplicateLiterals | Avoid duplicate literals | Medium | Active |  | errorprone |
 | AvoidEnumAsIdentifier | Avoid enum as identifier | High | Active |  | errorprone |
 | AvoidFieldNameMatchingMethodName | Avoid field name matching method name | Medium | Active |  | errorprone |
@@ -74,8 +117,6 @@ The following rules exist in both versions with no changes:
 | AvoidMessageDigestField | Avoid message digest field | Medium | Active |  | bestpractices |
 | AvoidMultipleUnaryOperators | Avoid multiple unary operators | High | Active |  | errorprone |
 | AvoidPrintStackTrace | Avoid print stack trace | Medium | Active |  | bestpractices |
-| AvoidProtectedFieldInFinalClass | Avoid protected field in final class | Medium | Active |  | codestyle |
-| AvoidProtectedMethodInFinalClassNotExtending | Avoid protected method in final class not extending | Medium | Active |  | codestyle |
 | AvoidReassigningCatchVariables | Avoid reassigning catch variables | Medium | Active |  | bestpractices |
 | AvoidReassigningLoopVariables | Avoid reassigning loop variables | Medium | Active |  | bestpractices |
 | AvoidReassigningParameters | Avoid reassigning parameters | High | Active |  | bestpractices |
@@ -89,19 +130,16 @@ The following rules exist in both versions with no changes:
 | AvoidThrowingRawExceptionTypes | Avoid throwing raw exception types | Blocker | Active |  | design |
 | AvoidUncheckedExceptionsInSignatures | Avoid unchecked exceptions in signatures | Medium | Active |  | design |
 | AvoidUsingHardCodedIP | Avoid using hard coded IP | Medium | Active |  | bestpractices |
-| AvoidUsingNativeCode | Avoid using native code | High | Active |  | codestyle |
 | AvoidUsingOctalValues | Avoid using octal values | Medium | Active |  | errorprone |
 | AvoidUsingVolatile | Avoid using volatile | High | Active |  | multithreading |
 | BigIntegerInstantiation | BigInteger instantiation | Medium | Active |  | performance |
 | BooleanGetMethodName | Boolean get method name | Low | Active |  | codestyle |
 | BrokenNullCheck | Broken null check | High | Active |  | errorprone |
 | CallSuperFirst | Call super first | Medium | Active |  | errorprone |
-| CallSuperInConstructor | Call super in constructor | Medium | Active |  | codestyle |
 | CallSuperLast | Call super last | Medium | Active |  | errorprone |
 | CheckResultSet | Check result set | Medium | Active |  | bestpractices |
 | CheckSkipResult | Check skip result | Medium | Active |  | errorprone |
 | ClassCastExceptionWithToArray | ClassCastException with toArray | Medium | Active |  | errorprone |
-| ClassNamingConventions | Class naming conventions | Blocker | Active |  | codestyle |
 | ClassWithOnlyPrivateConstructorsShouldBeFinal | Class with only private constructors should be final | Blocker | Active |  | design |
 | CloneMethodMustBePublic | Clone method must be public | Medium | Active |  | errorprone |
 | CloneMethodMustImplementCloneable | Clone method must implement Cloneable | Medium | Active |  | errorprone |
@@ -110,18 +148,15 @@ The following rules exist in both versions with no changes:
 | CognitiveComplexity | Cognitive complexity | Medium | Active |  | design |
 | CollapsibleIfStatements | Collapsible if statements | Medium | Active |  | design |
 | CommentContent | Comment content | Medium | Active |  | documentation |
-| CommentDefaultAccessModifier | Comment default access modifier | Medium | Active |  | codestyle |
 | CommentRequired | Comment required | Medium | Active |  | documentation |
 | CommentSize | Comment size | Medium | Active |  | documentation |
 | CompareObjectsWithEquals | Compare objects with equals | Medium | Active |  | errorprone |
 | ComparisonWithNaN | Comparison with NaN | Medium | Active |  | errorprone |
 | ConfusingArgumentToVarargsMethod | Confusing argument to varargs method | Medium | Active |  | errorprone |
-| ConfusingTernary | Confusing ternary | Medium | Active |  | codestyle |
 | ConsecutiveAppendsShouldReuse | Consecutive appends should reuse | Medium | Active |  | performance |
 | ConsecutiveLiteralAppends | Consecutive literal appends | Medium | Active |  | performance |
 | ConstantsInInterface | Constants in interface | Medium | Active |  | bestpractices |
 | ConstructorCallsOverridableMethod | Constructor calls overridable method | Blocker | Active |  | errorprone |
-| ControlStatementBraces | Control statement braces | Medium | Active |  | codestyle |
 | CouplingBetweenObjects | Coupling between objects | Medium | Active |  | design |
 | CyclomaticComplexity | Cyclomatic complexity | Medium | Active |  | design |
 | DataClass | Data class | Medium | Active |  | design |
@@ -140,9 +175,7 @@ The following rules exist in both versions with no changes:
 | DoubleBraceInitialization | Double brace initialization | Medium | Active |  | bestpractices |
 | DoubleCheckedLocking | Double checked locking | Blocker | Active |  | multithreading |
 | EmptyCatchBlock | Empty catch block | Medium | Active |  | errorprone |
-| EmptyControlStatement | Empty control statement | Medium | Active |  | codestyle |
 | EmptyFinalizer | Empty finalizer | Medium | Active |  | errorprone |
-| EmptyMethodInAbstractClassShouldBeAbstract | Empty method in abstract class should be abstract | Blocker | Active |  | codestyle |
 | EqualsNull | Equals null | Blocker | Active |  | errorprone |
 | ExceptionAsFlowControl | Exception as flow control | Medium | Active |  | design |
 | ExcessiveImports | Excessive imports | Medium | Active |  | design |
@@ -150,23 +183,17 @@ The following rules exist in both versions with no changes:
 | ExcessivePublicCount | Excessive public count | Medium | Active |  | design |
 | ExhaustiveSwitchHasDefault | Exhaustive switch has default | Medium | Active |  | bestpractices |
 | ExtendsObject | Extends object | Low | Active |  | codestyle |
-| FieldDeclarationsShouldBeAtStartOfClass | Field declarations should be at start of class | Medium | Active |  | codestyle |
-| FieldNamingConventions | Field naming conventions | Blocker | Active |  | codestyle |
 | FinalFieldCouldBeStatic | Final field could be static | Medium | Active |  | design |
-| FinalParameterInAbstractMethod | Final parameter in abstract method | Blocker | Active |  | codestyle |
 | FinalizeDoesNotCallSuperFinalize | Finalize does not call super finalize | Medium | Active |  | errorprone |
 | FinalizeOnlyCallsSuperFinalize | Finalize only calls super finalize | Medium | Active |  | errorprone |
 | FinalizeOverloaded | Finalize overloaded | Medium | Active |  | errorprone |
 | FinalizeShouldBeProtected | Finalize should be protected | Medium | Active |  | errorprone |
 | ForLoopCanBeForeach | For loop can be foreach | Medium | Active |  | bestpractices |
-| ForLoopShouldBeWhileLoop | For loop should be while loop | Medium | Active |  | codestyle |
 | ForLoopVariableCount | For loop variable count | Medium | Active |  | bestpractices |
-| FormalParameterNamingConventions | Formal parameter naming conventions | Blocker | Active |  | codestyle |
 | GodClass | God class | Medium | Active |  | design |
 | GuardLogStatement | Guard log statement | High | Active |  | bestpractices |
 | HardCodedCryptoKey | Hard coded crypto key | Medium | Active |  | security |
 | IdempotentOperations | Idempotent operations | Medium | Active |  | errorprone |
-| IdenticalCatchBranches | Identical catch branches | Medium | Active |  | codestyle |
 | ImmutableField | Immutable field | Medium | Active |  | design |
 | ImplicitFunctionalInterface | Implicit functional interface | High | Active |  | bestpractices |
 | ImplicitSwitchFallThrough | Implicit switch fall through | Medium | Active |  | errorprone |
@@ -176,28 +203,20 @@ The following rules exist in both versions with no changes:
 | InstantiationToGetClass | Instantiation to get class | Low | Active |  | errorprone |
 | InsufficientStringBufferDeclaration | Insufficient StringBuffer declaration | Medium | Active |  | performance |
 | InvalidJavaBean | Invalid Java bean | Medium | Active |  | design |
-| InvalidLogMessageFormat | Invalid log message format | Info | Active |  | errorprone |
 | JUnit4SuitesShouldUseSuiteAnnotation | JUnit4 suites should use suite annotation | Medium | Active |  | bestpractices |
 | JUnit5TestShouldBePackagePrivate | JUnit5 test should be package private | Medium | Active |  | bestpractices |
 | JUnitSpelling | JUnit spelling | Medium | Active |  | errorprone |
 | JUnitStaticSuite | JUnit static suite | Medium | Active |  | errorprone |
 | JUnitUseExpected | JUnit use expected | Medium | Active |  | bestpractices |
 | JumbledIncrementer | Jumbled incrementer | Medium | Active |  | errorprone |
-| LambdaCanBeMethodReference | Lambda can be method reference | Medium | Active |  | codestyle |
 | LawOfDemeter | Law of demeter | Medium | Active |  | design |
-| LinguisticNaming | Linguistic naming | Medium | Active |  | codestyle |
 | LiteralsFirstInComparisons | Literals first in comparisons | Medium | Active |  | bestpractices |
 | LocalHomeNamingConvention | Local home naming convention | Low | Active |  | codestyle |
 | LocalInterfaceSessionNamingConvention | Local interface session naming convention | Low | Active |  | codestyle |
-| LocalVariableCouldBeFinal | Local variable could be final | Medium | Active |  | codestyle |
-| LocalVariableNamingConventions | Local variable naming conventions | Blocker | Active |  | codestyle |
 | LogicInversion | Logic inversion | Medium | Active |  | design |
-| LongVariable | Long variable | Medium | Active |  | codestyle |
 | LooseCoupling | Loose coupling | Medium | Active |  | bestpractices |
 | LoosePackageCoupling | Loose package coupling | Medium | Active |  | design |
 | MDBAndSessionBeanNamingConvention | MDB and session bean naming convention | Low | Active |  | codestyle |
-| MethodArgumentCouldBeFinal | Method argument could be final | Medium | Active |  | codestyle |
-| MethodNamingConventions | Method naming conventions | Blocker | Active |  | codestyle |
 | MethodReturnsInternalArray | Method returns internal array | Medium | Active |  | bestpractices |
 | MethodWithSameNameAsEnclosingClass | Method with same name as enclosing class | Medium | Active |  | errorprone |
 | MisplacedNullCheck | Misplaced null check | Medium | Active |  | errorprone |
@@ -208,7 +227,6 @@ The following rules exist in both versions with no changes:
 | MutableStaticState | Mutable static state | Medium | Active |  | design |
 | NPathComplexity | NPath complexity | Medium | Active |  | design |
 | NcssCount | NCSS count | Medium | Active |  | design |
-| NoPackage | No package | Medium | Active |  | codestyle |
 | NonCaseLabelInSwitch | Non case label in switch | Medium | Active |  | errorprone |
 | NonExhaustiveSwitch | Non exhaustive switch | Medium | Active |  | bestpractices |
 | NonSerializableClass | Non serializable class | Medium | Active |  | errorprone |
@@ -216,11 +234,8 @@ The following rules exist in both versions with no changes:
 | NonThreadSafeSingleton | Non thread safe singleton | Medium | Active |  | multithreading |
 | NullAssignment | Null assignment | Medium | Active |  | errorprone |
 | OneDeclarationPerLine | One declaration per line | Low | Active |  | bestpractices |
-| OnlyOneReturn | Only one return | Medium | Active |  | codestyle |
 | OptimizableToArrayCall | Optimizable toArray call | Medium | Active |  | performance |
 | OverrideBothEqualsAndHashcode | Override both equals and hashcode | Medium | Active |  | errorprone |
-| PackageCase | Package case | Medium | Active |  | codestyle |
-| PrematureDeclaration | Premature declaration | Medium | Active |  | codestyle |
 | PreserveStackTrace | Preserve stack trace | Medium | Active |  | bestpractices |
 | PrimitiveWrapperInstantiation | Primitive wrapper instantiation | Medium | Active |  | bestpractices |
 | ProperCloneImplementation | Proper clone implementation | High | Active |  | errorprone |
@@ -234,8 +249,6 @@ The following rules exist in both versions with no changes:
 | ReturnEmptyCollectionRatherThanNull | Return empty collection rather than null | Blocker | Active |  | errorprone |
 | ReturnFromFinallyBlock | Return from finally block | Medium | Active |  | errorprone |
 | ShortClassName | Short class name | Low | Active |  | codestyle |
-| ShortMethodName | Short method name | Medium | Active |  | codestyle |
-| ShortVariable | Short variable | Medium | Active |  | codestyle |
 | SignatureDeclareThrowsException | Signature declare throws Exception | Medium | Active |  | design |
 | SimpleDateFormatNeedsLocale | SimpleDateFormat needs Locale | Medium | Active |  | errorprone |
 | SimplifiableTestAssertion | Simplifiable test assertion | Medium | Active |  | bestpractices |
@@ -259,7 +272,6 @@ The following rules exist in both versions with no changes:
 | TooFewBranchesForSwitch | Too few branches for switch | Medium | Active |  | performance |
 | TooManyFields | Too many fields | Medium | Active |  | design |
 | TooManyMethods | Too many methods | Medium | Active |  | design |
-| TooManyStaticImports | Too many static imports | Medium | Active |  | codestyle |
 | UncommentedEmptyConstructor | Uncommented empty constructor | Medium | Active |  | documentation |
 | UncommentedEmptyMethodBody | Uncommented empty method body | Medium | Active |  | documentation |
 | UnconditionalIfStatement | Unconditional if statement | Medium | Active |  | errorprone |
@@ -269,18 +281,11 @@ The following rules exist in both versions with no changes:
 | UnitTestShouldUseAfterAnnotation | Unit test should use after annotation | Medium | Active |  | bestpractices |
 | UnitTestShouldUseBeforeAnnotation | Unit test should use before annotation | Medium | Active |  | bestpractices |
 | UnitTestShouldUseTestAnnotation | Unit test should use test annotation | Medium | Active |  | bestpractices |
-| UnnecessaryAnnotationValueElement | Unnecessary annotation value element | Medium | Active |  | codestyle |
 | UnnecessaryBooleanAssertion | Unnecessary boolean assertion | Medium | Active |  | errorprone |
-| UnnecessaryBoxing | Unnecessary boxing | Medium | Active |  | codestyle |
 | UnnecessaryCaseChange | Unnecessary case change | Medium | Active |  | errorprone |
-| UnnecessaryCast | Unnecessary cast | Medium | Active |  | codestyle |
-| UnnecessaryConstructor | Unnecessary constructor | Medium | Active |  | codestyle |
 | UnnecessaryConversionTemporary | Unnecessary conversion temporary | Medium | Active |  | errorprone |
 | UnnecessaryFullyQualifiedName | Unnecessary fully qualified name | Low | Active |  | codestyle |
 | UnnecessaryImport | Unnecessary import | Low | Active |  | codestyle |
-| UnnecessaryModifier | Unnecessary modifier | Medium | Active |  | codestyle |
-| UnnecessaryReturn | Unnecessary return | Medium | Active |  | codestyle |
-| UnnecessarySemicolon | Unnecessary semicolon | Medium | Active |  | codestyle |
 | UnnecessaryVarargsArrayCreation | Unnecessary varargs array creation | Medium | Active |  | bestpractices |
 | UnnecessaryWarningSuppression | Unnecessary warning suppression | Medium | Active |  | bestpractices |
 | UnsynchronizedStaticFormatter | Unsynchronized static formatter | Medium | Active |  | multithreading |
@@ -295,32 +300,43 @@ The following rules exist in both versions with no changes:
 | UseCollectionIsEmpty | Use Collection.isEmpty | Medium | Active |  | bestpractices |
 | UseConcurrentHashMap | Use ConcurrentHashMap | Medium | Active |  | multithreading |
 | UseCorrectExceptionLogging | Use correct exception logging | Medium | Active |  | errorprone |
-| UseDiamondOperator | Use diamond operator | Medium | Active |  | codestyle |
 | UseEnumCollections | Use enum collections | Medium | Active |  | bestpractices |
 | UseEqualsToCompareStrings | Use equals to compare strings | Medium | Active |  | errorprone |
-| UseExplicitTypes | Use explicit types | Medium | Active |  | codestyle |
 | UseIOStreamsWithApacheCommonsFileItem | Use IOStreams with apache commons FileItem | Medium | Active |  | performance |
 | UseIndexOfChar | Use index of char | Medium | Active |  | performance |
 | UseLocaleWithCaseConversions | Use Locale with case conversions | Medium | Active |  | errorprone |
 | UseNotifyAllInsteadOfNotify | Use notifyAll instead of notify | Medium | Active |  | multithreading |
 | UseObjectForClearerAPI | Use object for clearer API | Medium | Active |  | design |
 | UseProperClassLoader | Use proper ClassLoader | Medium | Active |  | errorprone |
-| UseShortArrayInitializer | Use short Array initializer | Medium | Active |  | codestyle |
 | UseStandardCharsets | Use standard Charsets | Medium | Active |  | bestpractices |
 | UseStringBufferForStringAppends | Use StringBuffer for string appends | Medium | Active |  | performance |
 | UseStringBufferLength | Use StringBuffer length | Medium | Active |  | performance |
 | UseTryWithResources | Use try with resources | Medium | Active |  | bestpractices |
-| UseUnderscoresInNumericLiterals | Use underscores in numeric literals | Medium | Active |  | codestyle |
 | UseUtilityClass | Use utility class | Medium | Active |  | design |
 | UseVarargs | Use varargs | Low | Active |  | bestpractices |
 | UselessOverridingMethod | Useless overriding method | Medium | Active |  | design |
 | UselessParentheses | Useless parentheses | Low | Active |  | codestyle |
-| UselessQualifiedThis | Useless qualified this | Medium | Active |  | codestyle |
 | UselessStringValueOf | Useless String.valueOf | Medium | Active |  | performance |
 | WhileLoopWithLiteralBoolean | While loop with literal boolean | Medium | Active |  | bestpractices |
 | XPathRule | PMD XPath Template Rule |  | Active |  |  |
 
+## Renamed Rules
+The following rules have new names:
+
+| Rule name | New rule name | Category |
+|-----------|---------------|----------|
+| DefaultLabelNotLastInSwitchStmt | DefaultLabelNotLastInSwitch | bestpractices |
+| JUnit4TestShouldUseAfterAnnotation | UnitTestShouldUseAfterAnnotation | bestpractices |
+| JUnit4TestShouldUseBeforeAnnotation | UnitTestShouldUseBeforeAnnotation | bestpractices |
+| JUnit4TestShouldUseTestAnnotation | UnitTestShouldUseTestAnnotation | bestpractices |
+| JUnitAssertionsShouldIncludeMessage | UnitTestAssertionsShouldIncludeMessage | bestpractices |
+| JUnitTestContainsTooManyAsserts | UnitTestContainsTooManyAsserts | bestpractices |
+| JUnitTestsShouldIncludeAssert | UnitTestShouldIncludeAssert | bestpractices |
+| NonCaseLabelInSwitchStatement | NonCaseLabelInSwitch | errorprone |
+| SwitchStmtsShouldHaveDefault | NonExhaustiveSwitch | bestpractices |
+| TooFewBranchesForASwitchStatement | TooFewBranchesForSwitch | performance |
+
 ## Removed Rules
 No rules were removed.
 
-Report generated on Mon Sep 29 09:36:01 CEST 2025
+Report generated on Mon Sep 29 11:44:31 CEST 2025
