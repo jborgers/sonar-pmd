@@ -26,6 +26,7 @@ import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -51,6 +52,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -199,6 +201,9 @@ public class RulesDefinitionXmlLoader {
     private static final String ELEMENT_RULES = "rules";
     private static final String ELEMENT_RULE = "rule";
     private static final String ELEMENT_PARAM = "param";
+    private static final Pattern TEST_RULE_PATTERN = Pattern.compile(".*([tT]est|JUnit).*");
+    private static final String TAG_TEST_SOURCES = "tests";
+    private static final String TAG_MAIN_SOURCES = "main-sources";
 
     private enum DescriptionFormat {
         HTML, MARKDOWN
@@ -366,11 +371,24 @@ public class RulesDefinitionXmlLoader {
             if (type != null) {
                 rule.setType(RuleType.valueOf(type));
             }
+            fillScope(rule, name, tags);
             fillDescription(rule, descriptionFormat, description);
             fillRemediationFunction(rule, debtRemediationFunction, debtRemediationFunctionGapMultiplier, debtRemediationFunctionBaseEffort);
             fillParams(rule, params);
         } catch (Exception e) {
             throw new IllegalStateException(format("Fail to load the rule with key [%s:%s]", repo.key(), key), e);
+        }
+    }
+
+    private static void fillScope(RulesDefinition.NewRule rule, String name, List<String> tags) {
+        rule.setScope(RuleScope.ALL); // default
+        if (tags.contains(TAG_TEST_SOURCES) || TEST_RULE_PATTERN.matcher(name).matches()) {
+            if (!tags.contains(TAG_MAIN_SOURCES)) { // if rule has both, it means ALL
+                rule.setScope(RuleScope.TEST);
+            }
+        }
+        if (tags.contains(TAG_MAIN_SOURCES) && !tags.contains(TAG_TEST_SOURCES)) { // if rule has both, it means ALL
+            rule.setScope(RuleScope.MAIN);
         }
     }
 
