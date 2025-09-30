@@ -364,23 +364,34 @@ public class RulesDefinitionXmlLoaderTest {
                 "<tag>main-sources</tag>" + // override the name containing Test
                 "<tag>tests</tag>" + // make it both, main-sources and test -> All
                 "</rule>" +
+
+                "<rule>" +
+                "<key>Rule08</key>" +
+                "<name>Rule for junit</name>" +
+                "<description>Description</description>" +
+                "<severity>MAJOR</severity>" +
+                "<type>CODE_SMELL</type>" +
+                "</rule>" +
                 "</rules>";
-        RulesDefinition.Rule rule0 = load(xml).rule("Rule00");
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule rule0 = rulesRepo.rule("Rule00");
         assertThat(rule0.scope()).isEqualTo(RuleScope.ALL);
-        RulesDefinition.Rule rule1 = load(xml).rule("Rule01");
+        RulesDefinition.Rule rule1 = rulesRepo.rule("Rule01");
         assertThat(rule1.scope()).isEqualTo(RuleScope.TEST);
-        RulesDefinition.Rule rule2 = load(xml).rule("Rule02");
+        RulesDefinition.Rule rule2 = rulesRepo.rule("Rule02");
         assertThat(rule2.scope()).isEqualTo(RuleScope.TEST);
-        RulesDefinition.Rule rule3 = load(xml).rule("Rule03");
+        RulesDefinition.Rule rule3 = rulesRepo.rule("Rule03");
         assertThat(rule3.scope()).isEqualTo(RuleScope.MAIN);
-        RulesDefinition.Rule rule4 = load(xml).rule("Rule04");
+        RulesDefinition.Rule rule4 = rulesRepo.rule("Rule04");
         assertThat(rule4.scope()).isEqualTo(RuleScope.ALL);
-        RulesDefinition.Rule rule5 = load(xml).rule("Rule05");
+        RulesDefinition.Rule rule5 = rulesRepo.rule("Rule05");
         assertThat(rule5.scope()).isEqualTo(RuleScope.ALL);
-        RulesDefinition.Rule rule6 = load(xml).rule("Rule06");
+        RulesDefinition.Rule rule6 = rulesRepo.rule("Rule06");
         assertThat(rule6.scope()).isEqualTo(RuleScope.MAIN);
-        RulesDefinition.Rule rule7 = load(xml).rule("Rule07");
+        RulesDefinition.Rule rule7 = rulesRepo.rule("Rule07");
         assertThat(rule7.scope()).isEqualTo(RuleScope.ALL);
+        RulesDefinition.Rule rule8 = rulesRepo.rule("Rule08");
+        assertThat(rule8.scope()).isEqualTo(RuleScope.TEST);
     }
 
     private RulesDefinition.Repository load(InputStream input, String encoding) {

@@ -201,7 +201,7 @@ public class RulesDefinitionXmlLoader {
     private static final String ELEMENT_RULES = "rules";
     private static final String ELEMENT_RULE = "rule";
     private static final String ELEMENT_PARAM = "param";
-    private static final Pattern TEST_RULE_PATTERN = Pattern.compile(".*([tT]est|JUnit).*");
+    private static final Pattern TEST_RULE_PATTERN = Pattern.compile(".*(Test|JUnit).*", Pattern.CASE_INSENSITIVE);
     private static final String TAG_TEST_SOURCES = "tests";
     private static final String TAG_MAIN_SOURCES = "main-sources";
 
