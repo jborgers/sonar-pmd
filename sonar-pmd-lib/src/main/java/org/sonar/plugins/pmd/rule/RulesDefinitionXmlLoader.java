@@ -201,7 +201,7 @@ public class RulesDefinitionXmlLoader {
     private static final String ELEMENT_RULES = "rules";
     private static final String ELEMENT_RULE = "rule";
     private static final String ELEMENT_PARAM = "param";
-    private static final Pattern TEST_RULE_PATTERN = Pattern.compile(".*(Test|JUnit).*", Pattern.CASE_INSENSITIVE);
+    private static final Pattern TEST_RULE_PATTERN = Pattern.compile("Test|JUnit", Pattern.CASE_INSENSITIVE);
     private static final String TAG_TEST_SOURCES = "tests";
     private static final String TAG_MAIN_SOURCES = "main-sources";
 
@@ -382,7 +382,7 @@ public class RulesDefinitionXmlLoader {
 
     private static void fillScope(RulesDefinition.NewRule rule, String name, List<String> tags) {
         rule.setScope(RuleScope.ALL); // default
-        if (tags.contains(TAG_TEST_SOURCES) || TEST_RULE_PATTERN.matcher(name).matches()) {
+        if (tags.contains(TAG_TEST_SOURCES) || TEST_RULE_PATTERN.matcher(name).find()) {
             if (!tags.contains(TAG_MAIN_SOURCES)) { // if rule has both, it means ALL
                 rule.setScope(RuleScope.TEST);
             }
