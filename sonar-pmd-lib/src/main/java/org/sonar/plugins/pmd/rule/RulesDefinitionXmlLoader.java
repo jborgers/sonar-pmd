@@ -371,7 +371,7 @@ public class RulesDefinitionXmlLoader {
             if (type != null) {
                 rule.setType(RuleType.valueOf(type));
             }
-            fillScope(rule, name, tags);
+            rule.setScope(determineScope(name, tags));
             fillDescription(rule, descriptionFormat, description);
             fillRemediationFunction(rule, debtRemediationFunction, debtRemediationFunctionGapMultiplier, debtRemediationFunctionBaseEffort);
             fillParams(rule, params);
@@ -380,16 +380,17 @@ public class RulesDefinitionXmlLoader {
         }
     }
 
-    private static void fillScope(RulesDefinition.NewRule rule, String name, List<String> tags) {
-        rule.setScope(RuleScope.ALL); // default
+    private static RuleScope determineScope(String name, List<String> tags) {
+        RuleScope scope = RuleScope.ALL; // default
         if (tags.contains(TAG_TEST_SOURCES) || TEST_RULE_PATTERN.matcher(name).find()) {
             if (!tags.contains(TAG_MAIN_SOURCES)) { // if rule has both, it means ALL
-                rule.setScope(RuleScope.TEST);
+                scope =RuleScope.TEST;
             }
         }
         if (tags.contains(TAG_MAIN_SOURCES) && !tags.contains(TAG_TEST_SOURCES)) { // if rule has both, it means ALL
-            rule.setScope(RuleScope.MAIN);
+            scope = RuleScope.MAIN;
         }
+        return scope;
     }
 
     @SuppressWarnings({"removal"})
