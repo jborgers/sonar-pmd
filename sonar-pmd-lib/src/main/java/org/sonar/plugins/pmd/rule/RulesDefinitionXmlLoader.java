@@ -351,6 +351,14 @@ public class RulesDefinitionXmlLoader {
                 } else if ("tag".equalsIgnoreCase(elementName)) {
                     tags.add(StringUtils.trim(reader.getElementText()));
                 }
+                // the following does not work, yet. Tests fail.
+//                } else if ("tag".equalsIgnoreCase(elementName)) {
+//                    String tag = trim(reader.getElementText());
+//                    // we filter out the 'main-sources' tag because it is used to set/limit analysis scope only; and not used in the rule tags
+//                    if (!TAG_MAIN_SOURCES.equalsIgnoreCase(tag)) {
+//                        tags.add(tag);
+//                    }
+//                }
             }
         }
     }
