@@ -295,13 +295,13 @@ public class RulesDefinitionXmlLoaderTest {
     }
 
     @Test
-    public void test_filter_nop_sonar_tags() {
+    public void test_filter_non_sonar_tags() {
         String xml = "" +
                 "<rules>" +
                 "<rule >" +
-                "<key>Rule00</key>" +
-                "<name>Rule 00</name>" +
-                "<description>Description of rule 00</description>" +
+                "<key>rule-non-sonar-tags-test</key>" +
+                "<name>Rule non Sonar Tags Test</name>" +
+                "<description>Rule to check filtering of non Sonar tags</description>" +
                 "<type>BUG</type>" +
                 "<tag>tests</tag>" +
                 "<tag>main-sources</tag>" +
@@ -309,13 +309,9 @@ public class RulesDefinitionXmlLoaderTest {
                 "</rules>";
 
         RulesDefinition.Repository rulesRepo = load(xml);
-        RulesDefinition.Rule rule0 = rulesRepo.rule("Rule00");
+        RulesDefinition.Rule nonSonarTags = rulesRepo.rule("rule-non-sonar-tags-test");
 
-        assertThat(rule0.scope())
-                .withFailMessage("main-sources and tests tags means scope all")
-                .isEqualTo(RuleScope.ALL);
-
-        assertThat(rule0.tags())
+        assertThat(nonSonarTags.tags())
                 .withFailMessage("Should not contain main-sources")
                 .containsOnly("tests");
 

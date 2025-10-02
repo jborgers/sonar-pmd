@@ -381,6 +381,8 @@ public class RulesDefinitionXmlLoader {
     }
 
     private static String[] filterNonSonarTags(List<String> tags) {
+        // we filter out the 'main-sources' tag because it is only used to set/limit analysis scope;
+        // and not used in the rule tags of Sonar
         return tags.stream()
                 .filter(tag -> !tag.equalsIgnoreCase(TAG_MAIN_SOURCES))
                 .toArray(String[]::new);
