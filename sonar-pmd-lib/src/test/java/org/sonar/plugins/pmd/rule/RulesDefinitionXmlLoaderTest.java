@@ -295,6 +295,33 @@ public class RulesDefinitionXmlLoaderTest {
     }
 
     @Test
+    public void test_filter_nop_sonar_tags() {
+        String xml = "" +
+                "<rules>" +
+                "<rule >" +
+                "<key>Rule00</key>" +
+                "<name>Rule 00</name>" +
+                "<description>Description of rule 00</description>" +
+                "<type>BUG</type>" +
+                "<tag>tests</tag>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+                "</rules>";
+
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule rule0 = rulesRepo.rule("Rule00");
+
+        assertThat(rule0.scope())
+                .withFailMessage("main-sources and tests tags means scope all")
+                .isEqualTo(RuleScope.ALL);
+
+        assertThat(rule0.tags())
+                .withFailMessage("Should not contain main-sources")
+                .containsOnly("tests");
+
+    }
+
+    @Test
     public void test_analysis_scope() {
         String xml = "" +
                 "<rules>" +

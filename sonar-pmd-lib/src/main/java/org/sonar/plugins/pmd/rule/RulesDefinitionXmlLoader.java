@@ -349,16 +349,8 @@ public class RulesDefinitionXmlLoader {
                 } else if (ELEMENT_PARAM.equalsIgnoreCase(elementName)) {
                     params.add(processParameter(element, reader));
                 } else if ("tag".equalsIgnoreCase(elementName)) {
-                    tags.add(StringUtils.trim(reader.getElementText()));
+                    tags.add(trim(reader.getElementText()));
                 }
-                // the following does not work, yet. Tests fail.
-//                } else if ("tag".equalsIgnoreCase(elementName)) {
-//                    String tag = trim(reader.getElementText());
-//                    // we filter out the 'main-sources' tag because it is used to set/limit analysis scope only; and not used in the rule tags
-//                    if (!TAG_MAIN_SOURCES.equalsIgnoreCase(tag)) {
-//                        tags.add(tag);
-//                    }
-//                }
             }
         }
     }
@@ -372,7 +364,7 @@ public class RulesDefinitionXmlLoader {
                     .setSeverity(severity)
                     .setName(name)
                     .setInternalKey(internalKey)
-                    .setTags(tags.toArray(new String[0]))
+                    .setTags(filterNonSonarTags(tags))
                     .setTemplate(template)
                     .setStatus(status)
                     .setGapDescription(gapDescription);
@@ -386,6 +378,12 @@ public class RulesDefinitionXmlLoader {
         } catch (Exception e) {
             throw new IllegalStateException(format("Fail to load the rule with key [%s:%s]", repo.key(), key), e);
         }
+    }
+
+    private static String[] filterNonSonarTags(List<String> tags) {
+        return tags.stream()
+                .filter(tag -> !tag.equalsIgnoreCase(TAG_MAIN_SOURCES))
+                .toArray(String[]::new);
     }
 
     private static RuleScope determineScope(String name, List<String> tags) {
