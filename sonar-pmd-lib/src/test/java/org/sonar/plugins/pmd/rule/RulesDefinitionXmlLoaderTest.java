@@ -295,6 +295,29 @@ public class RulesDefinitionXmlLoaderTest {
     }
 
     @Test
+    public void test_filter_non_sonar_tags() {
+        String xml = "" +
+                "<rules>" +
+                "<rule >" +
+                "<key>rule-non-sonar-tags-test</key>" +
+                "<name>Rule non Sonar Tags Test</name>" +
+                "<description>Rule to check filtering of non Sonar tags</description>" +
+                "<type>BUG</type>" +
+                "<tag>tests</tag>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+                "</rules>";
+
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule nonSonarTags = rulesRepo.rule("rule-non-sonar-tags-test");
+
+        assertThat(nonSonarTags.tags())
+                .withFailMessage("Should not contain main-sources")
+                .containsOnly("tests");
+
+    }
+
+    @Test
     public void test_analysis_scope() {
         String xml = "" +
                 "<rules>" +
