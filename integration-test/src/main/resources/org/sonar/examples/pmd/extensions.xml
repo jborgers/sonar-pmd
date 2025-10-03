@@ -29,9 +29,18 @@
     <name>Avoid if without using brace</name>
     <configKey>org/sonar/examples/pmd/rulesets.xml/AvoidIfWithoutBrace</configKey>
     <priority>CRITICAL</priority>
-  <description>Avoid if without using brace</description>
+    <description>Avoid if without using brace</description>
+    <tag>main-sources</tag> <!-- only analyse main source code -->
   </rule>
 
+  <rule>
+    <key>AvoidIfWithoutBraceTest</key>
+    <name>Avoid if without using brace in test cases</name>
+    <configKey>org/sonar/examples/pmd/rulesets.xml/AvoidIfWithoutBraceTest</configKey>
+    <priority>CRITICAL</priority>
+    <description>Avoid if without using brace in test cases</description>
+    <tag>tests</tag>
+  </rule>
 
   <!--
     Extension written in XPath, second solution.
