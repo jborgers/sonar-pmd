@@ -298,9 +298,9 @@ public class RulesDefinitionXmlLoaderTest {
     public void test_filter_non_sonar_tags() {
         String xml = "" +
                 "<rules>" +
-                "<rule >" +
+                "<rule>" +
                 "<key>rule-non-sonar-tags-test</key>" +
-                "<name>Rule non Sonar Tags Test</name>" +
+                "<name>Rule non Sonar Tags</name>" +
                 "<description>Rule to check filtering of non Sonar tags</description>" +
                 "<type>BUG</type>" +
                 "<tag>tests</tag>" +
@@ -318,10 +318,59 @@ public class RulesDefinitionXmlLoaderTest {
     }
 
     @Test
+    public void test_add_remove_tests_tag_on_name_match() {
+        String xml = "" +
+                "<rules>" +
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_1</key>" +
+                "<name>Rule add tests tag Test</name>" +
+                "<description>Rule to check adding tests tag on name match</description>" +
+                "<type>BUG</type>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_2</key>" +
+                "<name>Rule NO add tests tag Test</name>" +
+                "<description>Rule to check NO adding tests tag on name match</description>" +
+                "<type>BUG</type>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_3</key>" +
+                "<name>Rule remove tests tag Test</name>" +
+                "<description>Rule to check remove tests tag on name match override</description>" +
+                "<type>BUG</type>" +
+                "<tag>tests</tag>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+                "</rules>";
+
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule addTests1 = rulesRepo.rule("rule-tests_tag_on_name_match_1");
+
+        assertThat(addTests1.tags())
+                .withFailMessage("Should add tests tag")
+                .containsOnly("tests");
+
+        RulesDefinition.Rule addTests2 = rulesRepo.rule("rule-tests_tag_on_name_match_2");
+
+        assertThat(addTests2.tags())
+                .withFailMessage("Should NOT add tests tag")
+                .doesNotContain("tests");
+
+        RulesDefinition.Rule addTests3 = rulesRepo.rule("rule-tests_tag_on_name_match_3");
+
+        assertThat(addTests3.tags())
+                .withFailMessage("Should remove tests tag")
+                .doesNotContain("tests");
+    }
+
+    @Test
     public void test_analysis_scope() {
         String xml = "" +
                 "<rules>" +
-                "<rule >" +
+                "<rule>" +
                 "<key>Rule00</key>" +
                 "<name>Rule 00</name>" +
                 "<description>Description of rule 00</description>" +
