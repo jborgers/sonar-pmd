@@ -25,6 +25,7 @@ import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.PmdPriorities;
+import org.sonar.plugins.pmd.rule.PmdRuleScopeRegistry;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -37,11 +38,13 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
     private final ActiveRules activeRules;
     private final String repositoryKey;
     private final RuleScope targetScope;
+    private final PmdRuleScopeRegistry scopeRegistry;
 
-    public ActiveRulesRuleSetFactory(ActiveRules activeRules, String repositoryKey, RuleScope targetScope) {
+    public ActiveRulesRuleSetFactory(ActiveRules activeRules, String repositoryKey, RuleScope targetScope, PmdRuleScopeRegistry scopeRegistry) {
         this.activeRules = activeRules;
         this.repositoryKey = repositoryKey;
         this.targetScope = targetScope;
+        this.scopeRegistry = scopeRegistry;
     }
 
     @Override
@@ -65,13 +68,18 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
         return ruleset;
     }
 
-    private boolean isRuleInScope(ActiveRule activeRule, RuleScope scope) {
-        if (scope == RuleScope.ALL) {
-            return true; }
-        else {
-            boolean isTestRule = activeRule.ruleKey().rule().toLowerCase().contains("test");
-            return (scope == RuleScope.MAIN && !isTestRule) || (scope == RuleScope.TEST && isTestRule);
+    private boolean isRuleInScope(ActiveRule activeRule, RuleScope targetScope) {
+        if (targetScope == RuleScope.ALL) {
+            return true;
         }
+
+        // Get the actual scope from the registry (based on XML rule definition)
+        RuleScope ruleScope = scopeRegistry.getScope(activeRule.ruleKey().rule());
+
+        // Rule matches if:
+        // - Rule scope is ALL (applies to both MAIN and TEST)
+        // - Rule scope matches the target scope exactly
+        return ruleScope == RuleScope.ALL || ruleScope == targetScope;
     }
 
     private void addRuleProperties(ActiveRule activeRule, PmdRule pmdRule) {

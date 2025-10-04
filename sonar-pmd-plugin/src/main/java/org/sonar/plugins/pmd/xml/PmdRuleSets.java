@@ -19,11 +19,14 @@
  */
 package org.sonar.plugins.pmd.xml;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.utils.ValidationMessages;
+import org.sonar.plugins.pmd.rule.PmdRuleScopeRegistry;
 import org.sonar.plugins.pmd.xml.factory.ActiveRulesRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.XmlRuleSetFactory;
@@ -38,8 +41,25 @@ public class PmdRuleSets {
 
     private static final Logger LOG = LoggerFactory.getLogger(PmdRuleSets.class);
 
-    private PmdRuleSets() {
+    private static final PmdRuleScopeRegistry SCOPE_REGISTRY = createRegistry();
+
+    private static PmdRuleScopeRegistry createRegistry() {
+        try {
+            return new PmdRuleScopeRegistry(
+                    "/org/sonar/plugins/pmd/rules-java.xml",
+                    "/org/sonar/plugins/pmd/rules-kotlin.xml"
+            );
+        } catch (Exception e) {
+            LOG.error("Failed to initialize PMD scope registry, using empty registry", e);
+            return new PmdRuleScopeRegistry(); // Empty or minimal fallback
+        }
     }
+
+    private static PmdRuleScopeRegistry getScopeRegistry() {
+        return SCOPE_REGISTRY;
+    }
+
+    private PmdRuleSets() {}
 
     /**
      * @param configReader A character stream containing the data of the {@link PmdRuleSet}.
@@ -60,7 +80,7 @@ public class PmdRuleSets {
     }
 
     public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey, RuleScope scope) {
-        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey, scope));
+        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey, scope, getScopeRegistry()));
     }
 
     private static PmdRuleSet create(RuleSetFactory factory) {
