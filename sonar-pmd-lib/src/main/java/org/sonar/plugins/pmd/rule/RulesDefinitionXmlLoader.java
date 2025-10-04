@@ -358,20 +358,21 @@ public class RulesDefinitionXmlLoader {
     private static void buildRule(RulesDefinition.NewRepository repo, String key, String name, @Nullable String description,
                                   String descriptionFormat, @Nullable String internalKey, String severity, @Nullable String type, RuleStatus status,
                                   boolean template, @Nullable String gapDescription, @Nullable String debtRemediationFunction, @Nullable String debtRemediationFunctionGapMultiplier,
-                                  @Nullable String debtRemediationFunctionBaseEffort, List<ParamStruct> params, List<String> tags) {
+                                  @Nullable String debtRemediationFunctionBaseEffort, List<ParamStruct> params, List<String> inputTags) {
         try {
+            String[] ruleTags = determineSonarRuleTags(name, inputTags);
             RulesDefinition.NewRule rule = repo.createRule(key)
                     .setSeverity(severity)
                     .setName(name)
                     .setInternalKey(internalKey)
-                    .setTags(filterNonSonarTags(tags))
+                    .setTags(ruleTags)
                     .setTemplate(template)
                     .setStatus(status)
                     .setGapDescription(gapDescription);
             if (type != null) {
                 rule.setType(RuleType.valueOf(type));
             }
-            rule.setScope(determineScope(name, tags));
+            rule.setScope(determineScope(name, inputTags));
             fillDescription(rule, descriptionFormat, description);
             fillRemediationFunction(rule, debtRemediationFunction, debtRemediationFunctionGapMultiplier, debtRemediationFunctionBaseEffort);
             fillParams(rule, params);
@@ -380,22 +381,43 @@ public class RulesDefinitionXmlLoader {
         }
     }
 
-    private static String[] filterNonSonarTags(List<String> tags) {
+    private static String[] determineSonarRuleTags(String name, List<String> inputTags) {
+        List<String> ruleTags = new ArrayList(inputTags);
+        boolean hasTagTests = ruleTags.contains(TAG_TEST_SOURCES);
+        boolean hasTagMainSources = ruleTags.contains(TAG_MAIN_SOURCES);
+        boolean nameMatchesTest = TEST_RULE_PATTERN.matcher(name).find();
+
+        if (nameMatchesTest) {
+            if (!hasTagMainSources && !hasTagTests) { // no override
+                ruleTags.add(TAG_TEST_SOURCES);
+            } else {
+                // main-sources or main-sources+tests tag used to override name matching
+                if (hasTagMainSources || (hasTagMainSources && hasTagTests)) {
+                    // override name matching to non-test: main-sources or all-sources
+                    ruleTags.remove(TAG_TEST_SOURCES);
+                }
+            }
+        }
         // we filter out the 'main-sources' tag because it is only used to set/limit analysis scope;
         // and not used in the rule tags of Sonar
-        return tags.stream()
-                .filter(tag -> !tag.equalsIgnoreCase(TAG_MAIN_SOURCES))
-                .toArray(String[]::new);
+        ruleTags.remove(TAG_MAIN_SOURCES);
+        return ruleTags.toArray(new String[0]);
     }
+
+
 
     private static RuleScope determineScope(String name, List<String> tags) {
         RuleScope scope = RuleScope.ALL; // default
-        if (tags.contains(TAG_TEST_SOURCES) || TEST_RULE_PATTERN.matcher(name).find()) {
-            if (!tags.contains(TAG_MAIN_SOURCES)) { // if rule has both, it means ALL
-                scope =RuleScope.TEST;
+        boolean hasTagTests = tags.contains(TAG_TEST_SOURCES);
+        boolean hasTagMainSources = tags.contains(TAG_MAIN_SOURCES);
+        boolean nameMatchesTest = TEST_RULE_PATTERN.matcher(name).find();
+
+        if (hasTagTests || nameMatchesTest) {
+            if (!hasTagMainSources) { // if rule has both, it means ALL
+                scope = RuleScope.TEST;
             }
         }
-        if (tags.contains(TAG_MAIN_SOURCES) && !tags.contains(TAG_TEST_SOURCES)) { // if rule has both, it means ALL
+        if (hasTagMainSources && !hasTagTests) { // if rule has both, it means ALL
             scope = RuleScope.MAIN;
         }
         return scope;
