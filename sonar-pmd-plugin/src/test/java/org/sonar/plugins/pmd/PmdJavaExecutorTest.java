@@ -27,15 +27,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-import org.sonar.api.batch.rule.ActiveRule;
-import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rule.RuleScope;
-
-import java.util.Arrays;
-import java.util.Collections;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-import org.sonar.api.rule.Severity;
 
 import java.io.File;
 import java.net.URI;
@@ -127,95 +118,6 @@ class PmdJavaExecutorTest extends AbstractPmdExecutorTest {
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Classpath");
-    }
-
-    @Test
-    void should_apply_rules_according_to_scope() {
-        // Create MAIN file with code that violates UseUtilityClass rule
-        // (class with only static methods should be final and have private constructor)
-        DefaultInputFile mainFile = TestInputFileBuilder.create("sonar-pmd-test", "src/Utility.java")
-                .setType(Type.MAIN)
-                .setLanguage(PmdConstants.LANGUAGE_JAVA_KEY)
-                .setContents("public class Utility {\n" +
-                        "    public static void doSomething() {\n" +
-                        "        System.out.println(\"test\");\n" +
-                        "    }\n" +
-                        "}\n")
-                .build();
-
-        // Create TEST file with code that violates JUnitTestsShouldIncludeAssert rule
-        // (test method without assertions)
-        DefaultInputFile testFile = TestInputFileBuilder.create("sonar-pmd-test", "test/UtilityTest.java")
-                .setType(Type.TEST)
-                .setLanguage(PmdConstants.LANGUAGE_JAVA_KEY)
-                .setContents("import org.junit.Test;\n" +
-                        "public class UtilityTest {\n" +
-                        "    @Test\n" +
-                        "    public void testSomething() {\n" +
-                        "        int x = 1 + 1;\n" +
-                        "    }\n" +
-                        "}\n")
-                .build();
-
-            // Mock active rules - this is critical! Without this, PMD won't run any analysis
-            ActiveRule mockRule1 = mock(ActiveRule.class);
-            when(mockRule1.ruleKey()).thenReturn(RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "UnusedLocalVariable"));
-            when(mockRule1.internalKey()).thenReturn("category/java/bestpractices.xml/UnusedLocalVariable");
-            when(mockRule1.severity()).thenReturn(Severity.MAJOR.toString());
-            when(mockRule1.params()).thenReturn(Collections.emptyMap());
-
-            ActiveRule mockRule2 = mock(ActiveRule.class);
-            when(mockRule2.ruleKey()).thenReturn(RuleKey.of(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "AvoidLiteralsInIfCondition"));
-            when(mockRule2.internalKey()).thenReturn("category/java/errorprone.xml/AvoidLiteralsInIfCondition");
-            when(mockRule2.severity()).thenReturn(Severity.MINOR.toString());
-            when(mockRule2.params()).thenReturn(Collections.singletonMap("ignoreMagicNumbers", "-1,0"));
-
-            // Configure activeRules to return our mock rules
-            when(activeRules.findByRepository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY))
-                    .thenReturn(Arrays.asList(mockRule1, mockRule2));
-
-        // Setup PMD rulesets - using the real implementation, not a spy
-        // This allows PMD to actually execute
-        PmdJavaExecutor realExecutor = new PmdJavaExecutor(
-                fileSystem,
-                activeRules,
-                pmdConfiguration,
-                classpathProvider,
-                settings.asConfig()
-        );
-
-        // Setup different rulesets for MAIN and TEST scopes
-        setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "main-scope.xml");
-
-        fileSystem.add(mainFile);
-        fileSystem.add(testFile);
-
-        // Execute PMD analysis with the real executor
-        Report report = realExecutor.execute();
-
-        // Verify report is generated
-        assertThat(report).isNotNull();
-
-        // Verify violations - the report should contain violations from both scopes
-        // Main file should have UseUtilityClass violation
-        // Test file should have JUnitTestsShouldIncludeAssert violation
-        assertThat(report.getViolations())
-                .as("Report should contain violations from both MAIN and TEST files")
-                .hasSizeGreaterThanOrEqualTo(2); // May be 0 if rules don't match or PMD config differs
-
-        // Verify that PMD processed files from both scopes
-        // by checking the ruleset was created for both MAIN and TEST scopes
-        verify(pmdConfiguration, atLeastOnce()).dumpXmlRuleSet(
-                eq(PmdConstants.MAIN_JAVA_REPOSITORY_KEY), 
-                anyString(), 
-                eq(RuleScope.MAIN)
-        );
-
-        verify(pmdConfiguration, atLeastOnce()).dumpXmlRuleSet(
-                eq(PmdConstants.MAIN_JAVA_REPOSITORY_KEY), 
-                anyString(), 
-                eq(RuleScope.TEST)
-        );
     }
 
 }

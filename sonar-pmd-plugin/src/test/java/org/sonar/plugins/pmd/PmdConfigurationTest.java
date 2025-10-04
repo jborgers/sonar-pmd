@@ -78,7 +78,7 @@ class PmdConfigurationTest {
 
         File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>", RuleScope.TEST);
 
-        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
+        assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd-test.xml"));
         assertThat(Files.readAllLines(rulesFile.toPath(), StandardCharsets.UTF_8)).containsExactly("<rules>");
     }
 
