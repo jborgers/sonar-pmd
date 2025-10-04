@@ -144,7 +144,7 @@ public class PmdRuleScopeRegistry {
         try (InputStream inputStream = url.openStream()) {
             Map<String, RuleScope> scopes = loadRuleScopesFromStream(inputStream, StandardCharsets.UTF_8);
             ruleScopeMap.putAll(scopes);
-            LOGGER.info("Loaded {} rule scopes from URL {}", scopes.size(), url);
+            LOGGER.debug("Loaded {} rule scopes from URL {}", scopes.size(), url);
         } catch (Exception e) {
             LOGGER.error("Failed to load rule scopes from URL {}", url, e);
         }
