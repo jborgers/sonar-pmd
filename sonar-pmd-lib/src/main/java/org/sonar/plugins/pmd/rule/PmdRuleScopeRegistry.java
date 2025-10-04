@@ -113,9 +113,6 @@ public class PmdRuleScopeRegistry {
         }
     }
 
-    public PmdRuleScopeRegistry(String... xmlResourcePaths) {
-        addXmlResources(xmlResourcePaths);
-    }
 
     /**
      * Gets the scope for a rule key.
@@ -147,7 +144,7 @@ public class PmdRuleScopeRegistry {
         try (InputStream inputStream = url.openStream()) {
             Map<String, RuleScope> scopes = loadRuleScopesFromStream(inputStream, StandardCharsets.UTF_8);
             ruleScopeMap.putAll(scopes);
-            LOGGER.debug("Loaded {} rule scopes from URL {}", scopes.size(), url);
+            LOGGER.info("Loaded {} rule scopes from URL {}", scopes.size(), url);
         } catch (Exception e) {
             LOGGER.error("Failed to load rule scopes from URL {}", url, e);
         }
@@ -158,7 +155,8 @@ public class PmdRuleScopeRegistry {
         try (Reader reader = new InputStreamReader(input, charset)) {
             XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
             xmlFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
-            xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.FALSE);
+            // Enable namespace awareness to correctly handle files with default or prefixed namespaces on <rules> or children
+            xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.TRUE);
             // just so it won't try to load DTD in if there's DOCTYPE
             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
             xmlFactory.setProperty(XMLInputFactory.IS_VALIDATING, Boolean.FALSE);
@@ -178,56 +176,73 @@ public class PmdRuleScopeRegistry {
             if (event.isStartElement()) {
                 StartElement element = event.asStartElement();
                 String elementName = element.getName().getLocalPart();
-                if (ELEMENT_RULE.equals(elementName)) {
-                    processRuleScopeOnly(scopeMap, reader);
+                if (ELEMENT_RULE.equalsIgnoreCase(elementName)) {
+                    processRuleScopeOnly(scopeMap, element, reader);
                 }
             }
         }
     }
 
-    private static void processRuleScopeOnly(Map<String, RuleScope> scopeMap, XMLEventReader reader) throws XMLStreamException {
+    private static void processRuleScopeOnly(Map<String, RuleScope> scopeMap, StartElement ruleElement, XMLEventReader reader) throws XMLStreamException {
         String key = null;
         String name = null;
         List<String> tags = new ArrayList<>();
 
+        // Support legacy format: <rule key="..." priority="...">
+        javax.xml.namespace.QName qn = new javax.xml.namespace.QName("key");
+        javax.xml.stream.events.Attribute keyAttr = ruleElement.getAttributeByName(qn);
+        if (keyAttr != null && keyAttr.getValue() != null && !keyAttr.getValue().isEmpty()) {
+            key = keyAttr.getValue().trim();
+        }
+
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-            if (event.isEndElement() && ELEMENT_RULE.equals(event.asEndElement().getName().getLocalPart())) {
+            if (event.isEndElement() && ELEMENT_RULE.equalsIgnoreCase(event.asEndElement().getName().getLocalPart())) {
                 break;
             }
             if (event.isStartElement()) {
                 StartElement element = event.asStartElement();
                 String elementName = element.getName().getLocalPart();
-                String text = getElementText(reader);
 
-                if ("key".equals(elementName)) {
+                if ("key".equalsIgnoreCase(elementName)) {
+                    String text = reader.getElementText();
                     key = text;
-                } else if ("name".equals(elementName)) {
+                } else if ("name".equalsIgnoreCase(elementName) || "title".equalsIgnoreCase(elementName)) {
+                    String text = reader.getElementText();
                     name = text;
-                } else if ("tag".equals(elementName)) {
-                    tags.add(text);
+                } else if ("tag".equalsIgnoreCase(elementName)) {
+                    String text = reader.getElementText();
+                    if (text != null && !text.isEmpty()) {
+                        tags.add(text);
+                    }
+                } else {
+                    // Unhandled element like <description> may contain nested elements: skip safely
+                    skipElement(reader, elementName);
                 }
             }
         }
 
-        if (key != null && name != null) {
+        if (key != null) {
             RuleScope scope = RulesDefinitionXmlLoader.determineScope(name, tags);
             scopeMap.put(key, scope);
         }
     }
 
-    private static String getElementText(XMLEventReader reader) throws XMLStreamException {
-        StringBuilder text = new StringBuilder();
+    // Skips over the current element, consuming all nested content until its matching end tag
+    private static void skipElement(XMLEventReader reader, String elementName) throws XMLStreamException {
+        int depth = 0;
         while (reader.hasNext()) {
-            XMLEvent event = reader.peek();
-            if (event.isEndElement()) {
-                break;
-            }
-            event = reader.nextEvent();
-            if (event.isCharacters()) {
-                text.append(event.asCharacters().getData());
+            XMLEvent e = reader.nextEvent();
+            if (e.isStartElement()) {
+                depth++;
+            } else if (e.isEndElement()) {
+                if (depth == 0 && e.asEndElement().getName().getLocalPart().equalsIgnoreCase(elementName)) {
+                    return;
+                }
+                if (depth > 0) {
+                    depth--;
+                }
             }
         }
-        return text.toString().trim();
     }
 }

@@ -101,12 +101,11 @@ public class PmdRuleSets {
                 LOG.warn("Failed to enumerate PMD scope index files on classpath", e);
             }
 
-            // Fallback: support well-known external PMD plugin rulesets if present on classpath
-            // e.g., sonar-pmd-jpinpoint provides: com/jpinpoint/pmd/rules/jpinpoint-rules.xml
+            // Load jPinpoint Sonar plugin scope ruleset if present on classpath (new canonical path only)
             try {
-                String jpinpointPath = "com/jpinpoint/pmd/rules/jpinpoint-rules.xml";
-                Enumeration<URL> jpUrls = cl.getResources(jpinpointPath);
+                String jpinpointPath = "com/jpinpoint/sonar/rules/sonar-pmd-jpinpoint.xml";
                 List<URL> found = new ArrayList<>();
+                Enumeration<URL> jpUrls = cl.getResources(jpinpointPath);
                 while (jpUrls.hasMoreElements()) {
                     found.add(jpUrls.nextElement());
                 }
@@ -125,9 +124,6 @@ public class PmdRuleSets {
         }
     }
 
-    private static PmdRuleScopeRegistry getScopeRegistry() {
-        return SCOPE_REGISTRY;
-    }
 
     private PmdRuleSets() {}
 
@@ -150,7 +146,7 @@ public class PmdRuleSets {
     }
 
     public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey, RuleScope scope) {
-        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey, scope, getScopeRegistry()));
+        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey, scope, SCOPE_REGISTRY));
     }
 
     private static PmdRuleSet create(RuleSetFactory factory) {
