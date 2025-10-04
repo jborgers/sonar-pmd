@@ -22,6 +22,7 @@ package org.sonar.plugins.pmd.xml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.api.utils.ValidationMessages;
 import org.sonar.plugins.pmd.xml.factory.ActiveRulesRuleSetFactory;
 import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
@@ -55,7 +56,11 @@ public class PmdRuleSets {
      * @return An instance of PmdRuleSet. The output may be empty but never null.
      */
     public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey) {
-        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey));
+        return from(activeRules, repositoryKey, RuleScope.ALL);
+    }
+
+    public static PmdRuleSet from(ActiveRules activeRules, String repositoryKey, RuleScope scope) {
+        return create(new ActiveRulesRuleSetFactory(activeRules, repositoryKey, scope));
     }
 
     private static PmdRuleSet create(RuleSetFactory factory) {

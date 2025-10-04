@@ -129,11 +129,11 @@ class PmdIT {
                 .hasSize(expectedTestIssuesCount);
 
         Optional<Issue> testIssue1 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:UnitTestContainsTooManyAsserts")).findFirst();
-        assertThat(testIssue1).withFailMessage("expected sources test issue not found").isPresent();
+        assertThat(testIssue1).withFailMessage("expected sources test issue pmd:UnitTestContainsTooManyAsserts not found").isPresent();
         assertThat(testIssue1.get().message()).isEqualTo("Unit tests should not contain more than 1 assert(s).");
 
         Optional<Issue> testIssue2 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:AvoidIfWithoutBraceTest")).findFirst();
-        assertThat(testIssue2).withFailMessage("expected source test only issue not found").isPresent();
+        assertThat(testIssue2).withFailMessage("expected source test only issue pmd:AvoidIfWithoutBraceTest not found").isPresent();
 
 
         // component -> com.sonarsource.it.projects:pmd-junit-rules:src/main/java/ProductionCode.java
@@ -144,12 +144,12 @@ class PmdIT {
                 .withFailMessage(printFailedIssueCountCheck(prodIssues, expectedProdIssueCount))
                 .hasSize(expectedProdIssueCount);
 
-        Optional<Issue> prodIssue1 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:UnusedPrivateField")).findFirst();
-        assertThat(prodIssue1).withFailMessage("expected sources main rule not found").isPresent();
+        Optional<Issue> prodIssue1 = prodIssues.stream().filter(i -> i.ruleKey().equals("pmd:UnusedPrivateField")).findFirst();
+        assertThat(prodIssue1).withFailMessage("expected sources main rule pmd:UnusedPrivateField not found").isPresent();
         assertThat(prodIssue1.get().message()).contains("Avoid unused private fields such as 'unused'.");
 
-        Optional<Issue> prodIssue2 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:AvoidIfWithoutBrace")).findFirst();
-        assertThat(prodIssue2).withFailMessage("expected sources main only issue not found").isPresent();
+        Optional<Issue> prodIssue2 = prodIssues.stream().filter(i -> i.ruleKey().equals("pmd:AvoidIfWithoutBrace")).findFirst();
+        assertThat(prodIssue2).withFailMessage("expected sources main only issue pmd:AvoidIfWithoutBrace not found").isPresent();
 
         // Cleanup
         ORCHESTRATOR.resetData(projectName);

@@ -57,8 +57,8 @@ public class PmdKotlinExecutor extends AbstractPmdExecutor {
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
-        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
+        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, org.sonar.api.rule.RuleScope.MAIN);
+        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, org.sonar.api.rule.RuleScope.TEST);
 
         if (LOGGER.isDebugEnabled()) {
             kotlinMainReport.ifPresent(this::writeDebugLine);

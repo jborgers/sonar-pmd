@@ -1,7 +1,8 @@
 public class ProductionCode {
 	private int unused;
+	private int used;
 
     public void makeTwoWhenOne() {
-        if (unused == 1) unused = 2;
+        if (used == 1) used = 2;
     }
 }

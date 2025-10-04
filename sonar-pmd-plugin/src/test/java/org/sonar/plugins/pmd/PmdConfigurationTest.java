@@ -26,6 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.internal.MapSettings;
+import org.sonar.api.rule.RuleScope;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,7 +76,7 @@ class PmdConfigurationTest {
     void should_dump_xml_rule_set() throws IOException {
         when(fs.workDir()).thenReturn(WORK_DIR);
 
-        File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>");
+        File rulesFile = configuration.dumpXmlRuleSet("pmd", "<rules>", RuleScope.TEST);
 
         assertThat(rulesFile).isEqualTo(new File(WORK_DIR, "pmd.xml"));
         assertThat(Files.readAllLines(rulesFile.toPath(), StandardCharsets.UTF_8)).containsExactly("<rules>");
@@ -85,7 +86,7 @@ class PmdConfigurationTest {
     void should_fail_to_dump_xml_rule_set() {
         when(fs.workDir()).thenReturn(new File("xxx"));
 
-        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd", "<xml>"));
+        final Throwable thrown = catchThrowable(() -> configuration.dumpXmlRuleSet("pmd", "<xml>", RuleScope.MAIN));
 
         assertThat(thrown)
                 .isInstanceOf(IllegalStateException.class)
