@@ -105,10 +105,10 @@ class PmdIT {
      * SONAR-1076
      */
     @Test
-    void testJunitRules() {
+    void testSourcesTestVsMainScopedRules() {
 
         // given
-        final String projectName = "pmd-junit-rules";
+        final String projectName = "pmd-test-vs-main-rules";
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals();
@@ -119,8 +119,8 @@ class PmdIT {
         ORCHESTRATOR.executeBuild(build);
 
         // then
-        // (component -> com.sonarsource.it.projects:pmd-junit-rules:src/test/java/ProductionCodeTest.java)
-        String testComponentKey = keyFor("pmd-junit-rules", "src/test/java", "", "ProductionCodeTest", ".java");
+        // (component -> com.sonarsource.it.projects:pmd-test-vs-main-rules:src/test/java/ProductionCodeTest.java)
+        String testComponentKey = keyFor("pmd-test-vs-main-rules", "src/test/java", "", "ProductionCodeTest", ".java");
         final List<Issue> testIssues = retrieveIssues(testComponentKey);
 
         int expectedTestIssuesCount = 2;
@@ -136,7 +136,7 @@ class PmdIT {
         assertThat(testIssue2).withFailMessage("expected source test only issue pmd:AvoidIfWithoutBraceTest not found").isPresent();
 
 
-        // component -> com.sonarsource.it.projects:pmd-junit-rules:src/main/java/ProductionCode.java
+        // component -> com.sonarsource.it.projects:pmd-test-vs-main-rules:src/main/java/ProductionCode.java
         final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "src/main/java", "", "ProductionCode", ".java"));
 
         int expectedProdIssueCount = 2;
