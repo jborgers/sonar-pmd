@@ -35,8 +35,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.net.URL;
 
 /**
  * Registry that stores the scope (MAIN, TEST, ALL) for each PMD rule by parsing the XML rule definitions.
@@ -45,20 +48,73 @@ import java.util.Map;
  */
 public class PmdRuleScopeRegistry {
 
+    private static volatile PmdRuleScopeRegistry INSTANCE;
+
+    public static PmdRuleScopeRegistry getInstance() {
+        if (INSTANCE == null) {
+            synchronized (PmdRuleScopeRegistry.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new PmdRuleScopeRegistry();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PmdRuleScopeRegistry.class);
     private static final String ELEMENT_RULE = "rule";
 
     private final Map<String, RuleScope> ruleScopeMap = new HashMap<>();
+    private final Set<String> loadedResources = new HashSet<>();
 
     /**
-     * Creates a registry and loads rule scopes from the given XML resource paths.
-     *
-     * @param xmlResourcePaths Paths to XML rule definition files (e.g., "/org/sonar/plugins/pmd/rules-java.xml")
+     * Creates an empty registry. Use addXmlResources(...) to load rule scopes.
      */
-    public PmdRuleScopeRegistry(String... xmlResourcePaths) {
-        for (String path : xmlResourcePaths) {
-            loadRulesFromXml(path);
+    public PmdRuleScopeRegistry() {
+        // empty
+    }
+
+    public synchronized void addXmlResources(String... xmlResourcePaths) {
+        if (xmlResourcePaths == null) {
+            return;
         }
+        for (String path : xmlResourcePaths) {
+            LOGGER.info("Loading rule scopes from XML '{}'", path);
+            if (path == null) {
+                continue;
+            }
+            if (loadedResources.add(path)) { // only load once
+                loadRulesFromXml(path);
+            } else {
+                LOGGER.debug("Rule scopes for XML '{}' already loaded, skipping.", path);
+            }
+        }
+    }
+
+    /**
+     * Add XML resources provided as URLs, allowing multiple resources with the same path
+     * to be loaded from different classpath entries (e.g., child plugins).
+     */
+    public synchronized void addXmlUrls(URL... urls) {
+        if (urls == null) {
+            return;
+        }
+        for (URL url : urls) {
+            if (url == null) {
+                continue;
+            }
+            String id = url.toExternalForm();
+            if (loadedResources.add(id)) {
+                LOGGER.info("Loading rule scopes from URL '{}'", id);
+                loadRulesFromUrl(url);
+            } else {
+                LOGGER.debug("Rule scopes for URL '{}' already loaded, skipping.", id);
+            }
+        }
+    }
+
+    public PmdRuleScopeRegistry(String... xmlResourcePaths) {
+        addXmlResources(xmlResourcePaths);
     }
 
     /**
@@ -84,6 +140,16 @@ public class PmdRuleScopeRegistry {
             LOGGER.debug("Loaded {} rule scopes from {}", scopes.size(), xmlResourcePath);
         } catch (Exception e) {
             LOGGER.error("Failed to load rule scopes from {}", xmlResourcePath, e);
+        }
+    }
+
+    private void loadRulesFromUrl(URL url) {
+        try (InputStream inputStream = url.openStream()) {
+            Map<String, RuleScope> scopes = loadRuleScopesFromStream(inputStream, StandardCharsets.UTF_8);
+            ruleScopeMap.putAll(scopes);
+            LOGGER.debug("Loaded {} rule scopes from URL {}", scopes.size(), url);
+        } catch (Exception e) {
+            LOGGER.error("Failed to load rule scopes from URL {}", url, e);
         }
     }
 
