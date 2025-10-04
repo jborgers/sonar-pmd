@@ -101,6 +101,23 @@ public class PmdRuleSets {
                 LOG.warn("Failed to enumerate PMD scope index files on classpath", e);
             }
 
+            // Fallback: support well-known external PMD plugin rulesets if present on classpath
+            // e.g., sonar-pmd-jpinpoint provides: com/jpinpoint/pmd/rules/jpinpoint-rules.xml
+            try {
+                String jpinpointPath = "com/jpinpoint/pmd/rules/jpinpoint-rules.xml";
+                Enumeration<URL> jpUrls = cl.getResources(jpinpointPath);
+                List<URL> found = new ArrayList<>();
+                while (jpUrls.hasMoreElements()) {
+                    found.add(jpUrls.nextElement());
+                }
+                if (!found.isEmpty()) {
+                    LOG.info("Loading PMD scope definitions from jPinpoint ruleset found at {} location(s)", found.size());
+                    registry.addXmlUrls(found.toArray(new URL[0]));
+                }
+            } catch (IOException e) {
+                LOG.debug("Could not enumerate jPinpoint ruleset on classpath", e);
+            }
+
             return registry;
         } catch (Exception e) {
             LOG.error("Failed to initialize PMD scope registry, using empty registry", e);
