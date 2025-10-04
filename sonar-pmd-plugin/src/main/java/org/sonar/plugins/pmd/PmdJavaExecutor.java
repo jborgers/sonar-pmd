@@ -26,6 +26,7 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.rule.RuleScope;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -64,8 +65,8 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
-        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY, RuleScope.MAIN);
+        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY, RuleScope.TEST);
 
         if (LOGGER.isDebugEnabled()) {
             javaMainReport.ifPresent(this::writeDebugLine);

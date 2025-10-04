@@ -1,0 +1,13 @@
+<rules xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+  <rule>
+    <key>NS001</key>
+    <name>Rule With Default NS</name>
+    <tag>tests</tag>
+  </rule>
+  <rule>
+    <key>NS002</key>
+    <name>Main Rule</name>
+    <tag>main-sources</tag>
+    <tag>performance</tag>
+  </rule>
+</rules>

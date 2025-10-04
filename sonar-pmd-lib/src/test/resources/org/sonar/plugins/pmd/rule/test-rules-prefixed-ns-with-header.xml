@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns:pmd="http://pmd.sourceforge.net/ruleset/2.0.0">
+  <rule>
+    <key>NSP001</key>
+    <name>Prefixed Namespace Test Rule</name>
+    <tag>tests</tag>
+  </rule>
+  <rule>
+    <key>NSP002</key>
+    <name>Another Rule</name>
+    <tag>main-sources</tag>
+    <tag>security</tag>
+  </rule>
+</rules>

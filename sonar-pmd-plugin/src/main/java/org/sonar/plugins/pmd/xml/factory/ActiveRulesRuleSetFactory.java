@@ -23,7 +23,9 @@ import java.util.*;
 
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.PmdPriorities;
+import org.sonar.plugins.pmd.rule.PmdRuleScopeRegistry;
 import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
@@ -35,10 +37,14 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
 
     private final ActiveRules activeRules;
     private final String repositoryKey;
+    private final RuleScope targetScope;
+    private final PmdRuleScopeRegistry scopeRegistry;
 
-    public ActiveRulesRuleSetFactory(ActiveRules activeRules, String repositoryKey) {
+    public ActiveRulesRuleSetFactory(ActiveRules activeRules, String repositoryKey, RuleScope targetScope, PmdRuleScopeRegistry scopeRegistry) {
         this.activeRules = activeRules;
         this.repositoryKey = repositoryKey;
+        this.targetScope = targetScope;
+        this.scopeRegistry = scopeRegistry;
     }
 
     @Override
@@ -47,8 +53,11 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
         final Collection<ActiveRule> rules = this.activeRules.findByRepository(repositoryKey);
         PmdRuleSet ruleset = new PmdRuleSet();
         ruleset.setName(repositoryKey);
-        ruleset.setDescription(String.format("Sonar Profile: %s", repositoryKey));
+        ruleset.setDescription("Sonar Profile: " + repositoryKey + " (" + targetScope + ")");
         for (ActiveRule rule : rules) {
+            if (!isRuleInScope(rule, targetScope)) {
+                continue;
+            }
             String configKey = rule.internalKey();
             PmdRule pmdRule = new PmdRule(configKey, PmdPriorities.ofSonarRule(rule));
             addRuleProperties(rule, pmdRule);
@@ -59,7 +68,21 @@ public class ActiveRulesRuleSetFactory implements RuleSetFactory {
         return ruleset;
     }
 
-    private void addRuleProperties(org.sonar.api.batch.rule.ActiveRule activeRule, PmdRule pmdRule) {
+    private boolean isRuleInScope(ActiveRule activeRule, RuleScope targetScope) {
+        if (targetScope == RuleScope.ALL) {
+            return true;
+        }
+
+        // Get the actual scope from the registry (based on XML rule definition)
+        RuleScope ruleScope = scopeRegistry.getScope(activeRule.ruleKey().rule());
+
+        // Rule matches if:
+        // - Rule scope is ALL (applies to both MAIN and TEST)
+        // - Rule scope matches the target scope exactly
+        return ruleScope == RuleScope.ALL || ruleScope == targetScope;
+    }
+
+    private void addRuleProperties(ActiveRule activeRule, PmdRule pmdRule) {
         if ((activeRule.params() != null) && !activeRule.params().isEmpty()) {
             List<PmdProperty> properties = new ArrayList<>();
             for (Map.Entry<String, String> activeRuleParam : activeRule.params().entrySet()) {

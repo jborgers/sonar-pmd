@@ -19,5 +19,13 @@
       <key>UnusedPrivateField</key>
       <priority>MAJOR</priority>
     </rule>
+    <rule>
+      <repositoryKey>pmd</repositoryKey>
+      <key>AvoidIfWithoutBrace</key>
+    </rule>
+    <rule>
+      <repositoryKey>pmd</repositoryKey>
+      <key>AvoidIfWithoutBraceTest</key>
+    </rule>
   </rules>
 </profile>

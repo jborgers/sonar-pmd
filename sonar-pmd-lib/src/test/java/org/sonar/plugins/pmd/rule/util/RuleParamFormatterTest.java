@@ -21,7 +21,7 @@ class RuleParamFormatterTest {
         String result = RuleParamFormatter.buildDescription(existing, fromPropInfo, accepted, false);
 
         assertThat(result)
-                .isEqualTo("Some description. Extra. Allowed values: [A,B,C]. Select one of the values.");
+                .isEqualTo("Some description. Extra. Allowed values: [a,b,c]. Select one of the values.");
     }
 
     @Test

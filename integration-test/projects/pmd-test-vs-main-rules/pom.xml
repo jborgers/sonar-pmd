@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.sonarsource.it.projects</groupId>
-  <artifactId>pmd-junit-rules</artifactId>
+  <artifactId>pmd-test-vs-main-rules</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <build>
@@ -12,7 +12,7 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>5.1.0.4751</version>
+          <version>5.2.0.4988</version>
         </plugin>
       </plugins>
     </pluginManagement>

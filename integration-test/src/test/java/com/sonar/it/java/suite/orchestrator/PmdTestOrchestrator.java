@@ -53,6 +53,7 @@ public class PmdTestOrchestrator {
         if (System.getProperty("orchestrator.artifactory.url") == null) {
             System.setProperty("orchestrator.artifactory.url", CENTRAL_MAVEN);
         }
+        System.out.println("NOTICE: Make sure to run './mvnw clean install -DskipTests' before running integration tests to ensure all new changes are available in the test");
     }
     private final OrchestratorRule delegate;
 

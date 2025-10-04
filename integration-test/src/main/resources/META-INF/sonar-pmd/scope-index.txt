@@ -1,0 +1,3 @@
+# List of classpath resources that define PMD rule scopes for this plugin
+# One path per line; paths are resolved via ClassLoader.getResources
+org/sonar/examples/pmd/extensions.xml

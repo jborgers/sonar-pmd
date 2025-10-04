@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.rule.RuleScope;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,9 +60,23 @@ public class PmdConfiguration {
         return output.toString();
     }
 
-    File dumpXmlRuleSet(String repositoryKey, String rulesXml) {
+    File dumpXmlRuleSet(String repositoryKey, String rulesXml, RuleScope scope) {
         try {
-            File configurationFile = writeToWorkingDirectory(rulesXml, repositoryKey + ".xml").toFile();
+            String suffix;
+            switch (scope) {
+                case MAIN:
+                    suffix = "-main";
+                    break;
+                case TEST:
+                    suffix = "-test";
+                    break;
+                case ALL:
+                default:
+                    suffix = "";
+                    break;
+            }
+            String fileName = repositoryKey + suffix + ".xml";
+            File configurationFile = writeToWorkingDirectory(rulesXml, fileName).toFile();
 
             LOG.info("PMD configuration: " + configurationFile.getAbsolutePath());
 
@@ -87,7 +102,7 @@ public class PmdConfiguration {
             final String reportAsString = reportToString(report);
             final Path reportFile = writeToWorkingDirectory(reportAsString, PMD_RESULT_XML);
 
-            LOG.info("PMD output report: {}" + reportFile);
+            LOG.info("PMD output report: {}", reportFile);
 
             return reportFile;
         } catch (IOException e) {

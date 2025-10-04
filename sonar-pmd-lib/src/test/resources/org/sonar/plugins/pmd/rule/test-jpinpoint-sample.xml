@@ -1,0 +1,67 @@
+<rules xmlns:pmd="http://pmd.sourceforge.net/ruleset/2.0.0">
+   <rule>
+      <key>AvoidCDIReferenceLeak</key>
+      <name>Explicit CDI references need to be destroyed otherwise they leak.</name>
+      <internalKey>com/jpinpoint/pmd/rules/jpinpoint-rules.xml/AvoidCDIReferenceLeak</internalKey>
+      <severity>BLOCKER</severity>
+      <description><![CDATA[<b>Problem:</b> A proxy object is created by Contexts and Dependency Injection (CDI) for explicit references, they are not de-referenced implicitly and become a memory leak. &#xD;
+            <p/>
+         <b>Solution:</b> Destroy the reference explicitly.
+            (jpinpoint-rules)<p/>
+         <b>Example:</b>
+         <pre>public class CDIStuff {
+        private void bad() {
+                MyClass o = CDI.current().select(MyClass.class).get();
+                o.doStuff();
+            // bad - missing destroy in finally
+        }
+        private void good() {
+                MyClass o = CDI.current().select(MyClass.class).get();
+                try {
+                        o.doStuff();
+                } finally {
+                        CDI.current().destroy(o); // good - destroy properly
+                }
+        }
+}
+</pre>
+         <b>More information: </b>
+         <a href="https://github.com/jborgers/PMD-jPinpoint-rules/tree/pmd7/docs/JavaCodePerformance.md#pml05">JavaCodePerformance.md#pml05</a>
+         <br/>]]></description>
+      <tag>jpinpoint-rule</tag>
+      <tag>memory</tag>
+      <tag>performance</tag>
+      <tag>sustainability-low</tag>
+   </rule>
+   <rule>
+      <key>AvoidCalendar</key>
+      <name>A Calendar is inefficient in memory usage.</name>
+      <internalKey>com/jpinpoint/pmd/rules/jpinpoint-rules.xml/AvoidCalendar</internalKey>
+      <severity>MAJOR</severity>
+      <description><![CDATA[<b>Problem:</b> A Calendar is a heavyweight object and expensive to create. &#xD;
+            <p/>
+         <b>Solution:</b> Use Date, Java 8+ java.time.[Local/Zoned]DateTime.
+            (jpinpoint-rules)<p/>
+         <b>Example:</b>
+         <pre>public class CalendarStuff {
+    Calendar field1; // bad
+    private Calendar bad1() {
+        return Calendar.getInstance();
+    }
+    private Date good1a() {
+        return new Date(); // now
+    }
+    private LocalDateTime good1b() {
+        return LocalDateTime.now();
+    }
+}
+</pre>
+         <b>More information: </b>
+         <a href="https://github.com/jborgers/PMD-jPinpoint-rules/tree/pmd7/docs/JavaCodePerformance.md#imu01">JavaCodePerformance.md#imu01</a>
+         <br/>]]></description>
+      <tag>jpinpoint-rule</tag>
+      <tag>memory</tag>
+      <tag>performance</tag>
+      <tag>sustainability-medium</tag>
+   </rule>
+</rules>

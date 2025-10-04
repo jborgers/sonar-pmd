@@ -25,6 +25,7 @@ package org.sonar.plugins.pmd.rule;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
@@ -37,7 +38,6 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Cardinality;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
-import org.jetbrains.annotations.Nullable;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -404,9 +404,7 @@ public class RulesDefinitionXmlLoader {
         return ruleTags.toArray(new String[0]);
     }
 
-
-
-    private static RuleScope determineScope(String name, List<String> tags) {
+    /* default */ static RuleScope determineScope(String name, List<String> tags) {
         RuleScope scope = RuleScope.ALL; // default
         boolean hasTagTests = tags.contains(TAG_TEST_SOURCES);
         boolean hasTagMainSources = tags.contains(TAG_MAIN_SOURCES);

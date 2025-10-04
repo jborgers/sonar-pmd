@@ -23,12 +23,14 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
 import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.internal.MapSettings;
+import org.sonar.api.rule.RuleScope;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +57,7 @@ public abstract class AbstractPmdExecutorTest {
     
     protected AbstractPmdExecutor pmdExecutor;
 
-    protected static DefaultInputFile file(String path, Type type) {
+    protected static DefaultInputFile fileJava(String path, Type type) {
         return TestInputFileBuilder.create("sonar-pmd-test", path)
                 .setType(type)
                 .setLanguage(PmdConstants.LANGUAGE_JAVA_KEY)
@@ -90,7 +92,7 @@ public abstract class AbstractPmdExecutorTest {
 
     @Test
     void unknown_pmd_ruleset() {
-        when(pmdConfiguration.dumpXmlRuleSet(anyString(), anyString())).thenReturn(new File("unknown"));
+        when(pmdConfiguration.dumpXmlRuleSet(anyString(), anyString(), ArgumentMatchers.any(RuleScope.class))).thenReturn(new File("unknown"));
 
         DefaultInputFile srcFile = getAppropriateInputFileForTest();
         fileSystem.add(srcFile);
@@ -109,6 +111,6 @@ public abstract class AbstractPmdExecutorTest {
 
     protected void setupPmdRuleSet(String repositoryKey, String profileFileName) {
         final Path sourcePath = Paths.get("src/test/resources/org/sonar/plugins/pmd/").resolve(profileFileName);
-        when(pmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString())).thenReturn(sourcePath.toFile());
+        when(pmdConfiguration.dumpXmlRuleSet(eq(repositoryKey), anyString(), ArgumentMatchers.any(RuleScope.class))).thenReturn(sourcePath.toFile());
     }
 }

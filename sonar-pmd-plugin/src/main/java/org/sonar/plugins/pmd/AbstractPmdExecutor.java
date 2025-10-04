@@ -33,16 +33,15 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * Abstract base class for PMD executors that contains common functionality.
@@ -159,14 +158,14 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The report
      */
-    protected Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
+    protected Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey, RuleScope scope) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
             LOGGER.debug("No files to analyze for {}", repositoryKey);
             return Optional.empty();
         }
 
-        final RuleSet ruleSet = createRuleSet(repositoryKey);
+        final RuleSet ruleSet = createRuleSet(repositoryKey, scope);
 
         if (ruleSet.size() < 1) {
             // No rule
@@ -183,14 +182,13 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The ruleset
      */
-    protected RuleSet createRuleSet(String repositoryKey) {
-        final String rulesXml = dumpXml(rulesProfile, repositoryKey);
-        final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
+    protected RuleSet createRuleSet(String repositoryKey, RuleScope scope) {
+        final String rulesXml = dumpXml(rulesProfile, repositoryKey, scope);
+        final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml, scope);
         final String ruleSetFilePath = ruleSetFile.getAbsolutePath();
 
         try {
-            return new RuleSetLoader()
-                    .loadFromResource(ruleSetFilePath);
+            return new RuleSetLoader().loadFromResource(ruleSetFilePath);
         } catch (RuleSetLoadException e) {
             throw new IllegalStateException(e);
         }
@@ -202,9 +200,9 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The XML
      */
-    protected String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
-        final StringWriter writer = new StringWriter();
-        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey);
+    protected String dumpXml(ActiveRules rulesProfile, String repositoryKey, RuleScope scope) {
+        final StringWriter writer = new StringWriter(2024);
+        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey, scope);
         ruleSet.writeTo(writer);
 
         return writer.toString();

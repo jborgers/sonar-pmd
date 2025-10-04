@@ -230,6 +230,27 @@ public class JavaRulePropertyExtractor {
     }
 
     /**
+     * Returns the display label for an enum constant: if the enum type defines a no-arg method named
+     * 'label' returning a String, that value is used. Otherwise, falls back to toString().
+     */
+    private static String enumDisplay(Object enumConst) {
+        if (enumConst == null) return "";
+        try {
+            // Use public or package-private method label() if present
+            var m = enumConst.getClass().getMethod("label");
+            if (m.getReturnType() == String.class) {
+                Object v = m.invoke(enumConst);
+                return v == null ? "" : v.toString();
+            }
+        } catch (NoSuchMethodException ignored) {
+            // ignore
+        } catch (Throwable t) {
+            LOGGER.debug("Failed to invoke label() on {}: {}", enumConst.getClass().getName(), t.toString());
+        }
+        return enumConst.toString();
+    }
+
+    /**
      * Gets the default values from the given PropertyDescriptor object.
      */
     private List<String> getDefaultValues(PropertyDescriptor<?> propertyDescriptor) {
@@ -254,7 +275,7 @@ public class JavaRulePropertyExtractor {
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueList) {
-                    String x = value.toString();
+                    String x = (value != null && value.getClass().isEnum()) ? enumDisplay(value) : String.valueOf(value);
                     // workaround for label mapping AvoidUsingHardCodedIP AddressKinds enum
                     x = x.equals("IPV4") ? "IPv4" : x;
                     x = x.equals("IPV6") ? "IPv6" : x;
@@ -273,7 +294,7 @@ public class JavaRulePropertyExtractor {
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueSet) {
-                    String x = value.toString();
+                    String x = (value != null && value.getClass().isEnum()) ? enumDisplay(value) : String.valueOf(value);
                     result.add(x);
                 }
                 return result;
@@ -282,7 +303,8 @@ public class JavaRulePropertyExtractor {
                 if (optional.isPresent()) {
                     Object wrappedInOptional = optional.get();
                     LOGGER.debug("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
-                    return Collections.singletonList(wrappedInOptional.toString());
+                    String v = (wrappedInOptional != null && wrappedInOptional.getClass().isEnum()) ? enumDisplay(wrappedInOptional) : wrappedInOptional.toString();
+                    return Collections.singletonList(v);
                 } else {
                     if (!(propertyDescriptor.name().equals("violationSuppressRegex") || propertyDescriptor.name().equals("violationSuppressXPath"))) {
                         LOGGER.debug("%%% found empty optional for {}", propertyDescriptor);
@@ -291,7 +313,8 @@ public class JavaRulePropertyExtractor {
                 }
             } else if (defaultValue != null) {
                 LOGGER.debug("%%% found default value: {} for {} (type: {})", defaultValue, propertyDescriptor.name(), defaultValue.getClass().getSimpleName());
-                return Collections.singletonList(defaultValue.toString());
+                String v = (defaultValue.getClass().isEnum()) ? enumDisplay(defaultValue) : defaultValue.toString();
+                return Collections.singletonList(v);
             }
         } catch (Exception e) {
             LOGGER.error("Error getting default values for {}", propertyDescriptor, e);
@@ -347,7 +370,8 @@ public class JavaRulePropertyExtractor {
                 Object[] constants = enumClass.getEnumConstants();
                 if (constants != null) {
                     for (Object c : constants) {
-                        result.add(normalizeLabel(c.toString()));
+                        String label = enumDisplay(c);
+                        result.add(normalizeLabel(label));
                     }
                 }
             }
