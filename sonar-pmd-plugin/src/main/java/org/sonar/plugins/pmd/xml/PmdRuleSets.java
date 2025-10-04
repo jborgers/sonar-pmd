@@ -58,8 +58,8 @@ public class PmdRuleSets {
 
             ClassLoader cl = PmdRuleSets.class.getClassLoader();
 
-            // Also support a generic index file that child plugins can ship to declare arbitrary rule XML paths
-            String indexResource = "META-INF/sonar-pmd/scope-index.txt"; // each line: a classpath resource path to an XML
+            // Support a generic index file that child plugins can ship to declare arbitrary rule XML paths
+            String indexResource = "META-INF/sonar-pmd/sonar-pmd-rules-paths.txt"; // each line: a classpath resource path to an XML
             try {
                 Enumeration<URL> indexUrls = cl.getResources(indexResource);
                 int processedIndexes = 0;
@@ -101,7 +101,7 @@ public class PmdRuleSets {
                 LOG.warn("Failed to enumerate PMD scope index files on classpath", e);
             }
 
-            // Load jPinpoint Sonar plugin scope ruleset if present on classpath (new canonical path only)
+            // Load jPinpoint Sonar plugin sonar rules if present on classpath (new canonical path only)
             try {
                 String jpinpointPath = "com/jpinpoint/sonar/rules/sonar-pmd-jpinpoint.xml";
                 List<URL> found = new ArrayList<>();
