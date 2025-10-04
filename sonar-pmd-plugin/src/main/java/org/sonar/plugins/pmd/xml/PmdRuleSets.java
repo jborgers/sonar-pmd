@@ -58,64 +58,9 @@ public class PmdRuleSets {
 
             ClassLoader cl = PmdRuleSets.class.getClassLoader();
 
-            // Support a generic index file that child plugins can ship to declare arbitrary rule XML paths
-            String indexResource = "META-INF/sonar-pmd/sonar-pmd-rules-paths.txt"; // each line: a classpath resource path to an XML
-            try {
-                Enumeration<URL> indexUrls = cl.getResources(indexResource);
-                int processedIndexes = 0;
-                List<URL> declaredRuleXmls = new ArrayList<>();
-                while (indexUrls.hasMoreElements()) {
-                    processedIndexes++;
-                    URL idxUrl = indexUrls.nextElement();
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(idxUrl.openStream(), StandardCharsets.UTF_8))) {
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            String path = line.trim();
-                            if (path.isEmpty() || path.startsWith("#")) {
-                                continue;
-                            }
-                            // Normalize leading slash for ClassLoader lookups
-                            if (path.startsWith("/")) {
-                                path = path.substring(1);
-                            }
-                            try {
-                                Enumeration<URL> xmls = cl.getResources(path);
-                                while (xmls.hasMoreElements()) {
-                                    declaredRuleXmls.add(xmls.nextElement());
-                                }
-                            } catch (IOException e) {
-                                LOG.warn("Failed to resolve declared PMD scope resource '{}' from index {}", path, idxUrl);
-                            }
-                        }
-                    } catch (IOException e) {
-                        LOG.warn("Failed to read PMD scope index {}", idxUrl, e);
-                    }
-                }
-                if (!declaredRuleXmls.isEmpty()) {
-                    LOG.info("Loading PMD scope definitions from {} resource(s) declared in {} index file(s)", declaredRuleXmls.size(), processedIndexes);
-                    registry.addXmlUrls(declaredRuleXmls.toArray(new URL[0]));
-                } else if (processedIndexes > 0) {
-                    LOG.debug("No PMD scope resources declared in {} index file(s)", processedIndexes);
-                }
-            } catch (IOException e) {
-                LOG.warn("Failed to enumerate PMD scope index files on classpath", e);
-            }
+            loadPluginProvidedSonarRules(cl, registry);
 
-            // Load jPinpoint Sonar plugin sonar rules if present on classpath (new canonical path only)
-            try {
-                String jpinpointPath = "com/jpinpoint/sonar/rules/sonar-pmd-jpinpoint.xml";
-                List<URL> found = new ArrayList<>();
-                Enumeration<URL> jpUrls = cl.getResources(jpinpointPath);
-                while (jpUrls.hasMoreElements()) {
-                    found.add(jpUrls.nextElement());
-                }
-                if (!found.isEmpty()) {
-                    LOG.info("Loading PMD scope definitions from jPinpoint ruleset found at {} location(s)", found.size());
-                    registry.addXmlUrls(found.toArray(new URL[0]));
-                }
-            } catch (IOException e) {
-                LOG.debug("Could not enumerate jPinpoint ruleset on classpath", e);
-            }
+            loadJPinpointPluginRules(cl, registry);
 
             return registry;
         } catch (Exception e) {
@@ -124,6 +69,72 @@ public class PmdRuleSets {
         }
     }
 
+    private static void loadJPinpointPluginRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
+        // Load jPinpoint Sonar plugin sonar rules if present on classpath (new canonical path only)
+        try {
+            String jpinpointPath = "com/jpinpoint/sonar/rules/sonar-pmd-jpinpoint.xml";
+            List<URL> found = new ArrayList<>();
+            Enumeration<URL> jpUrls = cl.getResources(jpinpointPath);
+            while (jpUrls.hasMoreElements()) {
+                found.add(jpUrls.nextElement());
+            }
+            if (!found.isEmpty()) {
+                LOG.info("Loading PMD scope definitions from jPinpoint ruleset found at {} location(s)", found.size());
+                registry.addXmlUrls(found.toArray(new URL[0]));
+            }
+        } catch (IOException e) {
+            LOG.debug("Could not enumerate jPinpoint ruleset on classpath", e);
+        }
+    }
+
+    private static void loadPluginProvidedSonarRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
+        // Support a generic index file that child plugins can ship to declare arbitrary rule XML paths
+        String indexResource = "META-INF/sonar-pmd/sonar-pmd-rules-paths.txt"; // each line: a classpath resource path to an XML
+        try {
+            Enumeration<URL> indexUrls = cl.getResources(indexResource);
+            int processedIndexes = 0;
+            List<URL> declaredRuleXmls = new ArrayList<>();
+            while (indexUrls.hasMoreElements()) {
+                processedIndexes++;
+                URL idxUrl = indexUrls.nextElement();
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(idxUrl.openStream(), StandardCharsets.UTF_8))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        processSonarPluginRulesPathLine(cl, line, declaredRuleXmls, idxUrl);
+                    }
+                } catch (IOException e) {
+                    LOG.warn("Failed to read PMD scope index {}", idxUrl, e);
+                }
+            }
+            if (!declaredRuleXmls.isEmpty()) {
+                LOG.info("Loading PMD scope definitions from {} resource(s) declared in {} index file(s)", declaredRuleXmls.size(), processedIndexes);
+                registry.addXmlUrls(declaredRuleXmls.toArray(new URL[0]));
+            } else if (processedIndexes > 0) {
+                LOG.debug("No PMD scope resources declared in {} index file(s)", processedIndexes);
+            }
+        } catch (IOException e) {
+            LOG.warn("Failed to enumerate PMD scope index files on classpath", e);
+        }
+    }
+
+    private static void processSonarPluginRulesPathLine(ClassLoader cl, String line, List<URL> declaredRuleXmls, URL idxUrl) {
+        String path = line.trim();
+        if (path.isEmpty() || path.startsWith("#")) {
+            return;
+        }
+        // Normalize leading slash for ClassLoader lookups
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        try {
+            Enumeration<URL> xmls = cl.getResources(path);
+            while (xmls.hasMoreElements()) {
+                declaredRuleXmls.add(xmls.nextElement());
+            }
+        } catch (IOException e) {
+            LOG.warn("Failed to resolve declared PMD scope resource '{}' from index {}", path, idxUrl);
+        }
+    }
 
     private PmdRuleSets() {}
 
