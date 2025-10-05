@@ -239,10 +239,10 @@ public abstract class AbstractPmdExecutor {
                         LOGGER.error(String.format(message, formatArgs));
                         break;
                     case WARN:
-                        LOGGER.warn(String.format(message, formatArgs));
+                        LOGGER.debug(String.format(message, formatArgs));
                         break;
                     case INFO:
-                        LOGGER.info(String.format(message, formatArgs));
+                        LOGGER.debug(String.format(message, formatArgs));
                         break;
                     case DEBUG:
                         LOGGER.debug(String.format(message, formatArgs));
