@@ -25,8 +25,11 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
 import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
+import net.sourceforge.pmd.util.log.PmdReporter;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
@@ -36,10 +39,13 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
+import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URLClassLoader;
 import java.util.Optional;
 
@@ -188,7 +194,37 @@ public abstract class AbstractPmdExecutor {
         final String ruleSetFilePath = ruleSetFile.getAbsolutePath();
 
         try {
-            return new RuleSetLoader().loadFromResource(ruleSetFilePath);
+            PmdReporter reporter = new PmdReporter() {
+                int numErrors = 0;
+                @Override
+                public boolean isLoggable(Level level) {
+                    return Level.ERROR.equals(level);
+                }
+
+                @Override
+                public void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error) {
+                    numErrors++;
+                    System.err.printf(message, formatArgs);
+                }
+
+                @Override
+                public int numErrors() {
+                    return numErrors;
+                }
+            };
+            // Need to use reflection to call withReporter since it's a package-private method in PMD
+            // and we need more information when failures happen besides:
+            // Caused by: net.sourceforge.pmd.lang.rule.RuleSetLoadException: Cannot load ruleset /.../sonar/pmd-main.xml: 2 XML validation errors occurred
+            //  at net.sourceforge.pmd.lang.rule.RuleSetFactory.readDocument(RuleSetFactory.java:196)
+            RuleSetLoader loader = new RuleSetLoader();
+            try {
+                Method withReporterMethod = RuleSetLoader.class.getDeclaredMethod("withReporter", PmdReporter.class);
+                withReporterMethod.setAccessible(true);
+                withReporterMethod.invoke(loader, reporter);
+                return loader.loadFromResource(ruleSetFilePath);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                throw new IllegalStateException("Failed to invoke withReporter method - this likely means the PMD API has changed", e);
+            }
         } catch (RuleSetLoadException e) {
             throw new IllegalStateException(e);
         }
