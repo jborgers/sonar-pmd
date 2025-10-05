@@ -223,7 +223,8 @@ public abstract class AbstractPmdExecutor {
                 withReporterMethod.invoke(loader, reporter);
                 return loader.loadFromResource(ruleSetFilePath);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                throw new IllegalStateException("Failed to invoke withReporter method - this likely means the PMD API has changed", e);
+                LOGGER.warn("Failed to invoke withReporter method - falling back to loading without extra reporter. This likely means the PMD API has changed.", e);
+                return loader.loadFromResource(ruleSetFilePath);
             }
         } catch (RuleSetLoadException e) {
             throw new IllegalStateException(e);
