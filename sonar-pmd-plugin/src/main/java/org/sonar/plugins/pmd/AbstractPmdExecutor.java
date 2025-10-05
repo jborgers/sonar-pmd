@@ -204,7 +204,7 @@ public abstract class AbstractPmdExecutor {
                 @Override
                 public void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error) {
                     numErrors++;
-                    System.err.printf(message, formatArgs);
+                    LOGGER.error(String.format(message, formatArgs), error);
                 }
 
                 @Override
