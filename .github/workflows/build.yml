@@ -13,17 +13,15 @@ on:
   workflow_dispatch:
     inputs:
       skipTests:
-        description: "Skip Tests?"
+        description: "Skip unit tests?"
         required: true
-        default: "no"
+        default: false
+        type: boolean
       deploySnapshot:
         description: "Deploy snapshot to Maven Central?"
         required: true
-        default: "false"
-        type: choice
-        options:
-          - "false"
-          - "true"
+        default: false
+        type: boolean
       runIntegrationTests:
         description: "Run integration tests?"
         required: true
@@ -85,7 +83,7 @@ jobs:
 
       - name: Build package with maven
         run: |
-          ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean package
+          ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "true" ]; then echo "-DskipTests"; fi) clean package
 
       - name: Run integration tests (manual trigger only)
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.runIntegrationTests == 'true'
@@ -99,7 +97,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
-          ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "yes" ]; then echo "-DskipTests"; fi) clean deploy
+          ./mvnw --batch-mode $(if [ "$SKIP_TESTS" = "true" ]; then echo "-DskipTests"; fi) clean deploy
 
       - name: Upload sonar-pmd-plugin jar
         uses: actions/upload-artifact@v4
