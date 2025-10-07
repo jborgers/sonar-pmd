@@ -80,13 +80,15 @@ Sonar-PMD assigns a scope to each PMD rule so it runs only where it makes sense.
 
 How scope is set automatically:
 - Default: ALL (rule runs on both main and test sources).
-- If a rule name contains "Test" or "JUnit", it is treated as a test rule and scoped to TEST automatically. 
+- If a rule name contains "Test" or "JUnit" (case-insensitive), it is treated as a test rule and scoped to TEST automatically. 
 - Test rules get the `tests` Sonar tag conform existing Sonar test scoped rules.
 
 How to configure or override the scope in the PMD rules XML:
-- Force a rule to run only on tests: add the tag `tests`.
-- Force a rule to run only on main sources: add the tag `main-sources`.
-- Make a rule run on ALL sources (even if its name matches a test pattern): add both tags `tests` and `main-sources`.
+1. Force a rule to run only on tests: add the tag `tests`.
+1. Force a rule to run only on main sources: add the tag `main-sources`.
+1. Force a rule run on ALL sources: add both tags `tests` and `main-sources`. 
+
+Note that the latter two options will override the rule name matching the test pattern. Also, the `tests` tag will not be shown.
 
 Notes:
 - The PMD tag `main-sources` is used for scope control and is not shown in the rule tags list in SonarQube.

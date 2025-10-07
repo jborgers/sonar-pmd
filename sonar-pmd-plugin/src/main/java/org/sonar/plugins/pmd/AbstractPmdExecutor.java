@@ -270,7 +270,7 @@ public abstract class AbstractPmdExecutor {
      * @return The XML
      */
     protected String dumpXml(ActiveRules rulesProfile, String repositoryKey, RuleScope scope) {
-        final StringWriter writer = new StringWriter(2024);
+        final StringWriter writer = new StringWriter(2048);
         final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey, scope);
         ruleSet.writeTo(writer);
 

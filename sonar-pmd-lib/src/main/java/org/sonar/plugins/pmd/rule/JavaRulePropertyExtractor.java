@@ -232,6 +232,8 @@ public class JavaRulePropertyExtractor {
     /**
      * Returns the display label for an enum constant: if the enum type defines a no-arg method named
      * 'label' returning a String, that value is used. Otherwise, falls back to toString().
+     *
+     * This is actually for a issue with default value of the
      */
     private static String enumDisplay(Object enumConst) {
         if (enumConst == null) return "";
@@ -303,7 +305,7 @@ public class JavaRulePropertyExtractor {
                 if (optional.isPresent()) {
                     Object wrappedInOptional = optional.get();
                     LOGGER.debug("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
-                    String v = (wrappedInOptional != null && wrappedInOptional.getClass().isEnum()) ? enumDisplay(wrappedInOptional) : wrappedInOptional.toString();
+                    String v = (wrappedInOptional.getClass().isEnum()) ? enumDisplay(wrappedInOptional) : wrappedInOptional.toString();
                     return Collections.singletonList(v);
                 } else {
                     if (!(propertyDescriptor.name().equals("violationSuppressRegex") || propertyDescriptor.name().equals("violationSuppressXPath"))) {
