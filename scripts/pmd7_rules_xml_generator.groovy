@@ -607,10 +607,6 @@ def processStandardProperty(xml, propInfo, Set existingParamKeys) {
     def unwrappedType = getUnwrappedType(propInfo)
     def typeToken = determineTypeToken(accepted, multiple, unwrappedType)
     def defVal = computeDefaultValue(propInfo)
-    // If this is a select list, normalize enum-like default values to lowercase (e.g., ANYWHERE -> anywhere)
-    if (typeToken != null && typeToken.startsWith("SINGLE_SELECT_LIST") && defVal instanceof String) {
-        defVal = normalizeEnumToken(defVal)
-    }
     addParamAndTrack(xml, propInfo.name, baseDesc, defVal, typeToken, existingParamKeys)
 }
 
@@ -724,11 +720,3 @@ def addXPathRuleToJavaFile(File outFile) {
     }
 }
 
-
-
-// Helper to normalize enum-like tokens to lowercase (e.g., ANYWHERE -> anywhere, ON_TYPE -> on_type)
-def normalizeEnumToken(val) {
-    if (val == null) return null
-    def v = val.toString().trim()
-    return (v ==~ /[A-Z0-9_]+/) ? v.toLowerCase() : v
-}
