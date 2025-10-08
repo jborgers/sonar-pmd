@@ -23,9 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.rule.RuleScope;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
@@ -48,6 +50,13 @@ import java.net.URL;
  */
 public class PmdRuleScopeRegistry {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmdRuleScopeRegistry.class);
+
+    private static final String ELEMENT_RULE = "rule";
+
+    private final Map<String, RuleScope> ruleScopeMap = new HashMap<>();
+    private final Set<String> loadedResources = new HashSet<>();
+
     private static volatile PmdRuleScopeRegistry INSTANCE;
 
     public static PmdRuleScopeRegistry getInstance() {
@@ -60,12 +69,6 @@ public class PmdRuleScopeRegistry {
         }
         return INSTANCE;
     }
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PmdRuleScopeRegistry.class);
-    private static final String ELEMENT_RULE = "rule";
-
-    private final Map<String, RuleScope> ruleScopeMap = new HashMap<>();
-    private final Set<String> loadedResources = new HashSet<>();
 
     /**
      * Creates an empty registry. Use addXmlResources(...) to load rule scopes.
@@ -189,8 +192,8 @@ public class PmdRuleScopeRegistry {
         List<String> tags = new ArrayList<>();
 
         // Support legacy format: <rule key="..." priority="...">
-        javax.xml.namespace.QName qn = new javax.xml.namespace.QName("key");
-        javax.xml.stream.events.Attribute keyAttr = ruleElement.getAttributeByName(qn);
+        QName qn = new QName("key");
+        Attribute keyAttr = ruleElement.getAttributeByName(qn);
         if (keyAttr != null && keyAttr.getValue() != null && !keyAttr.getValue().isEmpty()) {
             key = keyAttr.getValue().trim();
         }
