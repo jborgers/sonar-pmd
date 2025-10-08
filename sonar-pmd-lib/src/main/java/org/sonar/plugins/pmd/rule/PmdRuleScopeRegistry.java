@@ -23,9 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.rule.RuleScope;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
@@ -189,8 +191,8 @@ public class PmdRuleScopeRegistry {
         List<String> tags = new ArrayList<>();
 
         // Support legacy format: <rule key="..." priority="...">
-        javax.xml.namespace.QName qn = new javax.xml.namespace.QName("key");
-        javax.xml.stream.events.Attribute keyAttr = ruleElement.getAttributeByName(qn);
+        QName qn = new javax.xml.namespace.QName("key");
+        Attribute keyAttr = ruleElement.getAttributeByName(qn);
         if (keyAttr != null && keyAttr.getValue() != null && !keyAttr.getValue().isEmpty()) {
             key = keyAttr.getValue().trim();
         }
