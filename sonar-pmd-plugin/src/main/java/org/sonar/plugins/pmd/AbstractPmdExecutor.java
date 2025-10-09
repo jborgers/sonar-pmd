@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.pmd;
 
+import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDVersion;
 import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
@@ -204,20 +205,11 @@ public abstract class AbstractPmdExecutor {
     }
 
     private static RuleSet parseRuleSetWithReporter(PmdReporter reporter, String ruleSetFilePath) {
-        // Need to use reflection to call withReporter since it's a package-private method in PMD
-        // and we need more information when failures happen besides:
-        // Caused by: net.sourceforge.pmd.lang.rule.RuleSetLoadException: Cannot load ruleset /.../sonar/pmd-main.xml: 2 XML validation errors occurred
-        //  at net.sourceforge.pmd.lang.rule.RuleSetFactory.readDocument(RuleSetFactory.java:196)
-        RuleSetLoader loader = new RuleSetLoader();
-        try {
-            Method withReporterMethod = RuleSetLoader.class.getDeclaredMethod("withReporter", PmdReporter.class);
-            withReporterMethod.setAccessible(true);
-            withReporterMethod.invoke(loader, reporter);
-            return loader.loadFromResource(ruleSetFilePath);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            LOGGER.warn("Failed to invoke withReporter method - falling back to loading without extra reporter. This likely means the PMD API has changed.", e);
-            return loader.loadFromResource(ruleSetFilePath);
-        }
+        // no need to use reflection to enable withReporter method, see: https://github.com/pmd/pmd/issues/6126
+        PMDConfiguration pmdConfiguration = new PMDConfiguration();
+        pmdConfiguration.setReporter(reporter);
+        RuleSetLoader loader = RuleSetLoader.fromPmdConfig(pmdConfiguration);
+        return loader.loadFromResource(ruleSetFilePath);
     }
 
     private static @NotNull PmdReporter createSonarPmdPluginLogger() {
