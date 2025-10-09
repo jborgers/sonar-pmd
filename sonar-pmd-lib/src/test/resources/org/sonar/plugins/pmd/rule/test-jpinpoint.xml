@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <rule key="JP0001">
+    <title>Avoid Foo Test</title>
+    <name>Avoid Foo Test</name>
+    <tag>tests</tag>
+  </rule>
+  <rule key="JP0002">
+    <name>Avoid Foo</name>
+    <tag>main-sources</tag>
+    <tag>performance</tag>
+  </rule>
+</rules>

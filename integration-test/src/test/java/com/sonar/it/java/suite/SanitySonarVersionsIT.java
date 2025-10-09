@@ -6,6 +6,7 @@ package com.sonar.it.java.suite;
 import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.build.BuildResult;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -20,6 +21,7 @@ class SanitySonarVersionsIT {
     private static final String SONAR_VERSION_KEY = "test.sonar.version";
 
     @ParameterizedTest(name = "sanity on SonarQube {0}")
+    @Disabled("use the test with all rules enabled")
     @ValueSource(strings = {
             // Lowest supported SonarQube LTS line
             "LATEST_RELEASE[9.9]",
@@ -57,6 +59,47 @@ class SanitySonarVersionsIT {
         }
         finally {
             // restore previous property to not affect other tests
+            if (previous != null) {
+                System.setProperty(SONAR_VERSION_KEY, previous);
+            } else {
+                System.clearProperty(SONAR_VERSION_KEY);
+            }
+            if (orchestrator != null) {
+                try {
+                    orchestrator.stop();
+                } catch (Throwable ignored) {
+                    // ignore
+                }
+            }
+        }
+    }
+
+    @ParameterizedTest(name = "sanity-all-rules on SonarQube {0}")
+    @ValueSource(strings = {
+            "LATEST_RELEASE[9.9]",
+            "LATEST_RELEASE[25.9]"
+    })
+    void sanity_runs_with_all_rules_profile(String sonarqubeVersion) {
+        final String previous = System.getProperty(SONAR_VERSION_KEY);
+        System.setProperty(SONAR_VERSION_KEY, sonarqubeVersion);
+
+        PmdTestOrchestrator orchestrator = null;
+        try {
+            orchestrator = PmdTestOrchestrator.init();
+            orchestrator.start();
+
+            final String projectName = "pmd-extensions";
+            final MavenBuild build = MavenBuild
+                    .create(TestUtils.projectPom(projectName))
+                    .setCleanSonarGoals()
+                    // keep analysis minimal for sanity run
+                    .setProperty("sonar.java.binaries", ".");
+
+            // Use the profile that enables all PMD rules
+            orchestrator.associateProjectToQualityProfile("pmd-all-rules-profile", projectName);
+            final BuildResult result = orchestrator.executeBuild(build);
+            assertThat(result.getLogs()).contains("[INFO] Sensor PmdSensor [pmd]");
+        } finally {
             if (previous != null) {
                 System.setProperty(SONAR_VERSION_KEY, previous);
             } else {

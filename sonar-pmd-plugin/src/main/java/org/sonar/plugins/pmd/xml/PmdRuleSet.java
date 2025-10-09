@@ -74,19 +74,31 @@ public class PmdRuleSet {
      * @param destination The writer to which the XML document shall be written.
      */
     public void writeTo(Writer destination) {
-        Element eltRuleset = new Element("ruleset");
+        // PMD 2.0.0 ruleset namespace (compatible with PMD 6/7)
+        org.jdom2.Namespace ns = org.jdom2.Namespace.getNamespace("http://pmd.sourceforge.net/ruleset/2.0.0");
+        org.jdom2.Namespace xsi = org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+        Element eltRuleset = new Element("ruleset", ns);
+        // declare xsi namespace and schema location
+        eltRuleset.addNamespaceDeclaration(xsi);
+        eltRuleset.setAttribute("schemaLocation",
+            "http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd",
+            xsi);
+
         addAttribute(eltRuleset, "name", name);
-        addChild(eltRuleset, "description", description);
+        addChild(eltRuleset, "description", description, ns);
         for (PmdRule pmdRule : rules) {
-            Element eltRule = new Element("rule");
+            Element eltRule = new Element("rule", ns);
             addAttribute(eltRule, "ref", pmdRule.getRef());
             addAttribute(eltRule, "class", pmdRule.getClazz());
             addAttribute(eltRule, "message", pmdRule.getMessage());
             addAttribute(eltRule, "name", pmdRule.getName());
             addAttribute(eltRule, "language", pmdRule.getLanguage());
-            addChild(eltRule, "priority", String.valueOf(pmdRule.getPriority()));
+            if (pmdRule.getPriority() != null) {
+                addChild(eltRule, "priority", String.valueOf(pmdRule.getPriority()), ns);
+            }
             if (pmdRule.hasProperties()) {
-                Element ruleProperties = processRuleProperties(pmdRule);
+                Element ruleProperties = processRuleProperties(pmdRule, ns);
                 if (ruleProperties.getContentSize() > 0) {
                     eltRule.addContent(ruleProperties);
                 }
@@ -107,6 +119,13 @@ public class PmdRuleSet {
         }
     }
 
+    // Overload that ensures the child is created within the given namespace
+    private void addChild(Element elt, String name, @Nullable String text, org.jdom2.Namespace ns) {
+        if (text != null) {
+            elt.addContent(new Element(name, ns).setText(text));
+        }
+    }
+
     private void addAttribute(Element elt, String name, @Nullable String value) {
         if (value != null) {
             elt.setAttribute(name, value);
@@ -121,6 +140,26 @@ public class PmdRuleSet {
                 eltProperty.setAttribute("name", prop.getName());
                 if (prop.isCdataValue()) {
                     Element eltValue = new Element("value");
+                    eltValue.addContent(new CDATA(prop.getCdataValue()));
+                    eltProperty.addContent(eltValue);
+                } else {
+                    eltProperty.setAttribute("value", prop.getValue());
+                }
+                eltProperties.addContent(eltProperty);
+            }
+        }
+        return eltProperties;
+    }
+
+    // Namespaced variant
+    private Element processRuleProperties(PmdRule pmdRule, org.jdom2.Namespace ns) {
+        Element eltProperties = new Element("properties", ns);
+        for (PmdProperty prop : pmdRule.getProperties()) {
+            if (isPropertyValueNotEmpty(prop)) {
+                Element eltProperty = new Element("property", ns);
+                eltProperty.setAttribute("name", prop.getName());
+                if (prop.isCdataValue()) {
+                    Element eltValue = new Element("value", ns);
                     eltValue.addContent(new CDATA(prop.getCdataValue()));
                     eltProperty.addContent(eltValue);
                 } else {

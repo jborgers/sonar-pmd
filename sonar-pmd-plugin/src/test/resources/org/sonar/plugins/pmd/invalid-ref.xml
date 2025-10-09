@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="InvalidRef">
+  <description>Intentional invalid rule reference to trigger RuleSetLoader logging</description>
+  <rule name="BadRef" ref="category/java/errorprone.xml/ThisRuleDoesNotExist"/>
+</ruleset>

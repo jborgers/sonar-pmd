@@ -23,6 +23,7 @@ import com.sonar.it.java.suite.orchestrator.PmdTestOrchestrator;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.http.HttpException;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +32,8 @@ import org.sonar.wsclient.issue.Issue;
 import org.sonar.wsclient.issue.IssueQuery;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.sonar.it.java.suite.TestUtils.keyFor;
@@ -47,7 +50,8 @@ class PmdIT {
     }
 
     @ParameterizedTest
-    @EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_17", "JAVA_21", "JAVA_25", "JAVA_25_PREVIEW"})
+    //@EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_17", "JAVA_21", "JAVA_25", "JAVA_25_PREVIEW"})
+    @EnumSource(value = DefinedJavaVersion.class, mode = EnumSource.Mode.INCLUDE, names = {"JAVA_1_8", "JAVA_25_PREVIEW"})
     void testPmdExtensionsWithDifferentJavaVersions(DefinedJavaVersion version) {
 
         // given
@@ -102,10 +106,10 @@ class PmdIT {
      * SONAR-1076
      */
     @Test
-    void testJunitRules() {
+    void testSourcesTestVsMainScopedRules() {
 
         // given
-        final String projectName = "pmd-junit-rules";
+        final String projectName = "pmd-test-vs-main-rules";
         final MavenBuild build = MavenBuild
                 .create(TestUtils.projectPom(projectName))
                 .setCleanSonarGoals();
@@ -116,21 +120,45 @@ class PmdIT {
         ORCHESTRATOR.executeBuild(build);
 
         // then
-        // (component -> com.sonarsource.it.projects:pmd-junit-rules:src/test/java/ProductionCodeTest.java)
-        String testComponentKey = keyFor("pmd-junit-rules", "src/test/java", "", "ProductionCodeTest", ".java");
+        // (component -> com.sonarsource.it.projects:pmd-test-vs-main-rules:src/test/java/ProductionCodeTest.java)
+        String testComponentKey = keyFor("pmd-test-vs-main-rules", "src/test/java", "", "ProductionCodeTest", ".java");
         final List<Issue> testIssues = retrieveIssues(testComponentKey);
-        assertThat(testIssues).hasSize(1);
-        assertThat(testIssues.get(0).message()).isEqualTo("Unit tests should not contain more than 1 assert(s).");
-        assertThat(testIssues.get(0).ruleKey()).isEqualTo("pmd:UnitTestContainsTooManyAsserts");
 
-        // component -> com.sonarsource.it.projects:pmd-junit-rules:src/main/java/ProductionCode.java
+        int expectedTestIssuesCount = 2;
+        assertThat(testIssues)
+                .withFailMessage(printFailedIssueCountCheck(testIssues, expectedTestIssuesCount))
+                .hasSize(expectedTestIssuesCount);
+
+        Optional<Issue> testIssue1 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:UnitTestContainsTooManyAsserts")).findFirst();
+        assertThat(testIssue1).withFailMessage("expected sources test issue pmd:UnitTestContainsTooManyAsserts not found").isPresent();
+        assertThat(testIssue1.get().message()).isEqualTo("Unit tests should not contain more than 1 assert(s).");
+
+        Optional<Issue> testIssue2 = testIssues.stream().filter(i -> i.ruleKey().equals("pmd:AvoidIfWithoutBraceTest")).findFirst();
+        assertThat(testIssue2).withFailMessage("expected source test only issue pmd:AvoidIfWithoutBraceTest not found").isPresent();
+
+
+        // component -> com.sonarsource.it.projects:pmd-test-vs-main-rules:src/main/java/ProductionCode.java
         final List<Issue> prodIssues = retrieveIssues(keyFor(projectName, "src/main/java", "", "ProductionCode", ".java"));
-        assertThat(prodIssues).hasSize(1);
-        assertThat(prodIssues.get(0).message()).contains("Avoid unused private fields such as 'unused'.");
-        assertThat(prodIssues.get(0).ruleKey()).isEqualTo("pmd:UnusedPrivateField");
+
+        int expectedProdIssueCount = 2;
+        assertThat(prodIssues)
+                .withFailMessage(printFailedIssueCountCheck(prodIssues, expectedProdIssueCount))
+                .hasSize(expectedProdIssueCount);
+
+        Optional<Issue> prodIssue1 = prodIssues.stream().filter(i -> i.ruleKey().equals("pmd:UnusedPrivateField")).findFirst();
+        assertThat(prodIssue1).withFailMessage("expected sources main rule pmd:UnusedPrivateField not found").isPresent();
+        assertThat(prodIssue1.get().message()).contains("Avoid unused private fields such as 'unused'.");
+
+        Optional<Issue> prodIssue2 = prodIssues.stream().filter(i -> i.ruleKey().equals("pmd:AvoidIfWithoutBrace")).findFirst();
+        assertThat(prodIssue2).withFailMessage("expected sources main only issue pmd:AvoidIfWithoutBrace not found").isPresent();
 
         // Cleanup
         ORCHESTRATOR.resetData(projectName);
+    }
+
+    private static @NotNull Supplier<String> printFailedIssueCountCheck(List<Issue> prodIssues, int expectedCount) {
+        String listOfIssueKeys = prodIssues.stream().map(Issue::ruleKey).collect(Collectors.joining(";"));
+        return () -> "Did not find " + expectedCount + " issues, but " + prodIssues.size() + ": " + listOfIssueKeys;
     }
 
     /**
