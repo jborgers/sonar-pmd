@@ -46,8 +46,8 @@ The project follows standard Java code style conventions. When making changes:
 
 ## Version Compatibility
 The plugin has specific version compatibility requirements:
-- PMD version: 7.15.0
-- Java source compatibility: 8 to 24 (including 24-preview)
+- PMD version: 7.17.0
+- Java source compatibility: 8 to 25 (including 25-preview)
 - SonarQube compatibility: 9.9.4 and above
 
 ## Release Process
