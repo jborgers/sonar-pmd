@@ -19,30 +19,38 @@
  */
 package org.sonar.plugins.pmd;
 
+import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDVersion;
 import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.lang.rule.RuleSetLoadException;
 import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
+import net.sourceforge.pmd.util.log.PmdReporter;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
+import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URLClassLoader;
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Abstract base class for PMD executors that contains common functionality.
@@ -159,14 +167,14 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The report
      */
-    protected Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey) {
+    protected Optional<Report> executeRules(PmdTemplate pmdFactory, Iterable<InputFile> files, String repositoryKey, RuleScope scope) {
         if (!files.iterator().hasNext()) {
             // Nothing to analyze
             LOGGER.debug("No files to analyze for {}", repositoryKey);
             return Optional.empty();
         }
 
-        final RuleSet ruleSet = createRuleSet(repositoryKey);
+        final RuleSet ruleSet = createRuleSet(repositoryKey, scope);
 
         if (ruleSet.size() < 1) {
             // No rule
@@ -183,17 +191,68 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The ruleset
      */
-    protected RuleSet createRuleSet(String repositoryKey) {
-        final String rulesXml = dumpXml(rulesProfile, repositoryKey);
-        final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml);
+    protected RuleSet createRuleSet(String repositoryKey, RuleScope scope) {
+        final String rulesXml = dumpXml(rulesProfile, repositoryKey, scope);
+        final File ruleSetFile = pmdConfiguration.dumpXmlRuleSet(repositoryKey, rulesXml, scope);
         final String ruleSetFilePath = ruleSetFile.getAbsolutePath();
 
         try {
-            return new RuleSetLoader()
-                    .loadFromResource(ruleSetFilePath);
+            PmdReporter reporter = createSonarPmdPluginLogger();
+            return parseRuleSetWithReporter(reporter, ruleSetFilePath);
         } catch (RuleSetLoadException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private static RuleSet parseRuleSetWithReporter(PmdReporter reporter, String ruleSetFilePath) {
+        // no need to use reflection to enable withReporter method, see: https://github.com/pmd/pmd/issues/6126
+        PMDConfiguration pmdConfiguration = new PMDConfiguration();
+        pmdConfiguration.setReporter(reporter);
+        RuleSetLoader loader = RuleSetLoader.fromPmdConfig(pmdConfiguration);
+        return loader.loadFromResource(ruleSetFilePath);
+    }
+
+    private static @NotNull PmdReporter createSonarPmdPluginLogger() {
+        PmdReporter reporter = new PmdReporter() {
+            AtomicInteger numErrors = new AtomicInteger(0);
+            @Override
+            public boolean isLoggable(Level level) {
+                return Level.ERROR.equals(level);
+            }
+
+            @Override
+            public void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error) {
+                numErrors.incrementAndGet();
+                if (message == null) {
+                    message = "<null>";
+                }
+                switch (level) {
+                    case ERROR:
+                        LOGGER.error(String.format(message, formatArgs));
+                        break;
+                    case WARN:
+                        LOGGER.debug(String.format(message, formatArgs));
+                        break;
+                    case INFO:
+                        LOGGER.debug(String.format(message, formatArgs));
+                        break;
+                    case DEBUG:
+                        LOGGER.debug(String.format(message, formatArgs));
+                        break;
+                    case TRACE:
+                        LOGGER.trace(String.format(message, formatArgs));
+                        break;
+                        default:
+                           LOGGER.warn("Unknown PMD log level: {} message: {}", level, String.format(message, formatArgs));
+                    }
+            }
+
+            @Override
+            public int numErrors() {
+                return numErrors.get();
+            }
+        };
+        return reporter;
     }
 
     /**
@@ -202,9 +261,9 @@ public abstract class AbstractPmdExecutor {
      * @param repositoryKey The repository key
      * @return The XML
      */
-    protected String dumpXml(ActiveRules rulesProfile, String repositoryKey) {
-        final StringWriter writer = new StringWriter();
-        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey);
+    protected String dumpXml(ActiveRules rulesProfile, String repositoryKey, RuleScope scope) {
+        final StringWriter writer = new StringWriter(2048);
+        final PmdRuleSet ruleSet = PmdRuleSets.from(rulesProfile, repositoryKey, scope);
         ruleSet.writeTo(writer);
 
         return writer.toString();

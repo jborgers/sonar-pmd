@@ -59,13 +59,13 @@ class PmdJavaExecutorTest extends AbstractPmdExecutorTest {
 
     @Override
     protected DefaultInputFile getAppropriateInputFileForTest() {
-        return file("src/Class.java", Type.MAIN);
+        return fileJava("src/Class.java", Type.MAIN);
     }
 
     @Test
-    void should_execute_pmd_on_source_files_and_test_files() {
-        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
-        DefaultInputFile tstFile = file("test/ClassTest.java", Type.TEST);
+    void should_execute_pmd_on_main_files_and_test_files() {
+        DefaultInputFile srcFile = fileJava("src/Class.java", Type.MAIN);
+        DefaultInputFile tstFile = fileJava("test/ClassTest.java", Type.TEST);
         setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);
         fileSystem.add(tstFile);
@@ -85,7 +85,7 @@ class PmdJavaExecutorTest extends AbstractPmdExecutorTest {
 
     @Test
     void should_ignore_empty_test_dir() {
-        DefaultInputFile srcFile = file("src/Class.java", Type.MAIN);
+        DefaultInputFile srcFile = fileJava("src/Class.java", Type.MAIN);
         doReturn(pmdTemplate).when(pmdExecutor).createPmdTemplate(any(URLClassLoader.class));
         setupPmdRuleSet(PmdConstants.MAIN_JAVA_REPOSITORY_KEY, "simple.xml");
         fileSystem.add(srcFile);

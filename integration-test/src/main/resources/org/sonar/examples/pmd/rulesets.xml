@@ -29,6 +29,7 @@
     </example>
   </rule>
 
+  <!-- this rule only should in main-sources scope -->
   <rule name="AvoidIfWithoutBrace"
         message="Avoid if without using brace"
         class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
@@ -44,10 +45,39 @@
         ]]>
         </value>
       </property>
+      <!-- here as example how to add main-sources tag,
+           note: there is no automatic generation in place, so also added tag manually to extensions.xml -->
+      <property name="tags" value="main-sources" type="String" description="classification"/>
     </properties>
     <example>
       <![CDATA[
        // don't do this!
+       if (true)
+        test = "test";
+      ]]>
+    </example>
+  </rule>
+
+  <!-- because there is Test in the rule name, only expected to run in TEST scope -->
+  <rule name="AvoidIfWithoutBraceTest"
+        message="Avoid if without using brace in test code"
+        class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
+        language="java">
+    <description>
+      Avoid if without using brace in test code
+    </description>
+    <properties>
+      <property name="xpath">
+        <value>
+          <![CDATA[
+            //IfStatement[not(Statement/Block)]
+        ]]>
+        </value>
+      </property>
+    </properties>
+    <example>
+      <![CDATA[
+       // don't do this in tests!
        if (true)
         test = "test";
       ]]>

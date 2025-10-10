@@ -230,16 +230,46 @@ public class JavaRulePropertyExtractor {
     }
 
     /**
+     * Returns the value of the given enum constant as a String.
+     * Most return toString(), some have an explicit workaround.
+     */
+    private static String enumDisplay(String propertyName, Object enumConst) {
+        if (enumConst == null) return "";
+
+        String display = enumConst.toString();
+
+        if ("checkAddressTypes".equals(propertyName)) {
+            // workaround for label mapping AvoidUsingHardCodedIPRule AddressKinds enum
+            display = replace(display ,"IPV4", "IPv4");
+            display = replace(display ,"IPV6", "IPv6");
+            display = replace(display ,"IPV4_MAPPED_IPV6", "IPv4 mapped IPv6");
+        }
+        else if ("typeAnnotations".equals(propertyName)) {
+            // workaround for label mapping ModifierOrderRule TypeAnnotationPosition enum
+            display = replace(display ,"ON_TYPE", "ontype");
+            display = replace(display ,"ON_DECL", "ondecl");
+            display = replace(display ,"ANYWHERE", "anywhere");
+        }
+
+        return display;
+    }
+
+    private static String replace(String orig, String from, String to) {
+        return orig.equals(from) ? to : orig;
+    }
+
+    /**
      * Gets the default values from the given PropertyDescriptor object.
      */
     private List<String> getDefaultValues(PropertyDescriptor<?> propertyDescriptor) {
         try {
             // Get the default values from the PropertyDescriptor
             Object defaultValue = propertyDescriptor.defaultValue();
+            String propertyName = propertyDescriptor.name();
             @SuppressWarnings("unchecked")
             List<PropertyConstraint<?>> constraints = (List<PropertyConstraint<?>>) propertyDescriptor.serializer().getConstraints();
             if (!constraints.isEmpty()) {
-                LOGGER.debug("%%% found constraints: {} for {} (default value: {})", constraints.get(0).getConstraintDescription(), propertyDescriptor.name(), defaultValue);
+                LOGGER.debug("%%% found constraints: {} for {} (default value: {})", constraints.get(0).getConstraintDescription(), propertyName, defaultValue);
             }
             if (defaultValue instanceof List) {
                 @SuppressWarnings("unchecked")
@@ -247,18 +277,14 @@ public class JavaRulePropertyExtractor {
                 if (!defaultValueList.isEmpty()) {
                     Object value = defaultValueList.get(0);
                     Class<?> aClass = value.getClass();
-                    LOGGER.debug("%%% found list with wrapped class: {} for {} (default value: {})", aClass.getSimpleName(), propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found list with wrapped class: {} for {} (default value: {})", aClass.getSimpleName(), propertyName, defaultValue);
                 }
                 else {
-                    LOGGER.debug("%%% found empty list, cannot determine wrapped type for {} (default value: {})", propertyDescriptor.name(), defaultValue);
+                    LOGGER.debug("%%% found empty list, cannot determine wrapped type for {} (default value: {})", propertyName, defaultValue);
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueList) {
-                    String x = value.toString();
-                    // workaround for label mapping AvoidUsingHardCodedIP AddressKinds enum
-                    x = x.equals("IPV4") ? "IPv4" : x;
-                    x = x.equals("IPV6") ? "IPv6" : x;
-                    x = x.equals("IPV4_MAPPED_IPV6") ? "IPv4 mapped IPv6" : x;
+                    String x = (value != null && value.getClass().isEnum()) ? enumDisplay(propertyName, value) : String.valueOf(value);
                     result.add(x);
                 }
                 return result;
@@ -273,7 +299,7 @@ public class JavaRulePropertyExtractor {
                 }
                 List<String> result = new ArrayList<>();
                 for (Object value : defaultValueSet) {
-                    String x = value.toString();
+                    String x = (value != null && value.getClass().isEnum()) ? enumDisplay(propertyName, value) : String.valueOf(value);
                     result.add(x);
                 }
                 return result;
@@ -282,7 +308,8 @@ public class JavaRulePropertyExtractor {
                 if (optional.isPresent()) {
                     Object wrappedInOptional = optional.get();
                     LOGGER.debug("%%% found optional with wrapped class: {}", wrappedInOptional.getClass().getSimpleName());
-                    return Collections.singletonList(wrappedInOptional.toString());
+                    String v = (wrappedInOptional.getClass().isEnum()) ? enumDisplay(propertyName, wrappedInOptional) : wrappedInOptional.toString();
+                    return Collections.singletonList(v);
                 } else {
                     if (!(propertyDescriptor.name().equals("violationSuppressRegex") || propertyDescriptor.name().equals("violationSuppressXPath"))) {
                         LOGGER.debug("%%% found empty optional for {}", propertyDescriptor);
@@ -291,7 +318,8 @@ public class JavaRulePropertyExtractor {
                 }
             } else if (defaultValue != null) {
                 LOGGER.debug("%%% found default value: {} for {} (type: {})", defaultValue, propertyDescriptor.name(), defaultValue.getClass().getSimpleName());
-                return Collections.singletonList(defaultValue.toString());
+                String v = (defaultValue.getClass().isEnum()) ? enumDisplay(propertyName, defaultValue) : defaultValue.toString();
+                return Collections.singletonList(v);
             }
         } catch (Exception e) {
             LOGGER.error("Error getting default values for {}", propertyDescriptor, e);
@@ -312,6 +340,7 @@ public class JavaRulePropertyExtractor {
         List<String> result = new ArrayList<>();
         try {
             Object defaultValue = propertyDescriptor.defaultValue();
+            String propertyName = propertyDescriptor.name();
 
             // 1) If enum type is discoverable from default values, use enum constants
             Class<?> enumClass = null;
@@ -335,7 +364,7 @@ public class JavaRulePropertyExtractor {
                 Optional<?> opt = (Optional<?>) defaultValue;
                 if (opt.isPresent()) {
                     Object inner = opt.get();
-                    if (inner != null && inner.getClass().isEnum()) {
+                    if (inner.getClass().isEnum()) {
                         enumClass = inner.getClass();
                     }
                 }
@@ -347,7 +376,8 @@ public class JavaRulePropertyExtractor {
                 Object[] constants = enumClass.getEnumConstants();
                 if (constants != null) {
                     for (Object c : constants) {
-                        result.add(normalizeLabel(c.toString()));
+                        String label = enumDisplay(propertyName, c);
+                        result.add(enumDisplay(propertyName, label));
                     }
                 }
             }
@@ -358,7 +388,7 @@ public class JavaRulePropertyExtractor {
                 List<PropertyConstraint<?>> constraints = (List<PropertyConstraint<?>>) propertyDescriptor.serializer().getConstraints();
                 for (PropertyConstraint<?> c : constraints) {
                     String desc = String.valueOf(c.getConstraintDescription());
-                    List<String> fromDesc = parseValuesFromConstraintDescription(desc);
+                    List<String> fromDesc = parseValuesFromConstraintDescription(propertyName, desc);
                     if (!fromDesc.isEmpty()) {
                         result.addAll(fromDesc);
                         break;
@@ -392,11 +422,7 @@ public class JavaRulePropertyExtractor {
                 return "Object";
             } else if (defaultValue instanceof Optional) {
                 Optional<?> opt = (Optional<?>) defaultValue;
-                if (opt.isPresent() && opt.get() != null) {
-                    return opt.get().getClass().getSimpleName();
-                } else {
-                    return fallbackType;
-                }
+                return opt.map(o -> o.getClass().getSimpleName()).orElse(fallbackType);
             } else if (defaultValue != null) {
                 return defaultValue.getClass().getSimpleName();
             }
@@ -405,7 +431,7 @@ public class JavaRulePropertyExtractor {
         return fallbackType;
     }
 
-    private List<String> parseValuesFromConstraintDescription(String desc) {
+    private List<String> parseValuesFromConstraintDescription(String propertyName, String desc) {
         if (desc == null || desc.isEmpty()) return Collections.emptyList();
         // Look for "Possible values: [a, b, c]" or "Allowed values: [a, b]"
         String lower = desc.toLowerCase(Locale.ROOT);
@@ -419,22 +445,13 @@ public class JavaRulePropertyExtractor {
                 String[] parts = inner.split(",");
                 List<String> values = new ArrayList<>();
                 for (String p : parts) {
-                    String v = normalizeLabel(p.trim());
+                    String v = enumDisplay(propertyName, p.trim());
                     if (!v.isEmpty()) values.add(v);
                 }
                 return values;
             }
         }
         return Collections.emptyList();
-    }
-
-    private String normalizeLabel(String x) {
-        if (x == null) return "";
-        // reuse special mappings used for defaults
-        if ("IPV4".equals(x)) return "IPv4";
-        if ("IPV6".equals(x)) return "IPv6";
-        if ("IPV4_MAPPED_IPV6".equals(x)) return "IPv4 mapped IPv6";
-        return x;
     }
 
     /**

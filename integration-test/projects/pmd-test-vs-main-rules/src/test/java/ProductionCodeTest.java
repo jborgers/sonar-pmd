@@ -6,4 +6,8 @@ public class ProductionCodeTest extends junit.framework.TestCase {
 		assertEquals(1, unused);
 		assertFalse(2 == unused);
 	}
+
+    public void makeTwoWhenOne() {
+        if (unused == 1) unused = 2;
+    }
 }

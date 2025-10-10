@@ -25,7 +25,9 @@ package org.sonar.plugins.pmd.rule;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -36,7 +38,6 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Cardinality;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
-import org.jetbrains.annotations.Nullable;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -51,6 +52,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -199,6 +201,9 @@ public class RulesDefinitionXmlLoader {
     private static final String ELEMENT_RULES = "rules";
     private static final String ELEMENT_RULE = "rule";
     private static final String ELEMENT_PARAM = "param";
+    private static final Pattern TEST_RULE_PATTERN = Pattern.compile("Test|JUnit", Pattern.CASE_INSENSITIVE);
+    private static final String TAG_TEST_SOURCES = "tests";
+    private static final String TAG_MAIN_SOURCES = "main-sources";
 
     private enum DescriptionFormat {
         HTML, MARKDOWN
@@ -344,7 +349,7 @@ public class RulesDefinitionXmlLoader {
                 } else if (ELEMENT_PARAM.equalsIgnoreCase(elementName)) {
                     params.add(processParameter(element, reader));
                 } else if ("tag".equalsIgnoreCase(elementName)) {
-                    tags.add(StringUtils.trim(reader.getElementText()));
+                    tags.add(trim(reader.getElementText()));
                 }
             }
         }
@@ -353,25 +358,67 @@ public class RulesDefinitionXmlLoader {
     private static void buildRule(RulesDefinition.NewRepository repo, String key, String name, @Nullable String description,
                                   String descriptionFormat, @Nullable String internalKey, String severity, @Nullable String type, RuleStatus status,
                                   boolean template, @Nullable String gapDescription, @Nullable String debtRemediationFunction, @Nullable String debtRemediationFunctionGapMultiplier,
-                                  @Nullable String debtRemediationFunctionBaseEffort, List<ParamStruct> params, List<String> tags) {
+                                  @Nullable String debtRemediationFunctionBaseEffort, List<ParamStruct> params, List<String> inputTags) {
         try {
+            String[] ruleTags = determineSonarRuleTags(name, inputTags);
             RulesDefinition.NewRule rule = repo.createRule(key)
                     .setSeverity(severity)
                     .setName(name)
                     .setInternalKey(internalKey)
-                    .setTags(tags.toArray(new String[0]))
+                    .setTags(ruleTags)
                     .setTemplate(template)
                     .setStatus(status)
                     .setGapDescription(gapDescription);
             if (type != null) {
                 rule.setType(RuleType.valueOf(type));
             }
+            rule.setScope(determineScope(name, inputTags));
             fillDescription(rule, descriptionFormat, description);
             fillRemediationFunction(rule, debtRemediationFunction, debtRemediationFunctionGapMultiplier, debtRemediationFunctionBaseEffort);
             fillParams(rule, params);
         } catch (Exception e) {
             throw new IllegalStateException(format("Fail to load the rule with key [%s:%s]", repo.key(), key), e);
         }
+    }
+
+    private static String[] determineSonarRuleTags(String name, List<String> inputTags) {
+        List<String> ruleTags = new ArrayList(inputTags);
+        boolean hasTagTests = ruleTags.contains(TAG_TEST_SOURCES);
+        boolean hasTagMainSources = ruleTags.contains(TAG_MAIN_SOURCES);
+        boolean nameMatchesTest = TEST_RULE_PATTERN.matcher(name).find();
+
+        if (nameMatchesTest) {
+            if (!hasTagMainSources && !hasTagTests) { // no override
+                ruleTags.add(TAG_TEST_SOURCES);
+            } else {
+                // main-sources or main-sources+tests tag used to override name matching
+                if (hasTagMainSources || (hasTagMainSources && hasTagTests)) {
+                    // override name matching to non-test: main-sources or all-sources
+                    ruleTags.remove(TAG_TEST_SOURCES);
+                }
+            }
+        }
+        // we filter out the 'main-sources' tag because it is only used to set/limit analysis scope;
+        // and not used in the rule tags of Sonar
+        ruleTags.remove(TAG_MAIN_SOURCES);
+        return ruleTags.toArray(new String[0]);
+    }
+
+    /* default */ static RuleScope determineScope(String name, List<String> tags) {
+        RuleScope scope = RuleScope.ALL; // default
+        boolean hasTagTests = tags.contains(TAG_TEST_SOURCES);
+        boolean hasTagMainSources = tags.contains(TAG_MAIN_SOURCES);
+        boolean nameMatchesTest = TEST_RULE_PATTERN.matcher(name).find();
+
+        if (hasTagTests || nameMatchesTest) {
+            if (!hasTagMainSources) { // if rule has both, it means ALL
+                scope = RuleScope.TEST;
+            }
+        }
+        if (hasTagMainSources && !hasTagTests) { // if rule has both, it means ALL
+            scope = RuleScope.MAIN;
+        }
+        return scope;
     }
 
     @SuppressWarnings({"removal"})

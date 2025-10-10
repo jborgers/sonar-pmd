@@ -65,8 +65,13 @@ public final class RuleParamFormatter {
             // Remove any pre-existing Allowed/Possible values fragments to avoid duplication
             baseDesc = VALUES_FRAGMENT_PATTERN.matcher(baseDesc).replaceAll(" ").trim();
 
+            // Normalize enum-like tokens to lowercase (e.g., ANYWHERE -> anywhere, ON_TYPE -> on_type)
+            List<String> normalized = acceptedValues.stream()
+                    .map(RuleParamFormatter::normalizeEnumToken)
+                    .collect(Collectors.toList());
+
             String suffix = multiple ? " Select one or more values." : " Select one of the values.";
-            String joinedValues = acceptedValues.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
+            String joinedValues = normalized.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
             baseDesc = baseDesc + sentenceSeparator(baseDesc) + "Allowed values: [" + joinedValues + "]." + suffix;
         }
 
@@ -94,7 +99,10 @@ public final class RuleParamFormatter {
      * Example: SINGLE_SELECT_LIST,multiple=true,values="a,b,c"
      */
     public static String buildSelectTypeToken(List<String> acceptedValues, boolean multiple) {
-        String innerCsv = acceptedValues.stream()
+        List<String> normalized = acceptedValues.stream()
+                .map(RuleParamFormatter::normalizeEnumToken)
+                .collect(Collectors.toList());
+        String innerCsv = normalized.stream()
                 .map(v -> v == null ? "" : v.replace("\"", "\"\""))
                 .collect(Collectors.joining(","));
         String valuesToken = '"' + innerCsv + '"';
@@ -113,5 +121,19 @@ public final class RuleParamFormatter {
     private static String normalizeWhitespace(String s) {
         if (s == null) return "";
         return s.replaceAll("\\s+", " ").trim();
+    }
+
+    /**
+     * Normalize enum-like tokens: if the value is composed of uppercase letters, digits, and underscores,
+     * then convert it to lowercase (keeping underscores). This turns ANYWHERE -> anywhere and ON_TYPE -> on_type.
+     * Otherwise, return the value unchanged.
+     */
+    public static String normalizeEnumToken(@Nullable String value) {
+        if (value == null) return null;
+        String v = value.trim();
+        if (v.matches("[A-Z0-9_]+")) {
+            return v.toLowerCase();
+        }
+        return v;
     }
 }

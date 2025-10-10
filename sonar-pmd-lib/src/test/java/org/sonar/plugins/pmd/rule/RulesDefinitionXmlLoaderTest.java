@@ -29,6 +29,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
+import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -291,6 +292,178 @@ public class RulesDefinitionXmlLoaderTest {
         assertThat(function.type()).isEqualTo(DebtRemediationFunction.Type.LINEAR_OFFSET);
         assertThat(function.gapMultiplier()).isEqualTo("2d3h");
         assertThat(function.baseEffort()).isEqualTo("5min");
+    }
+
+    @Test
+    public void test_filter_non_sonar_tags() {
+        String xml = "" +
+                "<rules>" +
+                "<rule>" +
+                "<key>rule-non-sonar-tags-test</key>" +
+                "<name>Rule non Sonar Tags</name>" +
+                "<description>Rule to check filtering of non Sonar tags</description>" +
+                "<type>BUG</type>" +
+                "<tag>tests</tag>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+                "</rules>";
+
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule nonSonarTags = rulesRepo.rule("rule-non-sonar-tags-test");
+
+        assertThat(nonSonarTags.tags())
+                .withFailMessage("Should not contain main-sources")
+                .containsOnly("tests");
+
+    }
+
+    @Test
+    public void test_add_remove_tests_tag_on_name_match() {
+        String xml = "" +
+                "<rules>" +
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_1</key>" +
+                "<name>Rule add tests tag Test</name>" +
+                "<description>Rule to check adding tests tag on name match</description>" +
+                "<type>BUG</type>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_2</key>" +
+                "<name>Rule NO add tests tag Test</name>" +
+                "<description>Rule to check NO adding tests tag on name match</description>" +
+                "<type>BUG</type>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>rule-tests_tag_on_name_match_3</key>" +
+                "<name>Rule remove tests tag Test</name>" +
+                "<description>Rule to check remove tests tag on name match override</description>" +
+                "<type>BUG</type>" +
+                "<tag>tests</tag>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+                "</rules>";
+
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule addTests1 = rulesRepo.rule("rule-tests_tag_on_name_match_1");
+
+        assertThat(addTests1.tags())
+                .withFailMessage("Should add tests tag")
+                .containsOnly("tests");
+
+        RulesDefinition.Rule addTests2 = rulesRepo.rule("rule-tests_tag_on_name_match_2");
+
+        assertThat(addTests2.tags())
+                .withFailMessage("Should NOT add tests tag")
+                .doesNotContain("tests");
+
+        RulesDefinition.Rule addTests3 = rulesRepo.rule("rule-tests_tag_on_name_match_3");
+
+        assertThat(addTests3.tags())
+                .withFailMessage("Should remove tests tag")
+                .doesNotContain("tests");
+    }
+
+    @Test
+    public void test_analysis_scope() {
+        String xml = "" +
+                "<rules>" +
+                "<rule>" +
+                "<key>Rule00</key>" +
+                "<name>Rule 00</name>" +
+                "<description>Description of rule 00</description>" +
+                "<type>BUG</type>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule01</key>" +
+                "<name>Test rule 01</name>" +
+                "<description>Description</description>" +
+                "<type>BUG</type>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule02</key>" +
+                "<name>Rule 02</name>" +
+                "<description>Description</description>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>tests</tag>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule03</key>" +
+                "<name>Main rule 03</name>" +
+                "<description>Description</description>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>main-sources</tag>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule04</key>" +
+                "<name>Rule 04</name>" +
+                "<description>Description</description>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>main-sources</tag>" +
+                "<tag>tests</tag>" +
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule05</key>" +
+                "<name>Rule 05</name>" +
+                "<description>Description</description>" +
+                "<severity>MAJOR</severity>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>test</tag>" + // wrong tag so ALL
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule06</key>" +
+                "<name>Rule Not Test But Main 06</name>" +
+                "<description>Description</description>" +
+                "<severity>MAJOR</severity>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>main-sources</tag>" + // override the name containing Test, make it Main
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule07</key>" +
+                "<name>Rule Not Test But All 07</name>" +
+                "<description>Description</description>" +
+                "<severity>MAJOR</severity>" +
+                "<type>CODE_SMELL</type>" +
+                "<tag>main-sources</tag>" + // override the name containing Test
+                "<tag>tests</tag>" + // make it both, main-sources and test -> All
+                "</rule>" +
+
+                "<rule>" +
+                "<key>Rule08</key>" +
+                "<name>Rule for junit</name>" +
+                "<description>Description</description>" +
+                "<severity>MAJOR</severity>" +
+                "<type>CODE_SMELL</type>" +
+                "</rule>" +
+                "</rules>";
+        RulesDefinition.Repository rulesRepo = load(xml);
+        RulesDefinition.Rule rule0 = rulesRepo.rule("Rule00");
+        assertThat(rule0.scope()).isEqualTo(RuleScope.ALL);
+        RulesDefinition.Rule rule1 = rulesRepo.rule("Rule01");
+        assertThat(rule1.scope()).isEqualTo(RuleScope.TEST);
+        RulesDefinition.Rule rule2 = rulesRepo.rule("Rule02");
+        assertThat(rule2.scope()).isEqualTo(RuleScope.TEST);
+        RulesDefinition.Rule rule3 = rulesRepo.rule("Rule03");
+        assertThat(rule3.scope()).isEqualTo(RuleScope.MAIN);
+        RulesDefinition.Rule rule4 = rulesRepo.rule("Rule04");
+        assertThat(rule4.scope()).isEqualTo(RuleScope.ALL);
+        RulesDefinition.Rule rule5 = rulesRepo.rule("Rule05");
+        assertThat(rule5.scope()).isEqualTo(RuleScope.ALL);
+        RulesDefinition.Rule rule6 = rulesRepo.rule("Rule06");
+        assertThat(rule6.scope()).isEqualTo(RuleScope.MAIN);
+        RulesDefinition.Rule rule7 = rulesRepo.rule("Rule07");
+        assertThat(rule7.scope()).isEqualTo(RuleScope.ALL);
+        RulesDefinition.Rule rule8 = rulesRepo.rule("Rule08");
+        assertThat(rule8.scope()).isEqualTo(RuleScope.TEST);
     }
 
     private RulesDefinition.Repository load(InputStream input, String encoding) {
