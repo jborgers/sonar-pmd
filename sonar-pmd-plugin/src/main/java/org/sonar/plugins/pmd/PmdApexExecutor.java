@@ -26,6 +26,7 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.rule.RuleScope;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -56,8 +57,8 @@ public class PmdApexExecutor extends AbstractPmdExecutor {
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
         final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
-        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY);
+        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY, RuleScope.MAIN);
+        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY, RuleScope.TEST);
 
         if (LOGGER.isDebugEnabled()) {
             apexMainReport.ifPresent(this::writeDebugLine);
