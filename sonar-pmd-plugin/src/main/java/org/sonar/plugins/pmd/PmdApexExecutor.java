@@ -19,19 +19,14 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.rule.RuleScope;
+import org.sonar.plugins.pmd.util.ClassLoaderUtils;
 
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * PMD executor for Apex files.
@@ -56,24 +51,7 @@ public class PmdApexExecutor extends AbstractPmdExecutor {
 
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
-        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> apexMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY, RuleScope.MAIN);
-        final Optional<Report> apexTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_APEX_KEY), PmdConstants.MAIN_APEX_REPOSITORY_KEY, RuleScope.TEST);
-
-        if (LOGGER.isDebugEnabled()) {
-            apexMainReport.ifPresent(this::writeDebugLine);
-            apexTestReport.ifPresent(this::writeDebugLine);
-        }
-
-        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
-
-        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
-        unionReport = apexMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = apexTestReport.map(unionReport::union).orElse(unionReport);
-
-        pmdConfiguration.dumpXmlReport(unionReport);
-
-        return unionReport;
+        return executeLanguage(classLoader, PmdConstants.LANGUAGE_APEX_KEY, PmdConstants.MAIN_APEX_REPOSITORY_KEY);
     }
 
     /**
@@ -82,7 +60,6 @@ public class PmdApexExecutor extends AbstractPmdExecutor {
      */
     @Override
     protected URLClassLoader createClassloader() {
-        // Create an empty URLClassLoader
-        return new URLClassLoader(new URL[0]);
+        return ClassLoaderUtils.empty();
     }
 }

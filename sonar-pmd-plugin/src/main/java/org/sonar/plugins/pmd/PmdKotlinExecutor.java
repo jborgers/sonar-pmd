@@ -19,19 +19,13 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.rule.RuleScope;
 
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * PMD executor for Kotlin files.
@@ -57,24 +51,7 @@ public class PmdKotlinExecutor extends AbstractPmdExecutor {
 
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
-        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> kotlinMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, RuleScope.MAIN);
-        final Optional<Report> kotlinTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_KOTLIN_KEY), PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY, RuleScope.TEST);
-
-        if (LOGGER.isDebugEnabled()) {
-            kotlinMainReport.ifPresent(this::writeDebugLine);
-            kotlinTestReport.ifPresent(this::writeDebugLine);
-        }
-
-        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
-
-        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
-        unionReport = kotlinMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = kotlinTestReport.map(unionReport::union).orElse(unionReport);
-
-        pmdConfiguration.dumpXmlReport(unionReport);
-
-        return unionReport;
+        return executeLanguage(classLoader, PmdConstants.LANGUAGE_KOTLIN_KEY, PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY);
     }
 
     /**
