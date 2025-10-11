@@ -115,17 +115,28 @@ if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
     return // Skip the rest of the script
 }
 
-// Get output directory from binding variable (set by Maven) or use a default directory
-// The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
+// Get output directory from binding variable (set by Maven) or use default directories per plugin
+// The 'outputDir' variable controls Java/Kotlin output (main plugin). Optionally, 'apexOutputDir' controls Apex output (Apex plugin)
 @Field def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ?
     "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd" : "."
 @Field def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
+@Field def apexRel = "sonar-pmd-apex-plugin/src/main/resources/org/sonar/plugins/pmd"
+@Field def defaultApexOutputDir = apexRel
+@Field def apexOutputDirPath = {
+    def override = binding.hasVariable('apexOutputDir') ? apexOutputDir : null
+    def target = override ?: defaultApexOutputDir
+    def dirFile = new File(target)
+    if (!dirFile.exists() || !dirFile.isDirectory()) {
+        throw new RuntimeException("Required Apex output directory not found: ${dirFile.absolutePath}. Set 'apexOutputDir' to override or ensure the apex plugin module exists.")
+    }
+    return target
+}()
 @Field def javaOutputFileName = "rules-java.xml"
 @Field def kotlinOutputFileName = "rules-kotlin.xml"
 @Field def apexOutputFileName = "rules-apex.xml"
 @Field def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
 @Field def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
-@Field def apexOutputFilePath = new File(outputDirPath, apexOutputFileName)
+@Field def apexOutputFilePath = new File(apexOutputDirPath, apexOutputFileName)
 
 logInfo("PMD ${pmdVersion} Rules XML Generator")
 logInfo("=" * 50)

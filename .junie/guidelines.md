@@ -60,3 +60,12 @@ The project uses semantic versioning:
 1. A number of the PMD rules have been rewritten in the default Sonar Java plugin. For known alternatives, the `has-sonar-alternative` tag is added with references to these alternative(s).
 2. The plugin is licensed under the GNU Lesser General Public License, Version 3.0.
 3. Parts of the rule descriptions displayed in SonarQube have been extracted from PMD and are licensed under a BSD-style license.
+
+## Generate new rules files
+Use maven command:
+
+    ./mvnw generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin
+
+## Integration tests
+The integration tests are run using the SonarQube Docker image.
+Do not run the integration tests during Junie sessions unless it is the very last step to verify the plugins.
