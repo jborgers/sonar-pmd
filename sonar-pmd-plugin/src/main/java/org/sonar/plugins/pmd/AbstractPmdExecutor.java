@@ -41,16 +41,14 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 import org.sonar.plugins.pmd.xml.PmdRuleSets;
-import org.sonar.plugins.pmd.xml.factory.RuleSetFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URLClassLoader;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * Abstract base class for PMD executors that contains common functionality.
@@ -110,6 +108,31 @@ public abstract class AbstractPmdExecutor {
      * @return The end message
      */
     protected abstract String getEndMessage();
+
+    /**
+     * Execute PMD analysis for a specific language over MAIN and TEST scopes and union the results.
+     * Subclasses can call this to avoid duplication.
+     */
+    protected Report executeLanguage(URLClassLoader classLoader, String languageKey, String repositoryKey) {
+        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
+        final Optional<Report> mainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, languageKey), repositoryKey, RuleScope.MAIN);
+        final Optional<Report> testReport = executeRules(pmdFactory, hasFiles(Type.TEST, languageKey), repositoryKey, RuleScope.TEST);
+
+        if (LOGGER.isDebugEnabled()) {
+            mainReport.ifPresent(this::writeDebugLine);
+            testReport.ifPresent(this::writeDebugLine);
+        }
+
+        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
+
+        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
+        unionReport = mainReport.map(unionReport::union).orElse(unionReport);
+        unionReport = testReport.map(unionReport::union).orElse(unionReport);
+
+        pmdConfiguration.dumpXmlReport(unionReport);
+
+        return unionReport;
+    }
 
     /**
      * Create a classloader for PMD analysis

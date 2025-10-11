@@ -26,45 +26,40 @@ import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
 import org.sonar.plugins.pmd.util.ClassLoaderUtils;
 
-import java.io.File;
 import java.net.URLClassLoader;
-import java.util.Collection;
 
 /**
- * PMD executor for Java files.
+ * PMD executor for Apex files.
  */
 @ScannerSide
-public class PmdJavaExecutor extends AbstractPmdExecutor {
+public class PmdApexExecutor extends AbstractPmdExecutor {
 
-    private final ClasspathProvider classpathProvider;
-
-    public PmdJavaExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
-                       PmdConfiguration pmdConfiguration, ClasspathProvider classpathProvider, Configuration settings) {
+    public PmdApexExecutor(FileSystem fileSystem, ActiveRules rulesProfile,
+                       PmdConfiguration pmdConfiguration, Configuration settings) {
         super(fileSystem, rulesProfile, pmdConfiguration, settings);
-        this.classpathProvider = classpathProvider;
     }
 
     @Override
     protected String getStartMessage() {
-        return "Execute PMD {}";
+        return "Execute PMD {} for Apex";
     }
 
     @Override
     protected String getEndMessage() {
-        return "Execute PMD {} (done) | time={}ms";
+        return "Execute PMD {} for Apex (done) | time={}ms";
     }
 
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
-        return executeLanguage(classLoader, PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
+        return executeLanguage(classLoader, PmdConstants.LANGUAGE_APEX_KEY, PmdConstants.MAIN_APEX_REPOSITORY_KEY);
     }
 
     /**
-     * @return A classloader for PMD that contains all dependencies of the project that shall be analyzed.
+     * @return A classloader for PMD that contains no additional dependencies.
+     * For Apex projects, we don't need the project's classpath.
      */
     @Override
     protected URLClassLoader createClassloader() {
-        Collection<File> classpathElements = classpathProvider.classpath();
-        return ClassLoaderUtils.fromClasspath(classpathElements);
+        return ClassLoaderUtils.empty();
     }
 }

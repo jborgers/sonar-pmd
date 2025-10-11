@@ -33,7 +33,7 @@ public class PmdExtensionRepository implements RulesDefinition {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PmdExtensionRepository.class);
 
-    // Must be the same than the PMD plugin
+    // Must be the same as the PMD plugin
     private static final String REPOSITORY_KEY = "pmd";
     private static final String LANGUAGE_KEY = "java";
 

@@ -21,6 +21,10 @@ package org.sonar.plugins.pmd;
 
 import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
+import org.sonar.plugins.pmd.languages.ApexLanguage;
+import org.sonar.plugins.pmd.languages.ApexLanguageProperties;
+import org.sonar.plugins.pmd.profile.PmdApexSonarWayProfile;
+import org.sonar.plugins.pmd.rule.PmdApexRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdKotlinRulesDefinition;
 import org.sonar.plugins.pmd.rule.PmdRulesDefinition;
 
@@ -41,10 +45,16 @@ public class PmdPlugin implements Plugin {
                 PmdConfiguration.class,
                 PmdJavaExecutor.class,
                 PmdKotlinExecutor.class,
+                PmdApexExecutor.class,
                 PmdRulesDefinition.class,
                 PmdKotlinRulesDefinition.class,
+                PmdApexRulesDefinition.class,
+                ApexLanguage.class,
+                PmdApexSonarWayProfile.class,
                 PmdViolationRecorder.class,
                 DefaultClasspathProvider.class
         );
+
+        context.addExtensions(ApexLanguageProperties.getProperties());
     }
 }
