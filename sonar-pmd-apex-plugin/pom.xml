@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.sonarsource.pmd</groupId>
+    <artifactId>sonar-pmd</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>sonar-pmd-apex-plugin</artifactId>
+  <packaging>sonar-plugin</packaging>
+
+  <name>SonarQube PMD Apex Plugin</name>
+  <description>Sonar-PMD Apex is a plugin that provides coding rules from PMD for Apex.</description>
+  <inceptionYear>2012</inceptionYear>
+  <url>https://github.com/jborgers/sonar-pmd</url>
+
+  <properties>
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-plugin-api-impl</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.pmd</groupId>
+      <artifactId>sonar-pmd-lib</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-apex</artifactId>
+      <version>${pmd.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom2</artifactId>
+      <version>${jdom2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
+    </dependency>
+    <!-- Bind SLF4J during tests so LOGGER.error output is visible and can be asserted -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j-api.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <configuration>
+          <pluginKey>pmd-apex</pluginKey>
+          <pluginName>PMD Apex</pluginName>
+          <pluginClass>org.sonar.plugins.pmd.PmdApexPlugin</pluginClass>
+          <pluginDescription>Analyze Apex code with PMD.</pluginDescription>
+          <requiredForLanguages>apex</requiredForLanguages>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

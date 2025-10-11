@@ -113,6 +113,7 @@
   <modules>
     <module>sonar-pmd-lib</module>
     <module>sonar-pmd-plugin</module>
+    <module>sonar-pmd-apex-plugin</module>
     <module>integration-test</module>
   </modules>
 
