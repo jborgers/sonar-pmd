@@ -1,7 +1,11 @@
+/*
+ * Moved from apex/plugin modules to shared lib to reduce duplication.
+ */
 package org.sonar.plugins.pmd.xml;
 
 public class PmdProperty {
-    private final String name;
+
+    private String name;
     private String value;
     private String cdataValue;
 
@@ -18,8 +22,8 @@ public class PmdProperty {
         return value;
     }
 
-    public void setCdataValue(String cdataValue) {
-        this.cdataValue = cdataValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getCdataValue() {
@@ -28,5 +32,9 @@ public class PmdProperty {
 
     public boolean isCdataValue() {
         return cdataValue != null;
+    }
+
+    public void setCdataValue(String cdataValue) {
+        this.cdataValue = cdataValue;
     }
 }

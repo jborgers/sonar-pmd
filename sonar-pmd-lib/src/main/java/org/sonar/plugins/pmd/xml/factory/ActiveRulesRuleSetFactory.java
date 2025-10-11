@@ -1,3 +1,6 @@
+/*
+ * Moved to lib to share between plugins.
+ */
 package org.sonar.plugins.pmd.xml.factory;
 
 import java.util.*;

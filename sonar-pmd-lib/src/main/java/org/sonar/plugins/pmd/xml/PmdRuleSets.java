@@ -1,3 +1,6 @@
+/*
+ * Shared in lib to avoid duplication across modules.
+ */
 package org.sonar.plugins.pmd.xml;
 
 import org.slf4j.Logger;

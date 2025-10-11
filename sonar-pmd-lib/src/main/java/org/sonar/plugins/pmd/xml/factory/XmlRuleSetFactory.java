@@ -1,3 +1,6 @@
+/*
+ * Moved to lib to share between plugins.
+ */
 package org.sonar.plugins.pmd.xml.factory;
 
 import org.jdom2.Document;
@@ -12,7 +15,7 @@ import org.sonar.plugins.pmd.xml.PmdProperty;
 import org.sonar.plugins.pmd.xml.PmdRule;
 import org.sonar.plugins.pmd.xml.PmdRuleSet;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import javax.xml.XMLConstants;
 import java.io.IOException;
 import java.io.Reader;
