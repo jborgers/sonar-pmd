@@ -23,6 +23,7 @@ import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.reporting.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.mockito.Mockito;
 import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
@@ -35,6 +36,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.Mockito.*;
 
+@Disabled("Apex support moved to sonar-pmd-apex-plugin; tests disabled in main plugin")
 class PmdApexExecutorTest extends AbstractPmdExecutorTest {
 
     private PmdApexExecutor realPmdExecutor;

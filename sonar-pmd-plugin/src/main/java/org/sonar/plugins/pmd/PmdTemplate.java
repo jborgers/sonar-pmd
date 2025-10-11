@@ -97,10 +97,6 @@ public class PmdTemplate {
             }
             LOG.info("Java version: " + normalizedVersion);
             return languageVersion;
-        } else if (PmdConstants.LANGUAGE_APEX_KEY.equals(languageKey)) {
-            LanguageVersion languageVersion = new ApexLanguageModule().getDefaultVersion();
-            LOG.info("Using Apex default version");
-            return languageVersion;
         } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(languageKey)) {
             LanguageVersion languageVersion = new KotlinLanguageModule().getDefaultVersion();
             LOG.info("Using Kotlin default version");
@@ -152,11 +148,7 @@ public class PmdTemplate {
                     LOG.info("Processing {} files with language: {}", languageFiles.size(), language);
 
                     // Set the appropriate language version for this batch of files
-                    if (PmdConstants.LANGUAGE_APEX_KEY.equals(language)) {
-                        LanguageVersion apexVersion = new ApexLanguageModule().getDefaultVersion();
-                        configuration.setDefaultLanguageVersion(apexVersion);
-                        LOG.info("Set language version to Apex: {}", apexVersion.getName());
-                    } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(language)) {
+                    if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(language)) {
                         LanguageVersion kotlinVersion = new KotlinLanguageModule().getDefaultVersion();
                         configuration.setDefaultLanguageVersion(kotlinVersion);
                         LOG.info("Set language version to Kotlin: {}", kotlinVersion.getName());
