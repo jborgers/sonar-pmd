@@ -123,11 +123,6 @@
       <version>${pmd.version}</version>
     </dependency>
     <dependency>
-      <groupId>net.sourceforge.pmd</groupId>
-      <artifactId>pmd-apex</artifactId>
-      <version>${pmd.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom2</artifactId>
       <version>${jdom2.version}</version>

@@ -29,6 +29,21 @@ public class PmdApexPlugin implements Plugin {
 
     @Override
     public void define(Context context) {
-        // Apex-specific extensions will be registered here in a later step
+        context.addExtensions(
+                org.sonar.api.config.PropertyDefinition.builder(PmdConfiguration.PROPERTY_GENERATE_XML)
+                        .defaultValue("false")
+                        .name("Generate XML Report")
+                        .hidden()
+                        .build(),
+                PmdApexSensor.class,
+                PmdConfiguration.class,
+                PmdApexExecutor.class,
+                org.sonar.plugins.pmd.rule.PmdApexRulesDefinition.class,
+                org.sonar.plugins.pmd.profile.PmdApexSonarWayProfile.class,
+                org.sonar.plugins.pmd.languages.ApexLanguage.class,
+                PmdViolationRecorder.class
+        );
+
+        context.addExtensions(org.sonar.plugins.pmd.languages.ApexLanguageProperties.getProperties());
     }
 }

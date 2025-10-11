@@ -1,5 +1,5 @@
 /*
- * Shared PMD configuration utilities moved to lib.
+ * Shared PmdConfiguration moved to lib to be reused by plugins.
  */
 package org.sonar.plugins.pmd;
 

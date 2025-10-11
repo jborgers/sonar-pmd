@@ -7,9 +7,7 @@ import net.sourceforge.pmd.*;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
-import net.sourceforge.pmd.lang.apex.ApexLanguageModule;
 import net.sourceforge.pmd.lang.java.JavaLanguageModule;
-import net.sourceforge.pmd.lang.kotlin.KotlinLanguageModule;
 import net.sourceforge.pmd.lang.rule.RuleSet;
 import net.sourceforge.pmd.renderers.EmptyRenderer;
 import net.sourceforge.pmd.reporting.Report;
@@ -82,13 +80,23 @@ public class PmdTemplate {
             LOG.info("Java version: " + normalizedVersion);
             return languageVersion;
         } else if (PmdConstants.LANGUAGE_APEX_KEY.equals(languageKey)) {
-            LanguageVersion languageVersion = new ApexLanguageModule().getDefaultVersion();
-            LOG.info("Using Apex default version");
-            return languageVersion;
+            Language apex = LanguageRegistry.PMD.getLanguageById("apex");
+            if (apex != null) {
+                LanguageVersion languageVersion = apex.getDefaultVersion();
+                LOG.info("Using Apex default version");
+                return languageVersion;
+            }
+            LOG.warn("Apex language module not found on classpath; falling back to Java default version");
+            return new JavaLanguageModule().getDefaultVersion();
         } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(languageKey)) {
-            LanguageVersion languageVersion = new KotlinLanguageModule().getDefaultVersion();
-            LOG.info("Using Kotlin default version");
-            return languageVersion;
+            Language kotlin = LanguageRegistry.PMD.getLanguageById("kotlin");
+            if (kotlin != null) {
+                LanguageVersion languageVersion = kotlin.getDefaultVersion();
+                LOG.info("Using Kotlin default version");
+                return languageVersion;
+            }
+            LOG.warn("Kotlin language module not found on classpath; falling back to Java default version");
+            return new JavaLanguageModule().getDefaultVersion();
         }
 
         return new JavaLanguageModule().getDefaultVersion();
@@ -131,13 +139,23 @@ public class PmdTemplate {
                     LOG.info("Processing {} files with language: {}", languageFiles.size(), language);
 
                     if (PmdConstants.LANGUAGE_APEX_KEY.equals(language)) {
-                        LanguageVersion apexVersion = new ApexLanguageModule().getDefaultVersion();
-                        configuration.setDefaultLanguageVersion(apexVersion);
-                        LOG.info("Set language version to Apex: {}", apexVersion.getName());
+                        Language apex = LanguageRegistry.PMD.getLanguageById("apex");
+                        if (apex != null) {
+                            LanguageVersion apexVersion = apex.getDefaultVersion();
+                            configuration.setDefaultLanguageVersion(apexVersion);
+                            LOG.info("Set language version to Apex: {}", apexVersion.getName());
+                        } else {
+                            LOG.warn("Apex language module not found on classpath; keeping current default version");
+                        }
                     } else if (PmdConstants.LANGUAGE_KOTLIN_KEY.equals(language)) {
-                        LanguageVersion kotlinVersion = new KotlinLanguageModule().getDefaultVersion();
-                        configuration.setDefaultLanguageVersion(kotlinVersion);
-                        LOG.info("Set language version to Kotlin: {}", kotlinVersion.getName());
+                        Language kotlin = LanguageRegistry.PMD.getLanguageById("kotlin");
+                        if (kotlin != null) {
+                            LanguageVersion kotlinVersion = kotlin.getDefaultVersion();
+                            configuration.setDefaultLanguageVersion(kotlinVersion);
+                            LOG.info("Set language version to Kotlin: {}", kotlinVersion.getName());
+                        } else {
+                            LOG.warn("Kotlin language module not found on classpath; keeping current default version");
+                        }
                     } else {
                         LanguageVersion javaVersion = languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
                         configuration.setDefaultLanguageVersion(javaVersion);
