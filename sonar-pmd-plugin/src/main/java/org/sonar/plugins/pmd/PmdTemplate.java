@@ -163,7 +163,7 @@ public class PmdTemplate {
                         LOG.info("Set language version to Kotlin: {}", kotlinVersion.getName());
                     } else {
                         // Default to Java
-                        LanguageVersion javaVersion = languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, "24");
+                        LanguageVersion javaVersion = languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.JAVA_SOURCE_VERSION_DEFAULT_VALUE);
                         configuration.setDefaultLanguageVersion(javaVersion);
                         LOG.info("Set language version to Java: {}", javaVersion.getName());
                     }
