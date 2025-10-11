@@ -105,6 +105,12 @@ jobs:
           name: sonar-pmd-plugin-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
           path: sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar
 
+      - name: Upload sonar-pmd-apex-plugin jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-pmd-apex-plugin-${{ env.TAG_NAME }}${{ env.ARTIFACT_SUFFIX }}
+          path: sonar-pmd-apex-plugin/target/sonar-pmd-apex-plugin-*.jar
+
       - name: Upload sonar-pmd-lib jar
         uses: actions/upload-artifact@v4
         with:
