@@ -32,14 +32,12 @@ public class PmdRuleSets {
     private static PmdRuleScopeRegistry createRegistry() {
         try {
             PmdRuleScopeRegistry registry = PmdRuleScopeRegistry.getInstance();
-            registry.addXmlResources(
-                    "/org/sonar/plugins/pmd/rules-java.xml",
-                    "/org/sonar/plugins/pmd/rules-kotlin.xml"
-            );
 
             ClassLoader cl = PmdRuleSets.class.getClassLoader();
 
-            loadPluginProvidedSonarRules(cl, registry);
+            loadPmdJavaAndKotlineRules(cl, registry);
+
+            loadChildPmdPluginProvidedSonarRules(cl, registry);
 
             loadJPinpointPluginRules(cl, registry);
 
@@ -50,6 +48,22 @@ public class PmdRuleSets {
         }
     }
 
+    private static void loadPmdJavaAndKotlineRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
+        // Only load Java/Kotlin rule-scope resources if they exist on the classpath
+        String javaPath = "org/sonar/plugins/pmd/rules-java.xml";
+        String kotlinPath = "org/sonar/plugins/pmd/rules-kotlin.xml";
+        if (cl.getResource(javaPath) != null) {
+            registry.addXmlResources("/" + javaPath);
+        }
+        if (cl.getResource(kotlinPath) != null) {
+            registry.addXmlResources("/" + kotlinPath);
+        }
+    }
+
+    /**
+     * Needed for backwards compatibility for the child PMD plugin with JPinpoint rules
+     * Can be removed when the plugin has its own META-INF/sonar-pmd/sonar-pmd-rules-paths.txt
+     */
     private static void loadJPinpointPluginRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
         try {
             String jpinpointPath = "com/jpinpoint/sonar/rules/sonar-pmd-jpinpoint.xml";
@@ -67,7 +81,7 @@ public class PmdRuleSets {
         }
     }
 
-    private static void loadPluginProvidedSonarRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
+    private static void loadChildPmdPluginProvidedSonarRules(ClassLoader cl, PmdRuleScopeRegistry registry) {
         String indexResource = "META-INF/sonar-pmd/sonar-pmd-rules-paths.txt";
         try {
             Enumeration<URL> indexUrls = cl.getResources(indexResource);

@@ -99,12 +99,19 @@ Sonar-PMD is licensed under the [GNU Lesser General Public License, Version 3.0]
 Parts of the rule descriptions displayed in SonarQube have been extracted from [PMD](https://pmd.github.io/) and are licensed under a [BSD-style license](https://github.com/pmd/pmd/blob/master/LICENSE).  
 
 ## Build and test the plugin
-To build the plugin and run the integration tests (use java 17 to build the plugin):
+To build the plugin and run the integration tests (use Java 17 to build the plugin):
 
     ./mvnw clean verify
 
-## Generate PMD rules XML (Java and Kotlin)
-To regenerate the `rules-java.xml` and `rules-kotlin.xml` from PMD 7 using the provided Groovy script, run from the project root:
+### Failing Integration Tests
+
+If you experience issues starting the integration tests, make sure there is enough free space
+on your disk. Otherwise, ElasticSearch used by SonarQube might not be able to start due to bad
+system health status (high disk watermark [90%] exceeded).
+
+## Generate PMD rules XML (Java, Kotlin and Apex)
+To regenerate the `rules-java.xml`, `rules-kotlin.xml` and `rules-apex.xml` from PMD 7 
+using the provided Groovy script, run from the project root:
 
     ./mvnw clean generate-resources -Pgenerate-pmd-rules -pl sonar-pmd-plugin -am
 

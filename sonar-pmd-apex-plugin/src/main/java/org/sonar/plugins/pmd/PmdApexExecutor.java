@@ -25,12 +25,12 @@ public class PmdApexExecutor extends AbstractPmdExecutor {
 
     @Override
     protected String getStartMessage() {
-        return "Execute PMD {} for Apex";
+        return "Execute PMD Apex {}";
     }
 
     @Override
     protected String getEndMessage() {
-        return "Execute PMD {} for Apex (done) | time={}ms";
+        return "Execute PMD Apex {} (done) | time={}ms";
     }
 
     @Override
