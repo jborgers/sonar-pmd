@@ -1,12 +1,24 @@
 # Changelog
 
-[//]: # (## [4.2.0-SNAPSHOT]&#40;https://github.com/jborgers/sonar-pmd/tree/4.2.0-SNAPSHOT&#41; &#40;2025-xx-xx&#41;)
+[//]: # (## [4.3.0-SNAPSHOT]&#40;https://github.com/jborgers/sonar-pmd/tree/4.3.0-SNAPSHOT&#41; &#40;2025-xx-xx&#41;)
 
 [//]: # ()
-[//]: # ([Full Changelog]&#40;https://github.com/jborgers/sonar-pmd/compare/4.1.0..master&#41;)
+[//]: # ([Full Changelog]&#40;https://github.com/jborgers/sonar-pmd/compare/4.2.0..master&#41;)
 
 [//]: # ()
 [//]: # (**Implemented highlights**)
+
+## [4.2.0](https://github.com/jborgers/sonar-pmd/tree/4.2.0) (2025-10-13)
+
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.1.0..4.2.0)
+
+**Implemented highlights**
+* Java 25 support
+* Now PMD Java and Kotlin rules are available from 7.17.0 (292, up from 282), see details [pmd_release_notes_4.2.0.md](docs/pmd_release_notes_4.2.0.md)
+* Activate Kotlin sensor 
+* Add params in sonar rules xml based on Java Rule properties
+* Fix Analysis scope for main and test sources
+* Adjust severity level for code-style category 
 
 ## [4.1.0](https://github.com/jborgers/sonar-pmd/tree/4.1.0) (2025-07-18)
 [Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..4.1.0)
