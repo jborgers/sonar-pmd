@@ -78,7 +78,7 @@
     <jdom2.version>2.0.6.1</jdom2.version>
     <!-- Sonar settings -->
     <version.sonar-packaging.plugin>1.23.0.740</version.sonar-packaging.plugin>
-    <sonar-plugin-api-impl.version>25.9.0.112764</sonar-plugin-api-impl.version>
+    <sonar-plugin-api-impl.version>25.10.0.114319</sonar-plugin-api-impl.version>
     <sonar-plugin-api.version>13.2.0.3137</sonar-plugin-api.version>
     <sonar-java.version>8.19.0.40387</sonar-java.version>
     <sslr.squid.bridge.version>2.7.1.392</sslr.squid.bridge.version>
