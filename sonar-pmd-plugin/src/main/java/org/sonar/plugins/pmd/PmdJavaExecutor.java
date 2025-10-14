@@ -19,24 +19,16 @@
  */
 package org.sonar.plugins.pmd;
 
-import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.rule.RuleScope;
+import org.sonar.plugins.pmd.util.ClassLoaderUtils;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * PMD executor for Java files.
@@ -64,24 +56,7 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
 
     @Override
     protected Report executePmd(URLClassLoader classLoader) {
-        final PmdTemplate pmdFactory = createPmdTemplate(classLoader);
-        final Optional<Report> javaMainReport = executeRules(pmdFactory, hasFiles(Type.MAIN, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY, RuleScope.MAIN);
-        final Optional<Report> javaTestReport = executeRules(pmdFactory, hasFiles(Type.TEST, PmdConstants.LANGUAGE_JAVA_KEY), PmdConstants.MAIN_JAVA_REPOSITORY_KEY, RuleScope.TEST);
-
-        if (LOGGER.isDebugEnabled()) {
-            javaMainReport.ifPresent(this::writeDebugLine);
-            javaTestReport.ifPresent(this::writeDebugLine);
-        }
-
-        Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = AbstractPmdExecutor::accept;
-
-        Report unionReport = Report.buildReport(fileAnalysisListenerConsumer);
-        unionReport = javaMainReport.map(unionReport::union).orElse(unionReport);
-        unionReport = javaTestReport.map(unionReport::union).orElse(unionReport);
-
-        pmdConfiguration.dumpXmlReport(unionReport);
-
-        return unionReport;
+        return executeLanguage(classLoader, PmdConstants.LANGUAGE_JAVA_KEY, PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
     }
 
     /**
@@ -90,14 +65,6 @@ public class PmdJavaExecutor extends AbstractPmdExecutor {
     @Override
     protected URLClassLoader createClassloader() {
         Collection<File> classpathElements = classpathProvider.classpath();
-        List<URL> urls = new ArrayList<>();
-        for (File file : classpathElements) {
-            try {
-                urls.add(file.toURI().toURL());
-            } catch (MalformedURLException e) {
-                throw new IllegalStateException("Failed to create the project classloader. Classpath element is invalid: " + file, e);
-            }
-        }
-        return new URLClassLoader(urls.toArray(new URL[0]));
+        return ClassLoaderUtils.fromClasspath(classpathElements);
     }
 }

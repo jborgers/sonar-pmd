@@ -265,6 +265,12 @@ class PmdSensorTest {
                 .isEqualTo(expectedException);
     }
 
+
+
+
+
+
+
     @Test
     void should_to_string() {
         final String toString = pmdSensor.toString();
@@ -299,6 +305,7 @@ class PmdSensorTest {
         when(kotlinExecutor.execute())
                 .thenReturn(createReport(violations));
     }
+
 
     private Report createReport(RuleViolation... violations) {
         Consumer<FileAnalysisListener> fileAnalysisListenerConsumer = fal -> {
@@ -337,4 +344,5 @@ class PmdSensorTest {
                         .build()
         );
     }
+
 }

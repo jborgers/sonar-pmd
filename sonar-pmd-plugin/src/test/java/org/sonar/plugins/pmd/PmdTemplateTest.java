@@ -38,7 +38,7 @@ class PmdTemplateTest {
     })
     void verifyCanHandleJavaLanguageVersion(String javaVersion) {
         final Language language = PmdTemplate
-                .languageVersion(javaVersion)
+                .languageVersion(PmdConstants.LANGUAGE_JAVA_KEY, javaVersion)
                 .getLanguage();
 
         assertThat(language).isNotNull();
