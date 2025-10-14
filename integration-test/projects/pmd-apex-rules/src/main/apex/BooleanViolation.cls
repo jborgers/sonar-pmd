@@ -2,9 +2,9 @@
 public class BooleanViolation {
   public static void doSomething(Boolean isSomething) {
     if (isSomething == true) {
-      // Do something
+      isSomething = false;
     } else {
-      // Do something else, or maybe do nothing if isSomething is null?
+      isSomething = null;
     }
   }
 }
