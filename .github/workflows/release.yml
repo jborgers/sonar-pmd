@@ -41,6 +41,14 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
 
+      - name: Deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
+        run: |
+          ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
+
       - name: Collect JAR artifacts
         run: |
           mkdir -p artifacts
@@ -59,10 +67,3 @@ jobs:
           # This makes workflow re-runs idempotent; without it, gh release upload would fail on duplicates.
           gh release upload "${{ env.TAG_NAME }}" artifacts/*.jar --clobber
 
-      - name: Deploy
-        env:
-          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
-        run: |
-          ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy

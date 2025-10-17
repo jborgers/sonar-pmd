@@ -26,7 +26,7 @@ In Github create a Draft release, or a pre-release.
    - Uncomment the current SNAPSHOT release to non-SNAPSHOT upcoming release x.y.z
    - Fill in the "Implemented highlights"
    - Update `README.md` if needed
-   - Commit an push changes
+   - Commit and push changes
 
 2. Publish the release in Github:
    - Fill the to-be-created version
