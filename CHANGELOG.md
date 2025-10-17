@@ -3,14 +3,22 @@
 [//]: # (## [4.3.0-SNAPSHOT]&#40;https://github.com/jborgers/sonar-pmd/tree/4.3.0-SNAPSHOT&#41; &#40;2025-xx-xx&#41;)
 
 [//]: # ()
-[//]: # ([Full Changelog]&#40;https://github.com/jborgers/sonar-pmd/compare/4.2.0..master&#41;)
-
-[//]: # ()
 [//]: # (**Implemented highlights**)
 
-## [4.2.0](https://github.com/jborgers/sonar-pmd/tree/4.2.0) (2025-10-13)
+[//]: # ()
+[//]: # ([Full Changelog]&#40;https://github.com/jborgers/sonar-pmd/compare/4.2.0..master&#41;)
 
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.1.0..4.2.0)
+
+
+## [4.2.1](https://github.com/jborgers/sonar-pmd/tree/4.2.1) (2025-10-17)
+
+**Implemented highlights**
+* Remove required plugins pom.xml reference for Sonar market place
+* Improved regex warning message
+
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.2.0..4.2.1)
+
+## [4.2.0](https://github.com/jborgers/sonar-pmd/tree/4.2.0) (2025-10-13)
 
 **Implemented highlights**
 * Java 25 support
@@ -20,8 +28,9 @@
 * Fix Analysis scope for main and test sources
 * Adjust severity level for code-style category 
 
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.1.0..4.2.0)
+
 ## [4.1.0](https://github.com/jborgers/sonar-pmd/tree/4.1.0) (2025-07-18)
-[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..4.1.0)
 
 **Implemented highlights**
 * Now all current PMD Java rules are available (282, up from 206), see details [pmd_release_notes_4.1.0.md](docs/pmd_release_notes_4.1.0.md) 
@@ -32,6 +41,8 @@
 * Added `has-sonar-alternative` tag for rules with known Sonar alternative (instead of making rules with alternatives `Deprecated`)
 * Simplified release process by automation
 * Maven release via Sonatype Central Portal
+
+[Full Changelog](https://github.com/jborgers/sonar-pmd/compare/4.0.3..4.1.0)
 
 ## [4.0.3](https://github.com/jborgers/sonar-pmd/tree/4.0.3) (2025-06-06)
 

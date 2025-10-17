@@ -77,7 +77,7 @@ class SanitySonarVersionsIT {
     @ParameterizedTest(name = "sanity-all-rules on SonarQube {0}")
     @ValueSource(strings = {
             "LATEST_RELEASE[9.9]",
-            "LATEST_RELEASE[25.9]"
+            "LATEST_RELEASE[25.10]"
     })
     void sanity_runs_with_all_rules_profile(String sonarqubeVersion) {
         final String previous = System.getProperty(SONAR_VERSION_KEY);

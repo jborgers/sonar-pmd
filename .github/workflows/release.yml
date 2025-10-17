@@ -55,6 +55,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # --clobber: overwrite existing assets on the release if a file with the same name already exists
+          # This makes workflow re-runs idempotent; without it, gh release upload would fail on duplicates.
           gh release upload "${{ env.TAG_NAME }}" artifacts/*.jar --clobber
 
       - name: Deploy
