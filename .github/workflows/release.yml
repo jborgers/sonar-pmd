@@ -52,12 +52,18 @@ jobs:
       - name: Collect JAR artifacts
         run: |
           mkdir -p artifacts
-          find . -type f -path "./**/target/*.jar" \
-            -not -name "*-sources.jar" \
-            -not -name "*-javadoc.jar" \
-            -not -name "*tests.jar" \
-            -exec cp {} artifacts/ \;
+          # Ensure glob patterns expand to nothing (rather than literal strings) if no files match
+          shopt -s nullglob
+          # Only attach the plugin and lib jars to the GitHub Release
+          for f in sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar sonar-pmd-lib/target/sonar-pmd-lib-*.jar; do
+            if [ -e "$f" ]; then
+              cp "$f" artifacts/
+            fi
+          done
           echo "Collected files:" && ls -la artifacts
+          if [ -z "$(ls -A artifacts)" ]; then
+            echo "No matching artifacts found to upload"; exit 1
+          fi
 
       - name: Upload JARs to GitHub Release
         env:
