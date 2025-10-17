@@ -14,6 +14,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
 
@@ -39,6 +41,22 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
 
+      - name: Collect JAR artifacts
+        run: |
+          mkdir -p artifacts
+          find . -type f -path "./**/target/*.jar" \
+            -not -name "*-sources.jar" \
+            -not -name "*-javadoc.jar" \
+            -not -name "*tests.jar" \
+            -exec cp {} artifacts/ \;
+          echo "Collected files:" && ls -la artifacts
+
+      - name: Upload JARs to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ env.TAG_NAME }}" artifacts/*.jar --clobber
+
       - name: Deploy
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -46,4 +64,3 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
           ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
-
