@@ -645,7 +645,7 @@ def addSuppressionParamIfNeeded(xml, boolean hasVariablePlaceholders, Set existi
     if (hasVariablePlaceholders && !existingParamKeys.contains("violationSuppressRegex")) {
         addParam(xml,
             "violationSuppressRegex",
-            "Suppress violations with messages matching a regular expression. WARNING: make sure the regular expression is correct, otherwise analysis will fail with unclear XML validation errors.",
+            "Suppress violations with messages matching a regular expression. WARNING: Scanner-side analysis will fail if the regular expression is invalid. Ensure the regex is syntactically correct.",
             "",
             "STRING"
         )
