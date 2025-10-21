@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jdom2.CDATA;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -75,8 +76,8 @@ public class PmdRuleSet {
      */
     public void writeTo(Writer destination) {
         // PMD 2.0.0 ruleset namespace (compatible with PMD 6/7)
-        org.jdom2.Namespace ns = org.jdom2.Namespace.getNamespace("http://pmd.sourceforge.net/ruleset/2.0.0");
-        org.jdom2.Namespace xsi = org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        Namespace ns = Namespace.getNamespace("http://pmd.sourceforge.net/ruleset/2.0.0");
+        Namespace xsi = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         Element eltRuleset = new Element("ruleset", ns);
         // declare xsi namespace and schema location
@@ -152,7 +153,7 @@ public class PmdRuleSet {
     }
 
     // Namespaced variant
-    private Element processRuleProperties(PmdRule pmdRule, org.jdom2.Namespace ns) {
+    private Element processRuleProperties(PmdRule pmdRule, Namespace ns) {
         Element eltProperties = new Element("properties", ns);
         for (PmdProperty prop : pmdRule.getProperties()) {
             if (isPropertyValueNotEmpty(prop)) {
