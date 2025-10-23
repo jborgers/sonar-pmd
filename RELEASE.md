@@ -31,13 +31,13 @@ In Github create a Draft release, or a pre-release.
 2. Publish the release in Github:
    - Fill the to-be-created version
    - Generate the release notes, sync with "Implemented highlights" from `CHANGELOG.md`
-   - Press Publish button
+   - Press the Publish button
 
    This will trigger the release workflow, which injects the git tag via maven `-Drevision=<tag>`.
 
 3. Post-release tasks:
    - Manually release the staging repository in [Sonatype](https://oss.sonatype.org/#welcome) for Maven Central
-   - Make release available in Sonar marketplace and post a message for the shiny new release (see below)
+   - Make the release available in Sonar marketplace and post a message for the shiny new release (see below)
 
 ## Prepare for Next Development Cycle
 
