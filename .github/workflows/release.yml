@@ -14,6 +14,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
 
@@ -46,4 +48,28 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSWORD }}
         run: |
           ./mvnw --batch-mode -Drevision=${{ env.TAG_NAME }} -P release clean deploy
+
+      - name: Collect JAR artifacts
+        run: |
+          mkdir -p artifacts
+          # Ensure glob patterns expand to nothing (rather than literal strings) if no files match
+          shopt -s nullglob
+          # Only attach the plugin and lib jars to the GitHub Release
+          for f in sonar-pmd-plugin/target/sonar-pmd-plugin-*.jar sonar-pmd-lib/target/sonar-pmd-lib-*.jar; do
+            if [ -e "$f" ]; then
+              cp "$f" artifacts/
+            fi
+          done
+          echo "Collected files:" && ls -la artifacts
+          if [ -z "$(ls -A artifacts)" ]; then
+            echo "No matching artifacts found to upload"; exit 1
+          fi
+
+      - name: Upload JARs to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # --clobber: overwrite existing assets on the release if a file with the same name already exists
+          # This makes workflow re-runs idempotent; without it, gh release upload would fail on duplicates.
+          gh release upload "${{ env.TAG_NAME }}" artifacts/*.jar --clobber
 

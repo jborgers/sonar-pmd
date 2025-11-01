@@ -29,9 +29,8 @@ public final class PmdConstants {
     public static final String MAIN_KOTLIN_REPOSITORY_KEY = "pmd-kotlin";
     public static final String MAIN_APEX_REPOSITORY_KEY = "pmd-apex";
     public static final String REPOSITORY_NAME = "PMD";
-    public static final String REPOSITORY_KOTLIN_NAME = "PMD Kotlin";
+    public static final String REPOSITORY_KOTLIN_NAME = "PMD";
     public static final String REPOSITORY_APEX_NAME = "PMD Apex";
-    public static final String LANGUAGE_APEX_NAME = "Apex";
 
     public static final String XPATH_CLASS = "net.sourceforge.pmd.lang.rule.xpath.XPathRule";
     public static final String XPATH_EXPRESSION_PARAM = "xpath";

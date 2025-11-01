@@ -1,5 +1,21 @@
 /*
- * Moved to lib to share between plugins.
+ * SonarQube PMD7 Plugin
+ * Copyright (C) 2012-2021 SonarSource SA and others
+ * mailto:jborgers AT jpinpoint DOT com; peter.paul.bakker AT stokpop DOT nl
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package org.sonar.plugins.pmd.xml;
 
@@ -8,12 +24,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.CDATA;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -52,11 +69,18 @@ public class PmdRuleSet {
         this.description = description;
     }
 
+    /**
+     * Serializes this RuleSet in an XML document.
+     *
+     * @param destination The writer to which the XML document shall be written.
+     */
     public void writeTo(Writer destination) {
-        org.jdom2.Namespace ns = org.jdom2.Namespace.getNamespace("http://pmd.sourceforge.net/ruleset/2.0.0");
-        org.jdom2.Namespace xsi = org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        // PMD 2.0.0 ruleset namespace (compatible with PMD 6/7)
+        Namespace ns = Namespace.getNamespace("http://pmd.sourceforge.net/ruleset/2.0.0");
+        Namespace xsi = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         Element eltRuleset = new Element("ruleset", ns);
+        // declare xsi namespace and schema location
         eltRuleset.addNamespaceDeclaration(xsi);
         eltRuleset.setAttribute("schemaLocation",
             "http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd",
@@ -96,6 +120,7 @@ public class PmdRuleSet {
         }
     }
 
+    // Overload that ensures the child is created within the given namespace
     private void addChild(Element elt, String name, @Nullable String text, org.jdom2.Namespace ns) {
         if (text != null) {
             elt.addContent(new Element(name, ns).setText(text));
@@ -127,7 +152,8 @@ public class PmdRuleSet {
         return eltProperties;
     }
 
-    private Element processRuleProperties(PmdRule pmdRule, org.jdom2.Namespace ns) {
+    // Namespaced variant
+    private Element processRuleProperties(PmdRule pmdRule, Namespace ns) {
         Element eltProperties = new Element("properties", ns);
         for (PmdProperty prop : pmdRule.getProperties()) {
             if (isPropertyValueNotEmpty(prop)) {
