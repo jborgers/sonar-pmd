@@ -24,8 +24,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.CDATA;
 import org.jdom2.Document;
@@ -33,6 +31,7 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.jspecify.annotations.Nullable;
 
 public class PmdRuleSet {
 

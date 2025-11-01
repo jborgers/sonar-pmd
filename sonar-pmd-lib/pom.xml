@@ -58,9 +58,8 @@
     </dependency>
     <!-- needed for @Nullable annotation -->
     <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-      <version>26.0.2-1</version>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
