@@ -5,9 +5,9 @@ package org.sonar.plugins.pmd;
 
 import java.util.Locale;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RulePriority;
@@ -20,7 +20,7 @@ public final class PmdPriorities {
         // only static methods
     }
 
-    public static org.sonar.api.rules.RulePriority sonarPrioOf(@NotNull PmdRule pmdRule) {
+    public static org.sonar.api.rules.RulePriority sonarPrioOf(@NonNull PmdRule pmdRule) {
         return toSonarPrio(pmdRule.getPriority());
     }
 
@@ -41,11 +41,11 @@ public final class PmdPriorities {
         return Math.abs(priority.ordinal() - NUM_SEVERITIES);
     }
 
-    public static Integer fromSonarSeverity(@NotNull String severity) {
+    public static Integer fromSonarSeverity(@NonNull String severity) {
         return Math.abs(NUM_SEVERITIES - Severity.ALL.indexOf(severity));
     }
 
-    public static Integer ofSonarRule(@NotNull ActiveRule sonarRule) {
+    public static Integer ofSonarRule(@NonNull ActiveRule sonarRule) {
         return fromSonarSeverity(sonarRule.severity().toUpperCase(Locale.ENGLISH));
     }
 }

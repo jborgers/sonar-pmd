@@ -25,7 +25,8 @@ package org.sonar.plugins.pmd.rule;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
+
+import org.jspecify.annotations.Nullable;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;

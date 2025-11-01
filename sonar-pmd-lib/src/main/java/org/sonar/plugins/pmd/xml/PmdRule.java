@@ -3,8 +3,9 @@
  */
 package org.sonar.plugins.pmd.xml;
 
+import org.jspecify.annotations.Nullable;
 import org.sonar.plugins.pmd.PmdConstants;
-import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 

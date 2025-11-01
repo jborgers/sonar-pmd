@@ -4,7 +4,8 @@ import net.sourceforge.pmd.lang.rule.AbstractRule;
 import net.sourceforge.pmd.properties.PropertyConstraint;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertySource;
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.plugins.pmd.rule.util.ZipBombProtection;
@@ -219,7 +220,7 @@ public class JavaRulePropertyExtractor {
      * @param o The object to get the simplified type name from
      * @return The simplified class name as a String
      */
-    private static @NotNull String convertKnownTypes(Object o) {
+    private static @NonNull String convertKnownTypes(Object o) {
         String simpleName = o.getClass().getSimpleName();
         // is this needed? there is only: %%% found simplename with Empty: EmptySet
         if (simpleName.startsWith("Empty")) {

@@ -11,8 +11,9 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.Report;
 import net.sourceforge.pmd.util.log.PmdReporter;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -166,7 +167,7 @@ public abstract class AbstractPmdExecutor {
         return loader.loadFromResource(ruleSetFilePath);
     }
 
-    private static @NotNull PmdReporter createSonarPmdPluginLogger() {
+    private static @NonNull PmdReporter createSonarPmdPluginLogger() {
         PmdReporter reporter = new PmdReporter() {
             AtomicInteger numErrors = new AtomicInteger(0);
             @Override
