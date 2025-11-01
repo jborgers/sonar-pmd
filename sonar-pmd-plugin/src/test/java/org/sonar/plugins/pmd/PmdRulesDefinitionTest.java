@@ -38,7 +38,7 @@ class PmdRulesDefinitionTest {
         definition.define(context);
         RulesDefinition.Repository repository = context.repository(PmdConstants.MAIN_JAVA_REPOSITORY_KEY);
 
-        assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_NAME);
+        assertThat(repository.name()).isEqualTo(PmdConstants.REPOSITORY_JAVA_NAME);
         assertThat(repository.language()).isEqualTo(PmdConstants.LANGUAGE_JAVA_KEY);
 
         List<Rule> rules = repository.rules();

@@ -31,7 +31,7 @@ class PmdConstantsTest {
         assertThat(PmdConstants.PLUGIN_KEY).isEqualTo("pmd");
         assertThat(PmdConstants.MAIN_JAVA_REPOSITORY_KEY).isEqualTo("pmd");
         assertThat(PmdConstants.MAIN_KOTLIN_REPOSITORY_KEY).isEqualTo("pmd-kotlin");
-        assertThat(PmdConstants.REPOSITORY_NAME).isEqualTo("PMD");
+        assertThat(PmdConstants.REPOSITORY_JAVA_NAME).isEqualTo("PMD");
         assertThat(PmdConstants.XPATH_CLASS).isEqualTo("net.sourceforge.pmd.lang.rule.xpath.XPathRule");
         assertThat(PmdConstants.XPATH_EXPRESSION_PARAM).isEqualTo("xpath");
         assertThat(PmdConstants.XPATH_MESSAGE_PARAM).isEqualTo("message");
