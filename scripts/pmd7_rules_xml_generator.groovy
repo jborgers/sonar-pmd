@@ -62,8 +62,11 @@ MarkdownToHtmlConverter.setPmdVersion(pmdVersion)
 // Configuration
 @Field def pmdJavaJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-java/${pmdVersion}/pmd-java-${pmdVersion}.jar")
 @Field def pmdKotlinJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-kotlin/${pmdVersion}/pmd-kotlin-${pmdVersion}.jar")
+@Field def pmdApexJarPath = new File("${System.getProperty("user.home")}/.m2/repository/net/sourceforge/pmd/pmd-apex/${pmdVersion}/pmd-apex-${pmdVersion}.jar")
 def javaCategoriesPropertiesPath = "category/java/categories.properties"
 def kotlinCategoriesPropertiesPath = "category/kotlin/categories.properties"
+def apexCategoriesPropertiesPath = "category/apex/categories.properties"
+
 // Define language-specific rule alternatives paths
 @Field String javaRuleAlternativesPath = "scripts/rule-alternatives-java.json"
 @Field String kotlinRuleAlternativesPath = "scripts/rule-alternatives-kotlin.json"
@@ -112,20 +115,34 @@ if (binding.hasVariable('TEST_MODE') && binding.getVariable('TEST_MODE')) {
     return // Skip the rest of the script
 }
 
-// Get output directory from binding variable (set by Maven) or use a default directory
-// The 'outputDir' variable is passed from Maven's groovy-maven-plugin configuration
-@Field def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ? 
+// Get output directory from binding variable (set by Maven) or use default directories per plugin
+// The 'outputDir' variable controls Java/Kotlin output (main plugin). Optionally, 'apexOutputDir' controls Apex output (Apex plugin)
+@Field def defaultOutputDir = new File("sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd").exists() ?
     "sonar-pmd-plugin/src/main/resources/org/sonar/plugins/pmd" : "."
 @Field def outputDirPath = binding.hasVariable('outputDir') ? outputDir : defaultOutputDir
+@Field def apexRel = "sonar-pmd-apex-plugin/src/main/resources/org/sonar/plugins/pmd"
+@Field def defaultApexOutputDir = apexRel
+@Field def apexOutputDirPath = {
+    def override = binding.hasVariable('apexOutputDir') ? apexOutputDir : null
+    def target = override ?: defaultApexOutputDir
+    def dirFile = new File(target)
+    if (!dirFile.exists() || !dirFile.isDirectory()) {
+        throw new RuntimeException("Required Apex output directory not found: ${dirFile.absolutePath}. Set 'apexOutputDir' to override or ensure the apex plugin module exists.")
+    }
+    return target
+}()
 @Field def javaOutputFileName = "rules-java.xml"
 @Field def kotlinOutputFileName = "rules-kotlin.xml"
+@Field def apexOutputFileName = "rules-apex.xml"
 @Field def javaOutputFilePath = new File(outputDirPath, javaOutputFileName)
 @Field def kotlinOutputFilePath = new File(outputDirPath, kotlinOutputFileName)
+@Field def apexOutputFilePath = new File(apexOutputDirPath, apexOutputFileName)
 
 logInfo("PMD ${pmdVersion} Rules XML Generator")
 logInfo("=" * 50)
-logInfo("Java output file: ${javaOutputFilePath}")
+logInfo("Java output file  : ${javaOutputFilePath}")
 logInfo("Kotlin output file: ${kotlinOutputFilePath}")
+logInfo("Apex output file  : ${apexOutputFilePath}")
 
 // Function to read rules from a PMD JAR
 def readRulesFromJar = { jarFile, categoriesPath ->
@@ -214,6 +231,11 @@ logInfo("found ${javaRules.size()} total Java rules\n")
 logInfo("reading Kotlin rules from ${pmdKotlinJarPath}")
 def kotlinRules = readRulesFromJar(pmdKotlinJarPath, kotlinCategoriesPropertiesPath)
 logInfo("found ${kotlinRules.size()} total Kotlin rules\n")
+
+// Read Apex rules
+logInfo("reading Apex rules from ${pmdApexJarPath}")
+def apexRules = readRulesFromJar(pmdApexJarPath, apexCategoriesPropertiesPath)
+logInfo("found ${apexRules.size()} total Apex rules\n")
 
 // Helper function to escape XML content for CDATA
 String escapeForCdata(String text) {
@@ -309,7 +331,7 @@ def generateXmlFile = { outputFile, rules, language ->
             }
         }
         }
-        
+
         // Print summary information
         def activeRules = rules.count { !it.deprecated }
         def deprecatedRules = rules.count { it.deprecated }
@@ -366,12 +388,18 @@ logInfo("Generating Kotlin rules XML file...")
 logInfo("=" * 30)
 def kotlinSuccess = generateXmlFile(kotlinOutputFilePath, kotlinRules, "Kotlin")
 
+// Generate Apex rules XML file
+logInfo("")
+logInfo("Generating Apex rules XML file...")
+logInfo("=" * 30)
+def apexSuccess = generateXmlFile(apexOutputFilePath, apexRules, "Apex")
+
 // Add XPathRule as a special case to the Java rules XML file
 addXPathRuleToJavaFile()
 
 logInfo("")
-if (javaSuccess && kotlinSuccess) {
-    logInfo("XML generation completed successfully for both Java and Kotlin rules!")
+if (javaSuccess && kotlinSuccess && apexSuccess) {
+    logInfo("XML generation completed successfully for both Java, Kotlin and Apex rules!")
 } else {
     logInfo("XML generation completed with errors. Please check the logs above.")
 }

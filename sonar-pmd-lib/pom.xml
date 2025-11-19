@@ -58,10 +58,14 @@
     </dependency>
     <!-- needed for @Nullable annotation -->
     <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-      <version>26.0.2-1</version>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom2</artifactId>
+      <version>${jdom2.version}</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>

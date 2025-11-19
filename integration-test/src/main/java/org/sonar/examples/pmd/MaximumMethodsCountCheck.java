@@ -24,6 +24,7 @@ import java.util.List;
 
 
 import net.sourceforge.pmd.lang.java.ast.ASTClassBody;
+import net.sourceforge.pmd.lang.java.ast.ASTCompilationUnit;
 import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
 import net.sourceforge.pmd.properties.NumericConstraints;
@@ -48,22 +49,24 @@ public class MaximumMethodsCountCheck extends AbstractJavaRule {
         definePropertyDescriptor(propertyDescriptor);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
-        LOG.info("Start " + getName());
-    }
+//    @Override
+//    public void start(RuleContext ctx) {
+//        LOG.info("Start {}", getName());
+//    }
+//
+//    @Override
+//    public void end(RuleContext ctx) {
+//        LOG.info("End {}", getName());
+//    }
 
     @Override
-    public void end(RuleContext ctx) {
-        LOG.info("End " + getName());
-    }
-
-    @Override
-    public Object visit(ASTClassBody node, Object data) {
-        List<ASTMethodDeclaration> methods = node.descendants(ASTMethodDeclaration.class).toList();
+    public Object visit(ASTCompilationUnit cUnit, Object data) {
+        LOG.info("Start {}", getName());
+        List<ASTMethodDeclaration> methods = cUnit.descendants(ASTMethodDeclaration.class).toList();
         if (methods.size() > getProperty(propertyDescriptor)) {
-            asCtx(data).addViolation(node);
+            asCtx(data).addViolation(cUnit);
         }
-        return super.visit(node, data);
+        LOG.info("End {}", getName());
+        return super.visit(cUnit, data);
     }
 }

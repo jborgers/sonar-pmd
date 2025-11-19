@@ -21,12 +21,13 @@
     </rule>
     <rule>
       <repositoryKey>pmd</repositoryKey>
-      <key>AvoidCatchingThrowable</key>
+      <key>DoNotExtendIOException</key>
       <priority>MAJOR</priority>
     </rule>
+    <!-- rule from other repository/plugin: pmd -->
     <rule>
       <repositoryKey>pmd</repositoryKey>
-      <key>DoNotExtendIOException</key>
+      <key>AvoidCatchingThrowable</key>
       <priority>MAJOR</priority>
     </rule>
   </rules>

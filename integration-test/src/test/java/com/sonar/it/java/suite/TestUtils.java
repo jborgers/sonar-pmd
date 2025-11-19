@@ -52,7 +52,10 @@ class TestUtils {
     }
 
     private static @NotNull String ensureEndsWithSlash(String srcDir) {
-        if (!srcDir.isEmpty() && !srcDir.endsWith("/")) {
+        if (srcDir.isEmpty()) {
+            return srcDir;
+        }
+        if (!srcDir.endsWith("/")) {
             srcDir = srcDir + "/";
         }
         return srcDir;
