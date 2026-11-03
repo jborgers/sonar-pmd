@@ -128,4 +128,44 @@ class MarkdownToHtmlConverterTest {
                 .doesNotContain("<b>bold</b>")
                 .doesNotContain("<i>italic</i>");
     }
+
+    @Test
+    void testRuleReferenceWithoutQuotes() {
+        String input = "are reported by {% rule UnnecessaryCast %} instead.";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("are reported by <code>UnnecessaryCast</code> instead.")
+                .doesNotContain("{%");
+    }
+
+    @Test
+    void testRuleReferenceWithQuotes() {
+        String input = "are reported by {% rule \"UnnecessaryCast\" %} instead.";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("are reported by <code>UnnecessaryCast</code> instead.")
+                .doesNotContain("{%");
+    }
+
+    @Test
+    void testRuleReferenceWithCategoryPathShowsRuleNameOnly() {
+        String input = "Notice that {% rule java/errorprone/EmptyCatchBlock %} is still an independent rule.";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("Notice that <code>EmptyCatchBlock</code> is still an independent rule.")
+                .doesNotContain("{%");
+    }
+
+    @Test
+    void testRuleReferenceWithoutSpaceAfterOpeningTag() {
+        String input = "is related to {%rule OverrideBothEqualsAndHashcode %}. It";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("is related to <code>OverrideBothEqualsAndHashcode</code>. It")
+                .doesNotContain("{%");
+    }
 }
