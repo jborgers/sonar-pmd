@@ -21,6 +21,7 @@ From the project root directory:
 ```
 
 Notes:
+- Regenerate `rules-java.xml` and `rules-kotlin.xml` and commit them with your change when you touch the generator or the Markdown converter, and again after merging such a change to master. The output is deterministic (the header has no date), so regenerating changes the files only when the content changes.
 - The -am (also-make) flag is the Maven-native way to ensure dependent modules (like sonar-pmd-lib) are built in the reactor when you build only sonar-pmd-plugin with -pl.
 
 ### generate_release_notes.groovy
