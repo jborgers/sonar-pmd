@@ -220,11 +220,19 @@ class PmdIT {
             ORCHESTRATOR.executeBuild(build);
 
             // then
-            // PMD7-MIGRATION: added to force one violation in pmdShouldHaveAccessToExternalLibrariesInItsClasspath: is this testing the correct thing?
             final List<Issue> issues = retrieveIssues(keyFor(projectName, "src/main/java/", "pmd/", "Errors", ".java"));
+
+            final List<String> messages = issues
+                    .stream()
+                    .map(Issue::message)
+                    .collect(Collectors.toList());
 
             assertThat(issues)
                     .hasSize(3);
+
+            // MaximumMethodsCountCheck is a Java class loaded from the extension plugin
+            assertThat(messages)
+                    .contains("Avoid too many methods");
 
         } catch (HttpException e) {
             System.out.println("Failed to associate Project To Quality Profile: " + e.getMessage() + " body: " + e.getBody());
