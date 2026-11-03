@@ -128,4 +128,48 @@ class MarkdownToHtmlConverterTest {
                 .doesNotContain("<b>bold</b>")
                 .doesNotContain("<i>italic</i>");
     }
+
+    @Test
+    void testCodeBlockIndentedInSourceXmlIsDedented() {
+        String input = "```java\n"
+                + "            public class Foo implements Runnable {\n"
+                + "                // This method is overridden, and should have an @Override annotation\n"
+                + "                public void run() {\n"
+                + "\n"
+                + "                }\n"
+                + "            }\n"
+                + "            \n```";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .isEqualTo("<p><pre><code class=\"language-java\"> public class Foo implements Runnable {\n"
+                        + "     // This method is overridden, and should have an @Override annotation\n"
+                        + "     public void run() {\n"
+                        + " \n"
+                        + "     }\n"
+                        + " }</code></pre></p>");
+    }
+
+    @Test
+    void testCodeBlockStartingWithBlankLineIsDedented() {
+        String input = "```java\n"
+                + "\n"
+                + "        class Foo {\n"
+                + "            int myField = 1;\n"
+                + "        }\n"
+                + "        \n```";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("<code class=\"language-java\"> class Foo {\n     int myField = 1;\n }</code>");
+    }
+
+    @Test
+    void testCodeBlockWithoutIndentationIsUnchanged() {
+        String input = "```java\nclass Foo {\n    int a;\n}\n```";
+        String result = MarkdownToHtmlConverter.convertToHtml(input);
+
+        assertThat(result)
+                .contains("<code class=\"language-java\"> class Foo {\n     int a;\n }</code>");
+    }
 }

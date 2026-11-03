@@ -54,9 +54,9 @@ public class MarkdownToHtmlConverter {
     // Matches document sections like "Problem:", "Solution:" etc
     private static final Pattern SECTION_PATTERN = Pattern.compile("(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)", Pattern.DOTALL);
     // Matches multi-line code blocks between triple backticks
-    private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("```(\\w*)\\s*+(((?!```).)*+)```", Pattern.DOTALL);
+    private static final Pattern MULTI_LINE_CODE_BLOCK_PATTERN = Pattern.compile("```(\\w*)[ \\t]*+(?:\\r?\\n)?+(((?!```).)*+)```", Pattern.DOTALL);
     // Matches code blocks between quadruple backticks
-    private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("````(\\w*)\\s*+(((?!````).)*+)````", Pattern.DOTALL);
+    private static final Pattern QUADRUPLE_BACKTICK_CODE_BLOCK_PATTERN = Pattern.compile("````(\\w*)[ \\t]*+(?:\\r?\\n)?+(((?!````).)*+)````", Pattern.DOTALL);
     // Matches markdown headers like "# Title"
     private static final Pattern HEADER_PATTERN = Pattern.compile("^(#{1,6})\\s++([^\r\n]++)$");
 
@@ -594,6 +594,7 @@ public class MarkdownToHtmlConverter {
             String code = matcher.group(2) != null ? matcher.group(2) : "";
 
             // Format code with proper spacing and trim trailing whitespace
+            code = removeCommonIndentation(code);
             code = " " + NEWLINE_PATTERN.matcher(code).replaceAll("\n "); 
             code = TRAILING_WHITESPACE_PATTERN.matcher(code).replaceAll("");
 
@@ -606,6 +607,42 @@ public class MarkdownToHtmlConverter {
 
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    /**
+     * Removes leading blank lines and the indentation shared by all non-blank lines,
+     * as examples are indented in the rule XML source.
+     */
+    private static String removeCommonIndentation(String code) {
+        String[] lines = code.split("\r?\n", -1);
+        int firstNonBlank = 0;
+        while (firstNonBlank < lines.length && lines[firstNonBlank].trim().isEmpty()) {
+            firstNonBlank++;
+        }
+        int commonIndent = Integer.MAX_VALUE;
+        for (int i = firstNonBlank; i < lines.length; i++) {
+            if (!lines[i].trim().isEmpty()) {
+                commonIndent = Math.min(commonIndent, leadingWhitespaceLength(lines[i]));
+            }
+        }
+        StringBuilder dedented = new StringBuilder();
+        for (int i = firstNonBlank; i < lines.length; i++) {
+            if (i > firstNonBlank) {
+                dedented.append("\n");
+            }
+            if (!lines[i].trim().isEmpty()) {
+                dedented.append(lines[i].substring(commonIndent));
+            }
+        }
+        return dedented.toString();
+    }
+
+    private static int leadingWhitespaceLength(String line) {
+        int length = 0;
+        while (length < line.length() && (line.charAt(length) == ' ' || line.charAt(length) == '\t')) {
+            length++;
+        }
+        return length;
     }
 
     /**
