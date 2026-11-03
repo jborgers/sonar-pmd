@@ -49,8 +49,8 @@ public class MarkdownToHtmlConverter {
     private static final Pattern UNORDERED_LIST_ITEM_PATTERN = Pattern.compile("[ \\t]*[*\\-]([ \\t]++)([^\r\n]*)");
     // Matches indented lines, from 2 up to 100 spaces or tabs, that are continuations of list items
     private static final Pattern LIST_ITEM_CONTINUATION_PATTERN = Pattern.compile("^[ \\t]{2,100}([^*\\-][^\r\n]*)$");
-    // Matches rule references like {% rule "rulename" %}
-    private static final Pattern RULE_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*rule\\s*\"([^\"]+)\"\\s*\\%\\}");
+    // Matches rule references like {% rule "rulename" %}, {% rule rulename %} or {% rule java/category/rulename %}
+    private static final Pattern RULE_REFERENCE_PATTERN = Pattern.compile("\\{\\%\\s*rule\\s++\"?([^\"\\s%]++)\"?\\s*+\\%\\}");
     // Matches document sections like "Problem:", "Solution:" etc
     private static final Pattern SECTION_PATTERN = Pattern.compile("(Problem|Solution|Note|Notes|Exceptions):(.+?)(?=\\s+(Problem|Solution|Note|Notes|Exceptions):|$)", Pattern.DOTALL);
     // Matches multi-line code blocks between triple backticks
@@ -959,7 +959,9 @@ public class MarkdownToHtmlConverter {
         Matcher ruleRefMatcher = RULE_REFERENCE_PATTERN.matcher(result);
         StringBuilder sb = new StringBuilder();
         while (ruleRefMatcher.find()) {
-            String replacement = "<code>" + escapeHtml(ruleRefMatcher.group(1)) + "</code>";
+            String ruleReference = ruleRefMatcher.group(1);
+            String ruleName = ruleReference.substring(ruleReference.lastIndexOf('/') + 1);
+            String replacement = "<code>" + escapeHtml(ruleName) + "</code>";
             ruleRefMatcher.appendReplacement(sb, escapeReplacement(replacement));
         }
         ruleRefMatcher.appendTail(sb);
